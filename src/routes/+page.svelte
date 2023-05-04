@@ -9,7 +9,7 @@
 	/>
 </svelte:head>
 
-<section>...</section>
+<section class="bg-gray-50">&nbsp;</section>
 
 <style>
 </style>
