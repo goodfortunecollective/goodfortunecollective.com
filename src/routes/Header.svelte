@@ -1,5 +1,8 @@
 <script>
 	import { fade, fly } from 'svelte/transition';
+	import { onMount } from 'svelte';
+	import gsap from 'gsap';
+
 	import gfc from '$lib/images/gfc.svg';
 
 	const navigation = [
@@ -12,11 +15,44 @@
 	let mobileMenuOpen = false;
 	const openMobileMenu = () => (mobileMenuOpen = true);
 	const closeMobileMenu = () => (mobileMenuOpen = false);
+
+	onMount(() => {
+		const tl = gsap.timeline();
+
+		tl.fromTo(
+			'.a-logo',
+			{
+				opacity: 0
+			},
+			{
+				opacity: 1,
+				duration: 3,
+				ease: 'power4.out'
+			}
+		);
+
+		tl.fromTo(
+			'.a-nav-items',
+			{
+				y: -20,
+				opacity: 0
+			},
+			{
+				opacity: 1,
+				y: 0,
+				duration: 1.8,
+				stagger: 0.1,
+				delay: 0.6,
+				ease: 'power4.out'
+			},
+			'<'
+		);
+	});
 </script>
 
 <header class="bg-white">
 	<nav class="mx-auto flex max-w-7xl items-center justify-between p-6 sm:px-8" aria-label="Global">
-		<a href="/" class="-m-1.5 p-1.5">
+		<a href="/" class="-m-1.5 p-1.5 a-logo">
 			<span class="sr-only">Good Fortune Collective</span>
 			<img class="h-8 w-auto" src={gfc} alt="" />
 		</a>
@@ -44,8 +80,10 @@
 			</button>
 		</div>
 		<div class="hidden sm:flex sm:gap-x-12">
-			{#each navigation as { name, path }}
-				<a href="/{path}" class="text-sm font-semibold leading-6 text-gray-900">{name}</a>
+			{#each navigation as { name, path }, i}
+				<a href="/{path}" class="text-sm font-semibold leading-6 text-gray-900">
+					<span class="a-nav-items block">{name}</span>
+				</a>
 			{/each}
 		</div>
 	</nav>
