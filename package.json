@@ -2,8 +2,8 @@
 	"name": "gfc",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
+		"dev": "env-cmd vite dev",
+		"build": "env-cmd vite build",
 		"preview": "vite preview",
 		"test": "playwright test",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -18,10 +18,12 @@
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.5.0",
+		"@tailwindcss/typography": "^0.5.9",
 		"@types/cookie": "^0.5.1",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"autoprefixer": "^10.4.14",
+		"env-cmd": "^10.1.0",
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte": "^2.26.0",
@@ -39,6 +41,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@storyblok/svelte": "^3.0.2",
 		"clsx": "^1.2.1",
 		"gsap": "^3.11.5",
 		"tailwind-merge": "^1.12.0"

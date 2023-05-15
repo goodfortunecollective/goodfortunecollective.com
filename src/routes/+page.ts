@@ -1,3 +1,14 @@
-// since there's no dynamic data here, we can prerender
-// it so that it gets served as a static asset in production
-export const prerender = true;
+import { dev } from '$app/environment';
+
+/** @type {import('./$types').PageLoad} */
+export async function load({ parent }) {
+    const { storyblokApi } = await parent();
+
+    const dataStory = await storyblokApi.get("cdn/stories/home/", {
+        version: dev ? "draft" : "published",
+    });
+
+    return {
+        story: dataStory.data.story,
+    };
+}

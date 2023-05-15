@@ -10,4 +10,12 @@
 	<meta name="description" content="About" />
 </svelte:head>
 
-<div class="text-column a-skew-y">About</div>
+<div class="text-column a-skew-y">
+	<article class="prose lg:prose-xl">
+		<h1>About</h1>
+		<p>Lorem ...</p>
+		<p>Lorem ...</p>
+		<!-- ... -->
+	</article>
+	​
+</div>

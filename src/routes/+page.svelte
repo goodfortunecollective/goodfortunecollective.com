@@ -1,4 +1,14 @@
-<script>
+<script lang="ts">
+	import { onMount } from 'svelte';
+	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
+
+	export let data;
+
+	onMount(async () => {
+		if (data.story) {
+			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
+		}
+	});
 </script>
 
 <svelte:head>
@@ -9,7 +19,11 @@
 	/>
 </svelte:head>
 
-<section class="bg-gray-50">&nbsp;</section>
+<section class="bg-gray-50">
+	{#if data.story}
+		<StoryblokComponent blok={data.story.content} />
+	{/if}
+</section>
 
 <style>
 </style>
