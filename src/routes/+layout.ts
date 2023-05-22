@@ -1,11 +1,13 @@
 
 
 import { apiPlugin, storyblokInit, useStoryblokApi } from "@storyblok/svelte";
-import { STORYBLOK_ACCESS_TOKEN } from '$lib/env-vars'
+import { PUBLIC_STORYBLOK_ACCESS_TOKEN } from '$env/static/public'
 import Feature from "$lib/components/Feature.svelte";
 import Grid from "$lib/components/Grid.svelte";
 import Page from "$lib/components/Page.svelte";
 import Teaser from "$lib/components/Teaser.svelte";
+
+export const prerender = true;
 
 let callbackComponents = () => {
     return {
@@ -16,9 +18,10 @@ let callbackComponents = () => {
     };
 };
 
+
 export async function load() {
     storyblokInit({
-        accessToken: STORYBLOK_ACCESS_TOKEN,
+        accessToken: PUBLIC_STORYBLOK_ACCESS_TOKEN,
         use: [apiPlugin],
         components: callbackComponents,
         apiOptions: {
