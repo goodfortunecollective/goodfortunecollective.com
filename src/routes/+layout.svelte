@@ -27,6 +27,7 @@
 </script>
 
 <div>
+	<div id="canvas" class="fixed top-0 left-0 w-screen h-screen" />
 	<div id="smooth-wrapper">
 		<div id="smooth-content">
 			<div class="flex flex-col">
