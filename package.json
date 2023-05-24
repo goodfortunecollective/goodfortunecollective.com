@@ -42,7 +42,6 @@
 	"dependencies": {
 		"@storyblok/svelte": "^3.0.2",
 		"clsx": "^1.2.1",
-		"curtainsjs": "^8.1.4",
 		"gsap": "^3.11.5",
 		"tailwind-merge": "^1.12.0"
 	}
