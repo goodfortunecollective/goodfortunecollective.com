@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { onMount } from 'svelte';
 
 	import gsap from 'gsap';
@@ -30,7 +31,7 @@
 <div class="">
 	<section class="space-x-8 space-y-8 columns-1">
 		<div class="a-skew-y">
-			<a href="/work/[slug]">
+			<a href="{base}/work/[slug]">
 				<img
 					data-gsap="skew-y"
 					class="flex aspect-video object-cover"
@@ -40,7 +41,7 @@
 			>
 		</div>
 		<div class="a-skew-y">
-			<a href="/work/[slug]">
+			<a href="{base}/work/[slug]">
 				<img
 					data-gsap="skew-y"
 					class="flex aspect-video object-cover"
@@ -50,7 +51,7 @@
 			>
 		</div>
 		<div class="a-skew-y">
-			<a href="/work/[slug]">
+			<a href="{base}/work/[slug]">
 				<img
 					loading="lazy"
 					data-gsap="skew-y"
@@ -62,7 +63,7 @@
 			>
 		</div>
 		<div class="a-skew-y">
-			<a href="/work/[slug]">
+			<a href="{base}/work/[slug]">
 				<img
 					loading="lazy"
 					data-gsap="skew-y"
@@ -73,7 +74,7 @@
 			>
 		</div>
 		<div class="a-skew-y">
-			<a href="/work/[slug]">
+			<a href="{base}/work/[slug]">
 				<img
 					loading="lazy"
 					data-gsap="skew-y"
@@ -84,7 +85,7 @@
 			>
 		</div>
 		<div class="a-skew-y">
-			<a href="/work/[slug]">
+			<a href="{base}/work/[slug]">
 				<img
 					loading="lazy"
 					data-gsap="skew-y"

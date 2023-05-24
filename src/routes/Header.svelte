@@ -1,4 +1,5 @@
 <script>
+	import { base } from '$app/paths';
 	import { fade, fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import gsap from 'gsap';
@@ -52,7 +53,7 @@
 
 <header class="bg-white">
 	<nav class="mx-auto flex max-w-7xl items-center justify-between p-6 sm:px-8" aria-label="Global">
-		<a href="/" class="-m-1.5 p-1.5 a-logo">
+		<a href="{base}/" class="-m-1.5 p-1.5 a-logo">
 			<span class="sr-only">Good Fortune Collective</span>
 			<img class="h-8 w-auto" src={gfc} alt="" />
 		</a>
@@ -81,7 +82,7 @@
 		</div>
 		<div class="hidden sm:flex sm:gap-x-12">
 			{#each navigation as { name, path }, i}
-				<a href="/{path}" class="text-sm font-semibold leading-6 text-gray-900">
+				<a href="{base}/{path}" class="text-sm font-semibold leading-6 text-gray-900">
 					<span class="a-nav-items block">{name}</span>
 				</a>
 			{/each}
@@ -122,7 +123,7 @@
 					<div class="-my-6 divide-y divide-gray-500/10">
 						<div class="space-y-2 py-6">
 							{#each navigation as { name, path }, i}<a
-									href="/{path}"
+									href="{base}/{path}"
 									class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
 									in:fly={{ x: -48, duration: 500, delay: 300 + 50 * i }}
 									out:fly={{ x: -48, duration: 500, delay: 50 * i }}
