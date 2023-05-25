@@ -14,6 +14,7 @@
 			clamp = gsap.utils.clamp(-5, 5);
 
 		// @ts-ignore
+
 		ScrollSmoother.create({
 			smooth: 1.5,
 			effects: true,

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { base } from '$app/paths';
 	import { fade, fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
@@ -16,6 +16,20 @@
 	let mobileMenuOpen = false;
 	const openMobileMenu = () => (mobileMenuOpen = true);
 	const closeMobileMenu = () => (mobileMenuOpen = false);
+
+	let previousY: number;
+	let currentY: number;
+	let clientHeight: number;
+
+	const deriveDirection = (y: number) => {
+		const direction = !previousY || previousY < y ? 'down' : 'up';
+		previousY = y;
+
+		return direction;
+	};
+
+	$: scrollDirection = deriveDirection(currentY);
+	$: offscreen = scrollDirection === 'down' && currentY > clientHeight * 4;
 
 	onMount(() => {
 		const tl = gsap.timeline();
@@ -51,8 +65,17 @@
 	});
 </script>
 
-<header class="bg-white">
-	<nav class="mx-auto flex max-w-7xl items-center justify-between p-6 sm:px-8" aria-label="Global">
+<svelte:window bind:scrollY={currentY} />
+
+<header
+	class="sticky top-0 z-10 h-[var(--header-height)] transition-transform"
+	class:motion-safe:-translate-y-full={offscreen}
+	bind:clientHeight
+>
+	<nav
+		class="mx-auto flex max-w-7xl items-center justify-between p-6 sm:px-8 mix-blend-difference"
+		aria-label="Global"
+	>
 		<a href="{base}/" class="-m-1.5 p-1.5 a-logo">
 			<span class="sr-only">Good Fortune Collective</span>
 			<img class="h-8 w-auto" src={gfc} alt="" />
@@ -82,7 +105,7 @@
 		</div>
 		<div class="hidden sm:flex sm:gap-x-12">
 			{#each navigation as { name, path }, i}
-				<a href="{base}/{path}" class="text-sm font-semibold leading-6 text-gray-900">
+				<a href="{base}/{path}" class="text-sm font-semibold leading-6 text-gray-white">
 					<span class="a-nav-items block">{name}</span>
 				</a>
 			{/each}

@@ -1,44 +1,30 @@
-<script>
-	import { onMount } from 'svelte';
-	import { createDarkStore, cssDarkModePreference } from '$lib/styles';
+<script lang="ts">
+	import PageTransition from '$lib/components/PageTransition.svelte';
+	import type { LayoutServerData } from './$types';
 
-	import gsap from 'gsap';
-	import ScrollTrigger from '$lib/gsap/ScrollTrigger';
-	import ScrollSmoother from '$lib/gsap/ScrollSmoother';
-
+	import Loader from './Loader.svelte';
 	import Header from './Header.svelte';
 	import Footer from './Footer.svelte';
+
 	import '../app.css';
 
-	let darkModeStore = createDarkStore();
-	$: darkMode = $darkModeStore ?? cssDarkModePreference();
-
-	$: if (typeof document !== 'undefined') {
-		if (darkMode) {
-			document.body.classList.add('dark');
-		} else {
-			document.body.classList.remove('dark');
-		}
-	}
-
-	onMount(() => {
-		gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
-	});
+	export let data: LayoutServerData;
 </script>
 
-<div>
-	<div id="smooth-wrapper">
-		<div id="smooth-content">
-			<div class="flex flex-col">
-				<Header />
-				<main class="flex mx-auto flex-1 flex-col p-4 w-full max-w-5xl box-border">
+<Header />
+<div id="smooth-wrapper">
+	<div id="smooth-content" class=" ">
+		<main class="flex mx-auto flex-1 flex-col p-4 w-full max-w-5xl box-border">
+			<PageTransition pathname={data.pathname}>
+				<div class="pt-[var(--header-height)]">
 					<slot />
-				</main>
-				<Footer />
-			</div>
-		</div>
+				</div>
+			</PageTransition>
+			<Footer />
+		</main>
 	</div>
 </div>
+<Loader />
 
 <style>
 </style>

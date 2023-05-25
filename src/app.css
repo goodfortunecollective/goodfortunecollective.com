@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    font-family: 'Roboto', sans-serif;
+
+@layer base {
+    html {
+        -webkit-font-smoothing: antialiased;
+        font-family: 'Roboto', sans-serif;
+    }
+}
+
+:root {
+    --header-height: 4rem;
 }
