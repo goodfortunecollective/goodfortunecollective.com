@@ -6,6 +6,6 @@
 	$: headlineHTML = renderRichText(blok.headline);
 </script>
 
-<div use:storyblokEditable={blok} class="py-8 mb-6 text-5xl font-bold text-center">
+<div use:storyblokEditable={blok} class="py-8 mb-6 text-5xl font-degular-display text-center">
 	{@html headlineHTML}
 </div>
