@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { fade, fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
 
@@ -105,7 +106,7 @@
 		</div>
 		<div class="hidden sm:flex sm:gap-x-12">
 			{#each navigation as { name, path }, i}
-				<a href="/{path}" class="text-sm font-semibold leading-6 text-gray-white">
+				<a href="{base}/{path}" class="text-sm font-semibold leading-6 text-gray-white">
 					<span class="a-nav-items block">{name}</span>
 				</a>
 			{/each}
@@ -146,7 +147,7 @@
 					<div class="-my-6 divide-y divide-gray-500/10">
 						<div class="space-y-2 py-6">
 							{#each navigation as { name, path }, i}<a
-									href="/{path}"
+									href="{base}/{path}"
 									class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
 									in:fly={{ x: -48, duration: 500, delay: 300 + 50 * i }}
 									out:fly={{ x: -48, duration: 500, delay: 50 * i }}

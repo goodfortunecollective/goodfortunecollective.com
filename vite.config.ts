@@ -8,5 +8,5 @@ export default defineConfig({
 	plugins: [mkcert(), sveltekit()],
 	test: {
 		include: ['src/**/*.{test,spec}.{js,ts}']
-	},
+	}
 });
