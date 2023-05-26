@@ -77,7 +77,7 @@
 		class="mx-auto flex max-w-7xl items-center justify-between p-6 sm:px-8 mix-blend-difference"
 		aria-label="Global"
 	>
-		<a href="/" class="-m-1.5 p-1.5 a-logo">
+		<a href="{base}/" class="-m-1.5 p-1.5 a-logo">
 			<span class="sr-only">Good Fortune Collective</span>
 			<img class="h-8 w-auto" src={gfc} alt="" />
 		</a>
