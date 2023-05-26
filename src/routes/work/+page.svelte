@@ -1,15 +1,9 @@
 <script lang="ts">
-	import { base } from '$app/paths';
 	import { onMount } from 'svelte';
 
-	import gsap from 'gsap';
-
-	import ScrollTrigger from '$lib/gsap/ScrollTrigger';
-	import ScrollSmoother from '$lib/gsap/ScrollSmoother';
+	import { gsap, ScrollSmoother } from '$lib/gsap';
 
 	onMount(() => {
-		gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
-
 		let skewSetter = gsap.quickTo('[data-gsap="skew-y"]', 'skewY'),
 			clamp = gsap.utils.clamp(-5, 5);
 
@@ -32,7 +26,7 @@
 <div class="">
 	<section class="space-x-8 space-y-8 columns-1">
 		<div class="a-skew-y">
-			<a href="{base}/work/[slug]">
+			<a href="/work/[slug]">
 				<img
 					data-gsap="skew-y"
 					class="flex aspect-video object-cover"
@@ -42,7 +36,7 @@
 			>
 		</div>
 		<div class="a-skew-y">
-			<a href="{base}/work/[slug]">
+			<a href="/work/[slug]">
 				<img
 					data-gsap="skew-y"
 					class="flex aspect-video object-cover"
@@ -52,7 +46,7 @@
 			>
 		</div>
 		<div class="a-skew-y">
-			<a href="{base}/work/[slug]">
+			<a href="/work/[slug]">
 				<img
 					loading="lazy"
 					data-gsap="skew-y"
@@ -64,7 +58,7 @@
 			>
 		</div>
 		<div class="a-skew-y">
-			<a href="{base}/work/[slug]">
+			<a href="/work/[slug]">
 				<img
 					loading="lazy"
 					data-gsap="skew-y"
@@ -75,7 +69,7 @@
 			>
 		</div>
 		<div class="a-skew-y">
-			<a href="{base}/work/[slug]">
+			<a href="/work/[slug]">
 				<img
 					loading="lazy"
 					data-gsap="skew-y"
@@ -86,7 +80,7 @@
 			>
 		</div>
 		<div class="a-skew-y">
-			<a href="{base}/work/[slug]">
+			<a href="/work/[slug]">
 				<img
 					loading="lazy"
 					data-gsap="skew-y"

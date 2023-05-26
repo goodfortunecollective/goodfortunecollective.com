@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import gsap from 'gsap';
 
+	import { gsap } from '$lib/gsap';
 	import { cls } from '$lib/styles';
-
 	import gfc from '$lib/images/gfc.svg';
 
 	let background!: HTMLDivElement;
@@ -13,7 +12,7 @@
 	let active: boolean = true;
 	let colorBackground: string = 'bg-white';
 
-	onMount(() => {
+	onMount(async () => {
 		const tl = gsap.timeline();
 
 		tl.fromTo(
