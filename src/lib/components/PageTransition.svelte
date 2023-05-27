@@ -1,16 +1,15 @@
 <script lang="ts">
-	import { fly } from 'svelte/transition';
+	import { fade } from 'svelte/transition';
+	import { quartOut } from 'svelte/easing';
 	export let pathname: string = '';
 </script>
 
 {#key pathname}
 	<div
-		in:fly={{ x: -10, duration: 500, delay: 500 }}
-		out:fly={{ x: 5, duration: 500, delay: 2000 }}
+		class="absolute inset-0 w-full h-full"
+		in:fade={{ duration: 50, delay: 750, easing: quartOut }}
+		out:fade={{ duration: 50, delay: 750, easing: quartOut }}
 	>
-		Loader
-	</div>
-	<div>
 		<slot />
 	</div>
 {/key}

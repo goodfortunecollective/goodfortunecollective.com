@@ -7,6 +7,8 @@ import Grid from "$lib/components/Grid.svelte";
 import Page from "$lib/components/Page.svelte";
 import Teaser from "$lib/components/Teaser.svelte";
 
+import type { LayoutLoad } from "./$types";
+
 export const prerender = true;
 
 let callbackComponents = () => {
@@ -19,7 +21,7 @@ let callbackComponents = () => {
 };
 
 
-export async function load() {
+export const load: LayoutLoad = async ({ url: { pathname } }) => {
     storyblokInit({
         accessToken: PUBLIC_STORYBLOK_ACCESS_TOKEN,
         use: [apiPlugin],
@@ -33,5 +35,6 @@ export async function load() {
 
     return {
         storyblokApi: storyblokApi,
+        pathname: pathname,
     };
 }
