@@ -3,7 +3,7 @@
 
 	import { gsap } from '$lib/gsap';
 	import { cls } from '$lib/styles';
-	import gfc from '$lib/images/gfc.svg';
+	import { Gfc } from '$lib/components';
 
 	let background!: HTMLDivElement;
 	let logo!: HTMLDivElement;
@@ -105,7 +105,9 @@
 	<div class={cls('z-100 absolute top-0 w-screen h-screen overflow-hidden', colorBackground)}>
 		<div class="flex items-center justify-center w-full h-full">
 			<div bind:this={background} class="w-full h-full bg-gray-100 absolute" />
-			<img bind:this={logo} class="h-8 w-auto absolute" src={gfc} alt="" />
+			<div bind:this={logo} class="absolute">
+				<Gfc class="h-8 w-auto" alt="" />
+			</div>
 			<div bind:this={circle} class="w-16 h-16 bg-gray-300 rounded-full absolute" />
 		</div>
 	</div>

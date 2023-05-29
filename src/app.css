@@ -8,6 +8,11 @@
         -webkit-font-smoothing: antialiased;
         font-family: 'Roboto', sans-serif;
     }
+
+    html,
+    body {
+        background-color: #fff;
+    }
 }
 
 :root {

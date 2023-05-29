@@ -5,7 +5,7 @@
 
 	import { gsap } from '$lib/gsap';
 
-	import gfc from '$lib/images/gfc.svg';
+	import { Gfc } from '$lib/components';
 
 	const navigation = [
 		{ name: 'Work', path: 'work' },
@@ -22,6 +22,8 @@
 	let currentY: number;
 	let clientHeight: number;
 
+	let logo!: HTMLElement;
+
 	const deriveDirection = (y: number) => {
 		const direction = !previousY || previousY < y ? 'down' : 'up';
 		previousY = y;
@@ -36,19 +38,22 @@
 		const tl = gsap.timeline();
 
 		tl.fromTo(
-			'.a-logo',
+			logo,
 			{
+				y: -20,
 				opacity: 0
 			},
 			{
 				opacity: 1,
-				duration: 3,
+				y: 0,
+				duration: 1.8,
+				delay: 6.5,
 				ease: 'power4.out'
 			}
 		);
 
 		tl.fromTo(
-			'.a-nav-items',
+			'[data-gsap="nav-items"]',
 			{
 				y: -20,
 				opacity: 0
@@ -69,22 +74,19 @@
 <svelte:window bind:scrollY={currentY} />
 
 <header
-	class="sticky top-0 z-10 h-[var(--header-height)] transition-transform"
+	class="sticky top-0 z-10 h-[var(--header-height)] transition-transform mix-blend-difference"
 	class:motion-safe:-translate-y-full={offscreen}
 	bind:clientHeight
 >
-	<nav
-		class="mx-auto flex max-w-7xl items-center justify-between p-6 sm:px-8 mix-blend-difference"
-		aria-label="Global"
-	>
-		<a href="{base}/" class="-m-1.5 p-1.5 a-logo">
+	<nav class="mx-auto flex max-w-7xl items-center justify-between p-6 sm:px-8" aria-label="Global">
+		<a href="{base}/" class="-m-1.5 p-1.5" bind:this={logo}>
 			<span class="sr-only">Good Fortune Collective</span>
-			<img class="h-8 w-auto" src={gfc} alt="" />
+			<Gfc class="h-8 w-auto text-white" alt="" />
 		</a>
 		<div class="flex sm:hidden">
 			<button
 				type="button"
-				class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+				class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white"
 				on:click={openMobileMenu}
 			>
 				<span class="sr-only">Open main menu</span>
@@ -106,8 +108,8 @@
 		</div>
 		<div class="hidden sm:flex sm:gap-x-12">
 			{#each navigation as { name, path }, i}
-				<a href="{base}/{path}" class="text-sm font-semibold leading-6 text-gray-white">
-					<span class="a-nav-items block">{name}</span>
+				<a href="{base}/{path}" class="text-sm font-semibold leading-6">
+					<span data-gsap="nav-items" class="block text-white">{name}</span>
 				</a>
 			{/each}
 		</div>
@@ -123,11 +125,11 @@
 				<div class="flex items-center justify-between">
 					<a href="{base}/" class="-m-1.5 p-1.5" on:click={closeMobileMenu}>
 						<span class="sr-only">Good Fortune Collective</span>
-						<img class="h-8 w-auto" src={gfc} alt="" />
+						<Gfc class="h-8 w-auto" alt="" />
 					</a>
 					<button
 						type="button"
-						class="-m-2.5 rounded-md p-2.5 text-gray-700"
+						class="-m-2.5 rounded-md p-2.5 text-black"
 						on:click={closeMobileMenu}
 					>
 						<span class="sr-only">Close menu</span>
@@ -148,7 +150,7 @@
 						<div class="space-y-2 py-6">
 							{#each navigation as { name, path }, i}<a
 									href="{base}/{path}"
-									class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+									class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-black hover:bg-gray-50"
 									in:fly={{ x: -48, duration: 500, delay: 300 + 50 * i }}
 									out:fly={{ x: -48, duration: 500, delay: 50 * i }}
 									on:click={closeMobileMenu}>{name}</a

@@ -3,6 +3,7 @@
 	import { gsap } from '$lib/gsap';
 	import { cls } from '$lib/styles';
 	import PageTransition from '$lib/components/PageTransition.svelte';
+
 	import type { LayoutData } from './$types';
 
 	import Loader from './Loader.svelte';
