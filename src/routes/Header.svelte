@@ -15,7 +15,7 @@
 	];
 
 	let mobileMenuOpen = false;
-	const openMobileMenu = () => (mobileMenuOpen = true);
+	const toggleMobileMenu = () => (mobileMenuOpen = !mobileMenuOpen);
 	const closeMobileMenu = () => (mobileMenuOpen = false);
 
 	let previousY: number;
@@ -73,8 +73,36 @@
 
 <svelte:window bind:scrollY={currentY} />
 
+<!-- Mobile menu, show/hide based on menu open state. -->
+{#if mobileMenuOpen}
+	<div class="sm:hidden bg-white" role="dialog" aria-modal="true">
+		<!-- Background backdrop, show/hide based on slide-over state. -->
+		<div class="fixed inset-0 z-10" />
+		<div
+			in:fade
+			out:fade={{ delay: 500 }}
+			class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-black px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+		>
+			<div class="mt-24 flow-root">
+				<div class="-my-6 divide-y divide-gray-500/10">
+					<div class="space-y-2 py-6">
+						{#each navigation as { name, path }, i}<a
+								href="{base}/{path}"
+								class="-mx-3 block px-3 py-2 text-xl font-semibold leading-7 text-white"
+								in:fly={{ x: -48, duration: 500, delay: 300 + 50 * i }}
+								out:fly={{ x: -48, duration: 500, delay: 300 - 50 * i }}
+								on:click={closeMobileMenu}>{name}</a
+							>
+						{/each}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{/if}
+
 <header
-	class="sticky top-0 z-10 h-[var(--header-height)] transition-transform mix-blend-difference"
+	class="sticky top-0 z-20 h-[var(--header-height)] transition-transform mix-blend-difference"
 	class:motion-safe:-translate-y-full={offscreen}
 	bind:clientHeight
 >
@@ -87,23 +115,36 @@
 			<button
 				type="button"
 				class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white"
-				on:click={openMobileMenu}
+				on:click={toggleMobileMenu}
 			>
-				<span class="sr-only">Open main menu</span>
-				<svg
-					class="h-6 w-6"
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke-width="1.5"
-					stroke="currentColor"
-					aria-hidden="true"
-				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-					/>
-				</svg>
+				<span class="sr-only">{mobileMenuOpen ? 'Close' : 'Open'} main menu</span>
+				{#if mobileMenuOpen}
+					<svg
+						class="h-6 w-6"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						aria-hidden="true"
+					>
+						<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+					</svg>
+				{:else}
+					<svg
+						class="h-6 w-6"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						aria-hidden="true"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+						/>
+					</svg>
+				{/if}
 			</button>
 		</div>
 		<div class="hidden sm:flex sm:gap-x-12">
@@ -114,54 +155,6 @@
 			{/each}
 		</div>
 	</nav>
-	<!-- Mobile menu, show/hide based on menu open state. -->
-	{#if mobileMenuOpen}
-		<div class="sm:hidden" role="dialog" aria-modal="true" in:fade={{}} out:fade={{ delay: 400 }}>
-			<!-- Background backdrop, show/hide based on slide-over state. -->
-			<div class="fixed inset-0 z-10" />
-			<div
-				class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
-			>
-				<div class="flex items-center justify-between">
-					<a href="{base}/" class="-m-1.5 p-1.5" on:click={closeMobileMenu}>
-						<span class="sr-only">Good Fortune Collective</span>
-						<Gfc class="h-8 w-auto" alt="" />
-					</a>
-					<button
-						type="button"
-						class="-m-2.5 rounded-md p-2.5 text-black"
-						on:click={closeMobileMenu}
-					>
-						<span class="sr-only">Close menu</span>
-						<svg
-							class="h-6 w-6"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							aria-hidden="true"
-						>
-							<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-						</svg>
-					</button>
-				</div>
-				<div class="mt-6 flow-root">
-					<div class="-my-6 divide-y divide-gray-500/10">
-						<div class="space-y-2 py-6">
-							{#each navigation as { name, path }, i}<a
-									href="{base}/{path}"
-									class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-black hover:bg-gray-50"
-									in:fly={{ x: -48, duration: 500, delay: 300 + 50 * i }}
-									out:fly={{ x: -48, duration: 500, delay: 50 * i }}
-									on:click={closeMobileMenu}>{name}</a
-								>
-							{/each}
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	{/if}
 </header>
 
 <style>
