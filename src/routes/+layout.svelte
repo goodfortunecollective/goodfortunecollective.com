@@ -47,18 +47,16 @@
 
 <Header />
 <div id="smooth-wrapper">
-	<div id="smooth-content" class=" ">
-		<main class="flex mx-auto flex-1 flex-col p-4 w-full max-w-5xl box-border relative">
+	<div id="smooth-content">
+		<main>
 			<div
 				class={cls('h-screen w-screen z-10 fixed top-0 left-0', isTransition ? 'block' : 'hidden')}
 			>
 				<div bind:this={background} class="h-full w-full bg-black" />
 			</div>
 			<PageTransition pathname={data.pathname}>
-				<div class="pt-[var(--header-height)] h-full w-full">
-					<slot />
-					<Footer />
-				</div>
+				<slot />
+				<Footer />
 			</PageTransition>
 		</main>
 	</div>

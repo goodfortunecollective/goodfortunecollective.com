@@ -102,7 +102,7 @@
 {/if}
 
 <header
-	class="sticky top-0 z-20 h-[var(--header-height)] transition-transform mix-blend-difference"
+	class="fixed w-full top-0 z-20 h-[var(--header-height)] transition-transform ease-in mix-blend-difference"
 	class:motion-safe:-translate-y-full={offscreen}
 	bind:clientHeight
 >

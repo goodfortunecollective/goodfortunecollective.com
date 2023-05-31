@@ -2,12 +2,21 @@
 	import { onMount } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 
+	import { gsap, ScrollSmoother } from '$lib/gsap';
+
 	export let data;
 
 	onMount(async () => {
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
+
+		/**
+		ScrollSmoother.create({
+			smooth: 1.5,
+			effects: true
+		});
+		*/
 	});
 </script>
 
@@ -19,11 +28,11 @@
 	/>
 </svelte:head>
 
-<section class="bg-gray-50">
-	{#if data.story}
-		<StoryblokComponent blok={data.story.content} />
-	{/if}
-</section>
+<section class="h-full w-full bg-black" />
+<section class="h-full w-full" />
+{#if data.story}
+	<StoryblokComponent blok={data.story.content} />
+{/if}
 
 <style>
 </style>
