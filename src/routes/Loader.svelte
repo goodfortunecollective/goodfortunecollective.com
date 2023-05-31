@@ -102,7 +102,7 @@
 </script>
 
 {#if active}
-	<div class={cls('z-100 absolute top-0 w-screen h-screen overflow-hidden', colorBackground)}>
+	<div class={cls('fixed top-0 z-100 w-screen h-screen overflow-hidden', colorBackground)}>
 		<div class="flex items-center justify-center w-full h-full">
 			<div bind:this={background} class="w-full h-full bg-gray-100 absolute" />
 			<div bind:this={logo} class="absolute">
