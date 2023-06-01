@@ -61,7 +61,9 @@
 		</main>
 	</div>
 </div>
-<Loader />
+
+<!--
+<Loader />-->
 
 <style>
 </style>

@@ -106,7 +106,10 @@
 	class:motion-safe:-translate-y-full={offscreen}
 	bind:clientHeight
 >
-	<nav class="mx-auto flex max-w-7xl items-center justify-between p-6 sm:px-8" aria-label="Global">
+	<nav
+		class="mx-auto flex max-w-6xl items-center justify-between py-6 px-8 xl:px-0"
+		aria-label="Global"
+	>
 		<a href="{base}/" class="-m-1.5 p-1.5" bind:this={logo}>
 			<span class="sr-only">Good Fortune Collective</span>
 			<Gfc class="h-8 w-auto text-white" alt="" />
