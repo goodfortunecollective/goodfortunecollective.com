@@ -14,7 +14,7 @@
 
 	export let data: LayoutData;
 
-	let background!: HTMLDivElement;
+	let background!: HTMLElement;
 	let isTransition: boolean = false;
 
 	beforeNavigate(() => {

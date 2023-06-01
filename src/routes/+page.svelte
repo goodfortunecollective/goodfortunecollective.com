@@ -3,8 +3,12 @@
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 
 	import { gsap, ScrollSmoother, ScrollTrigger, SplitText } from '$lib/gsap';
+	import { scale } from 'svelte/transition';
+	// import VideoWithPreview from '$lib/components/VideoWithPreview.svelte';
 
 	export let data;
+
+	let video!: HTMLElement;
 
 	onMount(async () => {
 		if (data.story) {
@@ -23,14 +27,12 @@
 		const splitText = document.querySelectorAll('[data-gsap="split-text"]');
 
 		splitText.forEach((content) => {
-			const tl = gsap.timeline();
-
 			const text = new SplitText(content, {
 				type: 'lines,words,chars',
-				linesClass: 'split-line'
+				position: 'absolute'
 			});
 
-			tl.fromTo(
+			gsap.fromTo(
 				text.chars,
 				{
 					opacity: 0,
@@ -46,21 +48,46 @@
 				}
 			);
 
-			tl.to(text.chars, {
+			gsap.to(text.chars, {
 				scrollTrigger: {
 					trigger: '#h-intro',
-					start: 'top 20%',
-					end: 'bottom 50%',
-					markers: true
+					start: 'bottom 50%',
+					end: 'bottom 10%',
+					toggleActions: 'play complete reverse reverse'
 				},
 				opacity: 0,
-				duration: 0.6,
+				duration: 0.4,
 				ease: 'circ.out',
 				y: -80,
-				delay: 1,
-				stagger: 0.02
+				stagger: 0.01
 			});
 		});
+
+		gsap.fromTo(
+			video,
+			{
+				y: '0%',
+				scale: 0.65,
+				opacity: 0.5,
+				rotationY: -25
+			},
+			{
+				scrollTrigger: {
+					trigger: '#h-intro',
+					start: 'bottom 55%',
+					end: 'bottom 10%',
+					toggleActions: 'play complete reverse reverse',
+					pin: '.bg-black',
+					scrub: true
+				},
+				scale: 1,
+				opacity: 1,
+				rotationY: 0,
+				y: '60%',
+				duration: 1,
+				ease: 'circ.out'
+			}
+		);
 	});
 </script>
 
@@ -74,13 +101,17 @@
 
 <section class="flex h-full w-full bg-black">
 	<div class="flex w-full h-full mx-auto max-w-6xl relative">
-		<video
-			class="w-full h-full aspect-video absolute inset-0"
-			src="https://media.istockphoto.com/id/1250005100/pt/v%C3%ADdeo/floating-droplets-loop.mp4?s=mp4-640x640-is&amp;k=20&amp;c=eJworDI_aCrPdxtWQhVk4j77JHwtc4xV6wRFXljLgcE="
-			autoplay
-			muted
-			loop><track kind="captions" /></video
-		>
+		<div class="perspective-800 w-full h-full relative">
+			<div bind:this={video} class="absolute w-full h-full transform-gpu preserve-3d">
+				<video
+					class="w-full h-full aspect-video absolute inset-0"
+					src="https://media.istockphoto.com/id/1250005100/pt/v%C3%ADdeo/floating-droplets-loop.mp4?s=mp4-640x640-is&amp;k=20&amp;c=eJworDI_aCrPdxtWQhVk4j77JHwtc4xV6wRFXljLgcE="
+					autoplay
+					muted
+					loop><track kind="captions" /></video
+				>
+			</div>
+		</div>
 		<div class="z-10 absolute h-full w-full flex items-center">
 			<div class="flex flex-col gap-24" id="h-intro">
 				<h1 data-gsap="split-text" class="text-cyan-500 font-degular-display text-9xl">
@@ -98,6 +129,7 @@
 {#if data.story}
 	<StoryblokComponent blok={data.story.content} />
 {/if}
+```
 
 <style>
 </style>
