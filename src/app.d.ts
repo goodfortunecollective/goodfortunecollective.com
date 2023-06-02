@@ -9,6 +9,4 @@ declare global {
 	}
 }
 
-declare module 'curtainsjs';
-
 export { };

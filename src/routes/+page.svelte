@@ -3,12 +3,40 @@
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 
 	import { gsap, ScrollSmoother, ScrollTrigger, SplitText } from '$lib/gsap';
-	import { scale } from 'svelte/transition';
 	// import VideoWithPreview from '$lib/components/VideoWithPreview.svelte';
 
 	export let data;
 
 	let video!: HTMLElement;
+	let videoInteractive!: HTMLElement;
+
+	let constrain = 100;
+	let isMouseLocked = false;
+
+	function handleMousemove(event: MouseEvent) {
+		if (isMouseLocked) return;
+
+		let xy = [event.clientX, event.clientY];
+		let position = xy.concat([video]);
+
+		window.requestAnimationFrame(function () {
+			transformElement(videoInteractive, position);
+		});
+	}
+
+	function transforms(x: number, y: number, el: HTMLElement) {
+		let box = el.getBoundingClientRect();
+		let calcX = -(y - box.y - box.height / 2) / constrain;
+		let calcY = (x - box.x - box.width / 2) / constrain;
+
+		return (
+			'perspective(1000px) ' + '   rotateX(' + calcX + 'deg) ' + '   rotateY(' + calcY + 'deg) '
+		);
+	}
+
+	function transformElement(el: HTMLElement, xyEl: [x: number, y: number, el: HTMLElement]) {
+		el.style.transform = transforms.apply(null, xyEl);
+	}
 
 	onMount(async () => {
 		if (data.story) {
@@ -32,25 +60,18 @@
 			});
 
 			gsap.set(text.chars, {
-				opacity: 1,
-				y: -80
+				opacity: 0,
+				y: 40
 			});
 
-			gsap.fromTo(
-				text.chars,
-				{
-					opacity: 0,
-					y: 40
-				},
-				{
-					opacity: 1,
-					duration: 0.6,
-					ease: 'circ.out',
-					y: 0,
-					delay: 1,
-					stagger: 0.01
-				}
-			);
+			gsap.to(text.chars, {
+				opacity: 1,
+				duration: 0.6,
+				ease: 'circ.out',
+				y: 0,
+				delay: 1,
+				stagger: 0.01
+			});
 
 			gsap.to(text.chars, {
 				scrollTrigger: {
@@ -87,7 +108,25 @@
 				start: 'bottom 55%',
 				end: 'bottom 30%',
 				toggleActions: 'play complete reverse reverse',
-				scrub: true
+				scrub: true,
+				onUpdate: (self) => {
+					if (self.progress > 0.25) {
+						console.log('lock mouse');
+						if (!isMouseLocked) {
+							gsap.to(videoInteractive, {
+								pointerEvents: 'none',
+								rotateX: 0,
+								rotateY: 0,
+								duration: 0.1,
+								ease: 'circ.inOut'
+							});
+						}
+						isMouseLocked = true;
+					} else {
+						videoInteractive.style.pointerEvents = 'all';
+						isMouseLocked = false;
+					}
+				}
 			},
 			immediateRender: false,
 			scale: 1,
@@ -108,17 +147,21 @@
 	/>
 </svelte:head>
 
+<svelte:window on:mousemove={handleMousemove} />
+
 <section class="flex h-full w-full bg-black">
 	<div class="flex w-full h-full mx-auto max-w-6xl relative">
 		<div class="perspective-800 w-full h-full relative">
 			<div bind:this={video} class="absolute w-full h-full transform-gpu preserve-3d">
-				<video
-					class="w-full h-full aspect-video absolute inset-0"
-					src="https://media.istockphoto.com/id/1250005100/pt/v%C3%ADdeo/floating-droplets-loop.mp4?s=mp4-640x640-is&amp;k=20&amp;c=eJworDI_aCrPdxtWQhVk4j77JHwtc4xV6wRFXljLgcE="
-					autoplay
-					muted
-					loop><track kind="captions" /></video
-				>
+				<div bind:this={videoInteractive} class="w-full h-full preserve-3d">
+					<video
+						class="w-full h-full aspect-video absolute inset-0"
+						src="https://media.istockphoto.com/id/1250005100/pt/v%C3%ADdeo/floating-droplets-loop.mp4?s=mp4-640x640-is&amp;k=20&amp;c=eJworDI_aCrPdxtWQhVk4j77JHwtc4xV6wRFXljLgcE="
+						autoplay
+						muted
+						loop><track kind="captions" /></video
+					>
+				</div>
 			</div>
 		</div>
 		<div class="z-10 absolute h-full w-full flex items-center">
