@@ -25,21 +25,31 @@
 		tl.fromTo(
 			background,
 			{
-				x: '-100vw'
+				y: '150vh',
+				scale: 1.5,
+				rotation: 10
 			},
 			{
-				x: 0,
-				duration: 0.75,
-				ease: 'expo.inOut'
+				y: 0,
+				rotation: 0,
+				duration: 2,
+				ease: 'circ.inOut'
 			}
 		);
 
-		tl.to(background, {
-			x: '100vw',
-			duration: 0.75,
-			delay: 0.1,
-			ease: 'expo.inOut'
-		}).then(() => {
+		tl.fromTo(
+			background,
+			{ rotation: 10 },
+			{
+				y: '-100vh',
+				scale: 1,
+				rotation: 0,
+				duration: 1.5,
+				delay: 1.5,
+				ease: 'power4.out'
+			},
+			'<'
+		).then(() => {
 			isTransition = false;
 		});
 	});
@@ -50,7 +60,7 @@
 	<div id="smooth-content">
 		<main>
 			<div
-				class={cls('h-screen w-screen z-10 fixed top-0 left-0', isTransition ? 'block' : 'hidden')}
+				class={cls('h-screen w-screen z-50 fixed top-0 left-0', isTransition ? 'block' : 'hidden')}
 			>
 				<div bind:this={background} class="h-full w-full bg-black" />
 			</div>

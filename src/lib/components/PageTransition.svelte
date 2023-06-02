@@ -7,8 +7,8 @@
 {#key pathname}
 	<div
 		class="absolute inset-0 w-full h-full"
-		in:fade={{ duration: 50, delay: 750, easing: quartOut }}
-		out:fade={{ duration: 50, delay: 750, easing: quartOut }}
+		in:fade={{ duration: 50, delay: 1500, easing: quartOut }}
+		out:fade={{ duration: 50, delay: 1500, easing: quartOut }}
 	>
 		<slot />
 	</div>

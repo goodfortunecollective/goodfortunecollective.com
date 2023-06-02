@@ -36,7 +36,7 @@
 				text.chars,
 				{
 					opacity: 0,
-					y: 80
+					y: 40
 				},
 				{
 					opacity: 1,
@@ -44,20 +44,20 @@
 					ease: 'circ.out',
 					y: 0,
 					delay: 1,
-					stagger: 0.02
+					stagger: 0.01
 				}
 			);
 
 			gsap.to(text.chars, {
 				scrollTrigger: {
 					trigger: '#h-intro',
-					start: 'bottom 50%',
-					end: 'bottom 10%',
+					start: 'bottom 55%',
+					end: 'bottom 20%',
 					toggleActions: 'play complete reverse reverse'
 				},
 				opacity: 0,
 				duration: 0.4,
-				ease: 'circ.out',
+				ease: 'circ.inOut',
 				y: -80,
 				stagger: 0.01
 			});
@@ -74,8 +74,8 @@
 			{
 				scrollTrigger: {
 					trigger: '#h-intro',
-					start: 'bottom 55%',
-					end: 'bottom 10%',
+					start: 'bottom 65%',
+					end: 'bottom 20%',
 					toggleActions: 'play complete reverse reverse',
 					pin: '.bg-black',
 					scrub: true
@@ -85,7 +85,7 @@
 				rotationY: 0,
 				y: '60%',
 				duration: 1,
-				ease: 'circ.out'
+				ease: 'circ.inOut'
 			}
 		);
 	});

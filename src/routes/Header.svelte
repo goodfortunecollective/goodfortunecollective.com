@@ -47,7 +47,7 @@
 				opacity: 1,
 				y: 0,
 				duration: 1.8,
-				delay: 6.5,
+				delay: 1,
 				ease: 'power4.out'
 			}
 		);
