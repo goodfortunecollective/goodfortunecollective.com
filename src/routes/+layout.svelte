@@ -62,7 +62,7 @@
 			<div
 				class={cls('h-screen w-screen z-50 fixed top-0 left-0', isTransition ? 'block' : 'hidden')}
 			>
-				<div bind:this={background} class="h-full w-full bg-black" />
+				<div bind:this={background} class="h-full w-full bg-gray-900" />
 			</div>
 			<PageTransition pathname={data.pathname}>
 				<slot />

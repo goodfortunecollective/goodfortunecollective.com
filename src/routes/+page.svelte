@@ -28,8 +28,12 @@
 
 		splitText.forEach((content) => {
 			const text = new SplitText(content, {
-				type: 'lines,words,chars',
-				position: 'absolute'
+				type: 'lines,words,chars'
+			});
+
+			gsap.set(text.chars, {
+				opacity: 1,
+				y: -80
 			});
 
 			gsap.fromTo(
@@ -55,39 +59,44 @@
 					end: 'bottom 20%',
 					toggleActions: 'play complete reverse reverse'
 				},
+				immediateRender: false,
 				opacity: 0,
 				duration: 0.4,
 				ease: 'circ.inOut',
-				y: -80,
+				y: 40,
 				stagger: 0.01
 			});
 		});
 
-		gsap.fromTo(
-			video,
-			{
-				y: '0%',
-				scale: 0.65,
-				opacity: 0.5,
-				rotationY: -25
+		gsap.set(video, {
+			scale: 0.15,
+			opacity: 0,
+			rotationY: 0
+		});
+
+		gsap.to(video, {
+			scale: 0.65,
+			delay: 0.5,
+			opacity: 0.5,
+			rotationY: -25
+		});
+
+		gsap.to(video, {
+			scrollTrigger: {
+				trigger: '#h-intro',
+				start: 'bottom 55%',
+				end: 'bottom 30%',
+				toggleActions: 'play complete reverse reverse',
+				scrub: true
 			},
-			{
-				scrollTrigger: {
-					trigger: '#h-intro',
-					start: 'bottom 65%',
-					end: 'bottom 20%',
-					toggleActions: 'play complete reverse reverse',
-					pin: '.bg-black',
-					scrub: true
-				},
-				scale: 1,
-				opacity: 1,
-				rotationY: 0,
-				y: '60%',
-				duration: 1,
-				ease: 'circ.inOut'
-			}
-		);
+			immediateRender: false,
+			scale: 1,
+			opacity: 1,
+			rotationY: 0,
+			y: '50%',
+			duration: 1,
+			ease: 'circ.inOut'
+		});
 	});
 </script>
 
