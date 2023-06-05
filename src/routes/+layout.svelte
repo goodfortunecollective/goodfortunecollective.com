@@ -1,6 +1,7 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { beforeNavigate } from '$app/navigation';
-	import { gsap } from '$lib/gsap';
+	import { gsap, ScrollSmoother } from '$lib/gsap';
 	import { cls } from '$lib/styles';
 	import PageTransition from '$lib/components/PageTransition.svelte';
 
@@ -16,6 +17,19 @@
 
 	let background!: HTMLElement;
 	let isTransition: boolean = false;
+	let scroll: ScrollSmoother | null = null;
+
+	onMount(() => {
+		// @ts-ignore
+		scroll = ScrollSmoother.create({
+			wrapper: '#smooth-wrapper',
+			content: '#smooth-content',
+			smooth: 1.5,
+			effects: true,
+			smoothTouch: 0.1
+		});
+		if (scroll) scroll.paused(true);
+	});
 
 	beforeNavigate(() => {
 		isTransition = true;
@@ -53,22 +67,28 @@
 			isTransition = false;
 		});
 	});
+
+	function handleCompleteLoader() {
+		if (scroll) scroll.paused(false);
+	}
 </script>
 
 <Header />
-
 <main>
 	<div class={cls('h-full w-full z-50 fixed top-0 left-0', isTransition ? 'block' : 'hidden')}>
 		<div bind:this={background} class="h-full w-full bg-gray-900" />
 	</div>
-	<PageTransition pathname={data.pathname}>
-		<slot />
-		<Footer />
-	</PageTransition>
-</main>
 
-<!--
-<Loader />-->
+	<div id="smooth-wrapper">
+		<div id="smooth-content">
+			<PageTransition pathname={data.pathname}>
+				<slot />
+				<Footer />
+			</PageTransition>
+		</div>
+	</div>
+</main>
+<Loader on:complete={handleCompleteLoader} />
 
 <style>
 </style>

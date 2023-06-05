@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
 
 	import { gsap } from '$lib/gsap';
 	import { cls } from '$lib/styles';
 	import { Gfc } from '$lib/components';
+
+	const dispatch = createEventDispatcher();
 
 	let background!: HTMLDivElement;
 	let logo!: HTMLDivElement;
@@ -97,6 +100,7 @@
 			'<'
 		).then(() => {
 			active = false;
+			dispatch('complete');
 		});
 	});
 </script>

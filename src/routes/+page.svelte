@@ -2,10 +2,12 @@
 	import { onMount } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 
-	import { gsap, ScrollSmoother, ScrollTrigger, SplitText } from '$lib/gsap';
+	import { gsap, SplitText } from '$lib/gsap';
 	// import VideoWithPreview from '$lib/components/VideoWithPreview.svelte';
 
 	export let data;
+
+	const DELAY_LOADER = 6.5;
 
 	let video!: HTMLElement;
 	let videoInteractive!: HTMLElement;
@@ -43,15 +45,6 @@
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
 
-		// @ts-ignore
-		ScrollSmoother.create({
-			wrapper: '#smooth-wrapper',
-			content: '#smooth-content',
-			smooth: 1.5,
-			effects: true,
-			smoothTouch: 0.1
-		});
-
 		const splitText = document.querySelectorAll('[data-gsap="split-text"]');
 
 		splitText.forEach((content) => {
@@ -69,7 +62,7 @@
 				duration: 0.6,
 				ease: 'circ.out',
 				y: 0,
-				delay: 1,
+				delay: 1 + DELAY_LOADER,
 				stagger: 0.01
 			});
 
@@ -97,7 +90,7 @@
 
 		gsap.to(video, {
 			scale: 0.65,
-			delay: 0.5,
+			delay: 0.5 + DELAY_LOADER,
 			opacity: 0.5,
 			rotationY: -25
 		});
