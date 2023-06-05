@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { afterNavigate, beforeNavigate } from '$app/navigation';
+	import { beforeNavigate } from '$app/navigation';
 	import { gsap } from '$lib/gsap';
 	import { cls } from '$lib/styles';
 	import PageTransition from '$lib/components/PageTransition.svelte';
@@ -56,21 +56,16 @@
 </script>
 
 <Header />
-<div id="smooth-wrapper">
-	<div id="smooth-content">
-		<main>
-			<div
-				class={cls('h-screen w-screen z-50 fixed top-0 left-0', isTransition ? 'block' : 'hidden')}
-			>
-				<div bind:this={background} class="h-full w-full bg-gray-900" />
-			</div>
-			<PageTransition pathname={data.pathname}>
-				<slot />
-				<Footer />
-			</PageTransition>
-		</main>
+
+<main>
+	<div class={cls('h-full w-full z-50 fixed top-0 left-0', isTransition ? 'block' : 'hidden')}>
+		<div bind:this={background} class="h-full w-full bg-gray-900" />
 	</div>
-</div>
+	<PageTransition pathname={data.pathname}>
+		<slot />
+		<Footer />
+	</PageTransition>
+</main>
 
 <!--
 <Loader />-->

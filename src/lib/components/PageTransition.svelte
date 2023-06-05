@@ -6,10 +6,14 @@
 
 {#key pathname}
 	<div
-		class="absolute inset-0 w-full h-full"
+		class="absolute inset-0"
 		in:fade={{ duration: 50, delay: 1500, easing: quartOut }}
 		out:fade={{ duration: 50, delay: 1500, easing: quartOut }}
 	>
-		<slot />
+		<div id="smooth-wrapper">
+			<div id="smooth-content">
+				<slot />
+			</div>
+		</div>
 	</div>
 {/key}

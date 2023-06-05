@@ -43,14 +43,14 @@
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
 
-		/**
+		// @ts-ignore
 		ScrollSmoother.create({
 			wrapper: '#smooth-wrapper',
 			content: '#smooth-content',
 			smooth: 1.5,
 			effects: true,
 			smoothTouch: 0.1
-		});*/
+		});
 
 		const splitText = document.querySelectorAll('[data-gsap="split-text"]');
 
@@ -111,7 +111,6 @@
 				scrub: true,
 				onUpdate: (self) => {
 					if (self.progress > 0.25) {
-						console.log('lock mouse');
 						if (!isMouseLocked) {
 							gsap.to(videoInteractive, {
 								pointerEvents: 'none',
@@ -149,7 +148,7 @@
 
 <svelte:window on:mousemove={handleMousemove} />
 
-<section class="flex h-full w-full bg-black">
+<section class="flex h-screen w-screen bg-black">
 	<div class="flex w-full h-full mx-auto max-w-6xl relative">
 		<div class="perspective-800 w-full h-full relative">
 			<div bind:this={video} class="absolute w-full h-full transform-gpu preserve-3d">
@@ -177,7 +176,7 @@
 	</div>
 </section>
 
-<section class="h-full w-full" />
+<section class="h-screen w-screen" />
 {#if data.story}
 	<StoryblokComponent blok={data.story.content} />
 {/if}
