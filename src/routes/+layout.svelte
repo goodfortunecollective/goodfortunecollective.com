@@ -59,7 +59,7 @@
 				scale: 1,
 				rotation: 0,
 				duration: 1.5,
-				delay: 1.5,
+				delay: 1.7,
 				ease: 'power4.out'
 			},
 			'<'

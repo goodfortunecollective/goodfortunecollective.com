@@ -3,11 +3,10 @@
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 
 	import { gsap, SplitText } from '$lib/gsap';
+	import { delay_anim_page } from '$lib/stores';
 	// import VideoWithPreview from '$lib/components/VideoWithPreview.svelte';
 
 	export let data;
-
-	const DELAY_LOADER = 6.5;
 
 	let video!: HTMLElement;
 	let videoInteractive!: HTMLElement;
@@ -62,7 +61,7 @@
 				duration: 0.6,
 				ease: 'circ.out',
 				y: 0,
-				delay: 1 + DELAY_LOADER,
+				delay: 1 + $delay_anim_page,
 				stagger: 0.01
 			});
 
@@ -90,7 +89,7 @@
 
 		gsap.to(video, {
 			scale: 0.65,
-			delay: 0.5 + DELAY_LOADER,
+			delay: 0.5 + $delay_anim_page,
 			opacity: 0.5,
 			rotationY: -25
 		});

@@ -4,6 +4,7 @@
 
 	import { gsap } from '$lib/gsap';
 	import { cls } from '$lib/styles';
+	import { delay_anim_page } from '$lib/stores';
 	import { Gfc } from '$lib/components';
 
 	const dispatch = createEventDispatcher();
@@ -101,6 +102,7 @@
 		).then(() => {
 			active = false;
 			dispatch('complete');
+			delay_anim_page.set(1.5);
 		});
 	});
 </script>
