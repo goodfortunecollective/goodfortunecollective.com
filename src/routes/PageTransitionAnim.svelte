@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { gsap, ScrollSmoother } from '$lib/gsap';
+	import { gsap, ScrollSmoother, ScrollTrigger } from '$lib/gsap';
 	import { cls } from '$lib/styles';
 	import { beforeNavigate } from '$app/navigation';
 
@@ -42,7 +42,11 @@
 				rotation: 0,
 				duration: 1.5,
 				delay: 1.7,
-				ease: 'power4.out'
+				ease: 'power4.out',
+				onStart: () => {
+					// @ts-ignore
+					ScrollTrigger.refresh();
+				}
 			},
 			'<'
 		).then(() => {

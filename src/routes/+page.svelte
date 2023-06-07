@@ -58,8 +58,7 @@
 				trigger: '#h-intro',
 				start: 'center 55%',
 				end: 'center 30%',
-				toggleActions: 'play reverse play reverse', // onEnter onLeave onEnterBack onLeaveBack
-				markers: true
+				toggleActions: 'play reverse play reverse' // onEnter onLeave onEnterBack onLeaveBack
 			}
 		});
 		tlSplitText.addLabel('start');

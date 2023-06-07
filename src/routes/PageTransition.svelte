@@ -7,7 +7,7 @@
 
 {#key pathname}
 	<div
-		in:fly={{ easing: cubicOut, y: 100, opacity: 0, duration: 100, delay: 2000 }}
+		in:fly={{ easing: cubicOut, y: 100, opacity: 0, duration: 100, delay: 1500 }}
 		out:fly={{ easing: quartOut, y: -100, opacity: 1, duration: 100, delay: 1200 }}
 	>
 		<slot />
