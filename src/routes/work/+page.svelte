@@ -9,13 +9,9 @@
 			clamp = gsap.utils.clamp(-5, 5);
 
 		// @ts-ignore
-
-		ScrollSmoother.create({
-			smooth: 1.5,
-			effects: true,
-			onUpdate: (self) => skewSetter(clamp(self.getVelocity() / -50)),
-			onStop: () => skewSetter(0)
-		});
+		const scroll = ScrollSmoother.get();
+		scroll.onUpdate = () => skewSetter(clamp(scroll.getVelocity() / -50));
+		scroll.onStop = () => skewSetter(0);
 	});
 </script>
 

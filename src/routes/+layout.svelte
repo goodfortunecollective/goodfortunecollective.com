@@ -26,6 +26,7 @@
 			content: '#smooth-content',
 			smooth: 1.5,
 			effects: true,
+			normalizeScroll: true,
 			smoothTouch: 0.1
 		});
 		if (scroll) scroll.paused(true);
@@ -81,10 +82,8 @@
 
 	<div id="smooth-wrapper">
 		<div id="smooth-content">
-			<PageTransition pathname={data.pathname}>
-				<slot />
-				<Footer />
-			</PageTransition>
+			<slot />
+			<Footer />
 		</div>
 	</div>
 </main>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 
 	import { gsap, SplitText } from '$lib/gsap';
@@ -14,6 +14,9 @@
 	let constrain = 100;
 	let isMouseLocked = false;
 
+	let tlSplitText: any = null;
+	let tl: any = null;
+
 	function handleMousemove(event: MouseEvent) {
 		if (isMouseLocked) return;
 
@@ -21,7 +24,7 @@
 		let position = xy.concat([video]);
 
 		window.requestAnimationFrame(function () {
-			transformElement(videoInteractive, position);
+			if (videoInteractive) transformElement(videoInteractive, position);
 		});
 	}
 
@@ -44,89 +47,105 @@
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
 
-		const splitText = document.querySelectorAll('[data-gsap="split-text"]');
+		tl = gsap.timeline();
+		tl.delay($delay_anim_page);
+		tl.set(video, { scale: 0.15, opacity: 0, rotationY: 0 });
+
+		const splitText = gsap.utils.toArray('[data-gsap="split-text"]');
+
+		tlSplitText = gsap.timeline({
+			scrollTrigger: {
+				trigger: '#h-intro',
+				start: 'center 55%',
+				end: 'center 30%',
+				toggleActions: 'play reverse play reverse', // onEnter onLeave onEnterBack onLeaveBack
+				markers: true
+			}
+		});
+		tlSplitText.addLabel('start');
 
 		splitText.forEach((content) => {
 			const text = new SplitText(content, {
 				type: 'lines,words,chars'
 			});
 
-			gsap.set(text.chars, {
-				opacity: 0,
-				y: 40
-			});
+			let chars = text.chars;
 
-			gsap.to(text.chars, {
-				opacity: 1,
-				duration: 0.6,
-				ease: 'circ.out',
-				y: 0,
-				delay: 1 + $delay_anim_page,
-				stagger: 0.01
-			});
+			// @ts-ignore
+			gsap.set(content, { perspective: 400 });
 
-			gsap.to(text.chars, {
+			tlSplitText.from(
+				chars,
+				{
+					duration: 0.8,
+					opacity: 0,
+					scale: 0,
+					y: 80,
+					rotationX: 180,
+					transformOrigin: '0% 50% -50',
+					ease: 'back',
+					stagger: 0.01
+				},
+				'start'
+			);
+		});
+
+		tl.to(video, {
+			scale: 0.65,
+			opacity: 0.5,
+			rotationY: -25,
+			duration: 1
+		});
+
+		tl.fromTo(
+			video,
+			{
+				scale: 0.65,
+				opacity: 0.5,
+				rotationY: -25
+			},
+			{
 				scrollTrigger: {
 					trigger: '#h-intro',
 					start: 'bottom 55%',
-					end: 'bottom 20%',
-					toggleActions: 'play complete reverse reverse'
-				},
-				immediateRender: false,
-				opacity: 0,
-				duration: 0.4,
-				ease: 'circ.inOut',
-				y: 40,
-				stagger: 0.01
-			});
-		});
-
-		gsap.set(video, {
-			scale: 0.15,
-			opacity: 0,
-			rotationY: 0
-		});
-
-		gsap.to(video, {
-			scale: 0.65,
-			delay: 0.5 + $delay_anim_page,
-			opacity: 0.5,
-			rotationY: -25
-		});
-
-		gsap.to(video, {
-			scrollTrigger: {
-				trigger: '#h-intro',
-				start: 'bottom 55%',
-				end: 'bottom 30%',
-				toggleActions: 'play complete reverse reverse',
-				scrub: true,
-				onUpdate: (self) => {
-					if (self.progress > 0.25) {
-						if (!isMouseLocked) {
-							gsap.to(videoInteractive, {
-								pointerEvents: 'none',
-								rotateX: 0,
-								rotateY: 0,
-								duration: 0.1,
-								ease: 'circ.inOut'
-							});
+					end: 'bottom 30%',
+					toggleActions: 'play none none none', // onEnter onLeave onEnterBack onLeaveBack
+					scrub: true,
+					immediateRender: false,
+					onUpdate: (self) => {
+						if (self.progress > 0.25) {
+							if (!isMouseLocked && videoInteractive) {
+								gsap.to(videoInteractive, {
+									pointerEvents: 'none',
+									rotateX: 0,
+									rotateY: 0,
+									duration: 0.1,
+									ease: 'circ.inOut'
+								});
+							}
+							isMouseLocked = true;
+						} else {
+							if (videoInteractive) videoInteractive.style.pointerEvents = 'all';
+							isMouseLocked = false;
 						}
-						isMouseLocked = true;
-					} else {
-						videoInteractive.style.pointerEvents = 'all';
-						isMouseLocked = false;
 					}
-				}
-			},
-			immediateRender: false,
-			scale: 1,
-			opacity: 1,
-			rotationY: 0,
-			y: '50%',
-			duration: 1,
-			ease: 'circ.inOut'
-		});
+				},
+				scale: 1,
+				opacity: 1,
+				rotationY: 0,
+				y: '50%',
+				duration: 1,
+				ease: 'circ.inOut'
+			}
+		);
+	});
+
+	onDestroy(() => {
+		if (tl) tl.kill();
+		if (tlSplitText) tlSplitText.kill();
+
+		tl = null;
+		tlSplitText = null;
 	});
 </script>
 
