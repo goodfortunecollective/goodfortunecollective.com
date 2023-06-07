@@ -29,6 +29,8 @@
 				ease: 'circ.inOut',
 				onComplete: () => {
 					if (scroll) scroll.scrollTo(0, 0);
+					// @ts-ignore
+					ScrollTrigger.refresh();
 				}
 			}
 		);
@@ -41,14 +43,8 @@
 				scale: 1,
 				rotation: 0,
 				duration: 1.5,
-				delay: 1.7,
-				ease: 'power4.out',
-				onStart: () => {
-					// @ts-ignore
-					ScrollTrigger.refresh();
-				}
-			},
-			'<'
+				ease: 'power4.out'
+			}
 		).then(() => {
 			isTransition = false;
 			if (scroll) scroll.paused(false);
