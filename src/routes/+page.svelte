@@ -187,10 +187,12 @@
 </section>
 
 <section class="h-screen w-screen" />
+
+<!--
+
 {#if data.story}
 	<StoryblokComponent blok={data.story.content} />
 {/if}
-```
-
+-->
 <style>
 </style>
