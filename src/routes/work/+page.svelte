@@ -23,7 +23,7 @@
 <div class="">
 	<section class="space-x-8 space-y-8 columns-1">
 		<div class="a-skew-y">
-			<a href="{base}/work/[slug]">
+			<a href="{base}/work/a">
 				<img
 					data-gsap="skew-y"
 					class="flex aspect-video object-cover"
@@ -33,7 +33,7 @@
 			>
 		</div>
 		<div class="a-skew-y">
-			<a href="{base}/work/[slug]">
+			<a href="{base}/work/b">
 				<img
 					data-gsap="skew-y"
 					class="flex aspect-video object-cover"
@@ -43,7 +43,7 @@
 			>
 		</div>
 		<div class="a-skew-y">
-			<a href="{base}/work/[slug]">
+			<a href="{base}/work/c">
 				<img
 					loading="lazy"
 					data-gsap="skew-y"
@@ -55,7 +55,7 @@
 			>
 		</div>
 		<div class="a-skew-y">
-			<a href="{base}/work/[slug]">
+			<a href="{base}/work/d">
 				<img
 					loading="lazy"
 					data-gsap="skew-y"
@@ -77,7 +77,7 @@
 			>
 		</div>
 		<div class="a-skew-y">
-			<a href="{base}/work/[slug]">
+			<a href="{base}/work/e">
 				<img
 					loading="lazy"
 					data-gsap="skew-y"

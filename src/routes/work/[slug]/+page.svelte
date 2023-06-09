@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 
+	export let data;
+
 	onMount(() => {});
 
 	onDestroy(() => {});
@@ -12,7 +14,7 @@
 </svelte:head>
 
 <div class="relative">
-	<h1>Work Slug</h1>
+	<h1>Work Slug {data.slug}</h1>
 </div>
 
 <style>
