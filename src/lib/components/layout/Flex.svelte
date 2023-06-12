@@ -73,10 +73,9 @@
 	this={as}
 	{...$$restProps}
 	class={cls(
-		'flex flex-wrap',
+		'flex',
 		`flex-${flexDirection[direction]}`,
 		`justify-${flexJustifyContent[justifyContent]}`,
-		'items-center',
 		`gap-${gap}`,
 		$$props.class
 	)}

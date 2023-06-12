@@ -37,6 +37,7 @@
 <Header />
 <main>
 	<PageTransitionAnim />
+	<div id="canvas" />
 	<div id="smooth-wrapper">
 		<div id="smooth-content">
 			<PageTransition pathname={data.pathname}>
@@ -49,4 +50,14 @@
 <Loader on:complete={handleCompleteLoader} />
 
 <style>
+	#canvas {
+		position: fixed;
+		top: 0;
+		right: 0;
+		left: 0;
+		height: 100vh;
+		z-index: 10;
+		opacity: 1;
+		transition: opacity 0.5s ease-in;
+	}
 </style>
