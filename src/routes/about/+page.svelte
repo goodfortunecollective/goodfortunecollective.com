@@ -1,8 +1,6 @@
 <script>
-	import { onMount } from 'svelte';
-	// import { gsap } from '$lib/gsap';
-
-	onMount(() => {});
+	import { Flex } from '$lib/components/layout';
+	import { Heading } from '$lib/components/typography';
 </script>
 
 <svelte:head>
@@ -10,12 +8,15 @@
 	<meta name="description" content="About" />
 </svelte:head>
 
-<div class="text-column a-skew-y">
-	<article class="prose lg:prose-xl">
-		<h1>About</h1>
-		<p>Lorem ...</p>
-		<p>Lorem ...</p>
-		<!-- ... -->
-	</article>
-	​
-</div>
+<section class="pt-[var(--header-height)] pb-32 h-1/2 bg-gray-200">
+	<div class="mx-auto max-w-6xl">
+		<Flex class="pt-16 items-end">
+			<Heading as="h2" size="h1" class="w-1/2">Headline Statement</Heading>
+			<p class="text-xl flex-1">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ac feugiat nisl, a
+				cursus orci. Pellentesque sollicitudin feugiat ipsum, eget venenatis urna mollis ac.
+			</p>
+		</Flex>
+	</div>
+</section>
+<section class="h-screen bg-black" />
