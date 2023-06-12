@@ -2,21 +2,18 @@
 
 import { apiPlugin, storyblokInit, useStoryblokApi } from "@storyblok/svelte";
 import { PUBLIC_STORYBLOK_ACCESS_TOKEN } from '$env/static/public'
-import Feature from "$lib/components/Feature.svelte";
-import Grid from "$lib/components/Grid.svelte";
-import Page from "$lib/components/Page.svelte";
-import Teaser from "$lib/components/Teaser.svelte";
 
 import type { LayoutLoad } from "./$types";
+
+import { Flex, Heading, Page } from "$lib/storyblok";
 
 export const prerender = true;
 
 let callbackComponents = () => {
     return {
-        feature: Feature,
-        grid: Grid,
+        flex: Flex,
+        heading: Heading,
         page: Page,
-        teaser: Teaser,
     };
 };
 

@@ -6,6 +6,8 @@
 	import { delay_anim_page } from '$lib/stores';
 	// import VideoWithPreview from '$lib/components/VideoWithPreview.svelte';
 
+	import { Heading } from '$lib/components/typography';
+
 	export let data;
 
 	let video!: HTMLElement;
@@ -185,14 +187,16 @@
 		</div>
 	</div>
 </section>
+<div class="section-wrapper" />
 
-<section class="h-screen w-screen" />
+<section class="h-screen w-screen">
+	{#if data.story}
+		<StoryblokComponent blok={data.story.content} />
+	{/if}
+</section>
 
-<!--
-
-{#if data.story}
-	<StoryblokComponent blok={data.story.content} />
-{/if}
--->
 <style>
+	.section-wrapper {
+		height: 50vh;
+	}
 </style>
