@@ -16,6 +16,7 @@
 
 	let constrain = 100;
 	let isMouseLocked = false;
+	let animCompleted = false;
 
 	let tlSplitText: any = null;
 	let tl: any = null;
@@ -45,13 +46,12 @@
 		el.style.transform = transforms.apply(null, xyEl);
 	}
 
-	onMount(async () => {
+	onMount(() => {
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
 
 		tl = gsap.timeline();
-		tl.delay($delay_anim_page);
 		tl.set(video, { scale: 0.15, opacity: 0, rotationY: 0 });
 
 		const splitText = gsap.utils.toArray('[data-gsap="split-text"]');
@@ -86,7 +86,8 @@
 					rotationX: 180,
 					transformOrigin: '0% 50% -50',
 					ease: 'back',
-					stagger: 0.01
+					stagger: 0.01,
+					delay: $delay_anim_page
 				},
 				'start'
 			);
@@ -96,7 +97,11 @@
 			scale: 0.65,
 			opacity: 0.5,
 			rotationY: -25,
-			duration: 1
+			duration: 1,
+			delay: $delay_anim_page,
+			onComplete: () => {
+				animCompleted = true;
+			}
 		});
 
 		tl.fromTo(
@@ -115,6 +120,8 @@
 					scrub: true,
 					immediateRender: false,
 					onUpdate: (self) => {
+						if (!animCompleted) return;
+
 						if (self.progress > 0.25) {
 							if (!isMouseLocked && videoInteractive) {
 								gsap.to(videoInteractive, {
