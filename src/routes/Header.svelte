@@ -77,11 +77,11 @@
 {#if mobileMenuOpen}
 	<div class="sm:hidden bg-white" role="dialog" aria-modal="true">
 		<!-- Background backdrop, show/hide based on slide-over state. -->
-		<div class="fixed inset-0 z-10" />
+		<div class="fixed inset-0 z-20" />
 		<div
 			in:fade
 			out:fade={{ delay: 500 }}
-			class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-black px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+			class="fixed inset-y-0 right-0 z-20 w-full overflow-y-auto bg-black px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
 		>
 			<div class="mt-24 flow-root">
 				<div class="-my-6 divide-y divide-gray-500/10">
@@ -102,7 +102,7 @@
 {/if}
 
 <header
-	class="fixed w-full top-0 z-20 h-[var(--header-height)] transition-transform ease-in mix-blend-difference"
+	class="fixed w-full top-0 z-30 h-[var(--header-height)] transition-transform ease-in mix-blend-difference"
 	class:motion-safe:-translate-y-full={offscreen}
 	bind:clientHeight
 >

@@ -38,7 +38,7 @@
 <main>
 	<PageTransitionAnim />
 	<div id="canvas" />
-	<div id="smooth-wrapper">
+	<div id="smooth-wrapper" class="z-10">
 		<div id="smooth-content">
 			<PageTransition pathname={data.pathname}>
 				<slot />
@@ -56,7 +56,7 @@
 		right: 0;
 		left: 0;
 		height: 100vh;
-		z-index: 10;
+		z-index: 1;
 		opacity: 1;
 		transition: opacity 0.5s ease-in;
 	}

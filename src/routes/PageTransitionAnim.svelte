@@ -52,7 +52,7 @@
 	});
 </script>
 
-<div class={cls('h-full w-full fixed z-50 top-0 left-0', isTransition ? 'block' : 'hidden')}>
+<div class={cls('h-full w-full fixed z-40 top-0 left-0', isTransition ? 'block' : 'hidden')}>
 	<div bind:this={background} class="h-full w-full bg-gray-900" />
 </div>
 
