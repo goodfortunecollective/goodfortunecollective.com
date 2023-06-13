@@ -1,4 +1,5 @@
 <script>
+	import { base } from '$app/paths';
 </script>
 
 <footer class="bg-white">
@@ -35,7 +36,7 @@
 					<span class="sr-only">Vimeo</span>
 					<span class="">Vi</span>
 				</a>
-				<a href="/" class="text-gray-400 hover:text-gray-500">
+				<a href="{base}/" class="text-gray-400 hover:text-gray-500">
 					<span class="sr-only">Behance</span>
 					<span class="">Be</span>
 				</a>
