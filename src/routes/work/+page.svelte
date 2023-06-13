@@ -1,9 +1,29 @@
 <script lang="ts">
+	import { ScrollSmoother } from '$lib/gsap';
 	import { onMount, onDestroy } from 'svelte';
 	import { Curtains } from '$lib/vendors/curtainsjs/core/Curtains';
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
 
 	let curtains: any = null;
+	let scroll: ScrollSmoother | null = null;
+
+	function updateScroll(xOffset: any, yOffset: any) {
+		// update our scroll manager values
+		if (curtains) curtains.updateScrollValues(xOffset, yOffset);
+	}
+
+	//curtains.disableDrawing();
+
+	function scrollonUpdate(event: any) {
+		// @ts-ignore
+		scroll = ScrollSmoother.get();
+		console.log('event', event.detail);
+		console.log('scroll', scroll);
+		updateScroll(0, event.detail.offsetY);
+		console.log('scroll', window.pageYOffset);
+		// render scene
+		if (curtains) curtains.needRender();
+	}
 
 	onMount(() => {
 		// we will keep track of all our planes in an array
@@ -13,18 +33,31 @@
 		// get our planes elements
 		const planeElements = document.getElementsByClassName('plane');
 
+		const useNativeScroll = false;
+
+		if (!useNativeScroll) {
+			window.addEventListener('smoothScrollUpdate', scrollonUpdate);
+		}
+
 		// set up our WebGL context and append the canvas to our wrapper
 		curtains = new Curtains({
 			container: 'canvas',
+			watchScroll: useNativeScroll,
 			pixelRatio: Math.min(1.5, window.devicePixelRatio) // limit pixel ratio for performance
 		});
+
+		if (!useNativeScroll) {
+			curtains.disableDrawing();
+		}
 
 		curtains
 			.onRender(() => {
 				//if (useNativeScroll) {
 				// update our planes deformation
 				// increase/decrease the effect
-				scrollEffect = curtains.lerp(scrollEffect, 0, 0.05);
+				if (useNativeScroll) {
+					scrollEffect = curtains.lerp(scrollEffect, 0, 0.05);
+				}
 				//}
 			})
 			.onScroll(() => {
@@ -41,7 +74,7 @@
 					delta.y = -60;
 				}
 
-				if (Math.abs(delta.y) > Math.abs(scrollEffect)) {
+				if (useNativeScroll && Math.abs(delta.y) > Math.abs(scrollEffect)) {
 					scrollEffect = curtains.lerp(scrollEffect, delta.y, 0.5);
 				} else {
 					scrollEffect = curtains.lerp(scrollEffect, delta.y * 1.5, 0.5);
@@ -64,11 +97,6 @@
 				// on context lost, try to restore the context
 				curtains.restoreContext();
 			});
-
-		function updateScroll(xOffset, yOffset) {
-			// update our scroll manager values
-			curtains.updateScrollValues(xOffset, yOffset);
-		}
 
 		const vs = `
         precision mediump float;
@@ -182,6 +210,7 @@
 		}
 
 		function applyPlanesParallax(index) {
+			return;
 			// calculate the parallax effect
 
 			// get our window size
@@ -201,6 +230,13 @@
         planes[index].setRelativeTranslation(new Vec3(0, parallaxEffect * (sceneBoundingRect.height / 4)));
          */
 		}
+
+		return () => {
+			// this function is called when the component is destroyed
+			if (!useNativeScroll) {
+				window.removeEventListener('smoothScrollUpdate', scrollonUpdate);
+			}
+		};
 	});
 
 	onDestroy(() => {
@@ -213,119 +249,121 @@
 	<meta name="description" content="Work" />
 </svelte:head>
 
-<div id="planes">
-	<div class="plane-wrapper">
-		<span class="plane-title">Title 1</span>
-		<div class="plane-inner">
-			<div class="plane">
-				<img
-					src="https://source.unsplash.com/random/?Motion&1"
-					crossorigin=""
-					data-sampler="planeTexture"
-					alt=""
-				/>
+<section class="pt-[var(--header-height)] pb-32">
+	<div id="planes" class="mx-auto max-w-6xl">
+		<div class="plane-wrapper">
+			<span class="plane-title">Title 1</span>
+			<div class="plane-inner">
+				<div class="plane">
+					<img
+						src="https://source.unsplash.com/random/?Motion&1"
+						crossorigin=""
+						data-sampler="planeTexture"
+						alt=""
+					/>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="plane-wrapper">
-		<span class="plane-title">Title 2</span>
-		<div class="plane-inner">
-			<div class="plane">
-				<img
-					src="https://source.unsplash.com/random/?Motion&2"
-					crossorigin=""
-					data-sampler="planeTexture"
-					alt=""
-				/>
+		<div class="plane-wrapper">
+			<span class="plane-title">Title 2</span>
+			<div class="plane-inner">
+				<div class="plane">
+					<img
+						src="https://source.unsplash.com/random/?Motion&2"
+						crossorigin=""
+						data-sampler="planeTexture"
+						alt=""
+					/>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="plane-wrapper">
-		<span class="plane-title">Title 3</span>
-		<div class="plane-inner">
-			<div class="plane">
-				<img
-					src="https://source.unsplash.com/random/?Motion&3"
-					crossorigin=""
-					data-sampler="planeTexture"
-					alt=""
-				/>
+		<div class="plane-wrapper">
+			<span class="plane-title">Title 3</span>
+			<div class="plane-inner">
+				<div class="plane">
+					<img
+						src="https://source.unsplash.com/random/?Motion&3"
+						crossorigin=""
+						data-sampler="planeTexture"
+						alt=""
+					/>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="plane-wrapper">
-		<span class="plane-title">Title 4</span>
-		<div class="plane-inner">
-			<div class="plane">
-				<img
-					src="https://source.unsplash.com/random/?Motion&4"
-					crossorigin=""
-					data-sampler="planeTexture"
-					alt=""
-				/>
+		<div class="plane-wrapper">
+			<span class="plane-title">Title 4</span>
+			<div class="plane-inner">
+				<div class="plane">
+					<img
+						src="https://source.unsplash.com/random/?Motion&4"
+						crossorigin=""
+						data-sampler="planeTexture"
+						alt=""
+					/>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="plane-wrapper">
-		<span class="plane-title">Title 5</span>
-		<div class="plane-inner">
-			<div class="plane">
-				<img
-					src="https://source.unsplash.com/random/?Motion&1"
-					crossorigin=""
-					data-sampler="planeTexture"
-					alt=""
-				/>
+		<div class="plane-wrapper">
+			<span class="plane-title">Title 5</span>
+			<div class="plane-inner">
+				<div class="plane">
+					<img
+						src="https://source.unsplash.com/random/?Motion&1"
+						crossorigin=""
+						data-sampler="planeTexture"
+						alt=""
+					/>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="plane-wrapper">
-		<span class="plane-title">Title 6</span>
-		<div class="plane-inner">
-			<div class="plane">
-				<img
-					src="https://source.unsplash.com/random/?Motion&5"
-					crossorigin=""
-					data-sampler="planeTexture"
-					alt=""
-				/>
+		<div class="plane-wrapper">
+			<span class="plane-title">Title 6</span>
+			<div class="plane-inner">
+				<div class="plane">
+					<img
+						src="https://source.unsplash.com/random/?Motion&5"
+						crossorigin=""
+						data-sampler="planeTexture"
+						alt=""
+					/>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="plane-wrapper">
-		<span class="plane-title">Title 7</span>
-		<div class="plane-inner">
-			<div class="plane">
-				<img
-					src="https://source.unsplash.com/random/?Motion&6"
-					crossorigin=""
-					data-sampler="planeTexture"
-					alt=""
-				/>
+		<div class="plane-wrapper">
+			<span class="plane-title">Title 7</span>
+			<div class="plane-inner">
+				<div class="plane">
+					<img
+						src="https://source.unsplash.com/random/?Motion&6"
+						crossorigin=""
+						data-sampler="planeTexture"
+						alt=""
+					/>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="plane-wrapper">
-		<span class="plane-title">Title 8</span>
-		<div class="plane-inner">
-			<div class="plane">
-				<img
-					src="https://source.unsplash.com/random/?Motion&7"
-					crossorigin=""
-					data-sampler="planeTexture"
-					alt=""
-				/>
+		<div class="plane-wrapper">
+			<span class="plane-title">Title 8</span>
+			<div class="plane-inner">
+				<div class="plane">
+					<img
+						src="https://source.unsplash.com/random/?Motion&7"
+						crossorigin=""
+						data-sampler="planeTexture"
+						alt=""
+					/>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
+</section>
 
 <style>
 	.planes-loaded #planes {
@@ -353,13 +391,11 @@
 	}
 
 	.plane-title {
-		color: white;
 		position: absolute;
-		top: 25%;
-		left: 25%;
+		top: 100%;
+		left: 0%;
 		font-size: 2em;
 		font-weight: 700;
-		background: #ee6557;
 		display: inline-block;
 		padding: 0.125em 0.25em;
 	}

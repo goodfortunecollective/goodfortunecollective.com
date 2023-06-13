@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { custom_event } from 'svelte/internal';
+	import { createEventDispatcher } from 'svelte';
+
 	import { ScrollSmoother } from '$lib/gsap';
 
 	import type { LayoutData } from './$types';
@@ -16,6 +19,10 @@
 
 	let scroll: ScrollSmoother | null = null;
 
+	let ref: any;
+
+	const dispatch = createEventDispatcher();
+
 	onMount(() => {
 		// @ts-ignore
 		scroll = ScrollSmoother.create({
@@ -24,7 +31,12 @@
 			smooth: 1.5,
 			effects: true,
 			normalizeScroll: true,
-			smoothTouch: 0.1
+			smoothTouch: 0.1,
+			onUpdate: (event: any) => {
+				ref.dispatchEvent(
+					custom_event('smoothScrollUpdate', { offsetY: event.scrollTop() }, { bubbles: true })
+				);
+			}
 		});
 		if (scroll) scroll.paused(true);
 	});
@@ -35,7 +47,7 @@
 </script>
 
 <Header />
-<main>
+<main bind:this={ref}>
 	<PageTransitionAnim />
 	<div id="canvas" />
 	<div id="smooth-wrapper" class="z-10">
