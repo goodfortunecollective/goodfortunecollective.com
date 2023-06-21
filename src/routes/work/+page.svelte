@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { ScrollSmoother } from '$lib/gsap';
 	import { onMount, onDestroy } from 'svelte';
+	import { base } from '$app/paths';
+	import { ScrollSmoother } from '$lib/gsap';
 	import { Curtains } from '$lib/vendors/curtainsjs/core/Curtains';
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
 
@@ -240,7 +241,10 @@
 	});
 
 	onDestroy(() => {
-		if (curtains) curtains.dispose();
+		if (curtains) {
+			curtains.dispose();
+			curtains = null;
+		}
 	});
 </script>
 
@@ -255,12 +259,14 @@
 			<span class="plane-title">Title 1</span>
 			<div class="plane-inner">
 				<div class="plane">
-					<img
-						src="https://source.unsplash.com/random/?Motion&1"
-						crossorigin=""
-						data-sampler="planeTexture"
-						alt=""
-					/>
+					<a href="{base}/work/a">
+						<img
+							src="https://source.unsplash.com/random/?Motion&1"
+							crossorigin=""
+							data-sampler="planeTexture"
+							alt=""
+						/></a
+					>
 				</div>
 			</div>
 		</div>
