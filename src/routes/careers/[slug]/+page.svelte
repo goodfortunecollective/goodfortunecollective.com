@@ -2,6 +2,8 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 
+	import { base } from '$app/paths';
+
 	export let data;
 
 	onMount(() => {
@@ -20,6 +22,7 @@
 
 <section class="pt-[var(--header-height)] pb-32 h-screen bg-gray-200">
 	<div class="mx-auto max-w-6xl">
+		<a href="{base}/careers/"> &#10229; </a>
 		{#if data.story}
 			<StoryblokComponent blok={data.story.content} />
 		{/if}
