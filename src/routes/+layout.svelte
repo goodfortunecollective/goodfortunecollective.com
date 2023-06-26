@@ -60,9 +60,7 @@
 	</div>
 </main>
 
-<!--
 <Loader on:complete={handleCompleteLoader} />
--->
 
 <style>
 	#canvas {
@@ -74,5 +72,6 @@
 		z-index: 1;
 		opacity: 1;
 		transition: opacity 0.5s ease-in;
+		display: none;
 	}
 </style>
