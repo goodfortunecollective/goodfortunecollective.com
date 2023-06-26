@@ -2,6 +2,7 @@
 	import { base } from '$app/paths';
 	import { Flex } from '$lib/components/layout';
 	import { Heading } from '$lib/components/typography';
+	import { AlternateListBlock } from '$lib/components/layout';
 
 	export let data;
 </script>
@@ -12,7 +13,7 @@
 </svelte:head>
 
 <section class="pt-[var(--header-height)] pb-32 h-screen bg-gray-200">
-	<div class="mx-auto max-w-6xl">
+	<div class="mx-auto max-w-6xl ">
 		<Flex class="pt-16 items-end">
 			<Heading as="h2" size="h1" class="w-1/2">Headline Statement</Heading>
 			<p class="text-xl flex-1">
@@ -20,6 +21,12 @@
 				cursus orci. Pellentesque sollicitudin feugiat ipsum, eget venenatis urna mollis ac.
 			</p>
 		</Flex>
+	</div>
+</section>
+<section class="pt-32 pb-32 bg-white">
+	<div class="mx-auto max-w-6xl">
+		<AlternateListBlock titleSide="right" title="Lorem ipsum"></AlternateListBlock>
+
 		<Flex class="pt-32 items-end">
 			<Heading as="h2" size="h2" class="w-1/2">Current Openings Headline Statement</Heading>
 			{#each data.stories as { name, slug }}
