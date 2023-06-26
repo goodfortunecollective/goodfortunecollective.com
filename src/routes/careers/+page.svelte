@@ -1,10 +1,19 @@
 <script lang="ts">
+	import { onMount, onDestroy } from 'svelte';
+
 	import { base } from '$app/paths';
 	import { Flex } from '$lib/components/layout';
 	import { Heading } from '$lib/components/typography';
-	import { AlternateListBlock } from '$lib/components/layout';
+
+	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 
 	export let data;
+
+	onMount(() => {
+		if (data.story) {
+			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
+		}
+	});
 </script>
 
 <svelte:head>
@@ -23,13 +32,18 @@
 		</Flex>
 	</div>
 </section>
+
+<section>
+	{#if data.story}
+		<StoryblokComponent blok={data.story.content} />
+	{/if}
+</section>
+
 <section class="pt-32 pb-32 bg-white">
 	<div class="mx-auto max-w-6xl">
-		<AlternateListBlock titleSide="right" title="Lorem ipsum" />
-
 		<Flex class="pt-32 items-end">
 			<Heading as="h2" size="h2" class="w-1/2">Current Openings Headline Statement</Heading>
-			{#each data.stories as { name, slug }}
+			{#each data.jobs as { name, slug }}
 				<li>
 					<a href="{base}/careers/{slug}">
 						{name}

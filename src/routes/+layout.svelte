@@ -59,7 +59,10 @@
 		</div>
 	</div>
 </main>
+
+<!--
 <Loader on:complete={handleCompleteLoader} />
+-->
 
 <style>
 	#canvas {
