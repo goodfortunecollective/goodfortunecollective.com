@@ -1,5 +1,4 @@
-<script>
-	import { StoryblokComponent } from '@storyblok/svelte';
+<script lang="ts">
 	import { base } from '$app/paths';
 	import { Flex } from '$lib/components/layout';
 	import { Heading } from '$lib/components/typography';

@@ -1,9 +1,16 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
+	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
+
+	import { base } from '$app/paths';
 
 	export let data;
 
-	onMount(() => {});
+	onMount(() => {
+		if (data.story) {
+			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
+		}
+	});
 
 	onDestroy(() => {});
 </script>
@@ -13,9 +20,14 @@
 	<meta name="description" content="Work SLUG" />
 </svelte:head>
 
-<div class="relative">
-	<h1>Work Slug {data.slug}</h1>
-</div>
+<section class="pt-[var(--header-height)] pb-32">
+	<div class="mx-auto max-w-6xl">
+		<a href="{base}/work/"> &#10229; </a>
+		{#if data.story}
+			<StoryblokComponent blok={data.story.content} />
+		{/if}
+	</div>
+</section>
 
 <style>
 </style>

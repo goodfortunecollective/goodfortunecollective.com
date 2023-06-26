@@ -1,5 +1,17 @@
-export const load = ({ params }) => {
+import { dev } from '$app/environment';
+
+
+export async function load({ params, parent }) {
+    const { storyblokApi } = await parent();
+
+    const dataStory = await storyblokApi.get('cdn/stories', {
+        version: dev ? "draft" : "published",
+        starts_with: 'projects',
+        by_slugs: '*/' + params.slug,
+    });
+
     return {
-        slug: params.slug
-    }
+        story: dataStory.data.stories[0],
+    };
 }
+

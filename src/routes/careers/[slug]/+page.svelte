@@ -17,7 +17,7 @@
 
 <svelte:head>
 	<title>careers SLUG</title>
-	<meta name="description" content="Work SLUG" />
+	<meta name="description" content="Careers SLUG" />
 </svelte:head>
 
 <section class="pt-[var(--header-height)] pb-32">

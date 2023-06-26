@@ -5,6 +5,8 @@
 	import { Curtains } from '$lib/vendors/curtainsjs/core/Curtains';
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
 
+	export let data;
+
 	let curtains: any = null;
 	let scroll: ScrollSmoother | null = null;
 
@@ -255,119 +257,23 @@
 
 <section class="pt-[var(--header-height)] pb-32">
 	<div id="planes" class="mx-auto max-w-6xl">
-		<div class="plane-wrapper">
-			<span class="plane-title">Title 1</span>
-			<div class="plane-inner">
-				<div class="plane">
-					<a href="{base}/work/a">
-						<img
-							src="https://source.unsplash.com/random/?Motion&1"
-							crossorigin=""
-							data-sampler="planeTexture"
-							alt=""
-						/></a
-					>
+		{#each data.stories as { name, slug }}
+			<div class="plane-wrapper">
+				<span class="plane-title">{name}</span>
+				<div class="plane-inner">
+					<div class="plane">
+						<a href="{base}/work/{slug}">
+							<img
+								src="https://source.unsplash.com/random/?Motion&1"
+								crossorigin=""
+								data-sampler="planeTexture"
+								alt=""
+							/></a
+						>
+					</div>
 				</div>
 			</div>
-		</div>
-
-		<div class="plane-wrapper">
-			<span class="plane-title">Title 2</span>
-			<div class="plane-inner">
-				<div class="plane">
-					<img
-						src="https://source.unsplash.com/random/?Motion&2"
-						crossorigin=""
-						data-sampler="planeTexture"
-						alt=""
-					/>
-				</div>
-			</div>
-		</div>
-
-		<div class="plane-wrapper">
-			<span class="plane-title">Title 3</span>
-			<div class="plane-inner">
-				<div class="plane">
-					<img
-						src="https://source.unsplash.com/random/?Motion&3"
-						crossorigin=""
-						data-sampler="planeTexture"
-						alt=""
-					/>
-				</div>
-			</div>
-		</div>
-
-		<div class="plane-wrapper">
-			<span class="plane-title">Title 4</span>
-			<div class="plane-inner">
-				<div class="plane">
-					<img
-						src="https://source.unsplash.com/random/?Motion&4"
-						crossorigin=""
-						data-sampler="planeTexture"
-						alt=""
-					/>
-				</div>
-			</div>
-		</div>
-
-		<div class="plane-wrapper">
-			<span class="plane-title">Title 5</span>
-			<div class="plane-inner">
-				<div class="plane">
-					<img
-						src="https://source.unsplash.com/random/?Motion&1"
-						crossorigin=""
-						data-sampler="planeTexture"
-						alt=""
-					/>
-				</div>
-			</div>
-		</div>
-
-		<div class="plane-wrapper">
-			<span class="plane-title">Title 6</span>
-			<div class="plane-inner">
-				<div class="plane">
-					<img
-						src="https://source.unsplash.com/random/?Motion&5"
-						crossorigin=""
-						data-sampler="planeTexture"
-						alt=""
-					/>
-				</div>
-			</div>
-		</div>
-
-		<div class="plane-wrapper">
-			<span class="plane-title">Title 7</span>
-			<div class="plane-inner">
-				<div class="plane">
-					<img
-						src="https://source.unsplash.com/random/?Motion&6"
-						crossorigin=""
-						data-sampler="planeTexture"
-						alt=""
-					/>
-				</div>
-			</div>
-		</div>
-
-		<div class="plane-wrapper">
-			<span class="plane-title">Title 8</span>
-			<div class="plane-inner">
-				<div class="plane">
-					<img
-						src="https://source.unsplash.com/random/?Motion&7"
-						crossorigin=""
-						data-sampler="planeTexture"
-						alt=""
-					/>
-				</div>
-			</div>
-		</div>
+		{/each}
 	</div>
 </section>
 

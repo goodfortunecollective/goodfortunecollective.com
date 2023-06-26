@@ -1,6 +1,5 @@
 import { dev } from '$app/environment';
 
-/** @type {import('./$types').PageLoad} */
 export async function load({ parent }) {
     const { storyblokApi } = await parent();
 
@@ -13,3 +12,4 @@ export async function load({ parent }) {
         stories: dataStory.data.stories,
     };
 }
+

@@ -16,7 +16,7 @@ const config = {
 			assets: 'build',
 			fallback: null,
 			precompress: false,
-			strict: true
+			strict: true,
 		}),
 		paths: {
 			base: process.env.NODE_ENV === "production" ? "/goodfortunecollective.com" : "",
