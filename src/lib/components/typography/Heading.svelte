@@ -23,7 +23,7 @@
 </svelte:element>
 
 <!--
-    @component Heading  
+    @component Heading
     ## Props
     @prop as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1';
     @prop size: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1';
@@ -32,7 +32,7 @@
     <script>
       import {  Heading  } from '$lib/components'
     </script>
-    
+
     <div  class="text-center">
       <Heading as="h2" size="h1" class="mb-4">We invest in the world’s potential</Heading>
      </div>
