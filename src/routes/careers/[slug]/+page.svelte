@@ -20,7 +20,7 @@
 	<meta name="description" content="Work SLUG" />
 </svelte:head>
 
-<section class="pt-[var(--header-height)] pb-32 h-screen bg-gray-200">
+<section class="pt-[var(--header-height)] pb-32">
 	<div class="mx-auto max-w-6xl">
 		<a href="{base}/careers/"> &#10229; </a>
 		{#if data.story}

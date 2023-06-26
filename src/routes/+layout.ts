@@ -5,7 +5,7 @@ import { PUBLIC_STORYBLOK_ACCESS_TOKEN } from '$env/static/public'
 
 import type { LayoutLoad } from "./$types";
 
-import { Flex, Heading, Page } from "$lib/storyblok";
+import { Flex, Heading, Page, Heading_Richtext_2Col } from "$lib/storyblok";
 
 export const prerender = true;
 
@@ -14,6 +14,7 @@ let callbackComponents = () => {
         flex: Flex,
         heading: Heading,
         page: Page,
+        'heading-richtext-2col': Heading_Richtext_2Col
     };
 };
 

@@ -28,7 +28,8 @@
 					<a href="{base}/careers/{slug}">
 						{name}
 					</a>
-				</li>{/each}
+				</li>
+			{/each}
 		</Flex>
 	</div>
 </section>
