@@ -6,6 +6,7 @@
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
 
 	export let data;
+	// console.log(data.stories);
 
 	let curtains: any = null;
 	let scroll: ScrollSmoother | null = null;
@@ -257,17 +258,20 @@
 
 <section class="pt-[var(--header-height)] pb-32">
 	<div id="planes" class="max-w-6xl mx-auto">
-		{#each data.stories as { name, slug }}
+		{#each data.stories as { name, slug, content }}
 			<div class="plane-wrapper">
 				<span class="plane-title">{name}</span>
 				<div class="plane-inner">
 					<div class="plane">
 						<a href="{base}/work/{slug}">
+							<!-- {content.thumbnail} -->
+							<!-- {content.thumbnail.filename} -->
+							<!-- https://source.unsplash.com/random/?Motion&1 -->
 							<img
 								src="https://source.unsplash.com/random/?Motion&1"
 								crossorigin=""
 								data-sampler="planeTexture"
-								alt=""
+								alt={name}
 							/></a
 						>
 					</div>
