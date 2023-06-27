@@ -2,22 +2,23 @@
 	import { base } from '$app/paths';
 </script>
 
-<footer class="bg-white">
-	<div class="max-w-7xl mx-auto py-6">
-		<div class="md:flex md:items-center md:justify-between py-2">
-			<div>
-				<p class="text-center text-xs leading-5 text-gray-500 uppercase">
-					Let’s work together <strong>partners@goodfortunecollective.com</strong>
+<footer id="footer" class="bg-white">
+	<div class="max-w-6xl py-6 mx-auto">
+		<div class="py-2 md:flex md:items-center md:justify-between">
+			<div class="pt-8 pb-2 footer-col">
+				<p class="text-xs leading-5 text-center text-gray-500 uppercase">
+					<strong>Let’s work together</strong>
+					<a href="mailto:partners@goodfortunecollective.com">partners@goodfortunecollective.com</a>
 				</p>
 			</div>
-			<div>
-				<p class="text-center text-xs leading-5 text-gray-500 uppercase">
-					Find us in <strong>Vancouver, Canada</strong>
+			<div class="pt-8 pb-2 footer-col">
+				<p class="text-xs leading-5 text-center text-gray-500 uppercase">
+					<strong>Find us in</strong> <a href="#">Vancouver, Canada</a>
 				</p>
 			</div>
 		</div>
-		<div class="md:flex md:items-center md:justify-between py-2">
-			<div class="flex justify-center space-x-6">
+		<div class="py-2 md:flex md:items-center md:justify-between">
+			<div class="flex justify-center pb-8 space-x-6 text-sm md:pb-0">
 				<a
 					href="https://www.facebook.com/GoodFortuneCollective/"
 					class="text-gray-400 hover:text-gray-500"
@@ -42,7 +43,7 @@
 				</a>
 			</div>
 			<div>
-				<p class="text-center text-xs leading-5 text-gray-500 uppercase">
+				<p class="text-xs leading-5 text-center text-gray-500 uppercase">
 					&copy; {new Date().getFullYear().toString()} Good Fortune Collective. All rights reserved.
 				</p>
 			</div>
@@ -50,5 +51,63 @@
 	</div>
 </footer>
 
-<style>
+<style lang="scss">
+	@import '../vars.scss';
+
+	.footer-col {
+		position: relative;
+		@media (min-width: $media-md) {
+			overflow: hidden;
+
+			&:before {
+				position: absolute;
+				top: 0;
+				right: 0;
+				left: 0;
+				height: 1px;
+				background: #cccccc;
+				content: '';
+			}
+
+			&:first-child {
+				a {
+					&:before {
+						transform-origin: 0 0;
+					}
+				}
+			}
+			&:last-child {
+				a {
+					&:before {
+						transform-origin: 100% 100%;
+						transform: translate(150%, 0);
+					}
+				}
+			}
+
+			a {
+				position: relative;
+				display: inline-block;
+
+				&:before {
+					position: absolute;
+					top: -2rem;
+					right: 0;
+					height: 1px;
+					width: 100%;
+					transform: translate(-200%, 0);
+					background: $blackPure;
+					content: '';
+					transition: 0.4s width ease-out, 0.4s transform ease-out;
+				}
+
+				&:hover {
+					&:before {
+						width: 100%;
+						transform: translate(0, 0);
+					}
+				}
+			}
+		}
+	}
 </style>

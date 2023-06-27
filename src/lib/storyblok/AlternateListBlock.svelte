@@ -16,9 +16,9 @@
 		'md:col-start-3'
 	];
 
-	// if (blok.titleSide == 'right') {
-	// 	textCols = [];
-	// }
+	if (blok.titleSide == 'right') {
+		textCols = ['md:col-start-1 md:mt-24', 'md:col-start-6', 'md:col-start-2', 'md:col-start-4'];
+	}
 
 	export let textClasses = [];
 	for (let i = 0; i < textCols.length; i++) {
@@ -30,7 +30,7 @@
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	<div class="list md:grid md:grid-cols-12 md:gap-2 py-16 md:py-32 title-side-{blok.titleSide}">
 		<div class={titleClass}>
-			<Heading as="h3">{blok.title}</Heading>
+			<Heading as="h3" size="h3">{blok.title}</Heading>
 		</div>
 
 		{#each blok.list as item, i}
@@ -42,15 +42,8 @@
 					<p><StoryblokComponent blok={item} /></p>
 				</div>
 			</div>
-			<!-- {#if blok.titleSide === 'right' && i == 0}
-				<div class="col-span-4">
-					<Heading as="h3">{blok.title}</Heading>
-				</div>
-			{/if} -->
 		{/each}
 	</div>
-
-	<!-- <slot /> -->
 </div>
 
 <style lang="scss">

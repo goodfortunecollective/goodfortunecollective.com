@@ -17,6 +17,11 @@
 	let colorBackground: string = 'bg-white';
 
 	onMount(async () => {
+		// if (!active) {
+		// 	dispatch('complete');
+		// 	return;
+		// }
+
 		const tl = gsap.timeline();
 
 		tl.fromTo(
@@ -108,16 +113,22 @@
 </script>
 
 {#if active}
-	<div class={cls('fixed top-0 left-0 z-50 w-screen h-screen overflow-hidden', colorBackground)}>
+	<div
+		class={cls('fixed top-0 left-0 z-50 w-screen h-screen overflow-hidden', colorBackground)}
+		id="loader"
+	>
 		<div class="flex items-center justify-center w-full h-full">
-			<div bind:this={background} class="w-full h-full bg-gray-100 absolute" />
+			<div bind:this={background} class="absolute w-full h-full bg-gray-100" />
 			<div bind:this={logo} class="absolute">
-				<Gfc class="h-8 w-auto" alt="" />
+				<Gfc class="w-auto h-8" alt="" />
 			</div>
-			<div bind:this={circle} class="w-16 h-16 bg-gray-300 rounded-full absolute" />
+			<div bind:this={circle} class="absolute w-16 h-16 bg-gray-300 rounded-full" />
 		</div>
 	</div>
 {/if}
 
 <style>
+	#loader {
+		display: none;
+	}
 </style>
