@@ -168,13 +168,13 @@
 
 <svelte:window on:mousemove={handleMousemove} />
 
-<section class="flex h-screen w-screen bg-black">
-	<div class="flex w-full h-full mx-auto max-w-6xl relative">
-		<div class="perspective-800 w-full h-full relative">
+<section class="flex w-screen h-screen bg-black">
+	<div class="relative flex w-full h-full max-w-6xl mx-auto">
+		<div class="relative w-full h-full perspective-800">
 			<div bind:this={video} class="absolute w-full h-full transform-gpu preserve-3d">
 				<div bind:this={videoInteractive} class="w-full h-full preserve-3d">
 					<video
-						class="w-full h-full aspect-video absolute inset-0"
+						class="absolute inset-0 w-full h-full aspect-video"
 						src="https://media.istockphoto.com/id/1250005100/pt/v%C3%ADdeo/floating-droplets-loop.mp4?s=mp4-640x640-is&amp;k=20&amp;c=eJworDI_aCrPdxtWQhVk4j77JHwtc4xV6wRFXljLgcE="
 						autoplay
 						muted
@@ -183,12 +183,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="z-10 absolute h-full w-full flex items-center">
+		<div class="absolute z-10 flex items-center w-full h-full">
 			<div class="flex flex-col gap-24" id="h-intro">
 				<h1 data-gsap="split-text" class="text-cyan-500 font-degular-display text-9xl">
 					Good Fortune Collective
 				</h1>
-				<h2 data-gsap="split-text" class="text-white font-degular-display text-7xl max-w-2xl">
+				<h2 data-gsap="split-text" class="max-w-2xl text-white font-degular-display text-7xl">
 					is a culture that embraces change
 				</h2>
 			</div>
@@ -198,10 +198,10 @@
 <div class="section-wrapper" />
 
 <section class="pb-32">
-	<div class="mx-auto max-w-6xl">
-		<Flex class="pt-16 items-end">
-			<Heading as="h2" size="h1" class="w-1/2">Headline Statement</Heading>
-			<p class="text-xl flex-1">
+	<div class="max-w-6xl mx-auto">
+		<Flex class="items-end pt-16">
+			<Heading as="h2" size="h1" class="md:w-1/2">Headline Statement</Heading>
+			<p class="flex-1 text-xl">
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ac feugiat nisl, a
 				cursus orci. Pellentesque sollicitudin feugiat ipsum, eget venenatis urna mollis ac.
 			</p>
@@ -210,7 +210,7 @@
 </section>
 
 <!--
-<section class="h-screen w-screen">
+<section class="w-screen h-screen">
 	{#if data.story}
 		<StoryblokComponent blok={data.story.content} />
 	{/if}

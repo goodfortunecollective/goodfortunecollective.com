@@ -1,0 +1,19 @@
+// Colors
+$blackPure: #000;
+$black: #414141;
+
+// Screens
+$media-sm: 640px;
+$media-md: 768px;
+$media-lg: 1024px;
+$media-xl: 1280px;
+$media-2xl: 1536px;
+
+// Mixins
+@mixin nth-child-order($start, $end) {
+	@for $i from $start through $end {
+		&:nth-child(#{$i}) {
+			order: #{$i};
+		}
+	}
+}

@@ -13,9 +13,9 @@
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	<Flex class="px-24 pt-32">
-		<Heading as="h2" size="h5" class="uppercase font-bold tracking-widest w-1/2"
+		<Heading as="h2" size="h5" class="font-bold tracking-widest uppercase md:w-1/2"
 			>{blok.heading}</Heading
 		>
-		<div class="text-lg flex-1">{@html content}</div>
+		<div class="flex-1 text-lg">{@html content}</div>
 	</Flex>
 </div>
