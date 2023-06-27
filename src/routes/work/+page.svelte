@@ -256,7 +256,7 @@
 </svelte:head>
 
 <section class="pt-[var(--header-height)] pb-32">
-	<div id="planes" class="mx-auto max-w-6xl">
+	<div id="planes" class="max-w-6xl mx-auto">
 		{#each data.stories as { name, slug }}
 			<div class="plane-wrapper">
 				<span class="plane-title">{name}</span>
@@ -318,6 +318,12 @@
 		right: 0;
 		bottom: 0;
 		left: 0;
+	}
+
+	.plane a {
+		display: block;
+		width: 100%;
+		height: 100%;
 	}
 
 	.plane img {

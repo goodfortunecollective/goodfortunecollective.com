@@ -5,13 +5,16 @@ import { PUBLIC_STORYBLOK_ACCESS_TOKEN } from '$env/static/public'
 
 import type { LayoutLoad } from "./$types";
 
-import { AlternateListBlock, Flex, Heading, Page, Heading_Richtext_2Col, Text } from "$lib/storyblok";
+import { AlternateListBlock, FiguresBlock, VideoBlock, ImagesBlock, Flex, Heading, Page, Heading_Richtext_2Col, Text } from "$lib/storyblok";
 
 export const prerender = true;
 
 let callbackComponents = () => {
     return {
         'alternate-list-block': AlternateListBlock,
+        'figures-block': FiguresBlock,
+        'video-block': VideoBlock,
+				'images-block':ImagesBlock,
         flex: Flex,
         heading: Heading,
         'heading-richtext-2col': Heading_Richtext_2Col,
