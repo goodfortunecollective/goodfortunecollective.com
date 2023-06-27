@@ -57,7 +57,7 @@
 	@import '../../vars.scss';
 
 	.list {
-		color: $black;
+		color: $grayDark;
 
 		.list-item-text {
 			&:last-child {
