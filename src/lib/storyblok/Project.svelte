@@ -39,7 +39,9 @@
 			{/if}
 		</div>
 		<figure class="project-thumbnail md:w-1/4">
-			<img src={blok.thumbnail.filename} alt={blok.title} />
+			{#if blok.thumbnail}
+				<img src={blok.thumbnail.filename} alt={blok.title} />
+			{/if}
 		</figure>
 	</div>
 	{#each body as blok}
