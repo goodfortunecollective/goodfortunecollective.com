@@ -42,7 +42,9 @@
 	});
 
 	function handleCompleteLoader() {
-		if (scroll) scroll.paused(false);
+		if (scroll) {
+			scroll.paused(false);
+		}
 	}
 </script>
 
