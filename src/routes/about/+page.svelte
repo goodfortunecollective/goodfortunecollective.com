@@ -9,10 +9,10 @@
 </svelte:head>
 
 <section class="pt-[var(--header-height)] pb-32 h-1/2 bg-gray-200">
-	<div class="mx-auto max-w-6xl">
-		<Flex class="pt-16 items-end">
-			<Heading as="h2" size="h1" class="w-1/2">Headline Statement</Heading>
-			<p class="text-xl flex-1">
+	<div class="max-w-6xl mx-auto">
+		<Flex class="items-end pt-16">
+			<Heading as="h2" size="h1" class="md:w-1/2">Headline Statement</Heading>
+			<p class="flex-1 text-xl">
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ac feugiat nisl, a
 				cursus orci. Pellentesque sollicitudin feugiat ipsum, eget venenatis urna mollis ac.
 			</p>

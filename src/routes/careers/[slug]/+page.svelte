@@ -21,7 +21,7 @@
 </svelte:head>
 
 <section class="pt-[var(--header-height)] pb-32">
-	<div class="mx-auto max-w-6xl">
+	<div class="max-w-6xl mx-auto">
 		<a href="{base}/careers/"> &#10229; </a>
 		{#if data.story}
 			<StoryblokComponent blok={data.story.content} />

@@ -256,18 +256,22 @@
 </svelte:head>
 
 <section class="pt-[var(--header-height)] pb-32">
-	<div id="planes" class="mx-auto max-w-6xl">
-		{#each data.stories as { name, slug }}
+	<div id="planes" class="max-w-6xl mx-auto">
+		{#each data.stories as { name, slug, content }}
 			<div class="plane-wrapper">
 				<span class="plane-title">{name}</span>
+				<span class="plane-subtitle">{content.client}</span>
 				<div class="plane-inner">
 					<div class="plane">
 						<a href="{base}/work/{slug}">
+							<!-- src={content.thumbnail
+									? content.thumbnail.filename
+									: 'https://source.unsplash.com/random/?Motion&1'} -->
 							<img
 								src="https://source.unsplash.com/random/?Motion&1"
 								crossorigin=""
 								data-sampler="planeTexture"
-								alt=""
+								alt={name}
 							/></a
 						>
 					</div>
@@ -318,6 +322,12 @@
 		right: 0;
 		bottom: 0;
 		left: 0;
+	}
+
+	.plane a {
+		display: block;
+		width: 100%;
+		height: 100%;
 	}
 
 	.plane img {
