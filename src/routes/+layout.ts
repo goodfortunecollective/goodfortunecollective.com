@@ -14,7 +14,7 @@ let callbackComponents = () => {
         'alternate-list-block': AlternateListBlock,
         'figures-block': FiguresBlock,
         'video-block': VideoBlock,
-				'images-block':ImagesBlock,
+        'images-block': ImagesBlock,
         flex: Flex,
         heading: Heading,
         'heading-richtext-2col': Heading_Richtext_2Col,

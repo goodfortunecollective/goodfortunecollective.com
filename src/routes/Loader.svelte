@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { dev } from '$app/environment';
 	import { onMount } from 'svelte';
 	import { createEventDispatcher } from 'svelte';
 
@@ -16,13 +17,19 @@
 	let active: boolean = true;
 	let colorBackground: string = 'bg-white';
 
-	onMount(async () => {
-		// if (!active) {
-		// 	dispatch('complete');
-		// 	return;
-		// }
+	function ready() {
+		active = false;
+		dispatch('complete');
+		delay_anim_page.set(1.5);
+	}
 
+	onMount(async () => {
 		const tl = gsap.timeline();
+
+		if (dev) {
+			requestAnimationFrame(ready);
+			return;
+		}
 
 		tl.fromTo(
 			background,
@@ -105,9 +112,9 @@
 			},
 			'<'
 		).then(() => {
-			active = false;
-			dispatch('complete');
-			delay_anim_page.set(1.5);
+			if (!dev) {
+				ready();
+			}
 		});
 	});
 </script>
@@ -128,7 +135,4 @@
 {/if}
 
 <style>
-	#loader {
-		display: none;
-	}
 </style>
