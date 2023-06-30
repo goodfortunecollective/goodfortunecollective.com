@@ -75,20 +75,20 @@
 
 <!-- Mobile menu, show/hide based on menu open state. -->
 {#if mobileMenuOpen}
-	<div class="sm:hidden bg-white" role="dialog" aria-modal="true">
+	<div class="bg-white sm:hidden" role="dialog" aria-modal="true">
 		<!-- Background backdrop, show/hide based on slide-over state. -->
 		<div class="fixed inset-0 z-20" />
 		<div
 			in:fade
 			out:fade={{ delay: 500 }}
-			class="fixed inset-y-0 right-0 z-20 w-full overflow-y-auto bg-black px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+			class="fixed inset-y-0 right-0 z-20 w-full px-6 py-6 overflow-y-auto bg-black sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
 		>
-			<div class="mt-24 flow-root">
+			<div class="flow-root mt-24">
 				<div class="-my-6 divide-y divide-gray-500/10">
-					<div class="space-y-2 py-6">
+					<div class="py-6 space-y-2">
 						{#each navigation as { name, path }, i}<a
 								href="{base}/{path}"
-								class="-mx-3 block px-3 py-2 text-xl font-semibold leading-7 text-white"
+								class="block px-3 py-2 -mx-3 text-xl font-semibold leading-7 text-white"
 								in:fly={{ x: -48, duration: 500, delay: 300 + 50 * i }}
 								out:fly={{ x: -48, duration: 500, delay: 300 - 50 * i }}
 								on:click={closeMobileMenu}>{name}</a
@@ -107,12 +107,12 @@
 	bind:clientHeight
 >
 	<nav
-		class="mx-auto flex max-w-7xl items-center justify-between py-6 px-8 xl:px-0"
+		class="flex items-center justify-between px-8 py-6 mx-auto max-w-7xl xl:px-0"
 		aria-label="Global"
 	>
 		<a href="{base}/" class="-m-1.5 p-1.5" bind:this={logo}>
 			<span class="sr-only">Good Fortune Collective</span>
-			<Gfc class="h-8 w-auto text-white" alt="" />
+			<Gfc class="w-auto h-8 text-white" alt="" />
 		</a>
 		<div class="flex sm:hidden">
 			<button
@@ -123,7 +123,7 @@
 				<span class="sr-only">{mobileMenuOpen ? 'Close' : 'Open'} main menu</span>
 				{#if mobileMenuOpen}
 					<svg
-						class="h-6 w-6"
+						class="w-6 h-6"
 						fill="none"
 						viewBox="0 0 24 24"
 						stroke-width="1.5"
@@ -134,7 +134,7 @@
 					</svg>
 				{:else}
 					<svg
-						class="h-6 w-6"
+						class="w-6 h-6"
 						fill="none"
 						viewBox="0 0 24 24"
 						stroke-width="1.5"
@@ -152,7 +152,7 @@
 		</div>
 		<div class="hidden sm:flex sm:gap-x-12">
 			{#each navigation as { name, path }, i}
-				<a href="{base}/{path}" class="text-sm font-semibold leading-6">
+				<a href="{base}/{path}" class="text-sm leading-6">
 					<span data-gsap="nav-items" class="block text-white">{name}</span>
 				</a>
 			{/each}

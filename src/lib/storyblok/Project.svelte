@@ -1,5 +1,5 @@
 <script lang="ts">
-	// import { Heading } from '$lib/components/typography';
+	import { Heading } from '$lib/components/typography';
 	import { renderRichText } from '@storyblok/svelte';
 	import { StoryblokComponent, storyblokEditable } from '@storyblok/svelte';
 
@@ -43,6 +43,7 @@
 				<img src={blok.thumbnail.filename} alt={blok.title} />
 			{/if}
 		</figure>
+		<!-- <Heading size="h1">{blok.title}</Heading> -->
 	</div>
 	{#each body as blok}
 		<StoryblokComponent {blok} />
