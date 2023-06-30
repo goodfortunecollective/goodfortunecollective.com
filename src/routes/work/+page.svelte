@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import { base } from '$app/paths';
+	import { Heading } from '$lib/components/typography';
 	import { ScrollSmoother } from '$lib/gsap';
 	import { Curtains } from '$lib/vendors/curtainsjs/core/Curtains';
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
 
 	export let data;
+	// console.log(data);
 
 	let curtains: any = null;
 	let scroll: ScrollSmoother | null = null;
@@ -26,6 +28,12 @@
 		console.log('scroll', window.pageYOffset);
 		// render scene
 		if (curtains) curtains.needRender();
+	}
+
+	let categoriesOpened = false;
+
+	function toggleCategories() {
+		categoriesOpened = !categoriesOpened;
 	}
 
 	onMount(() => {
@@ -256,11 +264,46 @@
 </svelte:head>
 
 <section class="pt-[var(--header-height)] pb-32">
+	<div
+		class={'categories-toggle' + (categoriesOpened ? ' opened' : '')}
+		id="categories-toggle"
+		on:click={toggleCategories}
+	/>
+
+	<div
+		class={'flex flex-col mt-12 pr-6 text-sm font-bold uppercase categories' +
+			(categoriesOpened ? ' opened' : '')}
+		id="categories"
+	>
+		<a class="mb-2 category all active" href="#all" data-category="all"
+			>All projects <sup class="text-xs font-normal category-number">03</sup>
+		</a>
+		<a class="mb-2 category" href="#creative-campaigns" data-category="creative-campaigns"
+			>Creative Campaigns <sup class="text-xs font-normal category-number">01</sup>
+		</a>
+		<a class="mb-2 category" href="#branding-identity" data-category="branding-identity"
+			>Branding + Identity <sup class="text-xs font-normal category-number">01</sup>
+		</a>
+		<a class="mb-2 category" href="#live-experiential" data-category="live-experiential"
+			>Live Experiential <sup class="text-xs font-normal category-number">01</sup>
+		</a>
+		<a class="category" href="#social-campaigns" data-category="social-campaigns"
+			>Social Campaigns <sup class="text-xs font-normal category-number">01</sup>
+		</a>
+	</div>
+
 	<div id="planes" class="max-w-6xl mx-auto">
 		{#each data.stories as { name, slug, content }}
 			<div class="plane-wrapper">
-				<span class="plane-title">{name}</span>
-				<span class="plane-subtitle">{content.client}</span>
+				<h2 class="plane-title">{name}</h2>
+				<div class="uppercase plane-client">{content.client}</div>
+				{#if content.category}
+					<div class="uppercase plane-categories">
+						{#each content.category as category}
+							{category}
+						{/each}
+					</div>
+				{/if}
 				<div class="plane-inner">
 					<div class="plane">
 						<a href="{base}/work/{slug}">
@@ -281,7 +324,130 @@
 	</div>
 </section>
 
-<style>
+<style lang="scss">
+	@import '../../vars.scss';
+
+	#categories-toggle {
+		position: relative;
+		width: 39px;
+		height: 39px;
+		border-radius: 100%;
+		background: #e0e6e7;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: 0.5s background ease-out;
+		cursor: pointer;
+		z-index: 20;
+
+		@media (min-width: $media-md) {
+			position: absolute;
+			right: 0;
+		}
+
+		&:before,
+		&:after {
+			position: absolute;
+			width: 9px;
+			height: 1px;
+			background: #596669;
+			content: '';
+			transition: 0.5s background ease-out, 0.5s opacity ease-out, 0.4s transform ease-out;
+		}
+
+		&:after {
+			transform: rotate(90deg);
+		}
+
+		&.opened {
+			background: $black;
+
+			&:before,
+			&:after {
+				background: $white;
+			}
+
+			&:after {
+				opacity: 0;
+				transform: rotate(45deg);
+			}
+		}
+	}
+
+	#categories {
+		position: relative;
+		letter-spacing: 0.05em;
+		z-index: 15;
+		overflow: hidden;
+		padding-left: 40px;
+		height: 0;
+		transition: 0.5s height ease-out;
+		text-align: right;
+
+		&.opened {
+			height: auto;
+		}
+
+		&:after {
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			width: 1px;
+			background: #a3b2b6;
+			content: '';
+		}
+
+		@media (min-width: $media-md) {
+			position: absolute;
+			right: 0;
+			margin-right: 20px;
+		}
+	}
+
+	.category {
+		position: relative;
+		color: #a7a89a;
+		transition: 0.4s color ease-out, 0.4s transform ease-out;
+
+		&:after {
+			position: absolute;
+			right: -40px;
+			width: 4px;
+			height: 4px;
+			border-radius: 100%;
+			top: 50%;
+			margin-top: -2px;
+			background: $black;
+			opacity: 0;
+			content: '';
+			transition: 0.4s opacity ease-out, 0.4s transform ease-out;
+		}
+
+		&.active {
+			color: #596669;
+			transform: translate(-40px, 0);
+			cursor: default;
+
+			&:after {
+				opacity: 1;
+			}
+		}
+		@media (min-width: $media-md) {
+			&:hover {
+				color: #596669;
+				transform: translate(-40px, 0);
+				&:after {
+					opacity: 1;
+				}
+			}
+		}
+	}
+
+	.category-number {
+		margin-top: -2px;
+	}
+
 	.planes-loaded #planes {
 		opacity: 1;
 	}
@@ -314,6 +480,14 @@
 		font-weight: 700;
 		display: inline-block;
 		padding: 0.125em 0.25em;
+	}
+
+	.plane-client {
+		color: #a7a89a;
+	}
+
+	.plane-categories {
+		color: #a7a89a;
 	}
 
 	.plane {

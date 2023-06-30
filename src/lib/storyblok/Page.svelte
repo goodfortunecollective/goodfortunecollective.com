@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { StoryblokComponent, storyblokEditable } from '@storyblok/svelte';
-
 	export let blok: any;
 	let { body } = blok;
 </script>

@@ -1,26 +1,181 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { Heading } from '$lib/components/typography';
+	import { gsap } from 'gsap';
 
 	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 
 	export let blok: any;
+	// console.log(blok);
+
+	export let videoVisible = false;
+	export let videoPlaying = false;
+	export let btn = null;
+	export let video = null;
+
+	function contOnMove(e) {
+		let x = e.pageX - e.currentTarget.getBoundingClientRect().left,
+			y = e.pageY - e.currentTarget.getBoundingClientRect().top - window.scrollY;
+		// console.log('page x : ' + e.pageX + ' - ' + 'y : ' + e.pageY);
+		// console.log('x : ' + x + ' - ' + 'y : ' + y);
+		gsap.to(btn, 0.2, { x: x, y: y });
+	}
+
+	function showVideo() {
+		if (!videoVisible) {
+			videoVisible = true;
+			if (video) video.play();
+			videoPlaying = true;
+		} else {
+			playPauseVideo();
+		}
+	}
+
+	function playPauseVideo() {
+		// let player = e.currentTarget;
+
+		if (video.paused) {
+			video.play();
+		} else video.pause();
+
+		videoPlaying = !videoPlaying;
+	}
+	onMount(() => {
+		video = document.getElementById('video-player-' + blok.id);
+		btn = document.getElementById('video-block-btn-' + blok.id);
+	});
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	<div class="flex items-center justify-center my-12 video-block">
-		<iframe
-			src="https://player.vimeo.com/video/{blok.id}?h=0041aac5ea&title=0&byline=0&portrait=0"
-			width="640"
-			height="360"
-			frameborder="0"
-			allow="autoplay; fullscreen; picture-in-picture"
-			allowfullscreen
-		/>
-		<!-- <video src="https://player.vimeo.com/{blok.id}" /> -->
-		<!-- <video id="video-home-overlay" class="video-player" src="https://player.vimeo.com/progressive_redirect/playback/{blok.id}/rendition/1080p/file.mp4?loc=external&amp;signature=4fdebc546d37b98a3c1f0e6b7f04ed9786fb0b897a6f6af5717bfcab853df482" playsinline="" webkit-playsinline="" poster=""></video> -->
+	<div
+		class="flex items-center justify-center my-12 video-block"
+		on:mousemove={contOnMove}
+		data-id={blok.id}
+	>
+		{#if blok.id && !blok.file}
+			<iframe
+				class="video-block-iframe"
+				src="https://player.vimeo.com/video/{blok.id}?h=0041aac5ea&title=0&byline=0&portrait=0"
+				width="640"
+				height="360"
+				frameborder="0"
+				allow="autoplay; fullscreen; picture-in-picture"
+				allowfullscreen
+			/>
+		{:else if blok.file}
+			<video
+				class="video-player"
+				id={'video-player-' + blok.id}
+				src={blok.file}
+				playsinline=""
+				webkit-playsinline=""
+				poster=""
+				on:click={playPauseVideo}
+			/>
+		{/if}
+		{#if blok.poster}
+			<div
+				class={'video-block-btn' + (videoPlaying ? ' playing' : '')}
+				on:click={showVideo}
+				data-id={blok.id}
+				id={'video-block-btn-' + blok.id}
+			/>
+			<figure
+				class={'video-block-poster' + (videoVisible ? ' inactive' : '')}
+				on:click={showVideo}
+				data-id={blok.id}
+			>
+				<img class="video-block-poster-img" src={blok.poster.filename} alt="" />
+			</figure>
+			<!-- content here -->
+		{/if}
 	</div>
 </div>
 
 <style lang="scss">
-	// @import '../../vars.scss';
+	@import '../../vars.scss';
+
+	.video-block {
+		position: relative;
+	}
+
+	.video-player {
+		position: absolute;
+		width: 100%;
+		height: auto;
+		z-index: 10;
+	}
+
+	.video-block-btn {
+		position: absolute;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		top: 0;
+		left: 0;
+		// top: 50%;
+		// left: 50%;
+		width: 86px;
+		height: 86px;
+		background: $black;
+		border-radius: 100%;
+		transform: translate(-50%, -50%);
+		cursor: pointer;
+		z-index: 13;
+		transition: 0.5s opacity ease-out, 0s visibility 0.5s, 0s z-index 0.5s;
+
+		// play
+		&:before {
+			display: inline-block;
+			width: 0;
+			height: 0;
+			border-top: 7px solid transparent;
+			border-bottom: 7px solid transparent;
+			border-left: 12px solid $white;
+			margin-left: 2px;
+			content: '';
+			opacity: 1;
+		}
+
+		// pause
+		&:after {
+			position: absolute;
+			width: 10px;
+			height: 18px;
+			border-right: 2px solid $white;
+			border-left: 2px solid $white;
+			opacity: 0;
+			content: '';
+		}
+
+		&.playing {
+			&:before {
+				opacity: 0;
+			}
+
+			&:after {
+				opacity: 1;
+			}
+		}
+	}
+
+	.video-block-poster {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		z-index: 11;
+		cursor: pointer;
+		transition: 0.5s opacity ease-out, 0s visibility 0.5s, 0s z-index 0.5s;
+		&.inactive {
+			visibility: hidden;
+			opacity: 0;
+			z-index: 9;
+		}
+	}
+
+	.video-block-poster-img {
+		position: relative;
+		width: 100%;
+		height: auto;
+	}
 </style>
