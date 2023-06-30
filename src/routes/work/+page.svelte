@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import { base } from '$app/paths';
+	import { Heading } from '$lib/components/typography';
 	import { ScrollSmoother } from '$lib/gsap';
 	import { Curtains } from '$lib/vendors/curtainsjs/core/Curtains';
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
 
 	export let data;
+	// console.log(data);
 
 	let curtains: any = null;
 	let scroll: ScrollSmoother | null = null;
@@ -293,8 +295,15 @@
 	<div id="planes" class="max-w-6xl mx-auto">
 		{#each data.stories as { name, slug, content }}
 			<div class="plane-wrapper">
-				<sup class="plane-title">{name}</sup>
-				<sup class="plane-subtitle">{content.client}</sup>
+				<h2 class="plane-title">{name}</h2>
+				<div class="uppercase plane-client">{content.client}</div>
+				{#if content.category}
+					<div class="uppercase plane-categories">
+						{#each content.category as category}
+							{category}
+						{/each}
+					</div>
+				{/if}
 				<div class="plane-inner">
 					<div class="plane">
 						<a href="{base}/work/{slug}">
@@ -471,6 +480,14 @@
 		font-weight: 700;
 		display: inline-block;
 		padding: 0.125em 0.25em;
+	}
+
+	.plane-client {
+		color: #a7a89a;
+	}
+
+	.plane-categories {
+		color: #a7a89a;
 	}
 
 	.plane {
