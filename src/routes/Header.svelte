@@ -107,7 +107,7 @@
 	bind:clientHeight
 >
 	<nav
-		class="flex items-center justify-between px-8 py-6 mx-auto max-w-7xl xl:px-0"
+		class="flex items-center justify-between max-w-6xl px-8 py-6 mx-auto xl:px-0"
 		aria-label="Global"
 	>
 		<a href="{base}/" class="-m-1.5 p-1.5" bind:this={logo}>

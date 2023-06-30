@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { Heading } from '$lib/components/typography';
+	import { gsap } from 'gsap';
 
 	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 
@@ -7,25 +9,49 @@
 	// console.log(blok);
 
 	export let videoVisible = false;
+	export let videoPlaying = false;
+	export let btn = null;
+	export let video = null;
 
-	function showVideo(e) {
-		videoVisible = true;
-		let id = e.currentTarget.getAttribute('data-id');
-		let videoPlayer = document.getElementById('video-player-' + id);
-		if (videoPlayer) videoPlayer.play();
+	function contOnMove(e) {
+		let x = e.pageX - e.currentTarget.getBoundingClientRect().left,
+			y = e.pageY - e.currentTarget.getBoundingClientRect().top - window.scrollY;
+		// console.log('page x : ' + e.pageX + ' - ' + 'y : ' + e.pageY);
+		// console.log('x : ' + x + ' - ' + 'y : ' + y);
+		gsap.to(btn, 0.2, { x: x, y: y });
 	}
 
-	function playPauseVideo(e) {
-		let player = e.currentTarget;
-
-		if (player.paused) {
-			player.play();
-		} else player.pause();
+	function showVideo() {
+		if (!videoVisible) {
+			videoVisible = true;
+			if (video) video.play();
+			videoPlaying = true;
+		} else {
+			playPauseVideo();
+		}
 	}
+
+	function playPauseVideo() {
+		// let player = e.currentTarget;
+
+		if (video.paused) {
+			video.play();
+		} else video.pause();
+
+		videoPlaying = !videoPlaying;
+	}
+	onMount(() => {
+		video = document.getElementById('video-player-' + blok.id);
+		btn = document.getElementById('video-block-btn-' + blok.id);
+	});
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	<div class="flex items-center justify-center my-12 video-block">
+	<div
+		class="flex items-center justify-center my-12 video-block"
+		on:mousemove={contOnMove}
+		data-id={blok.id}
+	>
 		{#if blok.id && !blok.file}
 			<iframe
 				class="video-block-iframe"
@@ -49,9 +75,10 @@
 		{/if}
 		{#if blok.poster}
 			<div
-				class={'video-block-btn' + (videoVisible ? ' inactive' : '')}
+				class={'video-block-btn' + (videoPlaying ? ' playing' : '')}
 				on:click={showVideo}
 				data-id={blok.id}
+				id={'video-block-btn-' + blok.id}
 			/>
 			<figure
 				class={'video-block-poster' + (videoVisible ? ' inactive' : '')}
@@ -84,8 +111,10 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		top: 50%;
-		left: 50%;
+		top: 0;
+		left: 0;
+		// top: 50%;
+		// left: 50%;
 		width: 86px;
 		height: 86px;
 		background: $black;
@@ -95,7 +124,8 @@
 		z-index: 13;
 		transition: 0.5s opacity ease-out, 0s visibility 0.5s, 0s z-index 0.5s;
 
-		&:after {
+		// play
+		&:before {
 			display: inline-block;
 			width: 0;
 			height: 0;
@@ -104,6 +134,28 @@
 			border-left: 12px solid $white;
 			margin-left: 2px;
 			content: '';
+			opacity: 1;
+		}
+
+		// pause
+		&:after {
+			position: absolute;
+			width: 10px;
+			height: 18px;
+			border-right: 2px solid $white;
+			border-left: 2px solid $white;
+			opacity: 0;
+			content: '';
+		}
+
+		&.playing {
+			&:before {
+				opacity: 0;
+			}
+
+			&:after {
+				opacity: 1;
+			}
 		}
 	}
 
@@ -113,10 +165,6 @@
 		height: 100%;
 		z-index: 11;
 		cursor: pointer;
-	}
-
-	.video-block-btn,
-	.video-block-poster {
 		transition: 0.5s opacity ease-out, 0s visibility 0.5s, 0s z-index 0.5s;
 		&.inactive {
 			visibility: hidden;
