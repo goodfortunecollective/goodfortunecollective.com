@@ -1,6 +1,19 @@
-<script>
+<script lang="ts">
+	import { onMount, onDestroy } from 'svelte';
+
+	import { base } from '$app/paths';
 	import { Flex } from '$lib/components/layout';
 	import { Heading } from '$lib/components/typography';
+
+	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
+
+	export let data;
+
+	onMount(() => {
+		if (data.story) {
+			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
+		}
+	});
 </script>
 
 <svelte:head>
@@ -8,7 +21,7 @@
 	<meta name="description" content="Contact" />
 </svelte:head>
 
-<section class="pt-[var(--header-height)] pb-32">
+<section class="contact pt-[var(--header-height)] pb-32">
 	<div class="max-w-6xl mx-auto">
 		<Flex class="items-end pt-16">
 			<Heading as="h2" size="h1" class="md:w-1/2">Headline Statement</Heading>
@@ -17,7 +30,7 @@
 				cursus orci. Pellentesque sollicitudin feugiat ipsum, eget venenatis urna mollis ac.
 			</p>
 		</Flex>
-		<Flex class="px-24 pt-32">
+		<!-- <Flex class="px-24 pt-32">
 			<Heading as="h2" size="h5" class="font-bold tracking-widest uppercase md:w-1/2">Email</Heading
 			>
 			<p class="flex-1 text-2xl">Want to say hi?</p>
@@ -56,6 +69,27 @@
 				<strong>səlilwətaɬ</strong>
 				(Tsleil-Waututh) Nations.
 			</p>
-		</Flex>
+		</Flex> -->
 	</div>
 </section>
+
+<section class="contact">
+	<div class="max-w-6xl mx-auto">
+		{#if data.story}
+			<StoryblokComponent blok={data.story.content} />
+		{/if}
+	</div>
+</section>
+
+<style lang="scss">
+	@import '../../vars.scss';
+
+	.contact {
+		:global(.heading-richtext-2col .title) {
+			// color: #929292;
+		}
+		:global(.heading-richtext-2col .text) {
+			color: #929292;
+		}
+	}
+</style>

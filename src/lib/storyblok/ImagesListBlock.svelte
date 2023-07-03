@@ -5,25 +5,25 @@
 
 	export let blok: any;
 
-	export let titleClasses = ['md:col-start-3', 'md:col-start-5'];
-	export let imageClasses = ['md:col-start-1', 'md:col-start-7'];
-	export let textClasses = ['md:col-start-8', 'md:col-start-2'];
+	export let titleClasses = ['md:col-start-5', 'md:col-start-11'];
+	export let imageClasses = ['md:col-start-1', 'md:col-start-14'];
+	export let textClasses = ['md:col-start-14', 'md:col-start-4'];
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={'images-list-block ' + blok.class}>
 	<div class="flex flex-col list">
 		{#each blok.list as item, i}
-			<div class="flex py-16 md:grid md:grid-cols-12 md:gap-2 md:py-32 list-item">
-				<div class={'list-item-title-cont mb-8 flex flex-row md:col-span-4 ' + titleClasses[i % 2]}>
+			<div class="flex py-16 md:grid md:grid-cols-24 md:gap-2 md:py-32 list-item">
+				<div class={'list-item-title-cont mb-8 flex flex-row md:col-span-8 ' + titleClasses[i % 2]}>
 					<div class="text-lg font-bold list-item-number">
 						{#if i <= 10}0{/if}{i + 1}
 					</div>
 					<h2 class="text-4xl list-item-title">{item.title}</h2>
 				</div>
-				<div class={'list-item-text md:col-span-4 ' + textClasses[i % 2]}>
+				<div class={'list-item-text md:col-span-8 ' + textClasses[i % 2]}>
 					<StoryblokComponent blok={item} />
 				</div>
-				<figure class={'list-item-image md:col-span-6 ' + imageClasses[i % 2]}>
+				<figure class={'list-item-image md:col-span-12 ' + imageClasses[i % 2]}>
 					<img src={item.image.filename} alt={item.title} />
 				</figure>
 			</div>

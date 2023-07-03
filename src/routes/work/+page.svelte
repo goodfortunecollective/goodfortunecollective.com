@@ -1,14 +1,12 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
 	import { base } from '$app/paths';
-	import { Heading } from '$lib/components/typography';
 	import { ScrollSmoother } from '$lib/gsap';
 	import { Curtains } from '$lib/vendors/curtainsjs/core/Curtains';
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
+	import { onDestroy, onMount } from 'svelte';
 
 	export let data;
-	// console.log(data);
-
+	export let categoriesData = [];
 	let curtains: any = null;
 	let scroll: ScrollSmoother | null = null;
 
@@ -37,6 +35,36 @@
 	}
 
 	onMount(() => {
+		// console.log(data.stories);
+
+		// Get project counts by category
+		let storiesLength = data.stories.length;
+
+		let categories = data.categories.data.datasource_entries,
+			categoriesLength = categories.length;
+
+		for (let i = 0; i < categoriesLength; i++) {
+			categoriesData[i] = {
+				name: categories[i].name,
+				slug: categories[i].value,
+				count: 0
+			};
+		}
+
+		for (let indexStory = 0; indexStory < storiesLength; indexStory++) {
+			let categories = data.stories[indexStory].content.category;
+
+			for (let indexCat = 0; indexCat < categories.length; indexCat++) {
+				let category = categories[indexCat];
+				var result = categoriesData.find((item) => item.slug === category);
+				// console.log('category :' + category);
+				// console.log(result);
+				result.count++;
+			}
+		}
+
+		// console.log(categoriesData);
+
 		// we will keep track of all our planes in an array
 		const planes: any = [];
 		let scrollEffect = 0;
@@ -276,20 +304,25 @@
 		id="categories"
 	>
 		<a class="mb-2 category all active" href="#all" data-category="all"
-			>All projects <sup class="text-xs font-normal category-number">03</sup>
+			>All projects
+			{#if data.stories}
+				<sup class="text-xs font-normal category-number">
+					{#if data.stories.length < 10}0{/if}{data.stories.length}</sup
+				>
+			{/if}
 		</a>
-		<a class="mb-2 category" href="#creative-campaigns" data-category="creative-campaigns"
-			>Creative Campaigns <sup class="text-xs font-normal category-number">01</sup>
-		</a>
-		<a class="mb-2 category" href="#branding-identity" data-category="branding-identity"
-			>Branding + Identity <sup class="text-xs font-normal category-number">01</sup>
-		</a>
-		<a class="mb-2 category" href="#live-experiential" data-category="live-experiential"
-			>Live Experiential <sup class="text-xs font-normal category-number">01</sup>
-		</a>
-		<a class="category" href="#social-campaigns" data-category="social-campaigns"
-			>Social Campaigns <sup class="text-xs font-normal category-number">01</sup>
-		</a>
+		{#each data.categories.data.datasource_entries as category, i}
+			{#if categoriesData[i] && categoriesData[i].count > 0}
+				<a class="mb-2 category" href="#{category.value}" data-category={category.value}>
+					{category.name}
+					{#if categoriesData[i]}
+						<sup class="text-xs font-normal category-number"
+							>{#if categoriesData[i].count < 10}0{/if}{categoriesData[i].count}</sup
+						>
+					{/if}
+				</a>
+			{/if}
+		{/each}
 	</div>
 
 	<div id="planes" class="max-w-6xl mx-auto">

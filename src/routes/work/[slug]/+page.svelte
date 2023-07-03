@@ -6,12 +6,10 @@
 	import { base } from '$app/paths';
 
 	export let data;
-	$: solutions = renderRichText(data.story.content.solutions);
-	$: roles = renderRichText(data.story.content.roles);
-	$: deliverables = renderRichText(data.story.content.deliverables);
 	$: description = renderRichText(data.story.content.description);
 
 	onMount(() => {
+		// console.log(data.story.content);
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
@@ -38,19 +36,25 @@
 				{#if data.story.content.solutions}
 					<div class="flex flex-col md:w-1/5 project-header-col">
 						<h5 class="mb-2 text-sm font-bold uppercase">Solutions</h5>
-						{@html solutions}
+						{#each data.story.content.solutions as item}
+							<span>{item}</span>
+						{/each}
 					</div>
 				{/if}
 				{#if data.story.content.roles}
 					<div class="flex flex-col md:w-1/5 project-header-col">
 						<h5 class="mb-2 text-sm font-bold uppercase">Roles</h5>
-						{@html roles}
+						{#each data.story.content.roles as item}
+							<span>{item}</span>
+						{/each}
 					</div>
 				{/if}
 				{#if data.story.content.deliverables}
 					<div class="flex flex-col md:w-1/5 project-header-col">
 						<h5 class="mb-2 text-sm font-bold uppercase">Deliverables</h5>
-						{@html deliverables}
+						{#each data.story.content.deliverables as item}
+							<span>{item}</span>
+						{/each}
 					</div>
 				{/if}
 			</div>

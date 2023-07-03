@@ -8,11 +8,11 @@
 	$: content = renderRichText(blok.content);
 </script>
 
-<div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
+<div use:storyblokEditable={blok} {...$$restProps} class={'heading-richtext-2col ' + blok.class}>
 	<Flex class="px-24 pt-32">
-		<Heading as="h2" size="h5" class="font-bold tracking-widest uppercase md:w-1/2"
+		<Heading as="h2" size="h5" class="font-bold tracking-widest uppercase md:w-1/2 title"
 			>{blok.heading}</Heading
 		>
-		<div class="flex-1 text-lg">{@html content}</div>
+		<div class="flex-1 text-lg text">{@html content}</div>
 	</Flex>
 </div>

@@ -38,5 +38,3 @@
 		<StoryblokComponent blok={data.story.content} />
 	{/if}
 </section>
-
-<section class="h-screen bg-black" />
