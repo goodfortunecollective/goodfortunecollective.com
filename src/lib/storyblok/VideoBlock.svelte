@@ -12,6 +12,7 @@
 	export let videoPlaying = false;
 	export let btn = null;
 	export let video = null;
+	export let posterUrl = null;
 
 	function contOnMove(e) {
 		let x = e.pageX - e.currentTarget.getBoundingClientRect().left,
@@ -43,6 +44,10 @@
 	onMount(() => {
 		video = document.getElementById('video-player-' + blok.id);
 		btn = document.getElementById('video-block-btn-' + blok.id);
+
+		posterUrl = blok.poster.filename
+			? blok.poster.filename
+			: 'https://vumbnail.com/' + blok.id + '.jpg';
 	});
 </script>
 
@@ -73,22 +78,20 @@
 				on:click={playPauseVideo}
 			/>
 		{/if}
-		{#if blok.poster}
-			<div
-				class={'video-block-btn' + (videoPlaying ? ' playing' : '')}
-				on:click={showVideo}
-				data-id={blok.id}
-				id={'video-block-btn-' + blok.id}
-			/>
-			<figure
-				class={'video-block-poster' + (videoVisible ? ' inactive' : '')}
-				on:click={showVideo}
-				data-id={blok.id}
-			>
-				<img class="video-block-poster-img" src={blok.poster.filename} alt="" />
-			</figure>
-			<!-- content here -->
-		{/if}
+		<!-- {#if blok.poster}{/if} -->
+		<div
+			class={'video-block-btn' + (videoPlaying ? ' playing' : '')}
+			on:click={showVideo}
+			data-id={blok.id}
+			id={'video-block-btn-' + blok.id}
+		/>
+		<figure
+			class={'video-block-poster' + (videoVisible ? ' inactive' : '')}
+			on:click={showVideo}
+			data-id={blok.id}
+		>
+			<img class="video-block-poster-img" src={posterUrl} alt={blok.id} />
+		</figure>
 	</div>
 </div>
 

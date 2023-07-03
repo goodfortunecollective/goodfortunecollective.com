@@ -2,6 +2,8 @@ export { default as AlternateListBlock } from './AlternateListBlock.svelte';
 export { default as FiguresBlock } from './FiguresBlock.svelte';
 export { default as VideoBlock } from './VideoBlock.svelte';
 export { default as ImagesBlock } from './ImagesBlock.svelte';
+export { default as ImagesListBlock } from './ImagesListBlock.svelte';
+export { default as ImageListBlock } from './ImageListBlock.svelte';
 export { default as Flex } from './Flex.svelte';
 export { default as Heading_Richtext_2Col } from './Heading_Richtext_2Col.svelte';
 export { default as Heading } from './Heading.svelte';

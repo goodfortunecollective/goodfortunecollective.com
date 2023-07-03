@@ -1,10 +1,7 @@
 <script lang="ts">
-	import { renderRichText } from '@storyblok/svelte';
-
+	import { renderRichText, storyblokEditable } from '@storyblok/svelte';
 	import { Flex } from '$lib/components/layout';
 	import { Heading } from '$lib/components/typography';
-
-	import { storyblokEditable } from '@storyblok/svelte';
 
 	export let blok: any;
 
