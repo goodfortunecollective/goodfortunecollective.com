@@ -6,7 +6,7 @@
 	export let blok: any;
 	export let isWrapped = false;
 
-	if (blok.class.indexOf('wrapped') >= 0) {
+	if (blok.class && blok.class.indexOf('wrapped') >= 0) {
 		isWrapped = true;
 	}
 </script>

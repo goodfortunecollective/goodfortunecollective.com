@@ -2,7 +2,6 @@
 	import { onMount, onDestroy } from 'svelte';
 
 	import { base } from '$app/paths';
-	import { Flex } from '$lib/components/layout';
 	import { Heading } from '$lib/components/typography';
 
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';

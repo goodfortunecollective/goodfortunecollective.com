@@ -6,7 +6,7 @@
 	export let blok: any;
 	export let isAboutBlock = false;
 
-	if (blok.class.indexOf('about-images-block') >= 0) {
+	if (blok.class && blok.class.indexOf('about-images-block') >= 0) {
 		isAboutBlock = true;
 	}
 
