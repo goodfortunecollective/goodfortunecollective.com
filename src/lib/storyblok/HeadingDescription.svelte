@@ -15,24 +15,14 @@
 			>{blok.heading}</Heading
 		>
 		<div class="flex-1 text-lg text text-block">
-			{#each blok.content as b}
-				<StoryblokComponent blok={b} />
-			{/each}
+			<div class="flex flex-col gap-{blok.gap}">
+				{#each blok.content as b}
+					<StoryblokComponent blok={b} />
+				{/each}
+			</div>
 		</div>
 	</div>
 </div>
 
 <style lang="scss">
-	@import '../../vars.scss';
-	.text {
-		color: #929292;
-
-		h4 {
-			font-size: 1.5rem;
-		}
-
-		a {
-			color: #303030;
-		}
-	}
 </style>

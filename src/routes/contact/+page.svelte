@@ -26,16 +26,3 @@
 		<StoryblokComponent blok={data.story.content} />
 	{/if}
 </section>
-
-<style lang="scss">
-	@import '../../vars.scss';
-
-	// .contact {
-	// 	:global(.heading-richtext-2col .title) {
-	// 		// color: #929292;
-	// 	}
-	// 	:global(.heading-richtext-2col .text) {
-	// 		color: #929292;
-	// 	}
-	// }
-</style>
