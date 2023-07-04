@@ -6,9 +6,6 @@
 	import { delay_anim_page } from '$lib/stores';
 	// import VideoWithPreview from '$lib/components/VideoWithPreview.svelte';
 
-	import { Flex } from '$lib/components/layout';
-	import { Heading } from '$lib/components/typography';
-
 	export let data;
 
 	let video!: HTMLElement;
@@ -197,25 +194,9 @@
 </section>
 <div class="section-wrapper" />
 
-<section class="pb-32">
-	<div class="max-w-6xl mx-auto">
-		<Flex class="items-end pt-16">
-			<Heading as="h2" size="h1" class="md:w-1/2">Headline Statement</Heading>
-			<p class="flex-1 text-xl">
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ac feugiat nisl, a
-				cursus orci. Pellentesque sollicitudin feugiat ipsum, eget venenatis urna mollis ac.
-			</p>
-		</Flex>
-	</div>
-</section>
-
-<!--
-<section class="w-screen h-screen">
-	{#if data.story}
-		<StoryblokComponent blok={data.story.content} />
-	{/if}
-</section>
--->
+{#if data.story}
+	<StoryblokComponent blok={data.story.content} />
+{/if}
 
 <style>
 	.section-wrapper {

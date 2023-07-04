@@ -27,7 +27,7 @@
 					<span class="">Fb</span>
 				</a>
 				<a
-					href="https://www.facebook.com/GoodFortuneCollective/"
+					href="https://www.instagram.com/goodfortunecollective/"
 					class="text-gray-400 hover:text-gray-500"
 				>
 					<span class="sr-only">Instagram</span>
@@ -37,7 +37,7 @@
 					<span class="sr-only">Vimeo</span>
 					<span class="">Vi</span>
 				</a>
-				<a href="{base}/" class="text-gray-400 hover:text-gray-500">
+				<a href="https://www.behance.net/" class="text-gray-400 hover:text-gray-500">
 					<span class="sr-only">Behance</span>
 					<span class="">Be</span>
 				</a>

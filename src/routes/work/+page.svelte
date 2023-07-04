@@ -1,14 +1,13 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
 	import { base } from '$app/paths';
-	import { Heading } from '$lib/components/typography';
 	import { ScrollSmoother } from '$lib/gsap';
 	import { Curtains } from '$lib/vendors/curtainsjs/core/Curtains';
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
+	import { onDestroy, onMount } from 'svelte';
 
 	export let data;
-	// console.log(data);
-
+	export let categoriesData = [];
+	export let activeCategory = 'all';
 	let curtains: any = null;
 	let scroll: ScrollSmoother | null = null;
 
@@ -22,10 +21,10 @@
 	function scrollonUpdate(event: any) {
 		// @ts-ignore
 		scroll = ScrollSmoother.get();
-		console.log('event', event.detail);
-		console.log('scroll', scroll);
+		// console.log('event', event.detail);
+		// console.log('scroll', scroll);
 		updateScroll(0, event.detail.offsetY);
-		console.log('scroll', window.pageYOffset);
+		// console.log('scroll', window.pageYOffset);
 		// render scene
 		if (curtains) curtains.needRender();
 	}
@@ -36,7 +35,66 @@
 		categoriesOpened = !categoriesOpened;
 	}
 
+	function categoryOnClick(e) {
+		let $categoryActive = document.getElementsByClassName('category active'),
+			name = e.currentTarget.getAttribute('data-category');
+
+		if (e.currentTarget.className.indexOf('active') == -1) {
+			if ($categoryActive.length) $categoryActive[0].classList.remove('active');
+			e.currentTarget.classList.add('active');
+			activeCategory = name;
+		} else {
+			activeCategory = 'all';
+			e.currentTarget.classList.remove('active');
+		}
+
+		// if (activeCategory) {
+		// 	let $projects = document.getElementsByClassName('project'),
+		// 		$filteredProjects = document.getElementsByClassName('project ' + activeCategory);
+
+		// 	for (var i = 0; i < $projects.length; i++) {
+		// 		$projects[i].classList.remove('active');
+		// 	}
+
+		// 	for (var i = 0; i < $filteredProjects.length; i++) {
+		// 		$filteredProjects[i].classList.add('active');
+		// 	}
+		// }
+
+		e.preventDefault();
+	}
+
 	onMount(() => {
+		// console.log(data.stories);
+
+		// Get project counts by category
+		let storiesLength = data.stories.length;
+
+		let categories = data.categories.data.datasource_entries,
+			categoriesLength = categories.length;
+
+		for (let i = 0; i < categoriesLength; i++) {
+			categoriesData[i] = {
+				name: categories[i].name,
+				slug: categories[i].value,
+				count: 0
+			};
+		}
+
+		for (let indexStory = 0; indexStory < storiesLength; indexStory++) {
+			let categories = data.stories[indexStory].content.category;
+
+			for (let indexCat = 0; indexCat < categories.length; indexCat++) {
+				let category = categories[indexCat];
+				var result = categoriesData.find((item) => item.slug === category);
+				// console.log('category :' + category);
+				// console.log(result);
+				result.count++;
+			}
+		}
+
+		// console.log(categoriesData);
+
 		// we will keep track of all our planes in an array
 		const planes: any = [];
 		let scrollEffect = 0;
@@ -271,30 +329,40 @@
 	/>
 
 	<div
-		class={'flex flex-col mt-12 pr-6 text-sm font-bold uppercase categories' +
+		class={'flex flex-col mt-12 pr-6 text-sm font-bold uppercase tracking-wider ategories' +
 			(categoriesOpened ? ' opened' : '')}
 		id="categories"
 	>
-		<a class="mb-2 category all active" href="#all" data-category="all"
-			>All projects <sup class="text-xs font-normal category-number">03</sup>
+		<a class="mb-2 category all active" href="#all" data-category="all" on:click={categoryOnClick}
+			>All projects
+			{#if data.stories}
+				<sup class="text-xs font-normal category-number">
+					{#if data.stories.length < 10}0{/if}{data.stories.length}</sup
+				>
+			{/if}
 		</a>
-		<a class="mb-2 category" href="#creative-campaigns" data-category="creative-campaigns"
-			>Creative Campaigns <sup class="text-xs font-normal category-number">01</sup>
-		</a>
-		<a class="mb-2 category" href="#branding-identity" data-category="branding-identity"
-			>Branding + Identity <sup class="text-xs font-normal category-number">01</sup>
-		</a>
-		<a class="mb-2 category" href="#live-experiential" data-category="live-experiential"
-			>Live Experiential <sup class="text-xs font-normal category-number">01</sup>
-		</a>
-		<a class="category" href="#social-campaigns" data-category="social-campaigns"
-			>Social Campaigns <sup class="text-xs font-normal category-number">01</sup>
-		</a>
+		{#each data.categories.data.datasource_entries as category, i}
+			{#if categoriesData[i] && categoriesData[i].count > 0}
+				<a
+					class="mb-2 category"
+					href="#{category.value}"
+					data-category={category.value}
+					on:click={categoryOnClick}
+				>
+					{category.name}
+					{#if categoriesData[i]}
+						<sup class="text-xs font-normal category-number"
+							>{#if categoriesData[i].count < 10}0{/if}{categoriesData[i].count}</sup
+						>
+					{/if}
+				</a>
+			{/if}
+		{/each}
 	</div>
 
 	<div id="planes" class="max-w-6xl mx-auto">
 		{#each data.stories as { name, slug, content }}
-			<div class="plane-wrapper">
+			<div class="plane-wrapper project active {content.category.join(' ')}" data-id={slug}>
 				<h2 class="plane-title">{name}</h2>
 				<div class="uppercase plane-client">{content.client}</div>
 				{#if content.category}
@@ -376,7 +444,7 @@
 
 	#categories {
 		position: relative;
-		letter-spacing: 0.05em;
+		// letter-spacing: 0.05em;
 		z-index: 15;
 		overflow: hidden;
 		padding-left: 40px;
@@ -454,10 +522,16 @@
 
 	.plane-wrapper {
 		position: relative;
-
 		width: 75%;
 		height: 60vh;
 		margin: 10vh 25% 10vh 0;
+	}
+
+	.project {
+		display: none;
+		&.active {
+			display: block;
+		}
 	}
 
 	.plane-wrapper:nth-child(even) {
