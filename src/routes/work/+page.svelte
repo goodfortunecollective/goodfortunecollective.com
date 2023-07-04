@@ -48,20 +48,18 @@
 			e.currentTarget.classList.remove('active');
 		}
 
-		// console.log(activeCategory);
+		// if (activeCategory) {
+		// 	let $projects = document.getElementsByClassName('project'),
+		// 		$filteredProjects = document.getElementsByClassName('project ' + activeCategory);
 
-		if (activeCategory) {
-			let $projects = document.getElementsByClassName('project'),
-				$filteredProjects = document.getElementsByClassName('project ' + activeCategory);
+		// 	for (var i = 0; i < $projects.length; i++) {
+		// 		$projects[i].classList.remove('active');
+		// 	}
 
-			// for (var i = 0; i < $projects.length; i++) {
-			// 	$projects[i].classList.remove('active');
-			// }
-
-			// for (var i = 0; i < $filteredProjects.length; i++) {
-			// 	$filteredProjects[i].classList.add('active');
-			// }
-		}
+		// 	for (var i = 0; i < $filteredProjects.length; i++) {
+		// 		$filteredProjects[i].classList.add('active');
+		// 	}
+		// }
 
 		e.preventDefault();
 	}
@@ -532,7 +530,7 @@
 	.project {
 		display: none;
 		&.active {
-			display: flex;
+			display: block;
 		}
 	}
 
