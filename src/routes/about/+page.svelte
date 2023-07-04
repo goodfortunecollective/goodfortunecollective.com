@@ -22,11 +22,14 @@
 	<meta name="description" content="About" />
 </svelte:head>
 
-<section class="pt-[var(--header-height)] pb-32">
+<section class="about pt-[var(--header-height)] pb-32">
 	<!--h-1/2 -->
 	{#if data.story}
 		<StoryblokComponent blok={data.story.content} />
 	{/if}
+</section>
+<section>
+	<!-- <img src="{base}/img/good-fortune-collective-circle.png" alt="Good Fortune Collective" /> -->
 </section>
 <section class="max-w-6xl mx-auto">
 	<div class="flex flex-col items-stretch gap-12 px-8 pt-16 pb-8 lg:flex-row">
@@ -46,6 +49,28 @@
 
 <style lang="scss">
 	@import '../../vars.scss';
+
+	.about {
+		:global(.image-block:after) {
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 90px;
+			height: 90px;
+			background: url('/img/good-fortune-collective-circle.png');
+			background-size: cover;
+			transform: translate(50%, -50%);
+			z-index: 20;
+			content: '';
+		}
+
+		@media (min-width: $media-md) {
+			:global(.image-block:after) {
+				width: 180px;
+				height: 180px;
+			}
+		}
+	}
 
 	.text {
 		color: #929292;
