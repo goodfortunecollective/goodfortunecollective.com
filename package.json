@@ -43,7 +43,6 @@
 	"type": "module",
 	"dependencies": {
 		"@storyblok/svelte": "^3.0.2",
-		"clone-deep": "^4.0.1",
 		"clsx": "^1.2.1",
 		"gsap": "^3.11.5",
 		"tailwind-merge": "^1.12.0"

@@ -2,7 +2,6 @@
 	export let href = { url: '' };
 	export let label = '';
 	export let isExternal = false;
-	// export let class = ''
 </script>
 
 <a

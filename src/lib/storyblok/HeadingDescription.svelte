@@ -1,11 +1,9 @@
 <script lang="ts">
-	import { renderRichText, storyblokEditable } from '@storyblok/svelte';
+	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 	import { Flex } from '$lib/components/layout';
 	import { Heading } from '$lib/components/typography';
 
 	export let blok: any;
-
-	$: content = renderRichText(blok.content);
 </script>
 
 <div
@@ -18,7 +16,9 @@
 			>{blok.heading}</Heading
 		>
 		<div class="flex-1 text-lg text text-block">
-			{@html content}
+			{#each blok.content as b}
+				<StoryblokComponent blok={b} />
+			{/each}
 		</div>
 	</Flex>
 </div>
