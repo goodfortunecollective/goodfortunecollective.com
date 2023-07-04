@@ -2,7 +2,6 @@
 	import { onMount, onDestroy } from 'svelte';
 
 	import { base } from '$app/paths';
-	import { Flex } from '$lib/components/layout';
 	import { Heading } from '$lib/components/typography';
 
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
@@ -29,11 +28,11 @@
 
 <section class="pt-32 pb-32 bg-white">
 	<div class="max-w-6xl mx-auto">
-		<Flex class="pt-32 md:items-end">
-			<Heading as="h2" size="h2" class="w-full md:w-1/2"
+		<div class="flex flex-col lg:flex-row lg:pt-32 gap-8 lg:gap-32 px-8 lg:px-0">
+			<Heading as="h2" size="h2" class="w-full lg:w-1/4"
 				>Current Openings Headline Statement</Heading
 			>
-			<ul class="w-full jobs-list md:w-1/2">
+			<ul class="w-full jobs-list flex-1">
 				{#each data.jobs as { name, slug }}
 					<li class="jobs-list-item">
 						<a
@@ -53,7 +52,7 @@
 					</li>
 				{/each}
 			</ul>
-		</Flex>
+		</div>
 	</div>
 </section>
 

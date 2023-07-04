@@ -1,6 +1,5 @@
 import AlternateListBlock from './AlternateListBlock.svelte';
 import FiguresBlock from './FiguresBlock.svelte';
-import Flex from './Flex.svelte';
 import Heading from './Heading.svelte';
 import HeadingDescription from './HeadingDescription.svelte';
 import HeadlineStatement from './HeadlineStatement.svelte';
@@ -17,7 +16,6 @@ import VideoBlock from './VideoBlock.svelte';
 export const components: any = {
     'alternate-list-block': AlternateListBlock,
     'figures-block': FiguresBlock,
-    flex: Flex,
     heading: Heading,
     'heading-description': HeadingDescription,
     'headline-statement': HeadlineStatement,
