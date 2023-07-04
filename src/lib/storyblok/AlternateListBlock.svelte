@@ -27,7 +27,7 @@
 	// console.log(textClasses);
 </script>
 
-<div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
+<div use:storyblokEditable={blok} {...$$restProps} class={'max-w-6xl mx-auto ' + blok.class}>
 	<div class="px-6">
 		<div class="list md:grid md:grid-cols-12 md:gap-2 py-16 md:py-32 title-side-{blok.titleSide}">
 			<div class={titleClass}>

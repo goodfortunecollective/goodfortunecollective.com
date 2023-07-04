@@ -7,5 +7,5 @@
 </script>
 
 <span use:storyblokEditable={blok} class={blok.class}>
-	<Link {...$$restProps} href={blok.href} label={blok.label} />
+	<Link {...$$restProps} href={blok.href} class={blok.class} label={blok.label} />
 </span>

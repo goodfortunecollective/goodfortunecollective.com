@@ -11,8 +11,11 @@
 	export let blockClasses = 'flex my-12 images-block'; // flex-col
 	export let imageClass = 'image-block';
 	export let imagesCols = ['', '', ''];
+	export let imagesClasses = [];
 
-	if (imagesLength >= 3) {
+	if (imagesLength == 1) {
+		imageClass += ' w-full flex justify-center';
+	} else if (imagesLength >= 3) {
 		imagesCols = [
 			'col-span-10 md:col-start-2 md:col-span-5',
 			'col-start-3 -mt-12 col-span-10 md:col-start-7 md:col-span-5 md:mt-12',
@@ -21,7 +24,6 @@
 		blockClasses += ' grid grid-cols-12 gap-2 ';
 	}
 
-	export let imagesClasses = [];
 	for (let i = 0; i < imagesCols.length; i++) {
 		imagesClasses[i] = imageClass + ' ' + imagesCols[i];
 	}
