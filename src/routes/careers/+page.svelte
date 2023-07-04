@@ -21,7 +21,7 @@
 	<meta name="description" content="Careers" />
 </svelte:head>
 
-<section class="pt-[var(--header-height)] pb-32">
+<section class="pt-[var(--header-height)] pb-32 careers">
 	{#if data.story}
 		<StoryblokComponent blok={data.story.content} />
 	{/if}
@@ -29,7 +29,7 @@
 
 <section class="pt-32 pb-32 bg-white">
 	<div class="max-w-6xl mx-auto">
-		<Flex class="pt-32 md:items-end">
+		<Flex class="pt-32">
 			<Heading as="h2" size="h2" class="w-full md:w-1/2"
 				>Current Openings Headline Statement</Heading
 			>
@@ -37,7 +37,7 @@
 				{#each data.jobs as { name, slug }}
 					<li class="jobs-list-item">
 						<a
-							class="flex items-center w-full py-3 jobs-list-item-link"
+							class="flex items-center w-full py-4 jobs-list-item-link"
 							href="{base}/careers/{slug}"
 						>
 							<span class="jobs-list-item-name">{name}</span>
@@ -59,6 +59,7 @@
 
 <style lang="scss">
 	@import '../../vars.scss';
+
 	.jobs-list-item-link {
 		position: relative;
 		overflow: hidden;
