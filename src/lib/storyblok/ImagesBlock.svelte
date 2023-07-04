@@ -14,7 +14,7 @@
 	export let imagesClasses = [];
 
 	if (imagesLength == 1) {
-		imageClass += ' w-full flex justify-center';
+		blockClasses += ' w-full flex justify-center';
 	} else if (imagesLength >= 3) {
 		imagesCols = [
 			'col-span-10 md:col-start-2 md:col-span-5',
@@ -46,6 +46,8 @@
 	@import '../../vars.scss';
 
 	.image-block {
+		position: relative;
+
 		@media (min-width: $media-md) {
 			&:nth-child(2) {
 				margin-left: -20%;
