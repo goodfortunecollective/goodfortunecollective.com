@@ -5,8 +5,6 @@
 
 	export let blok: any;
 
-	// console.log(blok);
-
 	$: content = renderRichText(blok.content);
 	$: list = renderRichText(blok.list);
 </script>
