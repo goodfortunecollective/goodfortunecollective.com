@@ -9,12 +9,12 @@
 	href={href.url}
 	target={isExternal ? '_blank' : undefined}
 	rel={isExternal ? 'noopener' : undefined}
-	class="uppercase font-bold text-sm tracking-widest"
+	class="flex flex-row items-stretch h-10 text-xs font-bold tracking-widest uppercase"
 >
-	<span class="pr-4">{label}</span>
-	<span class="text-4xl relative"
-		><span class="z-10 absolute">&#10230;</span><span
-			class="block left-3 w-12 h-12 bg-gray-300 rounded-full absolute top-0"
+	<span class="flex items-center pr-4">{label}</span>
+	<span class="relative flex text-4xl"
+		><span class="absolute z-10 font-normal top-[-6px]">&#10230;</span><span
+			class="absolute top-0 block w-10 h-10 bg-gray-300 rounded-full left-3"
 		/></span
 	>
 </a>

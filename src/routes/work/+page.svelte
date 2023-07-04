@@ -409,7 +409,7 @@
 
 	#categories {
 		position: relative;
-		letter-spacing: 0.05em;
+		// letter-spacing: 0.05em;
 		z-index: 15;
 		overflow: hidden;
 		padding-left: 40px;

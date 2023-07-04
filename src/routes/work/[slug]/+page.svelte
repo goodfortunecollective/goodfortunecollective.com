@@ -29,13 +29,13 @@
 			<div class="flex flex-row gap-4 project-header-infos">
 				{#if data.story.content.client}
 					<div class="flex flex-col md:w-1/5 project-header-col">
-						<h5 class="mb-2 text-sm font-bold uppercase">Client</h5>
+						<h5 class="mb-2 text-sm font-bold tracking-wide uppercase">Client</h5>
 						{data.story.content.client}
 					</div>
 				{/if}
 				{#if data.story.content.solutions}
 					<div class="flex flex-col md:w-1/5 project-header-col">
-						<h5 class="mb-2 text-sm font-bold uppercase">Solutions</h5>
+						<h5 class="mb-2 text-sm font-bold tracking-wide uppercase">Solutions</h5>
 						{#each data.story.content.solutions as item}
 							<span>{item}</span>
 						{/each}
@@ -43,7 +43,7 @@
 				{/if}
 				{#if data.story.content.roles}
 					<div class="flex flex-col md:w-1/5 project-header-col">
-						<h5 class="mb-2 text-sm font-bold uppercase">Roles</h5>
+						<h5 class="mb-2 text-sm font-bold tracking-wide uppercase">Roles</h5>
 						{#each data.story.content.roles as item}
 							<span>{item}</span>
 						{/each}
@@ -51,7 +51,7 @@
 				{/if}
 				{#if data.story.content.deliverables}
 					<div class="flex flex-col md:w-1/5 project-header-col">
-						<h5 class="mb-2 text-sm font-bold uppercase">Deliverables</h5>
+						<h5 class="mb-2 text-sm font-bold tracking-wide uppercase">Deliverables</h5>
 						{#each data.story.content.deliverables as item}
 							<span>{item}</span>
 						{/each}
@@ -94,7 +94,6 @@
 
 	.project-header-col {
 		h5 {
-			letter-spacing: 0.02em;
 			color: $green;
 		}
 		p {

@@ -10,9 +10,17 @@
 
 	export let videoVisible = false;
 	export let videoPlaying = false;
+	export let btnHidden = false;
 	export let btn = null;
 	export let video = null;
 	export let posterUrl = null;
+
+	function contOnEnter(e) {
+		btnHidden = false;
+	}
+	function contOnLeave(e) {
+		btnHidden = true;
+	}
 
 	function contOnMove(e) {
 		let x = e.pageX - e.currentTarget.getBoundingClientRect().left,
@@ -55,6 +63,8 @@
 	<div
 		class="flex items-center justify-center my-12 video-block"
 		on:mousemove={contOnMove}
+		on:mouseenter={contOnEnter}
+		on:mouseleave={contOnLeave}
 		data-id={blok.id}
 	>
 		{#if blok.id && !blok.file}
@@ -80,7 +90,7 @@
 		{/if}
 		<!-- {#if blok.poster}{/if} -->
 		<div
-			class={'video-block-btn' + (videoPlaying ? ' playing' : '')}
+			class={'video-block-btn' + (videoPlaying ? ' playing' : '') + (btnHidden ? ' hidden' : '')}
 			on:click={showVideo}
 			data-id={blok.id}
 			id={'video-block-btn-' + blok.id}
@@ -159,6 +169,10 @@
 			&:after {
 				opacity: 1;
 			}
+		}
+
+		&.hidden {
+			opacity: 0;
 		}
 	}
 

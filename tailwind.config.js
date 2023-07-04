@@ -25,6 +25,15 @@ export default {
 				21: '21',
 				22: '22',
 				23: '23'
+			},
+			letterSpacing: {
+				tightest: '-.075em',
+				tighter: '-.05em',
+				tight: '-.025em',
+				normal: '0',
+				wide: '.025em',
+				wider: '.05em',
+				widest: '.15em'
 			}
 		}
 	},

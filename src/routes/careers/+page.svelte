@@ -41,7 +41,9 @@
 							href="{base}/careers/{slug}"
 						>
 							<span class="jobs-list-item-name">{name}</span>
-							<span class="text-xs font-bold uppercase jobs-list-item-action">Apply now</span>
+							<span class="text-xs font-bold tracking-widest uppercase jobs-list-item-action"
+								>Apply now</span
+							>
 							<span class="arrow arrow-default" /><span
 								class="flex items-center justify-center jobs-list-item-circle"
 							>
@@ -123,7 +125,6 @@
 
 	.jobs-list-item-action {
 		position: absolute;
-		letter-spacing: 0.05em;
 		right: 70px;
 		transform: translate(-20%, 0);
 		opacity: 0;

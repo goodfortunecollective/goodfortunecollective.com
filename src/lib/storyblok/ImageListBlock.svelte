@@ -11,7 +11,9 @@
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	{@html content}
-	<div class="grid grid-cols-2 pt-4 mt-4 text-sm uppercase gap-y-4 md:pt-8 md:mt-12 list">
+	<div
+		class="grid grid-cols-2 pt-4 mt-4 text-sm tracking-wide uppercase gap-y-4 md:pt-8 md:mt-12 list"
+	>
 		{@html list}
 	</div>
 </div>
@@ -21,7 +23,6 @@
 
 	.list {
 		position: relative;
-		letter-spacing: 0.02em;
 
 		&:before,
 		&:after {

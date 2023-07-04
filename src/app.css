@@ -21,6 +21,20 @@
     .perspective-800 {
         perspective: 800px;
     }
+
+		.text-block ul li{
+			position: relative;
+			padding-left: 15px;
+		}
+
+		.text-block ul li:before {
+			position: absolute;
+			top: 11px; left: 0;
+			width: 6px; height: 6px;
+			border-radius: 100%;
+			background: currentColor;
+			content:'';
+		}
 }
 
 :root {
