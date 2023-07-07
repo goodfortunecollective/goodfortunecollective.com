@@ -5,35 +5,49 @@
 
 	export let blok: any;
 	export let isAboutBlock = false;
+	export let layout = 'normal';
 
 	if (blok.class && blok.class.indexOf('about-images-block') >= 0) {
 		isAboutBlock = true;
+	}
+
+	if (blok.layout && blok.layout == 'columns') {
+		layout = 'columns';
 	}
 
 	export let imagesLength = blok.images.length;
 	export let blockClasses = 'flex py-12 images-block'; // flex-col
 	export let imageClass = 'image-block';
 	export let imagesCols = ['', '', ''];
-	export let imagesClasses = [];
+	export let imagesClasses = ['', '', ''];
 
 	if (imagesLength == 1) {
-		blockClasses += ' w-full flex justify-center';
+		blockClasses += ' w-full justify-center';
 	} else if (imagesLength >= 3) {
-		imagesCols = [
-			'col-span-10 md:col-start-2 md:col-span-5',
-			'col-start-3 -mt-12 col-span-10 md:col-start-7 md:col-span-5 md:mt-12',
-			'col-start-2 col-span-10 md:col-start-4 md:col-span-5'
-		];
-
-		if (isAboutBlock) {
+		// normal
+		if (layout == 'normal') {
 			imagesCols = [
-				'col-span-10 md:col-start-2 md:col-span-4',
-				'col-start-3 -mt-12 col-span-10 md:col-start-7 md:col-span-4 md:mt-12',
-				'col-start-2 col-span-10 md:col-start-4 md:col-span-4'
+				'col-span-10 md:col-start-2 md:col-span-5',
+				'col-start-3 -mt-12 col-span-10 md:col-start-7 md:col-span-5 md:mt-12',
+				'col-start-2 col-span-10 md:col-start-4 md:col-span-5'
 			];
-		}
 
-		blockClasses += ' grid grid-cols-12 gap-2 ';
+			if (isAboutBlock) {
+				imagesCols = [
+					'col-span-10 md:col-start-2 md:col-span-4',
+					'col-start-3 -mt-12 col-span-10 md:col-start-7 md:col-span-4 md:mt-12',
+					'col-start-2 col-span-10 md:col-start-4 md:col-span-4'
+				];
+			}
+
+			blockClasses += ' grid grid-cols-12 gap-2 ';
+
+			// column
+		} else {
+			// imagesCols = [];
+			blockClasses += ' max-w-6xl mx-auto md:flex-row md:gap-4';
+			imageClass = 'basis-full';
+		}
 	}
 
 	for (let i = 0; i < imagesCols.length; i++) {
@@ -48,10 +62,15 @@
 				<img
 					class="image-block-img"
 					src={item.filename}
-					alt={item.title ? item.title : 'Image ' + i}
+					alt={item.name ? item.name : 'Image ' + i}
 				/>
-				{#if item.title}
-					<figcaption class="image-block-title">{item.title}</figcaption>
+				{#if item.name && blok.show_title}
+					<figcaption class="mt-4 font-bold tracking-widest uppercase image-block-caption">
+						<span class="caption-number"
+							>{#if i <= 10}0{/if}{i + 1}</span
+						>
+						<span class="opacity-50 caption-text">{item.name}</span>
+					</figcaption>
 				{/if}
 			</figure>
 		{/each}
@@ -77,6 +96,21 @@
 			&:nth-child(2) {
 				margin-left: -20%;
 			}
+		}
+	}
+
+	.caption-number {
+		position: relative;
+		margin-right: 70px;
+
+		&:after {
+			position: absolute;
+			top: 9px;
+			right: -60px;
+			width: 50px;
+			height: 1px;
+			background: $white;
+			content: '';
 		}
 	}
 </style>
