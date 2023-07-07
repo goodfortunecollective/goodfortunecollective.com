@@ -26,7 +26,7 @@
 	{/if}
 </section>
 
-<section class="pt-32 pb-32 bg-white">
+<!-- <section class="pt-32 pb-32 bg-white">
 	<div class="max-w-6xl mx-auto">
 		<div class="flex flex-col gap-8 px-8 lg:flex-row lg:pt-32 lg:gap-32 lg:px-0">
 			<Heading as="h2" size="h2" class="w-full lg:w-1/4"
@@ -54,157 +54,157 @@
 			</ul>
 		</div>
 	</div>
-</section>
+</section> -->
 
 <style lang="scss">
-	@import '../../vars.scss';
+	// @import '../../vars.scss';
 
-	.jobs-list-item-link {
-		position: relative;
-		overflow: hidden;
+	// .jobs-list-item-link {
+	// 	position: relative;
+	// 	overflow: hidden;
 
-		&:before,
-		&:after {
-			position: absolute;
-			right: 0;
-			bottom: 0;
-			height: 1px;
-			content: '';
-		}
-
-		&:before {
-			left: 0;
-			background: $gray;
-		}
-
-		&:after {
-			width: 100%;
-			transform: translate(-100%, 0);
-			background: $black;
-			transition: 0.6s width ease-out, 0.6s transform ease-out;
-		}
-
-		&:hover {
-			.jobs-list-item-action {
-				transform: translate(0, 0);
-				opacity: 1;
-			}
-
-			.jobs-list-item-circle {
-				&:before {
-					transform: scale(1) translate(0, 0);
-				}
-			}
-
-			.arrow-default {
-				transform: scale(0, 1) translate(45px, 0);
-			}
-
-			.arrow-hover {
-				transform: translate(0, 0);
-			}
-
-			&:after {
-				// animation: jobs-list-hover ease-out 0.8s;
-				width: 20%;
-				transform: translate(0, 0);
-			}
-		}
-	}
-
-	// @keyframes jobs-list-hover {
-	// 	0% {
-	// 		transform: translate(-100%, 0);
-	// 		width: 100%;
+	// 	&:before,
+	// 	&:after {
+	// 		position: absolute;
+	// 		right: 0;
+	// 		bottom: 0;
+	// 		height: 1px;
+	// 		content: '';
 	// 	}
-	// 	100% {
-	// 		transform: translate(0, 0);
-	// 		width: 20%;
+
+	// 	&:before {
+	// 		left: 0;
+	// 		background: $gray;
+	// 	}
+
+	// 	&:after {
+	// 		width: 100%;
+	// 		transform: translate(-100%, 0);
+	// 		background: $black;
+	// 		transition: 0.6s width ease-out, 0.6s transform ease-out;
+	// 	}
+
+	// 	&:hover {
+	// 		.jobs-list-item-action {
+	// 			transform: translate(0, 0);
+	// 			opacity: 1;
+	// 		}
+
+	// 		.jobs-list-item-circle {
+	// 			&:before {
+	// 				transform: scale(1) translate(0, 0);
+	// 			}
+	// 		}
+
+	// 		.arrow-default {
+	// 			transform: scale(0, 1) translate(45px, 0);
+	// 		}
+
+	// 		.arrow-hover {
+	// 			transform: translate(0, 0);
+	// 		}
+
+	// 		&:after {
+	// 			// animation: jobs-list-hover ease-out 0.8s;
+	// 			width: 20%;
+	// 			transform: translate(0, 0);
+	// 		}
 	// 	}
 	// }
 
-	.jobs-list-item-action {
-		position: absolute;
-		right: 70px;
-		transform: translate(-20%, 0);
-		opacity: 0;
-		transition: 0.4s transform ease-out, 0.4s opacity ease-out;
-	}
+	// // @keyframes jobs-list-hover {
+	// // 	0% {
+	// // 		transform: translate(-100%, 0);
+	// // 		width: 100%;
+	// // 	}
+	// // 	100% {
+	// // 		transform: translate(0, 0);
+	// // 		width: 20%;
+	// // 	}
+	// // }
 
-	.jobs-list-item-circle {
-		position: absolute;
-		right: 0;
-		width: 36px;
-		height: 36px;
-		border-radius: 36px;
-		overflow: hidden;
-		background: $grayUltraLight;
-		overflow: hidden;
-		z-index: 8;
+	// .jobs-list-item-action {
+	// 	position: absolute;
+	// 	right: 70px;
+	// 	transform: translate(-20%, 0);
+	// 	opacity: 0;
+	// 	transition: 0.4s transform ease-out, 0.4s opacity ease-out;
+	// }
 
-		&:before {
-			position: absolute;
-			top: 0;
-			right: 0;
-			bottom: 0;
-			left: 0;
-			border-radius: 36px;
-			transform: scale(1.2) translate(-100%, 0);
-			background: $black;
-			z-index: 9;
-			content: '';
-			transition: 0.4s transform ease-out, 0.4s opacity ease-out;
-		}
-	}
+	// .jobs-list-item-circle {
+	// 	position: absolute;
+	// 	right: 0;
+	// 	width: 36px;
+	// 	height: 36px;
+	// 	border-radius: 36px;
+	// 	overflow: hidden;
+	// 	background: $grayUltraLight;
+	// 	overflow: hidden;
+	// 	z-index: 8;
 
-	.arrow {
-		position: absolute;
-		width: 50%;
-		height: 1px;
-		transition: 0.4s transform ease-out, 0.4s opacity ease-out;
+	// 	&:before {
+	// 		position: absolute;
+	// 		top: 0;
+	// 		right: 0;
+	// 		bottom: 0;
+	// 		left: 0;
+	// 		border-radius: 36px;
+	// 		transform: scale(1.2) translate(-100%, 0);
+	// 		background: $black;
+	// 		z-index: 9;
+	// 		content: '';
+	// 		transition: 0.4s transform ease-out, 0.4s opacity ease-out;
+	// 	}
+	// }
 
-		&:before,
-		&:after {
-			width: 4px;
-			height: 1px;
-			position: absolute;
-			top: 0;
-			right: 0;
-			content: '';
-		}
+	// .arrow {
+	// 	position: absolute;
+	// 	width: 50%;
+	// 	height: 1px;
+	// 	transition: 0.4s transform ease-out, 0.4s opacity ease-out;
 
-		&:before {
-			transform: rotate(40deg);
-			transform-origin: top right;
-		}
-		&:after {
-			transform: rotate(-40deg);
-			transform-origin: bottom right;
-		}
+	// 	&:before,
+	// 	&:after {
+	// 		width: 4px;
+	// 		height: 1px;
+	// 		position: absolute;
+	// 		top: 0;
+	// 		right: 0;
+	// 		content: '';
+	// 	}
 
-		&.arrow-default {
-			width: 38px;
-			right: 15px;
-			background: $grayLight;
-			z-index: 15;
-			transform-origin: 100% 50%;
+	// 	&:before {
+	// 		transform: rotate(40deg);
+	// 		transform-origin: top right;
+	// 	}
+	// 	&:after {
+	// 		transform: rotate(-40deg);
+	// 		transform-origin: bottom right;
+	// 	}
 
-			&:before,
-			&:after {
-				background: $grayLight;
-			}
-		}
+	// 	&.arrow-default {
+	// 		width: 38px;
+	// 		right: 15px;
+	// 		background: $grayLight;
+	// 		z-index: 15;
+	// 		transform-origin: 100% 50%;
 
-		&.arrow-hover {
-			width: 38%;
-			background: $white;
-			transform: translate(-100%, 0);
-			z-index: 10;
+	// 		&:before,
+	// 		&:after {
+	// 			background: $grayLight;
+	// 		}
+	// 	}
 
-			&:before,
-			&:after {
-				background: $white;
-			}
-		}
-	}
+	// 	&.arrow-hover {
+	// 		width: 38%;
+	// 		background: $white;
+	// 		transform: translate(-100%, 0);
+	// 		z-index: 10;
+
+	// 		&:before,
+	// 		&:after {
+	// 			background: $white;
+	// 		}
+	// 	}
+	// }
 </style>
