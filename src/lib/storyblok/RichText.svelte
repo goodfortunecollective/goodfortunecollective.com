@@ -46,3 +46,9 @@
 		{/if}
 	{/each}
 </div>
+
+<style lang="scss">
+	h3 {
+		font-size: 3rem;
+	}
+</style>

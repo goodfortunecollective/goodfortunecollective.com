@@ -10,7 +10,7 @@
 	{...$$restProps}
 	class={'heading-richtext-2col max-w-5xl mx-auto ' + blok.class}
 >
-	<div class="flex flex-col lg:flex-row px-8 lg:px-24 pt-32 gap-8 lg:gap-0">
+	<div class="flex flex-col gap-8 px-8 pt-32 lg:flex-row lg:px-24 lg:gap-0">
 		<Heading as="h2" size="h5" class="font-bold tracking-widest uppercase md:w-1/2 title"
 			>{blok.heading}</Heading
 		>
@@ -25,4 +25,11 @@
 </div>
 
 <style lang="scss">
+	.text-block {
+		:global(p),
+		:global(h3),
+		:global(ul) {
+			color: #929292;
+		}
+	}
 </style>

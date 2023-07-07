@@ -6,6 +6,7 @@ import HeadlineStatement from './HeadlineStatement.svelte';
 import ImageListBlock from './ImageListBlock.svelte';
 import ImagesBlock from './ImagesBlock.svelte';
 import ImagesListBlock from './ImagesListBlock.svelte';
+import TextColsBlock from './TextColsBlock.svelte';
 import JobList from './JobList.svelte';
 import SocialLinks from './SocialLinks.svelte';
 import Link from './Link.svelte';
@@ -24,6 +25,7 @@ export const components: any = {
     'image-list-block': ImageListBlock,
     'images-block': ImagesBlock,
     'images-list-block': ImagesListBlock,
+    'text-cols-block': TextColsBlock,
     'job-list': JobList,
     'social-links': SocialLinks,
     link: Link,
