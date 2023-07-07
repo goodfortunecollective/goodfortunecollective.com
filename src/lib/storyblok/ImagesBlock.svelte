@@ -65,6 +65,11 @@
 		background: #bec6c4;
 	}
 
+	.black-bg {
+		background: #1c1c1c;
+		color: $white;
+	}
+
 	.image-block {
 		position: relative;
 
