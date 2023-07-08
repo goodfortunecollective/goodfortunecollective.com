@@ -1,5 +1,6 @@
 <script>
 	import { base } from '$app/paths';
+	import SocialLinks from '$lib/storyblok/SocialLinks.svelte';
 </script>
 
 <footer id="footer" class="bg-white">
@@ -18,7 +19,10 @@
 			</div>
 		</div>
 		<div class="py-2 md:flex md:items-center md:justify-between">
-			<div class="flex justify-center pb-8 space-x-6 text-sm md:pb-0">
+			<div class="flex justify-center pt-2 pb-8 text-sm text-gray-400 md:justify-start md:pb-0">
+				<SocialLinks />
+			</div>
+			<!-- <div class="flex justify-center pb-8 space-x-6 text-sm md:pb-0">
 				<a
 					href="https://www.facebook.com/GoodFortuneCollective/"
 					class="text-gray-400 hover:text-gray-500"
@@ -41,7 +45,7 @@
 					<span class="sr-only">Behance</span>
 					<span class="">Be</span>
 				</a>
-			</div>
+			</div> -->
 			<div>
 				<p class="text-xs leading-5 text-center text-gray-500 uppercase">
 					&copy; {new Date().getFullYear().toString()} Good Fortune Collective. All rights reserved.
