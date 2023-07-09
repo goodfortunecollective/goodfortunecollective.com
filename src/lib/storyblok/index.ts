@@ -1,37 +1,44 @@
-import AlternateListBlock from './AlternateListBlock.svelte';
-import FiguresBlock from './FiguresBlock.svelte';
+import AlternateList from './AlternateList.svelte';
+import Container from './Container.svelte';
+import Figure from './Figure.svelte';
+import Figures from './Figures.svelte';
 import Heading from './Heading.svelte';
 import HeadingDescription from './HeadingDescription.svelte';
 import HeadlineStatement from './HeadlineStatement.svelte';
-import ImageListBlock from './ImageListBlock.svelte';
-import ImagesBlock from './ImagesBlock.svelte';
-import ImagesListBlock from './ImagesListBlock.svelte';
-import TextColsBlock from './TextColsBlock.svelte';
+import HeadlineVideo from './HeadlineVideo.svelte';
+import ImageList from './ImageList.svelte';
+import Images from './Images.svelte';
+import ImagesList from './ImagesList.svelte';
 import JobList from './JobList.svelte';
-import SocialLinks from './SocialLinks.svelte';
 import Link from './Link.svelte';
 import Page from './Page.svelte';
-import Project from './Project.svelte';
 import RichText from './RichText.svelte';
+import SEO from './SEO.svelte';
+import SocialLinks from './SocialLinks.svelte';
 import Text from './Text.svelte';
-import VideoBlock from './VideoBlock.svelte';
+import TextCols from './TextCols.svelte';
+import Video from './Video.svelte';
 
 export const components: any = {
-    'alternate-list-block': AlternateListBlock,
-    'figures-block': FiguresBlock,
+    'alternate-list': AlternateList,
+    'container': Container,
+    'figure': Figure,
+    'figures': Figures,
     heading: Heading,
     'heading-description': HeadingDescription,
     'headline-statement': HeadlineStatement,
-    'image-list-block': ImageListBlock,
-    'images-block': ImagesBlock,
-    'images-list-block': ImagesListBlock,
-    'text-cols-block': TextColsBlock,
+    'headline-video': HeadlineVideo,
+    'image-list': ImageList,
+    'images': Images,
+    'images-list': ImagesList,
     'job-list': JobList,
-    'social-links': SocialLinks,
     link: Link,
     page: Page,
-    project: Project,
+    project: Page,
     'rich-text': RichText,
+    seo: SEO,
+    'social-links': SocialLinks,
     text: Text,
-    'video-block': VideoBlock,
+    'text-cols': TextCols,
+    'video': Video,
 };

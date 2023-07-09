@@ -38,5 +38,5 @@ export default {
 		}
 	},
 	plugins: [require('@tailwindcss/typography')],
-	safelist: []
+	safelist: ['bg-gray-200']
 };

@@ -6,7 +6,8 @@
 	import { storyblokEditable, getStoryblokApi } from '@storyblok/svelte';
 
 	export let blok: any;
-	export let jobs: any;
+
+	let jobs: any;
 
 	onMount(async () => {
 		const storyblokApi = getStoryblokApi();

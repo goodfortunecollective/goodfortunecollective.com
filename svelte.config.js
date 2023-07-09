@@ -18,6 +18,9 @@ const config = {
 			precompress: false,
 			strict: true,
 		}),
+		alias: {
+			'@storyblok/svelte': './node_modules/@storyblok/svelte',
+		},
 		paths: {
 			base: process.env.NODE_ENV === "production" ? "/goodfortunecollective.com" : "",
 		},

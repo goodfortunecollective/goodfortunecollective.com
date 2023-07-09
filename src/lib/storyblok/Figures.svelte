@@ -16,21 +16,9 @@
 		</div>
 		<div class="mb-8 text-center block-content">{@html content}</div>
 		<div class="grid grid-cols-2 gap-2 figures-block-children md:grid-cols-4">
-			{#each blok.children as item, i}
-				<div class="mb-12 figure-block md:mb-0">
-					<div class="mb-4 font-bold md:mb-8 text-7xl md:text-9xl figure-block-title">
-						{item.title}
-					</div>
-					<div class="figure-block-content">
-						{item.content}
-						<!-- <p><StoryblokComponent blok={item} /></p> -->
-					</div>
-				</div>
+			{#each blok.children as b}
+				<StoryblokComponent blok={b} />
 			{/each}
 		</div>
 	</div>
 </div>
-
-<style lang="scss">
-	// @import '../../vars.scss';
-</style>

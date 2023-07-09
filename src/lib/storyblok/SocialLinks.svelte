@@ -4,8 +4,7 @@
 	// import { Heading } from '$lib/components/typography';
 	import { getStoryblokApi } from '@storyblok/svelte'; // storyblokEditable
 
-	// export let blok: any;
-	export let links: any;
+	let links: any;
 
 	onMount(async () => {
 		const storyblokApi = getStoryblokApi();

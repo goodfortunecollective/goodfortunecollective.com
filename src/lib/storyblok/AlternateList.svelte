@@ -24,7 +24,6 @@
 	for (let i = 0; i < textCols.length; i++) {
 		textClasses[i] = textClass + ' ' + textCols[i];
 	}
-	// console.log(textClasses);
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={'max-w-6xl mx-auto ' + blok.class}>
