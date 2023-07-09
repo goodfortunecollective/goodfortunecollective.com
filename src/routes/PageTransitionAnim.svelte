@@ -1,7 +1,7 @@
 <script lang="ts">
+	import { beforeNavigate } from '$app/navigation';
 	import { gsap, ScrollSmoother, ScrollTrigger } from '$lib/gsap';
 	import { cls } from '$lib/styles';
-	import { beforeNavigate } from '$app/navigation';
 
 	let background!: HTMLElement;
 	let isTransition: boolean = false;

@@ -1,6 +1,11 @@
 <script lang="ts">
-	import { RichTextSchema, storyblokEditable, type SbBlokData } from '@storyblok/svelte';
-	import { renderRichText } from '@storyblok/svelte';
+	import {
+		renderRichText,
+		RichTextSchema,
+		storyblokEditable,
+		type SbBlokData
+	} from '@storyblok/svelte';
+
 	import { components } from './';
 
 	export let blok: RichTextProps;

@@ -1,13 +1,7 @@
 <script lang="ts">
-	import { Heading } from '$lib/components/typography';
-
 	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 
 	export let blok: any;
-
-	// console.log(blok);
-
-	// export let textClass = 'md:col-span-6 list-item list-item-text mb-12 md:mb-24';
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>

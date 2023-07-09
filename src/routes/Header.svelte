@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { base } from '$app/paths';
 	import { fade, fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
 
+	import { base } from '$app/paths';
 	import { gsap } from '$lib/gsap';
-
 	import { Gfc } from '$lib/components';
 
 	const navigation = [

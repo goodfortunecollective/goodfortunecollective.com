@@ -8,8 +8,8 @@ export async function load({ parent }) {
         starts_with: 'projects',
     });
 
-    const categories = await storyblokApi.get('cdn/datasource_entries',{
-        datasource: 'categories'
+    const categories = await storyblokApi.get('cdn/datasource_entries', {
+        datasource: 'project-categories'
     });
 
     return {

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { custom_event } from 'svelte/internal';
-	import { createEventDispatcher } from 'svelte';
 
 	import { ScrollSmoother } from '$lib/gsap';
 
@@ -20,8 +19,6 @@
 	let scroll: ScrollSmoother | null = null;
 
 	let ref: any;
-
-	const dispatch = createEventDispatcher();
 
 	onMount(() => {
 		// @ts-ignore

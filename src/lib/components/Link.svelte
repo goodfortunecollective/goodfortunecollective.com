@@ -20,7 +20,7 @@
 >
 
 <style lang="scss">
-	@import '../../../vars.scss';
+	@import '../../vars.scss';
 
 	.link {
 		&:hover {

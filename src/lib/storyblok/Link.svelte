@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { storyblokEditable } from '@storyblok/svelte';
 
-	import { Link } from '$lib/components/layout';
+	import { Link } from '$lib/components';
 
 	export let blok: any;
 </script>

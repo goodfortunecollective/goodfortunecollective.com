@@ -1,12 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { Heading } from '$lib/components/typography';
+	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 	import { gsap } from 'gsap';
 
-	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
-
 	export let blok: any;
-	// console.log(blok);
 
 	export let videoVisible = false;
 	export let videoPlaying = false;

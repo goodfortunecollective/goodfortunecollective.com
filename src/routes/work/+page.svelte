@@ -1,9 +1,10 @@
 <script lang="ts">
+	import { onDestroy, onMount } from 'svelte';
+
 	import { base } from '$app/paths';
 	import { ScrollSmoother } from '$lib/gsap';
 	import { Curtains } from '$lib/vendors/curtainsjs/core/Curtains';
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
-	import { onDestroy, onMount } from 'svelte';
 
 	export let data;
 	export let categoriesData = [];

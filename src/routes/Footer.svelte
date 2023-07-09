@@ -1,5 +1,4 @@
-<script>
-	import { base } from '$app/paths';
+<script lang="ts">
 	import SocialLinks from '$lib/storyblok/SocialLinks.svelte';
 </script>
 

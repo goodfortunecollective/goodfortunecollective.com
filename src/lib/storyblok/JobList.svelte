@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { storyblokEditable, getStoryblokApi } from '@storyblok/svelte';
+
 	import { base } from '$app/paths';
 	import { dev } from '$app/environment';
-	import { Heading } from '$lib/components/typography';
-	import { storyblokEditable, getStoryblokApi } from '@storyblok/svelte';
+	import { Heading } from '$lib/components';
 
 	export let blok: any;
 

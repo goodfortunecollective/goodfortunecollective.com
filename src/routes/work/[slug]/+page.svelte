@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
-	import { Heading } from '$lib/components/typography';
 	import { useStoryblokBridge, StoryblokComponent, renderRichText } from '@storyblok/svelte';
 
 	import { base } from '$app/paths';
+	import { Heading } from '$lib/components';
 
 	export let data;
 	$: description = renderRichText(data.story.content.description);

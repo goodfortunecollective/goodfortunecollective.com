@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
-	import { Heading } from '$lib/components/typography';
+
+	import { Heading } from '$lib/components';
 
 	export let blok: any;
 </script>

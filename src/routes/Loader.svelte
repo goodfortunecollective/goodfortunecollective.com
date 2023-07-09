@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { dev } from '$app/environment';
-	import { onMount } from 'svelte';
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 
+	import { dev } from '$app/environment';
 	import { gsap } from '$lib/gsap';
 	import { cls } from '$lib/styles';
 	import { delay_anim_page } from '$lib/stores';
