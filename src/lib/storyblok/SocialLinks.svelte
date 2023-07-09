@@ -14,10 +14,10 @@
 	});
 </script>
 
-<div class="flex social-links">
+<div class="flex">
 	{#if links}
 		{#each links.data.datasource_entries as item}
-			<a class="mr-2 social-link" href={item.value} target="_blank">{item.name}</a>
+			<a class="mr-2" href={item.value} target="_blank">{item.name}</a>
 		{/each}
 	{/if}
 </div>
