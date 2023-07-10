@@ -376,11 +376,13 @@
 				<div class="plane-inner">
 					<div class="plane">
 						<a href="{base}/work/{slug}">
-							<!-- src={content.thumbnail
-									? content.thumbnail.filename
-									: 'https://source.unsplash.com/random/?Motion&1'} -->
 							<img
-								src="https://source.unsplash.com/random/?Motion&1"
+								src={content.thumbnail
+									? content.thumbnail.filename.replace(
+											'//a-us.storyblok.com',
+											'//a2-us.storyblok.com'
+									  )
+									: 'https://source.unsplash.com/random/?Motion&1'}
 								crossorigin=""
 								data-sampler="planeTexture"
 								alt={name}
