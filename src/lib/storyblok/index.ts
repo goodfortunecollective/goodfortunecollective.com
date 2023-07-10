@@ -14,6 +14,7 @@ import Link from './Link.svelte';
 import Page from './Page.svelte';
 import RichText from './RichText.svelte';
 import SEO from './SEO.svelte';
+import SocialLink from './SocialLink.svelte';
 import SocialLinks from './SocialLinks.svelte';
 import Text from './Text.svelte';
 import TextCols from './TextCols.svelte';
@@ -37,6 +38,7 @@ export const components: any = {
     project: Page,
     'rich-text': RichText,
     seo: SEO,
+    'social-link': SocialLink,
     'social-links': SocialLinks,
     text: Text,
     'text-cols': TextCols,

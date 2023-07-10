@@ -1,5 +1,5 @@
 <script lang="ts">
-	import SocialLinks from '$lib/storyblok/SocialLinks.svelte';
+	// import SocialLinks from '$lib/storyblok/SocialLinks.svelte';
 </script>
 
 <footer id="footer" class="bg-white">
@@ -19,7 +19,7 @@
 		</div>
 		<div class="py-2 md:flex md:items-center md:justify-between">
 			<div class="flex justify-center pt-2 pb-8 text-sm text-gray-400 md:justify-start md:pb-0">
-				<SocialLinks />
+				<!--<SocialLinks />-->
 			</div>
 			<!-- <div class="flex justify-center pb-8 space-x-6 text-sm md:pb-0">
 				<a
