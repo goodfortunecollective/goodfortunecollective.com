@@ -64,7 +64,8 @@
 			starts_with: 'projects'
 		});
 
-		// console.log(projects);
+		initCurtains();
+		// await initCurtains();
 
 		if (blok.show_categories) {
 			categories = await storyblokApi.get('cdn/datasource_entries', {
@@ -98,6 +99,16 @@
 			}
 		}
 
+		return () => {
+			// this function is called when the component is destroyed
+			if (!useNativeScroll) {
+				window.removeEventListener('smoothScrollUpdate', scrollonUpdate);
+			}
+		};
+	});
+
+	function initCurtains() {
+		console.log('Init curtains');
 		// we will keep track of all our planes in an array
 		const planes: any = [];
 		let scrollEffect = 0;
@@ -105,6 +116,9 @@
 		// get our planes elements
 		const planeElements = document.getElementsByClassName('plane');
 		const useNativeScroll = false;
+
+		console.log(planeElements);
+		console.log(planeElements.length);
 
 		if (!useNativeScroll) {
 			window.addEventListener('smoothScrollUpdate', scrollonUpdate);
@@ -229,86 +243,79 @@
 			}
 		};
 
-		// add our planes and handle them
+		// add our planes and handle them-
 		for (let i = 0; i < planeElements.length; i++) {
 			const plane = new Plane(curtains, planeElements[i], params);
-
 			planes.push(plane);
 
 			handlePlanes(i);
 		}
+	}
 
-		// handle all the planes
-		function handlePlanes(index) {
-			const plane = planes[index];
+	// handle all the planes
+	function handlePlanes(index) {
+		const plane = planes[index];
 
-			// check if our plane is defined and use it
-			plane
-				.onReady(() => {
-					// apply parallax on load
-					applyPlanesParallax(index);
+		// check if our plane is defined and use it
+		plane
+			.onReady(() => {
+				// apply parallax on load
+				applyPlanesParallax(index);
 
-					// once everything is ready, display everything
-					if (index === planes.length - 1) {
-						document.body.classList.add('planes-loaded');
-					}
-				})
-				.onAfterResize(() => {
-					// apply new parallax values after resize
-					applyPlanesParallax(index);
-				})
-				.onRender(() => {
-					// new way: we just have to change the rotation and scale properties directly!
-					// apply the rotation
-					plane.rotation.z = Math.abs(scrollEffect) / 750;
+				// once everything is ready, display everything
+				if (index === planes.length - 1) {
+					document.body.classList.add('planes-loaded');
+				}
+			})
+			.onAfterResize(() => {
+				// apply new parallax values after resize
+				applyPlanesParallax(index);
+			})
+			.onRender(() => {
+				// new way: we just have to change the rotation and scale properties directly!
+				// apply the rotation
+				plane.rotation.z = Math.abs(scrollEffect) / 750;
 
-					// scale plane and its texture
-					plane.scale.y = 1 + Math.abs(scrollEffect) / 300;
-					plane.textures[0].scale.y = 1 + Math.abs(scrollEffect) / 150;
-				})
-				.onReEnterView(() => {
-					// plane is drawn again
-					// planeDrawn++;
-					// update our number of planes drawn debug value
-					// debugElement.innerText = planeDrawn;
-				})
-				.onLeaveView(() => {
-					// plane is not drawn anymore
-					// planeDrawn--;
-					// update our number of planes drawn debug value
-					// debugElement.innerText = planeDrawn;
-				});
-		}
+				// scale plane and its texture
+				plane.scale.y = 1 + Math.abs(scrollEffect) / 300;
+				plane.textures[0].scale.y = 1 + Math.abs(scrollEffect) / 150;
+			})
+			.onReEnterView(() => {
+				// plane is drawn again
+				// planeDrawn++;
+				// update our number of planes drawn debug value
+				// debugElement.innerText = planeDrawn;
+			})
+			.onLeaveView(() => {
+				// plane is not drawn anymore
+				// planeDrawn--;
+				// update our number of planes drawn debug value
+				// debugElement.innerText = planeDrawn;
+			});
+	}
 
-		function applyPlanesParallax(index) {
-			return;
-			// calculate the parallax effect
+	function applyPlanesParallax(index) {
+		return;
+		// calculate the parallax effect
 
-			// get our window size
-			const sceneBoundingRect = curtains.getBoundingRect();
-			// get our plane center coordinate
-			const planeBoundingRect = planes[index].getBoundingRect();
-			const planeOffsetTop = planeBoundingRect.top + planeBoundingRect.height / 2;
-			// get a float value based on window height (0 means the plane is centered)
-			const parallaxEffect =
-				(planeOffsetTop - sceneBoundingRect.height / 2) / sceneBoundingRect.height;
+		// get our window size
+		const sceneBoundingRect = curtains.getBoundingRect();
+		// get our plane center coordinate
+		const planeBoundingRect = planes[index].getBoundingRect();
+		const planeOffsetTop = planeBoundingRect.top + planeBoundingRect.height / 2;
+		// get a float value based on window height (0 means the plane is centered)
+		const parallaxEffect =
+			(planeOffsetTop - sceneBoundingRect.height / 2) / sceneBoundingRect.height;
 
-			// apply the parallax effect
-			planes[index].relativeTranslation.y = (parallaxEffect * sceneBoundingRect.height) / 4;
+		// apply the parallax effect
+		planes[index].relativeTranslation.y = (parallaxEffect * sceneBoundingRect.height) / 4;
 
-			/*
+		/*
         // old way using setRelativeTranslation
         planes[index].setRelativeTranslation(new Vec3(0, parallaxEffect * (sceneBoundingRect.height / 4)));
          */
-		}
+	}
 
-		return () => {
-			// this function is called when the component is destroyed
-			if (!useNativeScroll) {
-				window.removeEventListener('smoothScrollUpdate', scrollonUpdate);
-			}
-		};
-	});
 	onDestroy(() => {
 		if (curtains) {
 			curtains.dispose();
