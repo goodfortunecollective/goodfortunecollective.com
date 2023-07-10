@@ -18,7 +18,7 @@ export async function load({ parent }) {
 
     return {
         story: dataStory.data.story,
-        stories: projects.data.stories,
+        projects: projects.data.stories,
         categories: categories,
     };
 }
