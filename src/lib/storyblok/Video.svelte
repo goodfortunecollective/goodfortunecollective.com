@@ -8,8 +8,8 @@
 	export let videoVisible = false;
 	export let videoPlaying = false;
 	export let btnHidden = false;
-	export let btn = null;
-	export let video = null;
+	let video!: HTMLElement;
+	let btn!: HTMLElement;
 	export let posterUrl = null;
 
 	function contOnEnter(e) {
@@ -46,10 +46,8 @@
 
 		videoPlaying = !videoPlaying;
 	}
-	onMount(() => {
-		video = document.getElementById('video-player-' + blok.id);
-		btn = document.getElementById('video-block-btn-' + blok.id);
 
+	onMount(() => {
 		posterUrl = blok.poster.filename
 			? blok.poster.filename
 			: 'https://vumbnail.com/' + blok.id + '.jpg';
@@ -77,9 +75,9 @@
 		{:else if blok.file}
 			<video
 				class="video-player"
-				id={'video-player-' + blok.id}
 				src={blok.file}
 				playsinline=""
+				bind:this={video}
 				webkit-playsinline=""
 				poster=""
 				on:click={playPauseVideo}
@@ -89,8 +87,7 @@
 		<div
 			class={'video-block-btn' + (videoPlaying ? ' playing' : '') + (btnHidden ? ' hidden' : '')}
 			on:click={showVideo}
-			data-id={blok.id}
-			id={'video-block-btn-' + blok.id}
+			bind:this={btn}
 		/>
 		<figure
 			class={'video-block-poster' + (videoVisible ? ' inactive' : '')}

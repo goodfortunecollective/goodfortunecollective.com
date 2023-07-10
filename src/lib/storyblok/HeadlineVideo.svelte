@@ -9,6 +9,11 @@
 
 	let video!: HTMLElement;
 	let videoInteractive!: HTMLElement;
+	let videoPlayer!: HTMLElement;
+	let videoBtn!: HTMLElement;
+
+	let videoPlaying = true;
+	let btnHidden = true;
 
 	let constrain = 100;
 	let isMouseLocked = false;
@@ -18,14 +23,17 @@
 	let tl: any = null;
 
 	function handleMousemove(event: MouseEvent) {
-		if (isMouseLocked) return;
-
 		let xy = [event.clientX, event.clientY];
-		let position = xy.concat([video]);
-
-		window.requestAnimationFrame(function () {
-			if (videoInteractive) transformElement(videoInteractive, position);
-		});
+		if (!isMouseLocked) {
+			let position = xy.concat([video]);
+			window.requestAnimationFrame(function () {
+				if (videoInteractive) transformElement(videoInteractive, position);
+			});
+		} else if (!btnHidden) {
+			(xy[0] -= videoInteractive.getBoundingClientRect().left),
+				(xy[1] -= videoInteractive.getBoundingClientRect().top);
+			gsap.to(videoBtn, 0.2, { x: xy[0], y: xy[1] });
+		}
 	}
 
 	function transforms(x: number, y: number, el: HTMLElement) {
@@ -117,7 +125,7 @@
 						if (self.progress > 0.25) {
 							if (!isMouseLocked && videoInteractive) {
 								gsap.to(videoInteractive, {
-									pointerEvents: 'none',
+									// pointerEvents: 'click',
 									rotateX: 0,
 									rotateY: 0,
 									duration: 0.1,
@@ -125,9 +133,12 @@
 								});
 							}
 							isMouseLocked = true;
+							showBtn();
 						} else {
-							if (videoInteractive) videoInteractive.style.pointerEvents = 'all';
+							// if (videoInteractive) videoInteractive.style.pointerEvents = 'all';
 							isMouseLocked = false;
+
+							hideBtn();
 						}
 					}
 				},
@@ -140,6 +151,31 @@
 			}
 		);
 	});
+
+	function videoOnEnter() {
+		showBtn();
+	}
+
+	function videoOnLeave() {
+		hideBtn();
+	}
+
+	function showBtn() {
+		if (!btnHidden) return;
+		btnHidden = false;
+	}
+	function hideBtn() {
+		if (btnHidden) return;
+		btnHidden = true;
+	}
+
+	function playPauseVideo() {
+		if (videoPlayer.paused) {
+			videoPlayer.play();
+		} else videoPlayer.pause();
+
+		videoPlaying = !videoPlaying;
+	}
 
 	onDestroy(() => {
 		if (tl) tl.kill();
@@ -155,15 +191,29 @@
 <section use:storyblokEditable={blok} {...$$restProps} class="flex w-screen h-screen bg-black">
 	<div class="relative flex w-full h-full max-w-6xl mx-auto">
 		<div class="relative w-full h-full perspective-800">
-			<div bind:this={video} class="absolute w-full h-full transform-gpu preserve-3d">
+			<div
+				bind:this={video}
+				class="absolute w-full h-full transform-gpu preserve-3d"
+				on:mouseenter={videoOnEnter}
+				on:mouseleave={videoOnLeave}
+			>
 				<div bind:this={videoInteractive} class="w-full h-full preserve-3d">
 					<video
+						bind:this={videoPlayer}
+						on:click={playPauseVideo}
 						class="absolute inset-0 w-full h-full aspect-video"
-						src="https://media.istockphoto.com/id/1250005100/pt/v%C3%ADdeo/floating-droplets-loop.mp4?s=mp4-640x640-is&amp;k=20&amp;c=eJworDI_aCrPdxtWQhVk4j77JHwtc4xV6wRFXljLgcE="
+						src={blok.video}
 						autoplay
 						muted
 						loop><track kind="captions" /></video
 					>
+					<div
+						bind:this={videoBtn}
+						class={'video-block-btn' +
+							(videoPlaying ? ' playing' : '') +
+							(btnHidden ? ' hidden' : '')}
+						on:click={playPauseVideo}
+					/>
 				</div>
 			</div>
 		</div>
@@ -180,3 +230,63 @@
 	</div>
 </section>
 <div class="h-[50vh]" />
+
+<style lang="scss">
+	@import '../../vars.scss';
+	.video-block-btn {
+		position: absolute;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		top: 0;
+		left: 0;
+		// top: 50%;
+		// left: 50%;
+		width: 86px;
+		height: 86px;
+		background: $black;
+		border-radius: 100%;
+		transform: translate(-50%, -50%);
+		cursor: pointer;
+		z-index: 13;
+		transition: 0.5s opacity ease-out, 0s visibility 0.5s, 0s z-index 0.5s;
+
+		// play
+		&:before {
+			display: inline-block;
+			width: 0;
+			height: 0;
+			border-top: 7px solid transparent;
+			border-bottom: 7px solid transparent;
+			border-left: 12px solid $white;
+			margin-left: 2px;
+			content: '';
+			opacity: 1;
+		}
+
+		// pause
+		&:after {
+			position: absolute;
+			width: 10px;
+			height: 18px;
+			border-right: 2px solid $white;
+			border-left: 2px solid $white;
+			opacity: 0;
+			content: '';
+		}
+
+		&.playing {
+			&:before {
+				opacity: 0;
+			}
+
+			&:after {
+				opacity: 1;
+			}
+		}
+
+		&.hidden {
+			opacity: 0;
+		}
+	}
+</style>
