@@ -5,7 +5,7 @@
 	export let size: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1';
 
 	const textSizes = {
-		h1: 'text-8xl',
+		h1: 'text-6xl md:text-8xl',
 		h2: 'text-4xl',
 		h3: 'text-3xl',
 		h4: 'text-2xl',
