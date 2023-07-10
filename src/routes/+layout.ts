@@ -7,8 +7,6 @@ import type { LayoutLoad } from "./$types";
 
 import { components } from "$lib/storyblok";
 
-export const prerender = true;
-
 export const load: LayoutLoad = async ({ url: { pathname } }) => {
     storyblokInit({
         accessToken: PUBLIC_STORYBLOK_ACCESS_TOKEN,
