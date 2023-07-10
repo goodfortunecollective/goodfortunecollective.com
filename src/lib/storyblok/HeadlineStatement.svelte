@@ -56,6 +56,9 @@
 	.black-bg {
 		background: #1c1c1c;
 		color: $white;
+		.text {
+			color: $white;
+		}
 	}
 
 	.text {

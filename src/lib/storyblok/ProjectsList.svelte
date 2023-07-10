@@ -1,19 +1,42 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
-	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
-
-	import { base } from '$app/paths';
 	import { ScrollSmoother } from '$lib/gsap';
 	import { Curtains } from '$lib/vendors/curtainsjs/core/Curtains';
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
+	import { storyblokEditable, getStoryblokApi } from '@storyblok/svelte';
 
-	export let data;
-	export let categoriesData = [];
-	export let activeCategory = 'all';
+	import { base } from '$app/paths';
+	import { dev } from '$app/environment';
+	import { Heading } from '$lib/components';
+
+	export let blok: any;
+
+	let projects: any;
+	let categories: any;
+	let categoriesData = [];
+	let activeCategory = 'all';
 	let categoriesOpened = false;
 
 	let curtains: any = null;
 	let scroll: ScrollSmoother | null = null;
+
+	function toggleCategories() {
+		categoriesOpened = !categoriesOpened;
+	}
+
+	function categoryOnClick(e) {
+		let $categoryActive = document.getElementsByClassName('category active'),
+			name = e.currentTarget.getAttribute('data-category');
+
+		if (e.currentTarget.className.indexOf('active') == -1) {
+			if ($categoryActive.length) $categoryActive[0].classList.remove('active');
+			e.currentTarget.classList.add('active');
+			activeCategory = name;
+		} else {
+			activeCategory = 'all';
+			e.currentTarget.classList.remove('active');
+		}
+	}
 
 	function updateScroll(xOffset: any, yOffset: any) {
 		// update our scroll manager values
@@ -33,81 +56,69 @@
 		if (curtains) curtains.needRender();
 	}
 
-	function toggleCategories() {
-		categoriesOpened = !categoriesOpened;
-	}
+	onMount(async () => {
+		const storyblokApi = getStoryblokApi();
 
-	function categoryOnClick(e) {
-		let $categoryActive = document.getElementsByClassName('category active'),
-			name = e.currentTarget.getAttribute('data-category');
+		projects = await storyblokApi.get('cdn/stories', {
+			version: dev ? 'draft' : 'published',
+			starts_with: 'projects'
+		});
 
-		if (e.currentTarget.className.indexOf('active') == -1) {
-			if ($categoryActive.length) $categoryActive[0].classList.remove('active');
-			e.currentTarget.classList.add('active');
-			activeCategory = name;
-		} else {
-			activeCategory = 'all';
-			e.currentTarget.classList.remove('active');
-		}
+		initCurtains();
+		// await initCurtains();
 
-		// if (activeCategory) {
-		// 	let $projects = document.getElementsByClassName('project'),
-		// 		$filteredProjects = document.getElementsByClassName('project ' + activeCategory);
+		if (blok.show_categories) {
+			categories = await storyblokApi.get('cdn/datasource_entries', {
+				datasource: 'project-categories'
+			});
 
-		// 	for (var i = 0; i < $projects.length; i++) {
-		// 		$projects[i].classList.remove('active');
-		// 	}
+			// Get project counts by category
+			let storiesLength = projects.data.stories.length;
 
-		// 	for (var i = 0; i < $filteredProjects.length; i++) {
-		// 		$filteredProjects[i].classList.add('active');
-		// 	}
-		// }
+			let categoriesEntries = categories.data.datasource_entries,
+				categoriesLength = categoriesEntries.length;
 
-		e.preventDefault();
-	}
+			for (let i = 0; i < categoriesLength; i++) {
+				categoriesData[i] = {
+					name: categoriesEntries[i].name,
+					slug: categoriesEntries[i].value,
+					count: 0
+				};
+			}
 
-	onMount(() => {
-		if (data.story) {
-			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
-		}
-		// console.log(data.stories);
+			for (let indexStory = 0; indexStory < storiesLength; indexStory++) {
+				let projectCategories = projects.data.stories[indexStory].content.category;
 
-		// Get project counts by category
-		let storiesLength = data.stories.length;
-
-		let categories = data.categories.data.datasource_entries,
-			categoriesLength = categories.length;
-
-		for (let i = 0; i < categoriesLength; i++) {
-			categoriesData[i] = {
-				name: categories[i].name,
-				slug: categories[i].value,
-				count: 0
-			};
-		}
-
-		for (let indexStory = 0; indexStory < storiesLength; indexStory++) {
-			let categories = data.stories[indexStory].content.category;
-
-			for (let indexCat = 0; indexCat < categories.length; indexCat++) {
-				let category = categories[indexCat];
-				var result = categoriesData.find((item) => item.slug === category);
-				// console.log('category :' + category);
-				// console.log(result);
-				result.count++;
+				for (let indexCat = 0; indexCat < projectCategories.length; indexCat++) {
+					let category = projectCategories[indexCat];
+					var result = categoriesData.find((item) => item.slug === category);
+					if (result) {
+						result.count++;
+					}
+				}
 			}
 		}
 
-		// console.log(categoriesData);
+		return () => {
+			// this function is called when the component is destroyed
+			if (!useNativeScroll) {
+				window.removeEventListener('smoothScrollUpdate', scrollonUpdate);
+			}
+		};
+	});
 
+	function initCurtains() {
+		console.log('Init curtains');
 		// we will keep track of all our planes in an array
 		const planes: any = [];
 		let scrollEffect = 0;
 
 		// get our planes elements
 		const planeElements = document.getElementsByClassName('plane');
-
 		const useNativeScroll = false;
+
+		console.log(planeElements);
+		console.log(planeElements.length);
 
 		if (!useNativeScroll) {
 			window.addEventListener('smoothScrollUpdate', scrollonUpdate);
@@ -232,86 +243,78 @@
 			}
 		};
 
-		// add our planes and handle them
+		// add our planes and handle them-
 		for (let i = 0; i < planeElements.length; i++) {
 			const plane = new Plane(curtains, planeElements[i], params);
-
 			planes.push(plane);
 
 			handlePlanes(i);
 		}
+	}
 
-		// handle all the planes
-		function handlePlanes(index) {
-			const plane = planes[index];
+	// handle all the planes
+	function handlePlanes(index) {
+		const plane = planes[index];
 
-			// check if our plane is defined and use it
-			plane
-				.onReady(() => {
-					// apply parallax on load
-					applyPlanesParallax(index);
+		// check if our plane is defined and use it
+		plane
+			.onReady(() => {
+				// apply parallax on load
+				applyPlanesParallax(index);
 
-					// once everything is ready, display everything
-					if (index === planes.length - 1) {
-						document.body.classList.add('planes-loaded');
-					}
-				})
-				.onAfterResize(() => {
-					// apply new parallax values after resize
-					applyPlanesParallax(index);
-				})
-				.onRender(() => {
-					// new way: we just have to change the rotation and scale properties directly!
-					// apply the rotation
-					plane.rotation.z = Math.abs(scrollEffect) / 750;
+				// once everything is ready, display everything
+				if (index === planes.length - 1) {
+					document.body.classList.add('planes-loaded');
+				}
+			})
+			.onAfterResize(() => {
+				// apply new parallax values after resize
+				applyPlanesParallax(index);
+			})
+			.onRender(() => {
+				// new way: we just have to change the rotation and scale properties directly!
+				// apply the rotation
+				plane.rotation.z = Math.abs(scrollEffect) / 750;
 
-					// scale plane and its texture
-					plane.scale.y = 1 + Math.abs(scrollEffect) / 300;
-					plane.textures[0].scale.y = 1 + Math.abs(scrollEffect) / 150;
-				})
-				.onReEnterView(() => {
-					// plane is drawn again
-					// planeDrawn++;
-					// update our number of planes drawn debug value
-					// debugElement.innerText = planeDrawn;
-				})
-				.onLeaveView(() => {
-					// plane is not drawn anymore
-					// planeDrawn--;
-					// update our number of planes drawn debug value
-					// debugElement.innerText = planeDrawn;
-				});
-		}
+				// scale plane and its texture
+				plane.scale.y = 1 + Math.abs(scrollEffect) / 300;
+				plane.textures[0].scale.y = 1 + Math.abs(scrollEffect) / 150;
+			})
+			.onReEnterView(() => {
+				// plane is drawn again
+				// planeDrawn++;
+				// update our number of planes drawn debug value
+				// debugElement.innerText = planeDrawn;
+			})
+			.onLeaveView(() => {
+				// plane is not drawn anymore
+				// planeDrawn--;
+				// update our number of planes drawn debug value
+				// debugElement.innerText = planeDrawn;
+			});
+	}
 
-		function applyPlanesParallax(index) {
-			return;
-			// calculate the parallax effect
+	function applyPlanesParallax(index) {
+		return;
+		// calculate the parallax effect
 
-			// get our window size
-			const sceneBoundingRect = curtains.getBoundingRect();
-			// get our plane center coordinate
-			const planeBoundingRect = planes[index].getBoundingRect();
-			const planeOffsetTop = planeBoundingRect.top + planeBoundingRect.height / 2;
-			// get a float value based on window height (0 means the plane is centered)
-			const parallaxEffect =
-				(planeOffsetTop - sceneBoundingRect.height / 2) / sceneBoundingRect.height;
+		// get our window size
+		const sceneBoundingRect = curtains.getBoundingRect();
+		// get our plane center coordinate
+		const planeBoundingRect = planes[index].getBoundingRect();
+		const planeOffsetTop = planeBoundingRect.top + planeBoundingRect.height / 2;
+		// get a float value based on window height (0 means the plane is centered)
+		const parallaxEffect =
+			(planeOffsetTop - sceneBoundingRect.height / 2) / sceneBoundingRect.height;
 
-			// apply the parallax effect
-			planes[index].relativeTranslation.y = (parallaxEffect * sceneBoundingRect.height) / 4;
+		// apply the parallax effect
+		planes[index].relativeTranslation.y = (parallaxEffect * sceneBoundingRect.height) / 4;
 
-			/*
+		/*
         // old way using setRelativeTranslation
         planes[index].setRelativeTranslation(new Vec3(0, parallaxEffect * (sceneBoundingRect.height / 4)));
          */
-		}
-
-		return () => {
-			// this function is called when the component is destroyed
-			if (!useNativeScroll) {
-				window.removeEventListener('smoothScrollUpdate', scrollonUpdate);
-			}
-		};
-	});
+	}
 
 	onDestroy(() => {
 		if (curtains) {
@@ -321,87 +324,87 @@
 	});
 </script>
 
-<svelte:head>
-	<title>Work</title>
-	<meta name="description" content="Work" />
-</svelte:head>
-
-<section class="pt-[var(--header-height)] pb-32">
-	<div
-		class={'categories-toggle' + (categoriesOpened ? ' opened' : '')}
-		id="categories-toggle"
-		on:click={toggleCategories}
-	/>
-
-	<div
-		class={'flex flex-col mt-12 pr-6 text-sm font-bold uppercase tracking-wider ategories' +
-			(categoriesOpened ? ' opened' : '')}
-		id="categories"
-	>
-		<a class="mb-2 category all active" href="#all" data-category="all" on:click={categoryOnClick}
-			>All projects
-			{#if data.stories}
-				<sup class="text-xs font-normal category-number">
-					{#if data.stories.length < 10}0{/if}{data.stories.length}</sup
-				>
-			{/if}
-		</a>
-		{#each data.categories.data.datasource_entries as category, i}
-			{#if categoriesData[i] && categoriesData[i].count > 0}
+<div use:storyblokEditable={blok} {...$$restProps} class={'pt-32 pb-32 bg-white ' + blok.class}>
+	<section class="">
+		{#if projects && categories && blok.show_categories}
+			<div
+				class={'categories-toggle' + (categoriesOpened ? ' opened' : '')}
+				id="categories-toggle"
+				on:click={toggleCategories}
+			/>
+			<div
+				class={'flex flex-col mt-12 pr-6 text-sm font-bold uppercase tracking-wider ategories' +
+					(categoriesOpened ? ' opened' : '')}
+				id="categories"
+			>
 				<a
-					class="mb-2 category"
-					href="#{category.value}"
-					data-category={category.value}
+					class="mb-2 category all active"
+					href="#all"
+					data-category="all"
 					on:click={categoryOnClick}
-				>
-					{category.name}
-					{#if categoriesData[i]}
-						<sup class="text-xs font-normal category-number"
-							>{#if categoriesData[i].count < 10}0{/if}{categoriesData[i].count}</sup
+					>All projects
+					{#if projects.data.stories}
+						<sup class="text-xs font-normal category-number">
+							{#if projects.data.stories.length < 10}0{/if}{projects.data.stories.length}</sup
 						>
 					{/if}
 				</a>
-			{/if}
-		{/each}
-	</div>
-
-	<div id="planes" class="max-w-6xl mx-auto">
-		{#each data.stories as { name, slug, content }}
-			<div class="plane-wrapper project active {content.category.join(' ')}" data-id={slug}>
-				<h2 class="plane-title">{name}</h2>
-				<div class="uppercase plane-client">{content.client}</div>
-				{#if content.category}
-					<div class="uppercase plane-categories">
-						{#each content.category as category}
-							{category}
-						{/each}
-					</div>
-				{/if}
-				<div class="plane-inner">
-					<div class="plane">
-						<a href="{base}/work/{slug}">
-							<img
-								src={content.thumbnail
-									? content.thumbnail.filename.replace(
-											'//a-us.storyblok.com',
-											'//a2-us.storyblok.com'
-									  )
-									: 'https://source.unsplash.com/random/?Motion&1'}
-								crossorigin=""
-								data-sampler="planeTexture"
-								alt={name}
-							/></a
+				{#each categories.data.datasource_entries as category, i}
+					{#if categoriesData[i] && categoriesData[i].count > 0}
+						<a
+							class="mb-2 category"
+							href="#{category.value}"
+							data-category={category.value}
+							on:click={categoryOnClick}
 						>
-					</div>
-				</div>
+							{category.name}
+							{#if categoriesData[i]}
+								<sup class="text-xs font-normal category-number"
+									>{#if categoriesData[i].count < 10}0{/if}{categoriesData[i].count}</sup
+								>
+							{/if}
+						</a>
+					{/if}
+				{/each}
 			</div>
-		{/each}
-	</div>
-</section>
+		{/if}
 
-{#if data.story}
-	<StoryblokComponent blok={data.story.content} />
-{/if}
+		{#if projects}
+			<div id="planes" class="max-w-6xl mx-auto">
+				{#each projects.data.stories as { name, slug, content }}
+					<div class="plane-wrapper project active {content.category.join(' ')}" data-id={slug}>
+						<h2 class="plane-title">{name}</h2>
+						<div class="uppercase plane-client">{content.client}</div>
+						{#if content.category}
+							<div class="uppercase plane-categories">
+								{#each content.category as category}
+									{category}
+								{/each}
+							</div>
+						{/if}
+						<div class="plane-inner">
+							<div class="plane">
+								<a href="{base}/work/{slug}">
+									<img
+										src={content.thumbnail
+											? content.thumbnail.filename.replace(
+													'//a-us.storyblok.com',
+													'//a2-us.storyblok.com'
+											  )
+											: 'https://source.unsplash.com/random/?Motion&1'}
+										crossorigin=""
+										data-sampler="planeTexture"
+										alt={name}
+									/></a
+								>
+							</div>
+						</div>
+					</div>
+				{/each}
+			</div>
+		{/if}
+	</section>
+</div>
 
 <style lang="scss">
 	@import '../../vars.scss';

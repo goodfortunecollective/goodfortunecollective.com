@@ -3,7 +3,11 @@ import { dev } from '$app/environment';
 export async function load({ parent }) {
     const { storyblokApi } = await parent();
 
-    const dataStory = await storyblokApi.get('cdn/stories', {
+    const dataStory = await storyblokApi.get("cdn/stories/work/", {
+        version: dev ? "draft" : "published",
+    });
+
+    const projects = await storyblokApi.get('cdn/stories', {
         version: dev ? "draft" : "published",
         starts_with: 'projects',
     });
@@ -13,7 +17,8 @@ export async function load({ parent }) {
     });
 
     return {
-        stories: dataStory.data.stories,
+        story: dataStory.data.story,
+        stories: projects.data.stories,
         categories: categories,
     };
 }
