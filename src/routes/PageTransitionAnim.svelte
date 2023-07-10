@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { beforeNavigate } from '$app/navigation';
+	import { page } from '$app/stores';
 	import { gsap, ScrollSmoother, ScrollTrigger } from '$lib/gsap';
 	import { cls } from '$lib/styles';
 
@@ -7,6 +8,7 @@
 	let isTransition: boolean = false;
 
 	beforeNavigate(async () => {
+		console.log('beforeNavigate');
 		// @ts-ignore
 		const scroll = ScrollSmoother.get();
 
@@ -47,7 +49,23 @@
 			}
 		).then(() => {
 			isTransition = false;
-			if (scroll) scroll.paused(false);
+			const hash = $page.url.hash.slice(1);
+
+			if (scroll) {
+				scroll.paused(false);
+
+				if (hash) {
+					const scrollElem = document.getElementById(hash);
+
+					if (scrollElem) {
+						gsap.to(scroll, {
+							scrollTop: scroll.offset(scrollElem, 'top top'),
+							duration: 1,
+							delay: 0.5
+						});
+					}
+				}
+			}
 		});
 	});
 </script>

@@ -20,7 +20,7 @@
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={'pt-32 pb-32 bg-white ' + blok.class}>
-	<section class="">
+	<section id="jobs">
 		<div class="max-w-6xl mx-auto">
 			<div class="flex flex-col gap-8 px-8 lg:flex-row lg:pt-32 lg:gap-32 lg:px-0">
 				<Heading as="h2" size="h2" class="w-full lg:w-1/4">{blok.title}</Heading>
