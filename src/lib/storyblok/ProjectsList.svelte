@@ -339,7 +339,7 @@
 			>
 				<a
 					class="mb-2 category all active"
-					href="#all"
+					href="{base}/work#all"
 					data-category="all"
 					on:click={categoryOnClick}
 					>All projects

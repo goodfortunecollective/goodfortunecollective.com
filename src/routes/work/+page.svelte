@@ -338,7 +338,11 @@
 			(categoriesOpened ? ' opened' : '')}
 		id="categories"
 	>
-		<a class="mb-2 category all active" href="#all" data-category="all" on:click={categoryOnClick}
+		<a
+			class="mb-2 category all active"
+			href="{base}/work#all"
+			data-category="all"
+			on:click={categoryOnClick}
 			>All projects
 			{#if data.stories}
 				<sup class="text-xs font-normal category-number">
