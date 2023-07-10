@@ -1,25 +1,30 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { getStoryblokApi } from '@storyblok/svelte';
+	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+	import { cva } from 'class-variance-authority';
 
-	let links: any;
+	import { cls } from '$lib/styles';
 
-	onMount(async () => {
-		const storyblokApi = getStoryblokApi();
-		links = await storyblokApi.get('cdn/datasource_entries', {
-			datasource: 'social-media-links'
-		});
+	export let blok: any;
+
+	const variants = cva('flex', {
+		variants: {
+			intent: {
+				primary: 'gap-16 text-xl',
+				secondary: 'gap-12 text-md'
+			}
+		},
+		defaultVariants: {
+			intent: 'primary'
+		}
 	});
 </script>
 
-<div class="flex">
-	{#if links}
-		{#each links.data.datasource_entries as item}
-			<a class="mr-2" href={item.value} target="_blank">{item.name}</a>
-		{/each}
-	{/if}
+<div
+	use:storyblokEditable={blok}
+	class={cls(variants({ intent: blok.intent }), blok.class)}
+	{...$$restProps}
+>
+	{#each blok.links as b}
+		<StoryblokComponent blok={b} />
+	{/each}
 </div>
-
-<style lang="scss">
-	@import '../../vars.scss';
-</style>
