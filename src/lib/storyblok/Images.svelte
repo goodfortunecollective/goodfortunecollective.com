@@ -3,14 +3,9 @@
 
 	export let blok: any;
 	export let isAboutBlock = false;
-	export let layout = 'normal';
 
 	if (blok.class && blok.class.indexOf('about-images-block') >= 0) {
 		isAboutBlock = true;
-	}
-
-	if (blok.layout && blok.layout == 'columns') {
-		layout = 'columns';
 	}
 
 	export let imagesLength = blok.images.length;
@@ -22,30 +17,21 @@
 	if (imagesLength == 1) {
 		blockClasses += ' w-full justify-center';
 	} else if (imagesLength >= 3) {
-		// normal
-		if (layout == 'normal') {
+		imagesCols = [
+			'col-span-10 md:col-start-2 md:col-span-5',
+			'col-start-3 -mt-12 col-span-10 md:col-start-7 md:col-span-5 md:mt-12',
+			'col-start-2 col-span-10 md:col-start-4 md:col-span-5'
+		];
+
+		if (isAboutBlock) {
 			imagesCols = [
-				'col-span-10 md:col-start-2 md:col-span-5',
-				'col-start-3 -mt-12 col-span-10 md:col-start-7 md:col-span-5 md:mt-12',
-				'col-start-2 col-span-10 md:col-start-4 md:col-span-5'
+				'col-span-10 md:col-start-2 md:col-span-4',
+				'col-start-3 -mt-12 col-span-10 md:col-start-7 md:col-span-4 md:mt-12',
+				'col-start-2 col-span-10 md:col-start-4 md:col-span-4'
 			];
-
-			if (isAboutBlock) {
-				imagesCols = [
-					'col-span-10 md:col-start-2 md:col-span-4',
-					'col-start-3 -mt-12 col-span-10 md:col-start-7 md:col-span-4 md:mt-12',
-					'col-start-2 col-span-10 md:col-start-4 md:col-span-4'
-				];
-			}
-
-			blockClasses += ' grid grid-cols-12 gap-2 ';
-
-			// column
-		} else {
-			// imagesCols = [];
-			blockClasses += ' max-w-6xl mx-auto md:flex-row md:gap-4';
-			imageClass = 'basis-full';
 		}
+
+		blockClasses += ' grid grid-cols-12 gap-2 ';
 	}
 
 	for (let i = 0; i < imagesCols.length; i++) {
