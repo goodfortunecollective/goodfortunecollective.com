@@ -23,24 +23,15 @@
 		let minX = imagesWrapper.offsetWidth - window.innerWidth;
 		imagesDraggable = Draggable.create('.images-wrapper', {
 			type: 'x',
-			bounds: { minX: -minX, maxX: 0 },
+			bounds: '.images-block',
 			inertia: true
 		});
-	}
-
-	function onResize() {
-		if (imagesDraggable !== null) {
-			let minX = imagesWrapper.offsetWidth - window.innerWidth;
-			imagesDraggable[0].applyBounds({ minX: -minX, maxX: 0 });
-		}
 	}
 
 	onMount(() => {
 		initDraggable();
 	});
 </script>
-
-<svelte:window on:resize={onResize} />
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	<div class={blockClasses}>
