@@ -1,23 +1,50 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { storyblokEditable } from '@storyblok/svelte';
+	import { Draggable } from '$lib/vendors/gsap/Draggable.js';
 
 	export let blok: any;
 
-	export let blockClasses = 'flex py-12 images-block  overflow-hidden'; // flex-col
-	export let wrapperClasses = 'flex w-[4000px] md:flex-row flex-nowrap md:gap-4'; // flex-col
-	export let imageClass = 'flex flex-col image-block';
-	// export let imagesCols = [];
-	export let imagesClasses = [];
+	let blockClasses = 'images-block flex py-12 overflow-hidden';
+	let wrapperClasses = 'images-wrapper draggable flex md:flex-row flex-nowrap md:gap-4';
+	let imageClass = 'flex flex-col image-block';
+	let imagesClasses = [];
+	let imagesDraggable = null;
+	let imagesWrapper!: HTMLElement;
 
 	for (let i = 0; i < blok.images.length; i++) {
-		if (i == 0) imagesClasses[i] = imageClass + ' md:ml-24';
-		else imagesClasses[i] = imageClass + ' ';
+		imagesClasses[i] = imageClass;
+
+		if (i == 0) imagesClasses[i] += ' md:ml-24';
+		else if (i == blok.images.length - 1) imagesClasses[i] += ' mr-8';
 	}
+
+	function initDraggable() {
+		let minX = imagesWrapper.offsetWidth - window.innerWidth;
+		imagesDraggable = Draggable.create('.images-wrapper', {
+			type: 'x',
+			bounds: { minX: -minX, maxX: 0 },
+			inertia: true
+		});
+	}
+
+	function onResize() {
+		if (imagesDraggable !== null) {
+			let minX = imagesWrapper.offsetWidth - window.innerWidth;
+			imagesDraggable[0].applyBounds({ minX: -minX, maxX: 0 });
+		}
+	}
+
+	onMount(() => {
+		initDraggable();
+	});
 </script>
+
+<svelte:window on:resize={onResize} />
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	<div class={blockClasses}>
-		<div class={wrapperClasses}>
+		<div class={wrapperClasses} bind:this={imagesWrapper}>
 			{#each blok.images as item, i}
 				<figure class={imagesClasses[i]}>
 					<img
