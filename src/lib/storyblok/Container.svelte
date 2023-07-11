@@ -9,3 +9,16 @@
 		<StoryblokComponent blok={b} />
 	{/each}
 </div>
+
+<style lang="scss">
+	@import '../../vars.scss';
+
+	.grey-bg {
+		background: #bec6c4;
+	}
+
+	.black-bg {
+		background: #1c1c1c;
+		color: $white;
+	}
+</style>

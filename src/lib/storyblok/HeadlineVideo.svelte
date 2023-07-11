@@ -219,10 +219,13 @@
 		</div>
 		<div class="absolute z-10 flex items-center w-full h-full">
 			<div class="flex flex-col gap-24" id="h-intro">
-				<h1 data-gsap="split-text" class="text-cyan-500 font-degular-display text-9xl">
+				<h1 data-gsap="split-text" class="text-6xl text-cyan-500 font-degular-display md:text-9xl">
 					{blok.headline}
 				</h1>
-				<h2 data-gsap="split-text" class="max-w-2xl text-white font-degular-display text-7xl">
+				<h2
+					data-gsap="split-text"
+					class="max-w-2xl text-4xl text-white font-degular-display md:text-7xl"
+				>
 					{blok.subheadline}
 				</h2>
 			</div>

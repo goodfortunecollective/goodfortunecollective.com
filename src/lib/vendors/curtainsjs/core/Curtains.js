@@ -1,6 +1,6 @@
-import {Renderer} from "./Renderer.js";
-import {ScrollManager} from "../utils/ScrollManager.js";
-import {throwWarning, lerp} from "../utils/utils.js";
+import { Renderer } from "./Renderer.js";
+import { ScrollManager } from "../utils/ScrollManager.js";
+import { throwWarning, lerp } from "../utils/utils.js";
 
 
 const version = "8.1.4";
@@ -85,10 +85,10 @@ export class Curtains {
         this.errors = false;
 
         // if a container has been provided, proceed to init
-        if(container) {
+        if (container) {
             this.setContainer(container);
         }
-        else if(!this.production) {
+        else if (!this.production) {
             throwWarning(this.type + ": no container provided in the initial parameters. Use setContainer() method to set one later and initialize the WebGL context")
         }
     }
@@ -102,29 +102,29 @@ export class Curtains {
      @container (HTML element or string): the container HTML element or ID that will hold our canvas
      ***/
     setContainer(container) {
-        if(!container) {
+        if (!container) {
             let container = document.createElement("div");
             container.setAttribute("id", "curtains-canvas");
             document.body.appendChild(container);
             this.container = container;
-            if(!this.production) throwWarning('Curtains: no valid container HTML element or ID provided, created a div with "curtains-canvas" ID instead');
+            if (!this.production) throwWarning('Curtains: no valid container HTML element or ID provided, created a div with "curtains-canvas" ID instead');
         }
         else {
-            if(typeof container === "string") {
+            if (typeof container === "string") {
                 container = document.getElementById(container);
 
-                if(!container) {
+                if (!container) {
                     let container = document.createElement("div");
                     container.setAttribute("id", "curtains-canvas");
                     document.body.appendChild(container);
                     this.container = container;
-                    if(!this.production) throwWarning('Curtains: no valid container HTML element or ID provided, created a div with "curtains-canvas" ID instead');
+                    if (!this.production) throwWarning('Curtains: no valid container HTML element or ID provided, created a div with "curtains-canvas" ID instead');
                 }
                 else {
                     this.container = container;
                 }
             }
-            else if(container instanceof Element) {
+            else if (container instanceof Element) {
                 this.container = container;
             }
         }
@@ -145,7 +145,7 @@ export class Curtains {
         // init webgl context
         this._initRenderer();
 
-        if(!this.gl) return;
+        if (!this.gl) return;
 
         // scroll
         this._initScroll();
@@ -160,11 +160,11 @@ export class Curtains {
         this.container.appendChild(this.canvas);
 
         // watermark
-        console.log("curtains.js - v" + version);
+        // console.log("curtains.js - v" + version);
 
         // start rendering
         this._animationFrameID = null;
-        if(this._autoRender) {
+        if (this._autoRender) {
             this._animate();
         }
     }
@@ -301,17 +301,17 @@ export class Curtains {
 
         // If forceRender is true, force rendering this frame even if drawing is not enabled.
         // If not, only render if enabled.
-        if(!this.renderer.state.drawingEnabled && !this.renderer.state.forceRender) {
+        if (!this.renderer.state.drawingEnabled && !this.renderer.state.forceRender) {
             return;
         }
 
         // reset forceRender
-        if(this.renderer.state.forceRender) {
+        if (this.renderer.state.forceRender) {
             this.renderer.state.forceRender = false;
         }
 
         // Curtains onRender callback
-        if(this._onRenderCallback) {
+        if (this._onRenderCallback) {
             this._onRenderCallback();
         }
 
@@ -327,7 +327,7 @@ export class Curtains {
     _addListeners() {
         // handling window resize event
         this._resizeHandler = null;
-        if(this._autoResize) {
+        if (this._autoResize) {
             this._resizeHandler = this.resize.bind(this, true);
             window.addEventListener("resize", this._resizeHandler, false);
         }
@@ -354,7 +354,7 @@ export class Curtains {
         this.renderer.setSize();
 
         // update scroll values ass well
-        if(this._scrollManager.shouldWatch) {
+        if (this._scrollManager.shouldWatch) {
             this._scrollManager.xOffset = window.pageXOffset;
             this._scrollManager.yOffset = window.pageYOffset;
         }
@@ -378,14 +378,14 @@ export class Curtains {
      @triggerCallback (bool): Whether we should trigger onAfterResize callback
      ***/
     resize(triggerCallback) {
-        if(!this.gl) return;
+        if (!this.gl) return;
 
         this._setSize();
 
         this.renderer.resize();
 
         this.nextRender(() => {
-            if(this._onAfterResizeCallback && triggerCallback) {
+            if (this._onAfterResizeCallback && triggerCallback) {
                 this._onAfterResizeCallback();
             }
         });
@@ -416,9 +416,9 @@ export class Curtains {
      And force render for at least one frame to actually update the scene
      ***/
     _updateScroll(lastXDelta, lastYDelta) {
-        for(let i = 0; i < this.planes.length; i++) {
+        for (let i = 0; i < this.planes.length; i++) {
             // if our plane is watching the scroll, update its position
-            if(this.planes[i].watchScroll) {
+            if (this.planes[i].watchScroll) {
                 this.planes[i].updateScrollPosition(lastXDelta, lastYDelta);
             }
         }
@@ -505,7 +505,7 @@ export class Curtains {
      @this: our Curtains element to handle chaining
      ***/
     onAfterResize(callback) {
-        if(callback) {
+        if (callback) {
             this._onAfterResizeCallback = callback;
         }
 
@@ -522,7 +522,7 @@ export class Curtains {
      @this: our Curtains element to handle chaining
      ***/
     onError(callback) {
-        if(callback) {
+        if (callback) {
             this._onErrorCallback = callback;
         }
 
@@ -535,7 +535,7 @@ export class Curtains {
     _onRendererError() {
         // be sure that the callback has been registered and only call the global error callback once
         setTimeout(() => {
-            if(this._onErrorCallback && !this.errors) {
+            if (this._onErrorCallback && !this.errors) {
                 this._onErrorCallback();
             }
             this.errors = true;
@@ -553,7 +553,7 @@ export class Curtains {
      @this: our Curtains element to handle chaining
      ***/
     onSuccess(callback) {
-        if(callback) {
+        if (callback) {
             this._onSuccessCallback = callback;
         }
 
@@ -580,7 +580,7 @@ export class Curtains {
      @this: our Curtains element to handle chaining
      ***/
     onContextLost(callback) {
-        if(callback) {
+        if (callback) {
             this._onContextLostCallback = callback;
         }
 
@@ -605,7 +605,7 @@ export class Curtains {
      @this: our Curtains element to handle chaining
      ***/
     onContextRestored(callback) {
-        if(callback) {
+        if (callback) {
             this._onContextRestoredCallback = callback;
         }
 
@@ -630,7 +630,7 @@ export class Curtains {
      @this: our Curtains element to handle chaining
      ***/
     onRender(callback) {
-        if(callback) {
+        if (callback) {
             this._onRenderCallback = callback;
         }
 
@@ -648,7 +648,7 @@ export class Curtains {
      @this: our Curtains element to handle chaining
      ***/
     onScroll(callback) {
-        if(callback) {
+        if (callback) {
             this._onScrollCallback = callback;
         }
 

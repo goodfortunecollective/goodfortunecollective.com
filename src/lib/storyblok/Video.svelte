@@ -48,9 +48,10 @@
 	}
 
 	onMount(() => {
-		posterUrl = blok.poster.filename
-			? blok.poster.filename
-			: 'https://vumbnail.com/' + blok.id + '.jpg';
+		posterUrl =
+			blok.poster && blok.poster.filename
+				? blok.poster.filename
+				: 'https://vumbnail.com/' + blok.id + '.jpg';
 	});
 </script>
 

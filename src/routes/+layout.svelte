@@ -2,7 +2,8 @@
 	import { onMount } from 'svelte';
 	import { custom_event } from 'svelte/internal';
 
-	import { ScrollSmoother } from '$lib/gsap';
+	import { page } from '$app/stores';
+	import { ScrollSmoother, gsap } from '$lib/gsap';
 
 	import type { LayoutData } from './$types';
 
@@ -35,7 +36,23 @@
 				);
 			}
 		});
-		if (scroll) scroll.paused(true);
+		if (scroll) {
+			const hash = $page.url.hash.slice(1);
+
+			if (hash) {
+				const scrollElem = document.getElementById(hash);
+
+				if (scrollElem) {
+					gsap.to(scroll, {
+						scrollTop: scroll.offset(scrollElem, 'top top'),
+						duration: 1,
+						delay: 0.5
+					});
+				} else {
+					scroll.paused(true);
+				}
+			}
+		}
 	});
 
 	function handleCompleteLoader() {
