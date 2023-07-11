@@ -39,15 +39,12 @@
 	});
 
 	function initCurtains() {
-		console.log('Init curtains');
+		// console.log('Init curtains');
 		// we will keep track of all our planes in an array
 
 		// get our planes elements
 		const planeElements = container.querySelectorAll('[data-plane]');
 		const useNativeScroll = false;
-
-		console.log(planeElements);
-		console.log(planeElements.length);
 
 		if (!useNativeScroll) {
 			window.addEventListener('smoothScrollUpdate', scrollonUpdate);
