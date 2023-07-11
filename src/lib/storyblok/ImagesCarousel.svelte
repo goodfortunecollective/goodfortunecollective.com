@@ -87,6 +87,11 @@
 		}
 	}
 
+	.image-block-img {
+		aspect-ratio: 1/1;
+		object-fit: cover;
+	}
+
 	.caption-number {
 		position: relative;
 		margin-right: 70px;
