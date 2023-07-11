@@ -13,8 +13,8 @@
 			if (container) {
 				const [x, xEnd] =
 					index % 2
-						? ['100%', (container.scrollWidth - parent.offsetWidth) * -0.25]
-						: [container.scrollWidth * -1 * 0.25, 0];
+						? ['100%', (container.scrollWidth - parent.offsetWidth) * -1]
+						: [container.scrollWidth * -1, 0];
 
 				gsap.fromTo(
 					container,
