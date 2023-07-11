@@ -6,6 +6,7 @@ import Heading from './Heading.svelte';
 import HeadingDescription from './HeadingDescription.svelte';
 import HeadlineStatement from './HeadlineStatement.svelte';
 import HeadlineVideo from './HeadlineVideo.svelte';
+import HeadlineImages from './HeadlineImages.svelte';
 import ImageList from './ImageList.svelte';
 import Images from './Images.svelte';
 import ImagesList from './ImagesList.svelte';
@@ -31,6 +32,7 @@ export const components: any = {
     'heading-description': HeadingDescription,
     'headline-statement': HeadlineStatement,
     'headline-video': HeadlineVideo,
+		'headline-images':HeadlineImages,
     'image-list': ImageList,
     'images': Images,
     'image-and-text': ImageAndText,
