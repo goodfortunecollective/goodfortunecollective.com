@@ -6,7 +6,7 @@
 	export let blok: any;
 
 	let blockClasses = 'images-block flex py-12 overflow-hidden';
-	let wrapperClasses = 'images-wrapper draggable flex md:flex-row flex-nowrap md:gap-4';
+	let wrapperClasses = 'images-wrapper draggable flex md:flex-row flex-nowrap gap-4 md:gap-8';
 	let imageClass = 'flex flex-col image-block';
 	let imagesClasses = [];
 	let imagesDraggable = null;
@@ -15,7 +15,7 @@
 	for (let i = 0; i < blok.images.length; i++) {
 		imagesClasses[i] = imageClass;
 
-		if (i == 0) imagesClasses[i] += ' md:ml-24';
+		if (i == 0) imagesClasses[i] += ' ml-8 md:ml-24';
 		else if (i == blok.images.length - 1) imagesClasses[i] += ' mr-8';
 	}
 
