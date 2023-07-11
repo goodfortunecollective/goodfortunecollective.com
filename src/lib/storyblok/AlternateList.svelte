@@ -30,7 +30,7 @@
 	<div class="px-6">
 		<div class="list md:grid md:grid-cols-12 md:gap-2 py-16 md:py-32 title-side-{blok.titleSide}">
 			<div class={titleClass}>
-				<Heading as="h3" size="h3">{blok.title}</Heading>
+				<Heading as="h3" size="h2">{blok.title}</Heading>
 			</div>
 
 			{#each blok.list as item, i}

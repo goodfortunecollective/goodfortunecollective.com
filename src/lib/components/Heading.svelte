@@ -6,9 +6,9 @@
 
 	const textSizes = {
 		h1: 'text-6xl md:text-8xl',
-		h2: 'text-4xl',
-		h3: 'text-3xl',
-		h4: 'text-2xl',
+		h2: 'text-5xl',
+		h3: 'text-4xl',
+		h4: 'text-3xl',
 		h5: 'text-xl',
 		h6: 'text-lg'
 	};

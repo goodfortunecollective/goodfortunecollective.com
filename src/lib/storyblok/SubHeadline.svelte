@@ -10,7 +10,7 @@
 	<div class="max-w-6xl mx-auto">
 		<div class="flex flex-col items-stretch gap-12 px-8 pt-16 pb-8 lg:flex-row lg:gap-0">
 			<div class="flex flex-col md:w-1/3">
-				<Heading as="h2" size="h2">{blok.title}</Heading>
+				<Heading as="h2" size="h3">{blok.title}</Heading>
 				{#if blok.links.length}
 					<div class="hidden mt-8 lg:block">
 						{#each blok.links as b}

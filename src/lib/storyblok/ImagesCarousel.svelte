@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { storyblokEditable } from '@storyblok/svelte';
-	import { Draggable } from '$lib/vendors/gsap/Draggable.js';
+
+	import { Draggable } from '$lib/gsap';
 
 	export let blok: any;
 
