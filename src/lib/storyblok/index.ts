@@ -9,6 +9,7 @@ import HeadlineVideo from './HeadlineVideo.svelte';
 import HeadlineImages from './HeadlineImages.svelte';
 import ImageList from './ImageList.svelte';
 import Images from './Images.svelte';
+import ImagesCarousel from './ImagesCarousel.svelte';
 import ImagesList from './ImagesList.svelte';
 import ImageAndText from './ImageAndText.svelte';
 import ProjectsList from './ProjectsList.svelte';
@@ -35,6 +36,7 @@ export const components: any = {
 		'headline-images':HeadlineImages,
     'image-list': ImageList,
     'images': Images,
+    'images-carousel': ImagesCarousel,
     'image-and-text': ImageAndText,
     'images-list': ImagesList,
     'job-list': JobList,
