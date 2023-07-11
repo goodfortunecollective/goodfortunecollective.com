@@ -8,7 +8,6 @@
 	let isTransition: boolean = false;
 
 	beforeNavigate(async () => {
-		console.log('beforeNavigate');
 		// @ts-ignore
 		const scroll = ScrollSmoother.get();
 

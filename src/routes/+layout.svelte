@@ -36,7 +36,6 @@
 				);
 			}
 		});
-		console.log('layout');
 		if (scroll) {
 			const hash = $page.url.hash.slice(1);
 
