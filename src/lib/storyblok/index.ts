@@ -20,6 +20,7 @@ import RichText from './RichText.svelte';
 import SEO from './SEO.svelte';
 import SocialLink from './SocialLink.svelte';
 import SocialLinks from './SocialLinks.svelte';
+import SubHeadline from './SubHeadline.svelte';
 import Text from './Text.svelte';
 import TextCols from './TextCols.svelte';
 import Video from './Video.svelte';
@@ -48,6 +49,7 @@ export const components: any = {
     seo: SEO,
     'social-link': SocialLink,
     'social-links': SocialLinks,
+    'subheadline': SubHeadline,
     text: Text,
     'text-cols': TextCols,
     'video': Video,
