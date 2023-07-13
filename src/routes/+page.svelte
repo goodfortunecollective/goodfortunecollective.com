@@ -1,6 +1,6 @@
 <script lang="ts">
-	import {onMount} from 'svelte';
-	import {useStoryblokBridge, StoryblokComponent} from '@storyblok/svelte';
+	import { onMount } from 'svelte';
+	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 
 	export let data;
 
@@ -20,5 +20,5 @@
 </svelte:head>
 
 {#if data.story}
-	<StoryblokComponent blok={data.story.content}/>
+	<StoryblokComponent blok={data.story.content} />
 {/if}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {cls} from '$lib/styles';
+	import { cls } from '$lib/styles';
 
 	export let as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1';
 	export let size: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1';
@@ -19,7 +19,7 @@
 	{...$$restProps}
 	class={cls(textSizes[size], 'w-full font-degular-display', $$props.class)}
 >
-	<slot/>
+	<slot />
 </svelte:element>
 
 <!--

@@ -1,11 +1,11 @@
 <script lang="ts">
-	import {createEventDispatcher, onMount} from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 
-	import {dev} from '$app/environment';
-	import {gsap} from '$lib/gsap';
-	import {cls} from '$lib/styles';
-	import {delay_anim_page} from '$lib/stores';
-	import {Gfc} from '$lib/components';
+	import { dev } from '$app/environment';
+	import { gsap } from '$lib/gsap';
+	import { cls } from '$lib/styles';
+	import { delay_anim_page } from '$lib/stores';
+	import { Gfc } from '$lib/components';
 
 	const dispatch = createEventDispatcher();
 
@@ -124,11 +124,11 @@
 		id="loader"
 	>
 		<div class="flex items-center justify-center w-full h-full">
-			<div bind:this={background} class="absolute w-full h-full bg-gray-100"/>
+			<div bind:this={background} class="absolute w-full h-full bg-gray-100" />
 			<div bind:this={logo} class="absolute">
-				<Gfc class="w-auto h-8" alt=""/>
+				<Gfc class="w-auto h-8" alt="" />
 			</div>
-			<div bind:this={circle} class="absolute w-16 h-16 bg-gray-300 rounded-full"/>
+			<div bind:this={circle} class="absolute w-16 h-16 bg-gray-300 rounded-full" />
 		</div>
 	</div>
 {/if}

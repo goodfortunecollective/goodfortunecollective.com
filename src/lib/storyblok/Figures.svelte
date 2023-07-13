@@ -1,7 +1,7 @@
 <script lang="ts">
-	import {renderRichText, storyblokEditable, StoryblokComponent} from '@storyblok/svelte';
+	import { renderRichText, storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 
-	import {Heading} from '$lib/components';
+	import { Heading } from '$lib/components';
 
 	export let blok: any;
 
@@ -16,7 +16,7 @@
 		<div class="mb-8 text-center block-content">{@html content}</div>
 		<div class="grid grid-cols-2 gap-2 figures-block-children md:grid-cols-4">
 			{#each blok.children as b}
-				<StoryblokComponent blok={b}/>
+				<StoryblokComponent blok={b} />
 			{/each}
 		</div>
 	</div>

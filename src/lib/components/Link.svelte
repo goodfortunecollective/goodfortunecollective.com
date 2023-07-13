@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let href = {url: ''};
+	export let href = { url: '' };
 	export let label = '';
 	export let isExternal = false;
 </script>
@@ -13,8 +13,8 @@
 >
 	<span class="flex items-center pr-4">{label}</span>
 	<span class="relative flex items-center justify-center ml-[50px] text-4xl">
-		<span class="arrow arrow-default"/><span class="flex items-center justify-center link-circle">
-			<span class="arrow arrow-hover"/>
+		<span class="arrow arrow-default" /><span class="flex items-center justify-center link-circle">
+			<span class="arrow arrow-hover" />
 		</span>
 	</span></a
 >

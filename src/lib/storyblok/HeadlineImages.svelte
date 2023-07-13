@@ -1,7 +1,7 @@
 <script lang="ts">
-	import {onMount} from 'svelte';
-	import {storyblokEditable} from '@storyblok/svelte';
-	import {Draggable} from '$lib/vendors/gsap/Draggable.js';
+	import { onMount } from 'svelte';
+	import { storyblokEditable } from '@storyblok/svelte';
+	import { Draggable } from '$lib/vendors/gsap/Draggable.js';
 
 	export let blok: any;
 
@@ -61,7 +61,7 @@
 							class="my-4 text-sm font-bold tracking-widest uppercase image-block-caption"
 						>
 							<span class="caption-number"
-							>{#if i <= 10}0{/if}{i + 1}</span
+								>{#if i <= 10}0{/if}{i + 1}</span
 							>
 							<span class="opacity-50 caption-text">{item.name}</span>
 						</figcaption>

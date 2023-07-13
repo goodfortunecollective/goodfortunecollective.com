@@ -1,9 +1,9 @@
 <script lang="ts">
-	import {storyblokEditable, StoryblokComponent} from '@storyblok/svelte';
-	import {cva} from 'class-variance-authority';
+	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+	import { cva } from 'class-variance-authority';
 
-	import {cls} from '$lib/styles';
-	import {Heading} from '$lib/components';
+	import { cls } from '$lib/styles';
+	import { Heading } from '$lib/components';
 
 	export let blok: any;
 
@@ -44,9 +44,9 @@
 	<dl class="flex flex-col gap-24 mt-16">
 		{#each blok.list as b, index}
 			<div class={cls('flex justify-start', variants({ layoutDirection: blok.layoutDirection }))}>
-				<div class={cls(variants({ columnIndex: getColumnIndex(index) }))}/>
+				<div class={cls(variants({ columnIndex: getColumnIndex(index) }))} />
 				<div class="md:w-7/12 min-w-[500px]">
-					<StoryblokComponent blok={b} {index}/>
+					<StoryblokComponent blok={b} {index} />
 				</div>
 			</div>
 		{/each}

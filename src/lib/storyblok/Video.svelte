@@ -1,7 +1,7 @@
 <script lang="ts">
-	import {onMount} from 'svelte';
-	import {storyblokEditable, StoryblokComponent} from '@storyblok/svelte';
-	import {gsap} from 'gsap';
+	import { onMount } from 'svelte';
+	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+	import { gsap } from 'gsap';
 
 	export let blok: any;
 
@@ -25,7 +25,7 @@
 			y = e.pageY - e.currentTarget.getBoundingClientRect().top - window.scrollY;
 		// console.log('page x : ' + e.pageX + ' - ' + 'y : ' + e.pageY);
 		// console.log('x : ' + x + ' - ' + 'y : ' + y);
-		gsap.to(btn, 0.2, {x: x, y: y});
+		gsap.to(btn, 0.2, { x: x, y: y });
 	}
 
 	function showVideo() {
@@ -96,7 +96,7 @@
 			on:click={showVideo}
 			data-id={blok.id}
 		>
-			<img class="video-block-poster-img" src={posterUrl} alt={blok.id}/>
+			<img class="video-block-poster-img" src={posterUrl} alt={blok.id} />
 		</figure>
 	</div>
 </div>

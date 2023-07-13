@@ -1,8 +1,8 @@
 <script lang="ts">
-	import {onMount} from 'svelte';
-	import {useStoryblokBridge, StoryblokComponent} from '@storyblok/svelte';
+	import { onMount } from 'svelte';
+	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 
-	import {base} from '$app/paths';
+	import { base } from '$app/paths';
 
 	import Planes from '$lib/components/Planes.svelte';
 	import Plane from '$lib/components/Plane.svelte';
@@ -68,7 +68,7 @@
 
 <svelte:head>
 	<title>Work</title>
-	<meta name="description" content="Work"/>
+	<meta name="description" content="Work" />
 </svelte:head>
 
 <section class="pt-[var(--header-height)] pb-32">
@@ -88,7 +88,7 @@
 			href="{base}/work#all"
 			data-category="all"
 			on:click={categoryOnClick}
-		>All projects
+			>All projects
 			{#if data.projects}
 				<sup class="text-xs font-normal category-number">
 					{#if data.projects.length < 10}0{/if}{data.projects.length}</sup
@@ -105,8 +105,7 @@
 				>
 					{category.name}
 					{#if categoriesData[i]}
-						<sup class="text-xs font-normal category-number"
-						>
+						<sup class="text-xs font-normal category-number">
 							{#if categoriesData[i].count < 10}0{/if}{categoriesData[i].count}</sup
 						>
 					{/if}
@@ -116,14 +115,14 @@
 	</div>
 
 	<Planes>
-		{#each data.projects as {name, slug, content}}
-			<Plane {name} {slug} {content}/>
+		{#each data.projects as { name, slug, content }}
+			<Plane {name} {slug} {content} />
 		{/each}
 	</Planes>
 </section>
 
 {#if data.story}
-	<StoryblokComponent blok={data.story.content}/>
+	<StoryblokComponent blok={data.story.content} />
 {/if}
 
 <style lang="scss">

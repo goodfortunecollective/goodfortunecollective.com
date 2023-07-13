@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {storyblokEditable, StoryblokComponent} from '@storyblok/svelte';
+	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 
 	export let blok: any;
 </script>
@@ -11,7 +11,7 @@
 				{#each blok.children as item, i}
 					<div class="flex text-block w-full grow-[1]">
 						<p>
-							<StoryblokComponent blok={item}/>
+							<StoryblokComponent blok={item} />
 						</p>
 					</div>
 				{/each}

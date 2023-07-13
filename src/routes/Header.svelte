@@ -1,16 +1,16 @@
 <script lang="ts">
-	import {fade, fly} from 'svelte/transition';
-	import {onMount} from 'svelte';
+	import { fade, fly } from 'svelte/transition';
+	import { onMount } from 'svelte';
 
-	import {base} from '$app/paths';
-	import {gsap} from '$lib/gsap';
-	import {Gfc} from '$lib/components';
+	import { base } from '$app/paths';
+	import { gsap } from '$lib/gsap';
+	import { Gfc } from '$lib/components';
 
 	const navigation = [
-		{name: 'Work', path: 'work'},
-		{name: 'About', path: 'about'},
-		{name: 'Careers', path: 'careers'},
-		{name: 'Contact', path: 'contact'}
+		{ name: 'Work', path: 'work' },
+		{ name: 'About', path: 'about' },
+		{ name: 'Careers', path: 'careers' },
+		{ name: 'Contact', path: 'contact' }
 	];
 
 	let mobileMenuOpen = false;
@@ -70,13 +70,13 @@
 	});
 </script>
 
-<svelte:window bind:scrollY={currentY}/>
+<svelte:window bind:scrollY={currentY} />
 
 <!-- Mobile menu, show/hide based on menu open state. -->
 {#if mobileMenuOpen}
 	<div class="bg-white sm:hidden" role="dialog" aria-modal="true">
 		<!-- Background backdrop, show/hide based on slide-over state. -->
-		<div class="fixed inset-0 z-20"/>
+		<div class="fixed inset-0 z-20" />
 		<div
 			in:fade
 			out:fade={{ delay: 500 }}
@@ -85,13 +85,13 @@
 			<div class="flow-root mt-24">
 				<div class="-my-6 divide-y divide-gray-500/10">
 					<div class="py-6 space-y-2">
-						{#each navigation as {name, path}, i}<a
-							href="{base}/{path}"
-							class="block px-3 py-2 -mx-3 text-xl font-semibold leading-7 text-white"
-							in:fly={{ x: -48, duration: 500, delay: 300 + 50 * i }}
-							out:fly={{ x: -48, duration: 500, delay: 300 - 50 * i }}
-							on:click={closeMobileMenu}>{name}</a
-						>
+						{#each navigation as { name, path }, i}<a
+								href="{base}/{path}"
+								class="block px-3 py-2 -mx-3 text-xl font-semibold leading-7 text-white"
+								in:fly={{ x: -48, duration: 500, delay: 300 + 50 * i }}
+								out:fly={{ x: -48, duration: 500, delay: 300 - 50 * i }}
+								on:click={closeMobileMenu}>{name}</a
+							>
 						{/each}
 					</div>
 				</div>
@@ -111,7 +111,7 @@
 	>
 		<a href="{base}/" class="-m-1.5 p-1.5" bind:this={logo}>
 			<span class="sr-only">Good Fortune Collective</span>
-			<Gfc class="w-auto h-8 text-white" alt=""/>
+			<Gfc class="w-auto h-8 text-white" alt="" />
 		</a>
 		<div class="flex sm:hidden">
 			<button
@@ -129,7 +129,7 @@
 						stroke="currentColor"
 						aria-hidden="true"
 					>
-						<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+						<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
 					</svg>
 				{:else}
 					<svg
@@ -150,7 +150,7 @@
 			</button>
 		</div>
 		<div class="hidden sm:flex sm:gap-x-12">
-			{#each navigation as {name, path}, i}
+			{#each navigation as { name, path }, i}
 				<a href="{base}/{path}" class="text-sm leading-6">
 					<span data-gsap="nav-items" class="block text-white">{name}</span>
 				</a>

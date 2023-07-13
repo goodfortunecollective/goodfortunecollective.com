@@ -1,11 +1,11 @@
 <script lang="ts">
-	import {onMount} from 'svelte';
-	import {custom_event} from 'svelte/internal';
+	import { onMount } from 'svelte';
+	import { custom_event } from 'svelte/internal';
 
-	import {page} from '$app/stores';
-	import {ScrollSmoother, gsap} from '$lib/gsap';
+	import { page } from '$app/stores';
+	import { ScrollSmoother, gsap } from '$lib/gsap';
 
-	import type {LayoutData} from './$types';
+	import type { LayoutData } from './$types';
 
 	import Loader from './Loader.svelte';
 	import Header from './Header.svelte';
@@ -33,7 +33,7 @@
 			smoothTouch: 0.1,
 			onUpdate: (event: any) => {
 				ref.dispatchEvent(
-					custom_event('smoothScrollUpdate', {offsetY: event.scrollTop()}, {bubbles: true})
+					custom_event('smoothScrollUpdate', { offsetY: event.scrollTop() }, { bubbles: true })
 				);
 			}
 		});
@@ -63,23 +63,22 @@
 	}
 </script>
 
-<Header/>
+<Header />
 <main bind:this={ref}>
-	<PageTransitionAnim/>
+	<PageTransitionAnim />
 	<div id="smooth-wrapper" class="z-10">
 		<div id="smooth-content">
 			<PageTransition pathname={data.pathname}>
-				<slot/>
-				<Footer/>
+				<slot />
+				<Footer />
 			</PageTransition>
 		</div>
 	</div>
 </main>
 
-<Curtains/>
+<Curtains />
 
-<Loader on:complete={handleCompleteLoader}/>
+<Loader on:complete={handleCompleteLoader} />
 
 <style>
-
 </style>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {storyblokEditable, StoryblokComponent} from '@storyblok/svelte';
+	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 
 	export let blok: any;
 
@@ -19,10 +19,10 @@
 					<h2 class="text-4xl list-item-title">{item.title}</h2>
 				</div>
 				<div class={'list-item-text mb-8 md:mb-0 md:col-span-8 ' + textClasses[i % 2]}>
-					<StoryblokComponent blok={item}/>
+					<StoryblokComponent blok={item} />
 				</div>
 				<figure class={'list-item-image md:col-span-12 ' + imageClasses[i % 2]}>
-					<img src={item.image.filename} alt={item.title}/>
+					<img src={item.image.filename} alt={item.title} />
 				</figure>
 			</div>
 		{/each}

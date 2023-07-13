@@ -1,7 +1,7 @@
 <script lang="ts">
-	import {storyblokEditable, StoryblokComponent} from '@storyblok/svelte';
+	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 
-	import {Heading} from '$lib/components';
+	import { Heading } from '$lib/components';
 
 	export let blok: any;
 
@@ -40,7 +40,7 @@
 					</div>
 					<div class="text-xl list-item-content">
 						<p>
-							<StoryblokComponent blok={item}/>
+							<StoryblokComponent blok={item} />
 						</p>
 					</div>
 				</div>

@@ -58,15 +58,15 @@ utility methods</a> like <a href="https://greensock.com/docs/v3/GSAP/UtilityMeth
 
 ```javascript
 // typical import
-import gsap from "gsap";
+import gsap from 'gsap';
 
 // get other plugins:
-import ScrollTrigger from "gsap/ScrollTrigger";
-import Flip from "gsap/Flip";
-import Draggable from "gsap/Draggable";
+import ScrollTrigger from 'gsap/ScrollTrigger';
+import Flip from 'gsap/Flip';
+import Draggable from 'gsap/Draggable';
 
 // or all tools are exported from the "all" file (excluding members-only plugins):
-import { gsap, ScrollTrigger, Draggable, MotionPathPlugin } from "gsap/all";
+import { gsap, ScrollTrigger, Draggable, MotionPathPlugin } from 'gsap/all';
 
 // don't forget to register plugins
 gsap.registerPlugin(ScrollTrigger, Draggable, Flip, MotionPathPlugin);
@@ -95,17 +95,17 @@ well.
 
 ### Resources
 
-* <a href="https://greensock.com/">GSAP home page</a>
-* <a href="https://greensock.com/get-started/">Getting started guide</a>
-* <a href="https://greensock.com/docs/">Docs</a>
-* <a href="https://greensock.com/cheatsheet">Cheat sheet</a>
-* <a href="https://greensock.com/forums/">Forums</a>
-* <a href="https://greensock.com/ease-visualizer/">Ease Visualizer</a>
-* <a href="https://greensock.com/showcase">Showcase</a>
-* <a href="https://greensock.com/why-gsap/">Why GSAP?</a> (convince your boss)
-* <a href="https://greensock.com/stagger">Staggering animations in GSAP 3</a>
-* <a href="https://greensock.com/draggable/">Draggable</a>
-* <a href="https://greensock.com/club/">Club GreenSock</a> (get access to bonus plugins not in this repository)
+- <a href="https://greensock.com/">GSAP home page</a>
+- <a href="https://greensock.com/get-started/">Getting started guide</a>
+- <a href="https://greensock.com/docs/">Docs</a>
+- <a href="https://greensock.com/cheatsheet">Cheat sheet</a>
+- <a href="https://greensock.com/forums/">Forums</a>
+- <a href="https://greensock.com/ease-visualizer/">Ease Visualizer</a>
+- <a href="https://greensock.com/showcase">Showcase</a>
+- <a href="https://greensock.com/why-gsap/">Why GSAP?</a> (convince your boss)
+- <a href="https://greensock.com/stagger">Staggering animations in GSAP 3</a>
+- <a href="https://greensock.com/draggable/">Draggable</a>
+- <a href="https://greensock.com/club/">Club GreenSock</a> (get access to bonus plugins not in this repository)
 
 ### What is Club GreenSock? (video)
 
@@ -113,11 +113,11 @@ well.
 
 There are 3 main reasons anyone signs up for <a href="https://greensock.com/club">Club GreenSock</a>:
 
-* To get access to the incredibly helpful <a href="https://greensock.com/club">members-only plugins</a> like
-	MorphSVGPlugin, SplitText, ScrollSmoother, etc.
-* To get the special <a href="https://greensock.com/licensing/">commercial license</a> ("Business Green" - only
-	necessary if multiple customers are being charged for something that uses GreenSock technology).
-* To support ongoing development efforts and **cheer us on**.
+- To get access to the incredibly helpful <a href="https://greensock.com/club">members-only plugins</a> like
+  MorphSVGPlugin, SplitText, ScrollSmoother, etc.
+- To get the special <a href="https://greensock.com/licensing/">commercial license</a> ("Business Green" - only
+  necessary if multiple customers are being charged for something that uses GreenSock technology).
+- To support ongoing development efforts and **cheer us on**.
 
 <a href="https://greensock.com/club/">Sign up</a> anytime.
 

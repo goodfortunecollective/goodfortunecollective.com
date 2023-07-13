@@ -1,8 +1,8 @@
 <script lang="ts">
-	import {StoryblokComponent, storyblokEditable} from '@storyblok/svelte';
-	import {onMount} from 'svelte';
+	import { StoryblokComponent, storyblokEditable } from '@storyblok/svelte';
+	import { onMount } from 'svelte';
 
-	import {gsap} from '$lib/gsap';
+	import { gsap } from '$lib/gsap';
 
 	export let blok: any;
 
@@ -18,7 +18,7 @@
 
 				gsap.fromTo(
 					container,
-					{x},
+					{ x },
 					{
 						x: xEnd,
 						scrollTrigger: {
@@ -40,7 +40,7 @@
 					{#each blok.tags as b}
 						<li class="inline-block mr-24 mb-8">
 							<span class="text-7xl uppercase">
-								<StoryblokComponent blok={b}/>
+								<StoryblokComponent blok={b} />
 							</span>
 						</li>
 					{/each}

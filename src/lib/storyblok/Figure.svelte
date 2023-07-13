@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {storyblokEditable} from '@storyblok/svelte';
+	import { storyblokEditable } from '@storyblok/svelte';
 
 	export let blok: any;
 </script>

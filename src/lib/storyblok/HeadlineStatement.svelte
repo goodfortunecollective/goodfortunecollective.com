@@ -1,7 +1,7 @@
 <script lang="ts">
-	import {renderRichText, storyblokEditable, StoryblokComponent} from '@storyblok/svelte';
+	import { renderRichText, storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 
-	import {Heading} from '$lib/components';
+	import { Heading } from '$lib/components';
 
 	export let blok: any;
 
@@ -16,7 +16,7 @@
 				{#if blok.children.length}
 					<div class="hidden mt-8 lg:block">
 						{#each blok.children as b}
-							<StoryblokComponent blok={b}/>
+							<StoryblokComponent blok={b} />
 						{/each}
 					</div>
 				{/if}
@@ -27,7 +27,7 @@
 			{#if blok.children.length}
 				<div class="mt-4 lg:hidden">
 					{#each blok.children as b}
-						<StoryblokComponent blok={b}/>
+						<StoryblokComponent blok={b} />
 					{/each}
 				</div>
 			{/if}

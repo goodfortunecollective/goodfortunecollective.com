@@ -1,8 +1,8 @@
 <script lang="ts">
-	import {storyblokEditable, StoryblokComponent} from '@storyblok/svelte';
-	import {cva} from 'class-variance-authority';
+	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+	import { cva } from 'class-variance-authority';
 
-	import {cls} from '$lib/styles';
+	import { cls } from '$lib/styles';
 
 	export let blok: any;
 
@@ -25,6 +25,6 @@
 	{...$$restProps}
 >
 	{#each blok.links as b}
-		<StoryblokComponent blok={b}/>
+		<StoryblokComponent blok={b} />
 	{/each}
 </div>
