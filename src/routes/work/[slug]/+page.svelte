@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
-	import { useStoryblokBridge, StoryblokComponent, renderRichText } from '@storyblok/svelte';
+	import {onMount, onDestroy} from 'svelte';
+	import {useStoryblokBridge, StoryblokComponent, renderRichText} from '@storyblok/svelte';
 
-	import { base } from '$app/paths';
-	import { Heading } from '$lib/components';
+	import {base} from '$app/paths';
+	import {Heading} from '$lib/components';
 
 	export let data;
 	$: description = renderRichText(data.story.content.description);
@@ -15,12 +15,13 @@
 		}
 	});
 
-	onDestroy(() => {});
+	onDestroy(() => {
+	});
 </script>
 
 <svelte:head>
 	<title>{data.story.name}</title>
-	<meta name="description" content={data.story.content.description} />
+	<meta name="description" content={data.story.content.description}/>
 </svelte:head>
 
 <section class="pt-[var(--header-height)] project-header">
@@ -67,7 +68,7 @@
 		</div>
 		<figure class="project-thumbnail md:w-1/4">
 			{#if data.story.content.thumbnail}
-				<img src={data.story.content.thumbnail.filename} alt={data.story.content.title} />
+				<img src={data.story.content.thumbnail.filename} alt={data.story.content.title}/>
 			{/if}
 		</figure>
 	</div>
@@ -76,10 +77,12 @@
 	<div class="max-w-6xl mx-auto">
 		<a href="{base}/work/"> &#10229; </a>
 		{#if data.story}
-			<StoryblokComponent blok={data.story.content} />
+			<StoryblokComponent blok={data.story.content}/>
 		{/if}
 		<div class="flex justify-center mt-16 align-center">
-			<a href="{base}/work/"><Heading size="h1" as="h3">All projects</Heading></a>
+			<a href="{base}/work/">
+				<Heading size="h1" as="h3">All projects</Heading>
+			</a>
 		</div>
 	</div>
 </section>
@@ -96,6 +99,7 @@
 		h5 {
 			color: $green;
 		}
+
 		p {
 			margin: 0;
 		}

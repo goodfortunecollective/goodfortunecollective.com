@@ -1,6 +1,5 @@
-import {Vec3} from '../math/Vec3.js';
-import {Mat4} from '../math/Mat4.js';
-
+import { Vec3 } from '../math/Vec3.js';
+import { Mat4 } from '../math/Mat4.js';
 
 /***
  Here we create our Camera object
@@ -19,121 +18,109 @@ import {Mat4} from '../math/Mat4.js';
  @this: our Mesh element
  ***/
 export class Camera {
-    constructor({
-                    fov = 50,
-                    near = 0.1,
-                    far = 150,
-                    width,
-                    height,
-                    pixelRatio = 1,
-                } = {}) {
+	constructor({ fov = 50, near = 0.1, far = 150, width, height, pixelRatio = 1 } = {}) {
+		this.position = new Vec3();
+		this.projectionMatrix = new Mat4();
 
-        this.position = new Vec3();
-        this.projectionMatrix = new Mat4();
+		this.worldMatrix = new Mat4();
+		this.viewMatrix = new Mat4();
 
-        this.worldMatrix = new Mat4();
-        this.viewMatrix = new Mat4();
+		this._shouldUpdate = false;
 
-        this._shouldUpdate = false;
+		this.setSize();
+		this.setPerspective(fov, near, far, width, height, pixelRatio);
+	}
 
-        this.setSize();
-        this.setPerspective(fov, near, far, width, height, pixelRatio);
-    }
-
-    /***
+	/***
      Sets the camera field of view
      Update the camera projection matrix only if the fov actually changed
 
      params:
      @fov (float, optional): field of view to use
-     ***/
-    setFov(fov) {
-        fov = isNaN(fov) ? this.fov : parseFloat(fov);
+	 ***/
+	setFov(fov) {
+		fov = isNaN(fov) ? this.fov : parseFloat(fov);
 
-        // clamp between 1 and 179
-        fov = Math.max(1, Math.min(fov, 179));
+		// clamp between 1 and 179
+		fov = Math.max(1, Math.min(fov, 179));
 
-        if(fov !== this.fov) {
-            this.fov = fov;
-            this.setPosition();
+		if (fov !== this.fov) {
+			this.fov = fov;
+			this.setPosition();
 
-            this._shouldUpdate = true;
-        }
+			this._shouldUpdate = true;
+		}
 
-        this.setCSSPerspective();
-    }
+		this.setCSSPerspective();
+	}
 
-
-    /***
+	/***
      Sets the camera near plane value
      Update the camera projection matrix only if the near plane actually changed
 
      params:
      @near (float, optional): near plane value to use
-     ***/
-    setNear(near) {
-        near = isNaN(near) ? this.near : parseFloat(near);
-        near = Math.max(near, 0.01);
+	 ***/
+	setNear(near) {
+		near = isNaN(near) ? this.near : parseFloat(near);
+		near = Math.max(near, 0.01);
 
-        if(near !== this.near) {
-            this.near = near;
-            this._shouldUpdate = true;
-        }
-    }
+		if (near !== this.near) {
+			this.near = near;
+			this._shouldUpdate = true;
+		}
+	}
 
-
-    /***
+	/***
      Sets the camera far plane value
      Update the camera projection matrix only if the far plane actually changed
 
      params:
      @far (float, optional): far plane value to use
-     ***/
-    setFar(far) {
-        far = isNaN(far) ? this.far : parseFloat(far);
-        far = Math.max(far, 50);
+	 ***/
+	setFar(far) {
+		far = isNaN(far) ? this.far : parseFloat(far);
+		far = Math.max(far, 50);
 
-        if(far !== this.far) {
-            this.far = far;
-            this._shouldUpdate = true;
-        }
-    }
+		if (far !== this.far) {
+			this.far = far;
+			this._shouldUpdate = true;
+		}
+	}
 
-
-    /***
+	/***
      Sets the camera pixel ratio value
      Update the camera projection matrix only if the pixel ratio actually changed
 
      params:
      @pixelRatio (float, optional): pixelRatio value to use
-     ***/
-    setPixelRatio(pixelRatio) {
-        if(pixelRatio !== this.pixelRatio) {
-            this._shouldUpdate = true;
-        }
+	 ***/
+	setPixelRatio(pixelRatio) {
+		if (pixelRatio !== this.pixelRatio) {
+			this._shouldUpdate = true;
+		}
 
-        this.pixelRatio = pixelRatio;
-    }
+		this.pixelRatio = pixelRatio;
+	}
 
-    /***
+	/***
      Sets the camera width and height
      Update the camera projection matrix only if the width or height actually changed
 
      params:
      @width (float, optional): width value to use
      @height (float, optional): height value to use
-     ***/
-    setSize(width, height) {
-        if(width !== this.width || height !== this.height) {
-            this._shouldUpdate = true;
-        }
+	 ***/
+	setSize(width, height) {
+		if (width !== this.width || height !== this.height) {
+			this._shouldUpdate = true;
+		}
 
-        this.width = width;
-        this.height = height;
-    }
+		this.width = width;
+		this.height = height;
+	}
 
-
-    /***
+	/***
      Sets the camera perspective
      Update the camera projection matrix if our _shouldUpdate flag is true
 
@@ -144,118 +131,124 @@ export class Camera {
      @width (float, optional): width value to use
      @height (float, optional): height value to use
      @pixelRatio (float, optional): pixelRatio value to use
-     ***/
-    setPerspective(fov, near, far, width, height, pixelRatio) {
-        this.setPixelRatio(pixelRatio);
-        this.setSize(width, height);
-        this.setFov(fov);
-        this.setNear(near);
-        this.setFar(far);
+	 ***/
+	setPerspective(fov, near, far, width, height, pixelRatio) {
+		this.setPixelRatio(pixelRatio);
+		this.setSize(width, height);
+		this.setFov(fov);
+		this.setNear(near);
+		this.setFar(far);
 
-        if(this._shouldUpdate) {
-            this.updateProjectionMatrix();
-        }
-    }
+		if (this._shouldUpdate) {
+			this.updateProjectionMatrix();
+		}
+	}
 
-
-    /***
+	/***
      Sets the camera position based on its fov
      Used by the Plane class objects to scale the planes with the right amount
-     ***/
-    setPosition() {
-        this.position.set(0, 0, 1);
+	 ***/
+	setPosition() {
+		this.position.set(0, 0, 1);
 
-        // update matrices
-        this.worldMatrix.setFromArray([
-            1, 0, 0, 0,
-            0, 1, 0, 0,
-            0, 0, 1, 0,
-            this.position.x, this.position.y, this.position.z, 1
-        ]);
+		// update matrices
+		this.worldMatrix.setFromArray([
+			1,
+			0,
+			0,
+			0,
+			0,
+			1,
+			0,
+			0,
+			0,
+			0,
+			1,
+			0,
+			this.position.x,
+			this.position.y,
+			this.position.z,
+			1
+		]);
 
-        this.viewMatrix = this.viewMatrix.copy(this.worldMatrix).getInverse();
-    }
+		this.viewMatrix = this.viewMatrix.copy(this.worldMatrix).getInverse();
+	}
 
-    /***
+	/***
      Sets a CSSPerspective property based on width, height, pixelRatio and fov
      Used to translate planes along the Z axis using pixel units as CSS would do
      Taken from: https://stackoverflow.com/questions/22421439/convert-field-of-view-value-to-css3d-perspective-value
-     ***/
-    setCSSPerspective() {
-        this.CSSPerspective = Math.pow( Math.pow(this.width / (2 * this.pixelRatio), 2) + Math.pow(this.height / (2 * this.pixelRatio) , 2), 0.5 ) / Math.tan((this.fov * 0.5) * Math.PI / 180);
-    }
+	 ***/
+	setCSSPerspective() {
+		this.CSSPerspective =
+			Math.pow(
+				Math.pow(this.width / (2 * this.pixelRatio), 2) +
+					Math.pow(this.height / (2 * this.pixelRatio), 2),
+				0.5
+			) / Math.tan((this.fov * 0.5 * Math.PI) / 180);
+	}
 
-
-    /***
+	/***
      Returns visible width / height at a given z-depth from our camera parameters
 
      Taken from: https://discourse.threejs.org/t/functions-to-calculate-the-visible-width-height-at-a-given-z-depth-from-a-perspective-camera/269
-     ***/
-    getScreenRatiosFromFov(depth = 0) {
-        // compensate for cameras not positioned at z=0
-        const cameraOffset = this.position.z;
-        if (depth < cameraOffset) {
-            depth -= cameraOffset;
-        }
-        else {
-            depth += cameraOffset;
-        }
+	 ***/
+	getScreenRatiosFromFov(depth = 0) {
+		// compensate for cameras not positioned at z=0
+		const cameraOffset = this.position.z;
+		if (depth < cameraOffset) {
+			depth -= cameraOffset;
+		} else {
+			depth += cameraOffset;
+		}
 
-        // vertical fov in radians
-        const vFOV = this.fov * Math.PI / 180;
+		// vertical fov in radians
+		const vFOV = (this.fov * Math.PI) / 180;
 
-        // Math.abs to ensure the result is always positive
-        const height = 2 * Math.tan( vFOV / 2 ) * Math.abs(depth);
-        return {
-            width: height * this.width / this.height,
-            height: height,
-        };
-    }
+		// Math.abs to ensure the result is always positive
+		const height = 2 * Math.tan(vFOV / 2) * Math.abs(depth);
+		return {
+			width: (height * this.width) / this.height,
+			height: height
+		};
+	}
 
-    /***
+	/***
      Updates the camera projection matrix
-     ***/
-    updateProjectionMatrix() {
-        const aspect = this.width / this.height;
+	 ***/
+	updateProjectionMatrix() {
+		const aspect = this.width / this.height;
 
-        const top = this.near * Math.tan((Math.PI / 180) * 0.5 * this.fov);
-        const height = 2 * top;
-        const width = aspect * height;
-        const left = -0.5 * width;
+		const top = this.near * Math.tan((Math.PI / 180) * 0.5 * this.fov);
+		const height = 2 * top;
+		const width = aspect * height;
+		const left = -0.5 * width;
 
-        const right = left + width;
-        const bottom = top - height;
+		const right = left + width;
+		const bottom = top - height;
 
+		const x = (2 * this.near) / (right - left);
+		const y = (2 * this.near) / (top - bottom);
 
-        const x = 2 * this.near / (right - left);
-        const y = 2 * this.near / (top - bottom);
+		const a = (right + left) / (right - left);
+		const b = (top + bottom) / (top - bottom);
+		const c = -(this.far + this.near) / (this.far - this.near);
+		const d = (-2 * this.far * this.near) / (this.far - this.near);
 
-        const a = (right + left) / (right - left);
-        const b = (top + bottom) / (top - bottom);
-        const c = -(this.far + this.near) / (this.far - this.near);
-        const d = -2 * this.far * this.near / (this.far - this.near);
+		this.projectionMatrix.setFromArray([x, 0, 0, 0, 0, y, 0, 0, a, b, c, -1, 0, 0, d, 0]);
+	}
 
-        this.projectionMatrix.setFromArray([
-            x, 0, 0, 0,
-            0, y, 0, 0,
-            a, b, c, -1,
-            0, 0, d, 0
-        ]);
-    }
-
-
-    /***
+	/***
      Force the projection matrix to update (used in Plane class objects context restoration)
-     ***/
-    forceUpdate() {
-        this._shouldUpdate = true;
-    }
+	 ***/
+	forceUpdate() {
+		this._shouldUpdate = true;
+	}
 
-
-    /***
+	/***
      Cancel the projection matrix update (used in Plane class objects after the projection matrix has been updated)
-     ***/
-    cancelUpdate() {
-        this._shouldUpdate = false;
-    }
+	 ***/
+	cancelUpdate() {
+		this._shouldUpdate = false;
+	}
 }

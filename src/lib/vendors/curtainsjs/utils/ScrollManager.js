@@ -17,43 +17,41 @@
  @this: our ScrollManager class object
  ***/
 export class ScrollManager {
-    constructor({
-        xOffset = 0,
-        yOffset = 0,
-        lastXDelta = 0,
-        lastYDelta = 0,
+	constructor({
+		xOffset = 0,
+		yOffset = 0,
+		lastXDelta = 0,
+		lastYDelta = 0,
 
-        shouldWatch = true,
+		shouldWatch = true,
 
-        onScroll = () => {},
-    } = {}) {
-        this.xOffset = xOffset;
-        this.yOffset = yOffset;
-        this.lastXDelta = lastXDelta;
-        this.lastYDelta = lastYDelta;
-        this.shouldWatch = shouldWatch;
+		onScroll = () => {}
+	} = {}) {
+		this.xOffset = xOffset;
+		this.yOffset = yOffset;
+		this.lastXDelta = lastXDelta;
+		this.lastYDelta = lastYDelta;
+		this.shouldWatch = shouldWatch;
 
-        this.onScroll = onScroll;
+		this.onScroll = onScroll;
 
-        // keep a ref to our scroll event
-        this.handler = this.scroll.bind(this, true);
-        if(this.shouldWatch) {
-            window.addEventListener("scroll", this.handler, {
-                passive: true
-            });
-        }
-    }
+		// keep a ref to our scroll event
+		this.handler = this.scroll.bind(this, true);
+		if (this.shouldWatch) {
+			window.addEventListener('scroll', this.handler, {
+				passive: true
+			});
+		}
+	}
 
-
-    /***
+	/***
      Called by the scroll event listener
-     ***/
-    scroll() {
-        this.updateScrollValues(window.pageXOffset, window.pageYOffset)
-    }
+	 ***/
+	scroll() {
+		this.updateScrollValues(window.pageXOffset, window.pageYOffset);
+	}
 
-
-    /***
+	/***
      Updates the scroll manager X and Y scroll values as well as last X and Y deltas
      Internally called by the scroll handler
      Could be called externally as well if the user wants to handle the scroll by himself
@@ -61,31 +59,30 @@ export class ScrollManager {
      params:
      @x (float): scroll value along X axis
      @y (float): scroll value along Y axis
-     ***/
-    updateScrollValues(x, y) {
-        // get our scroll delta values
-        const lastScrollXValue = this.xOffset;
-        this.xOffset = x;
-        this.lastXDelta = lastScrollXValue - this.xOffset;
+	 ***/
+	updateScrollValues(x, y) {
+		// get our scroll delta values
+		const lastScrollXValue = this.xOffset;
+		this.xOffset = x;
+		this.lastXDelta = lastScrollXValue - this.xOffset;
 
-        const lastScrollYValue = this.yOffset;
-        this.yOffset = y;
-        this.lastYDelta = lastScrollYValue - this.yOffset;
+		const lastScrollYValue = this.yOffset;
+		this.yOffset = y;
+		this.lastYDelta = lastScrollYValue - this.yOffset;
 
-        if(this.onScroll) {
-            this.onScroll(this.lastXDelta, this.lastYDelta);
-        }
-    }
+		if (this.onScroll) {
+			this.onScroll(this.lastXDelta, this.lastYDelta);
+		}
+	}
 
-
-    /***
+	/***
      Dispose our scroll manager (just remove our event listner if it had been added previously)
-     ***/
-    dispose() {
-        if(this.shouldWatch) {
-            window.removeEventListener("scroll", this.handler, {
-                passive: true
-            });
-        }
-    }
+	 ***/
+	dispose() {
+		if (this.shouldWatch) {
+			window.removeEventListener('scroll', this.handler, {
+				passive: true
+			});
+		}
+	}
 }

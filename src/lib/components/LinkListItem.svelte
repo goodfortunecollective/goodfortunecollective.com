@@ -8,10 +8,10 @@
 	<a class="flex items-center w-full py-4 list-item-link" href={url}>
 		<span class="list-item-name">{name}</span>
 		<span class="text-xs font-bold tracking-widest uppercase list-item-action">{label}</span>
-		<span class="arrow arrow-default" /><span
-			class="flex items-center justify-center list-item-circle"
-		>
-			<span class="arrow arrow-hover" />
+		<span class="arrow arrow-default"/><span
+		class="flex items-center justify-center list-item-circle"
+	>
+			<span class="arrow arrow-hover"/>
 		</span>
 	</a>
 </li>
@@ -137,6 +137,7 @@
 			transform: rotate(40deg);
 			transform-origin: top right;
 		}
+
 		&:after {
 			transform: rotate(-40deg);
 			transform-origin: bottom right;

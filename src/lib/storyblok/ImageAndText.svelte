@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { renderRichText, storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+	import {renderRichText, storyblokEditable, StoryblokComponent} from '@storyblok/svelte';
 
 	export let blok: any;
 	$: content = renderRichText(blok.content);
@@ -9,7 +9,7 @@
 	<div class="flex flex-col gap-8 lg:flex-row">
 		<div class="flex md:w-1/2">
 			<figure class="image-block">
-				<img class="image-block-img" src={blok.image.filename} alt={blok.id} />
+				<img class="image-block-img" src={blok.image.filename} alt={blok.id}/>
 			</figure>
 		</div>
 		<div class="flex flex-col md:w-1/2 md:justify-center">

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { storyblokEditable, getStoryblokApi } from '@storyblok/svelte';
+	import {onMount} from 'svelte';
+	import {storyblokEditable, getStoryblokApi} from '@storyblok/svelte';
 
-	import { base } from '$app/paths';
-	import { dev } from '$app/environment';
-	import { Heading } from '$lib/components';
+	import {base} from '$app/paths';
+	import {dev} from '$app/environment';
+	import {Heading} from '$lib/components';
 	import LinkListItem from '$lib/components/LinkListItem.svelte';
 
 	export let blok: any;
@@ -27,8 +27,8 @@
 				<Heading as="h2" size="h3" class="w-full lg:w-1/4">{blok.title}</Heading>
 				{#if jobs}
 					<ul class="flex-1 w-full">
-						{#each jobs.data.stories as { name, slug }}
-							<LinkListItem {name} url="{base}/careers/{slug}" label="Apply Now" />
+						{#each jobs.data.stories as {name, slug}}
+							<LinkListItem {name} url="{base}/careers/{slug}" label="Apply Now"/>
 						{/each}
 					</ul>
 				{/if}
@@ -38,8 +38,8 @@
 		<div>
 			{#if jobs}
 				<ul>
-					{#each jobs?.data.stories as { name, slug }}
-						<LinkListItem {name} url="{base}/careers/{slug}" label="Apply Now" />
+					{#each jobs?.data.stories as {name, slug}}
+						<LinkListItem {name} url="{base}/careers/{slug}" label="Apply Now"/>
 					{/each}
 				</ul>
 			{/if}

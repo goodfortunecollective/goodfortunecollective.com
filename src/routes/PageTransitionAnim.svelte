@@ -1,11 +1,20 @@
 <script lang="ts">
-	import { beforeNavigate } from '$app/navigation';
-	import { page } from '$app/stores';
-	import { gsap, ScrollSmoother, ScrollTrigger } from '$lib/gsap';
-	import { cls } from '$lib/styles';
+	import {beforeNavigate} from '$app/navigation';
+	import {page} from '$app/stores';
+	import {gsap, ScrollSmoother, ScrollTrigger} from '$lib/gsap';
+	import {cls} from '$lib/styles';
+
+	import {useCurtains} from '../lib/hooks/curtains-hooks';
 
 	let background!: HTMLElement;
 	let isTransition: boolean = false;
+
+
+	let curtains: any;
+
+	useCurtains((c) => {
+		curtains = c;
+	})
 
 	beforeNavigate(async () => {
 		// @ts-ignore
@@ -15,6 +24,9 @@
 		if (scroll) scroll.paused(true);
 
 		const tl = gsap.timeline();
+
+		// TODO needed?
+		//if(curtains) curtains.updateScrollValues(0, 0);
 
 		tl.fromTo(
 			background,
@@ -30,6 +42,7 @@
 				ease: 'circ.inOut',
 				onComplete: () => {
 					if (scroll) scroll.scrollTo(0, 0);
+					if (curtains) curtains.updateScrollValues(0, 0)
 					// @ts-ignore
 					ScrollTrigger.refresh();
 				}
@@ -38,7 +51,7 @@
 
 		tl.fromTo(
 			background,
-			{ rotation: 10 },
+			{rotation: 10},
 			{
 				y: '-100vh',
 				scale: 1,
@@ -49,6 +62,11 @@
 		).then(() => {
 			isTransition = false;
 			const hash = $page.url.hash.slice(1);
+
+			// if(curtains) {
+			// 	console.log('resize')
+			// 	curtains.resize()
+			// }
 
 			if (scroll) {
 				scroll.paused(false);
@@ -70,7 +88,7 @@
 </script>
 
 <div class={cls('h-full w-full fixed z-40 top-0 left-0', isTransition ? 'block' : 'hidden')}>
-	<div bind:this={background} class="h-full w-full bg-gray-900" />
+	<div bind:this={background} class="h-full w-full bg-gray-900"/>
 </div>
 
 <style></style>

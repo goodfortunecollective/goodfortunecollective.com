@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { renderRichText, storyblokEditable } from '@storyblok/svelte';
+	import {renderRichText, storyblokEditable} from '@storyblok/svelte';
 
 	export let blok: any;
 

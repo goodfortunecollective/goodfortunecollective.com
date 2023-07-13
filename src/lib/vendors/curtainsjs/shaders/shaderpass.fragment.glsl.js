@@ -1,7 +1,10 @@
 import precisionMedium from './chunks/precision.medium.glsl.js';
 import defaultVaryings from './chunks/default.varyings.glsl.js';
 
-const shaderPassFS = precisionMedium + defaultVaryings + `
+const shaderPassFS =
+	precisionMedium +
+	defaultVaryings +
+	`
 uniform sampler2D uRenderTexture;
 
 void main() {

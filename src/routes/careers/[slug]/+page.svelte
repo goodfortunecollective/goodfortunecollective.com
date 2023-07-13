@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
-	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
+	import {onMount, onDestroy} from 'svelte';
+	import {useStoryblokBridge, StoryblokComponent} from '@storyblok/svelte';
 
-	import { base } from '$app/paths';
+	import {base} from '$app/paths';
 
 	export let data;
 
@@ -12,19 +12,20 @@
 		}
 	});
 
-	onDestroy(() => {});
+	onDestroy(() => {
+	});
 </script>
 
 <svelte:head>
 	<title>careers SLUG</title>
-	<meta name="description" content="Careers SLUG" />
+	<meta name="description" content="Careers SLUG"/>
 </svelte:head>
 
 <section class="pt-[var(--header-height)] pb-32">
 	<div class="max-w-6xl mx-auto">
 		<a href="{base}/careers/"> &#10229; </a>
 		{#if data.story}
-			<StoryblokComponent blok={data.story.content} />
+			<StoryblokComponent blok={data.story.content}/>
 		{/if}
 	</div>
 </section>

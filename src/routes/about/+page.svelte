@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
+	import {onMount} from 'svelte';
+	import {useStoryblokBridge, StoryblokComponent} from '@storyblok/svelte';
 
-	import { base } from '$app/paths';
-	import { Link, Heading } from '$lib/components';
+	import {base} from '$app/paths';
+	import {Link, Heading} from '$lib/components';
 
 	export let data;
 
@@ -16,13 +16,13 @@
 
 <svelte:head>
 	<title>About</title>
-	<meta name="description" content="About" />
+	<meta name="description" content="About"/>
 </svelte:head>
 
 <section class="about pt-[var(--header-height)] pb-32">
 	<!--h-1/2 -->
 	{#if data.story}
-		<StoryblokComponent blok={data.story.content} />
+		<StoryblokComponent blok={data.story.content}/>
 	{/if}
 </section>
 <section>
@@ -38,7 +38,7 @@
 		<div class="flex flex-col justify-between space md:w-1/2">
 			<Heading as="h2" size="h1" class="text-9xl">Join us</Heading>
 			<div class="mt-8">
-				<Link href={{ url: base + '/careers/' }} label="We're good people" class="mt-8" />
+				<Link href={{ url: base + '/careers/' }} label="We're good people" class="mt-8"/>
 			</div>
 		</div>
 	</div>

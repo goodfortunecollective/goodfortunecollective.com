@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
-	import { storyblokEditable } from '@storyblok/svelte';
+	import {onMount, onDestroy} from 'svelte';
+	import {storyblokEditable} from '@storyblok/svelte';
 
-	import { gsap, SplitText } from '$lib/gsap';
-	import { delay_anim_page } from '$lib/stores';
+	import {gsap, SplitText} from '$lib/gsap';
+	import {delay_anim_page} from '$lib/stores';
 
 	export let blok: any;
 
@@ -32,7 +32,7 @@
 		} else if (!btnHidden) {
 			(xy[0] -= videoInteractive.getBoundingClientRect().left),
 				(xy[1] -= videoInteractive.getBoundingClientRect().top);
-			gsap.to(videoBtn, 0.2, { x: xy[0], y: xy[1] });
+			gsap.to(videoBtn, 0.2, {x: xy[0], y: xy[1]});
 		}
 	}
 
@@ -52,7 +52,7 @@
 
 	onMount(() => {
 		tl = gsap.timeline();
-		tl.set(video, { scale: 0.15, opacity: 0, rotationY: 0 });
+		tl.set(video, {scale: 0.15, opacity: 0, rotationY: 0});
 
 		const splitText = gsap.utils.toArray('[data-gsap="split-text"]');
 
@@ -74,7 +74,7 @@
 			let chars = text.chars;
 
 			// @ts-ignore
-			gsap.set(content, { perspective: 400 });
+			gsap.set(content, {perspective: 400});
 
 			tlSplitText.from(
 				chars,
@@ -164,6 +164,7 @@
 		if (!btnHidden) return;
 		btnHidden = false;
 	}
+
 	function hideBtn() {
 		if (btnHidden) return;
 		btnHidden = true;
@@ -186,7 +187,7 @@
 	});
 </script>
 
-<svelte:window on:mousemove={handleMousemove} />
+<svelte:window on:mousemove={handleMousemove}/>
 
 <section use:storyblokEditable={blok} {...$$restProps} class="flex w-screen h-screen bg-black">
 	<div class="relative flex w-full h-full max-w-6xl mx-auto">
@@ -205,7 +206,9 @@
 						src={blok.video}
 						autoplay
 						muted
-						loop><track kind="captions" /></video
+						loop>
+						<track kind="captions"/>
+					</video
 					>
 					<div
 						bind:this={videoBtn}
@@ -232,10 +235,11 @@
 		</div>
 	</div>
 </section>
-<div class="h-[50vh]" />
+<div class="h-[50vh]"/>
 
 <style lang="scss">
 	@import '../../vars.scss';
+
 	.video-block-btn {
 		position: absolute;
 		display: flex;

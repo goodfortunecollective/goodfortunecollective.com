@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+	import {storyblokEditable, StoryblokComponent} from '@storyblok/svelte';
 
-	import { Heading } from '$lib/components';
+	import {Heading} from '$lib/components';
 
 	export let blok: any;
 
@@ -39,7 +39,9 @@
 						{#if i <= 10}0{/if}{i + 1}
 					</div>
 					<div class="text-xl list-item-content">
-						<p><StoryblokComponent blok={item} /></p>
+						<p>
+							<StoryblokComponent blok={item}/>
+						</p>
 					</div>
 				</div>
 			{/each}
@@ -66,6 +68,7 @@
 				@include nth-child-order(3, 12);
 			}
 		}
+
 		.list-item-number {
 			position: relative;
 			width: calc(2% / 10) * 100;

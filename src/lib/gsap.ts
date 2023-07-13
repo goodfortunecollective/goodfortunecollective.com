@@ -9,8 +9,15 @@ import { Draggable } from '$lib/vendors/gsap/Draggable.js';
 import { InertiaPlugin } from '$lib/vendors/gsap/InertiaPlugin.js';
 
 if (browser) {
-    gsap.registerPlugin(ScrollSmoother, ScrollTrigger, MotionPathPlugin, SplitText, Draggable, InertiaPlugin);
+	gsap.registerPlugin(
+		ScrollSmoother,
+		ScrollTrigger,
+		MotionPathPlugin,
+		SplitText,
+		Draggable,
+		InertiaPlugin
+	);
 }
 
-export * from "gsap";
-export { ScrollSmoother, ScrollTrigger, MotionPathPlugin, SplitText, Draggable, InertiaPlugin};
+export * from 'gsap';
+export { ScrollSmoother, ScrollTrigger, MotionPathPlugin, SplitText, Draggable, InertiaPlugin };

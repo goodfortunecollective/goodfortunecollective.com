@@ -6,13 +6,14 @@
 		type SbBlokData
 	} from '@storyblok/svelte';
 
-	import { components } from './';
+	import {components} from './';
 
 	export let blok: RichTextProps;
 
 	interface RichTextProps extends SbBlokData {
 		content: any;
 	}
+
 	interface RichTextComponentSegmentsProps {
 		component?: any;
 		blok?: SbBlokData;
@@ -22,7 +23,7 @@
 	$: contentHTML = renderRichText(blok.content, {
 		schema: RichTextSchema,
 		resolver: (component, blok) => {
-			return `__COMPONENT__!!! ${JSON.stringify({ component, blok })} __COMPONENT__`;
+			return `__COMPONENT__!!! ${JSON.stringify({component, blok})} __COMPONENT__`;
 		}
 	});
 
@@ -47,7 +48,7 @@
 		{#if contentSegment.html}
 			{@html contentSegment.html}
 		{:else}
-			<svelte:component this={contentSegment.component} blok={contentSegment.blok} />
+			<svelte:component this={contentSegment.component} blok={contentSegment.blok}/>
 		{/if}
 	{/each}
 </div>

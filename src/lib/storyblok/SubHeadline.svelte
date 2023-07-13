@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+	import {storyblokEditable, StoryblokComponent} from '@storyblok/svelte';
 
-	import { Heading } from '$lib/components';
+	import {Heading} from '$lib/components';
 
 	export let blok: any;
 </script>
@@ -14,7 +14,7 @@
 				{#if blok.links.length}
 					<div class="hidden mt-8 lg:block">
 						{#each blok.links as b}
-							<StoryblokComponent blok={b} />
+							<StoryblokComponent blok={b}/>
 						{/each}
 					</div>
 				{/if}
@@ -22,14 +22,14 @@
 			<div class="flex flex-1">
 				<div class="flex flex-col gap-8 lg:pl-48">
 					{#each blok.content as b}
-						<StoryblokComponent blok={b} />
+						<StoryblokComponent blok={b}/>
 					{/each}
 				</div>
 			</div>
 			{#if blok.links.length}
 				<div class="lg:hidden">
 					{#each blok.links as b}
-						<StoryblokComponent blok={b} />
+						<StoryblokComponent blok={b}/>
 					{/each}
 				</div>
 			{/if}

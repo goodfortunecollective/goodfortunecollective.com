@@ -6,22 +6,26 @@
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
-*/
+ */
 /* eslint-disable */
 
-let gsap, _coreInitted, _win, _doc, CSSPlugin,
-	_windowExists = () => typeof(window) !== "undefined",
+let gsap,
+	_coreInitted,
+	_win,
+	_doc,
+	CSSPlugin,
+	_windowExists = () => typeof window !== 'undefined',
 	_getGSAP = () => gsap || (_windowExists() && (gsap = window.gsap) && gsap.registerPlugin && gsap),
 	_checkRegister = () => {
 		if (!_coreInitted) {
 			_initCore();
 			if (!CSSPlugin) {
-				console.warn("Please gsap.registerPlugin(CSSPlugin, CSSRulePlugin)");
+				console.warn('Please gsap.registerPlugin(CSSPlugin, CSSRulePlugin)');
 			}
 		}
 		return _coreInitted;
 	},
-	_initCore = core => {
+	_initCore = (core) => {
 		gsap = core || _getGSAP();
 		if (_windowExists()) {
 			_win = window;
@@ -35,15 +39,14 @@ let gsap, _coreInitted, _win, _doc, CSSPlugin,
 		}
 	};
 
-
 export const CSSRulePlugin = {
-	version: "3.10.4",
-	name: "cssRule",
+	version: '3.10.4',
+	name: 'cssRule',
 	init(target, value, tween, index, targets) {
-		if (!_checkRegister() || typeof(target.cssText) === "undefined") {
+		if (!_checkRegister() || typeof target.cssText === 'undefined') {
 			return false;
 		}
-		let div = target._gsProxy = target._gsProxy || _doc.createElement("div");
+		let div = (target._gsProxy = target._gsProxy || _doc.createElement('div'));
 		this.ss = target;
 		this.style = div.style;
 		div.style.cssText = target.cssText;
@@ -65,12 +68,15 @@ export const CSSRulePlugin = {
 	},
 	getRule(selector) {
 		_checkRegister();
-		let ruleProp = _doc.all ? "rules" : "cssRules",
+		let ruleProp = _doc.all ? 'rules' : 'cssRules',
 			styleSheets = _doc.styleSheets,
 			i = styleSheets.length,
-			pseudo = (selector.charAt(0) === ":"),
-			j, curSS, cs, a;
-		selector = (pseudo ? "" : ",") + selector.split("::").join(":").toLowerCase() + ","; //note: old versions of IE report tag name selectors as upper case, so we just change everything to lowercase.
+			pseudo = selector.charAt(0) === ':',
+			j,
+			curSS,
+			cs,
+			a;
+		selector = (pseudo ? '' : ',') + selector.split('::').join(':').toLowerCase() + ','; //note: old versions of IE report tag name selectors as upper case, so we just change everything to lowercase.
 		if (pseudo) {
 			a = [];
 		}
@@ -88,7 +94,11 @@ export const CSSRulePlugin = {
 			}
 			while (--j > -1) {
 				cs = curSS[j];
-				if (cs.selectorText && ("," + cs.selectorText.split("::").join(":").toLowerCase() + ",").indexOf(selector) !== -1) { //note: IE adds an extra ":" to pseudo selectors, so .myClass:after becomes .myClass::after, so we need to strip the extra one out.
+				if (
+					cs.selectorText &&
+					(',' + cs.selectorText.split('::').join(':').toLowerCase() + ',').indexOf(selector) !== -1
+				) {
+					//note: IE adds an extra ":" to pseudo selectors, so .myClass:after becomes .myClass::after, so we need to strip the extra one out.
 					if (pseudo) {
 						a.push(cs.style);
 					} else {

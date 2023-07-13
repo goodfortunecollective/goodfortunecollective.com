@@ -1,15 +1,16 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { custom_event } from 'svelte/internal';
+	import {onMount} from 'svelte';
+	import {custom_event} from 'svelte/internal';
 
-	import { page } from '$app/stores';
-	import { ScrollSmoother, gsap } from '$lib/gsap';
+	import {page} from '$app/stores';
+	import {ScrollSmoother, gsap} from '$lib/gsap';
 
-	import type { LayoutData } from './$types';
+	import type {LayoutData} from './$types';
 
 	import Loader from './Loader.svelte';
 	import Header from './Header.svelte';
 	import Footer from './Footer.svelte';
+	import Curtains from './Curtains.svelte';
 	import PageTransition from './PageTransition.svelte';
 	import PageTransitionAnim from './PageTransitionAnim.svelte';
 
@@ -32,7 +33,7 @@
 			smoothTouch: 0.1,
 			onUpdate: (event: any) => {
 				ref.dispatchEvent(
-					custom_event('smoothScrollUpdate', { offsetY: event.scrollTop() }, { bubbles: true })
+					custom_event('smoothScrollUpdate', {offsetY: event.scrollTop()}, {bubbles: true})
 				);
 			}
 		});
@@ -62,32 +63,23 @@
 	}
 </script>
 
-<Header />
+<Header/>
 <main bind:this={ref}>
-	<PageTransitionAnim />
-	<div id="canvas" />
+	<PageTransitionAnim/>
 	<div id="smooth-wrapper" class="z-10">
 		<div id="smooth-content">
 			<PageTransition pathname={data.pathname}>
-				<slot />
-				<Footer />
+				<slot/>
+				<Footer/>
 			</PageTransition>
 		</div>
 	</div>
 </main>
 
-<Loader on:complete={handleCompleteLoader} />
+<Curtains/>
+
+<Loader on:complete={handleCompleteLoader}/>
 
 <style>
-	#canvas {
-		position: fixed;
-		top: 0;
-		right: 0;
-		left: 0;
-		height: 100vh;
-		z-index: 1;
-		opacity: 1;
-		transition: opacity 0.5s ease-in;
-		/* display: none; */
-	}
+
 </style>

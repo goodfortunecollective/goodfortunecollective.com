@@ -6,18 +6,18 @@
  @this: our CallbackQueueManager class object
  ***/
 export class CallbackQueueManager {
-    constructor() {
-        this.clear();
-    }
+	constructor() {
+		this.clear();
+	}
 
-    /***
+	/***
      Clears our queue array (used on init)
-     ***/
-    clear() {
-        this.queue = [];
-    }
+	 ***/
+	clear() {
+		this.queue = [];
+	}
 
-    /***
+	/***
      Adds a callback to our queue list with a timeout of 0
 
      params:
@@ -26,36 +26,36 @@ export class CallbackQueueManager {
 
      returns:
      @queueItem: the queue item. Allows to keep a track of it and set its keep property to false when needed
-     ***/
-    add(callback, keep = false) {
-        const queueItem = {
-            callback,
-            keep,
-            timeout: null, // keep a reference to the timeout so we can safely delete if afterwards
-        };
-        queueItem.timeout = setTimeout(() => {
-            this.queue.push(queueItem);
-        }, 0);
+	 ***/
+	add(callback, keep = false) {
+		const queueItem = {
+			callback,
+			keep,
+			timeout: null // keep a reference to the timeout so we can safely delete if afterwards
+		};
+		queueItem.timeout = setTimeout(() => {
+			this.queue.push(queueItem);
+		}, 0);
 
-        return queueItem;
-    }
+		return queueItem;
+	}
 
-    /***
+	/***
      Executes all callbacks in the queue and remove the ones that have their keep property set to false.
      Called at the beginning of each render call
-     ***/
-    execute() {
-        // execute queue callbacks list
-        this.queue.map((entry) => {
-            if(entry.callback) {
-                entry.callback();
-            }
+	 ***/
+	execute() {
+		// execute queue callbacks list
+		this.queue.map((entry) => {
+			if (entry.callback) {
+				entry.callback();
+			}
 
-            // clear our timeout
-            clearTimeout(this.queue.timeout);
-        });
+			// clear our timeout
+			clearTimeout(this.queue.timeout);
+		});
 
-        // remove all items that have their keep property set to false
-        this.queue = this.queue.filter((entry) => entry.keep);
-    }
+		// remove all items that have their keep property set to false
+		this.queue = this.queue.filter((entry) => entry.keep);
+	}
 }

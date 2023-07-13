@@ -4,39 +4,41 @@
 
 
 @layer base {
-    html {
-        -webkit-font-smoothing: antialiased;
-        font-family: 'Roboto', sans-serif;
-    }
+	html {
+		-webkit-font-smoothing: antialiased;
+		font-family: 'Roboto', sans-serif;
+	}
 
-    html,
-    body {
-        background-color: #fff;
-    }
+	html,
+	body {
+		background-color: #fff;
+	}
 
-    .preserve-3d {
-        transform-style: preserve-3d;
-    }
+	.preserve-3d {
+		transform-style: preserve-3d;
+	}
 
-    .perspective-800 {
-        perspective: 800px;
-    }
+	.perspective-800 {
+		perspective: 800px;
+	}
 
-		.text-block ul li{
-			position: relative;
-			padding-left: 15px;
-		}
+	.text-block ul li {
+		position: relative;
+		padding-left: 15px;
+	}
 
-		.text-block ul li:before {
-			position: absolute;
-			top: 11px; left: 0;
-			width: 6px; height: 6px;
-			border-radius: 100%;
-			background: currentColor;
-			content:'';
-		}
+	.text-block ul li:before {
+		position: absolute;
+		top: 11px;
+		left: 0;
+		width: 6px;
+		height: 6px;
+		border-radius: 100%;
+		background: currentColor;
+		content: '';
+	}
 }
 
 :root {
-    --header-height: 4rem;
+	--header-height: 4rem;
 }
