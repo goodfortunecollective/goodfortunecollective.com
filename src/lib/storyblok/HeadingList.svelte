@@ -37,7 +37,7 @@
 		blok.class
 	)}
 >
-	<div class="md:w-4/12 absolute">
+	<div class="md:w-4/12 lg:absolute">
 		<Heading as="h3" size="h2">{blok.heading}</Heading>
 	</div>
 
@@ -45,7 +45,7 @@
 		{#each blok.list as b, index}
 			<div class={cls('flex justify-start', variants({ layoutDirection: blok.layoutDirection }))}>
 				<div class={cls(variants({ columnIndex: getColumnIndex(index) }))} />
-				<div class="md:w-7/12">
+				<div class="md:w-7/12 min-w-[500px]">
 					<StoryblokComponent blok={b} {index} />
 				</div>
 			</div>
