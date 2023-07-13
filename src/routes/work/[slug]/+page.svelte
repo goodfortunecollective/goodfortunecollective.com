@@ -18,11 +18,6 @@
 	onDestroy(() => {});
 </script>
 
-<svelte:head>
-	<title>{data.story.name}</title>
-	<meta name="description" content={data.story.content.description} />
-</svelte:head>
-
 <section class="pt-[var(--header-height)] project-header">
 	<div class="flex flex-row max-w-6xl pt-16 pb-32 mx-auto">
 		<div class="flex flex-col px-12 project-header-text md:w-3/4">

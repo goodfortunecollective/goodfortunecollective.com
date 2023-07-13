@@ -3,9 +3,7 @@
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 
 	import { base } from '$app/paths';
-
-	import Planes from '$lib/components/Planes.svelte';
-	import Plane from '$lib/components/Plane.svelte';
+	import ScrollPlane from '$lib/components/ScrollPlane.svelte';
 
 	export let data;
 	export let categoriesData = [];
@@ -66,11 +64,6 @@
 	});
 </script>
 
-<svelte:head>
-	<title>Work</title>
-	<meta name="description" content="Work" />
-</svelte:head>
-
 <section class="pt-[var(--header-height)] pb-32">
 	<div
 		class={'categories-toggle' + (categoriesOpened ? ' opened' : '')}
@@ -114,11 +107,9 @@
 		{/each}
 	</div>
 
-	<Planes>
-		{#each data.projects as { name, slug, content }}
-			<Plane {name} {slug} {content} />
-		{/each}
-	</Planes>
+	{#each data.projects as { name, slug, content }}
+		<ScrollPlane {name} {slug} {content} />
+	{/each}
 </section>
 
 {#if data.story}
