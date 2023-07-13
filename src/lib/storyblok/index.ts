@@ -1,4 +1,3 @@
-import AlternateList from './AlternateList.svelte';
 import Container from './Container.svelte';
 import Figure from './Figure.svelte';
 import Figures from './Figures.svelte';
@@ -29,7 +28,6 @@ import TextCols from './TextCols.svelte';
 import Video from './Video.svelte';
 
 export const components: any = {
-  'alternate-list': AlternateList,
   'container': Container,
   'figure': Figure,
   'figures': Figures,
