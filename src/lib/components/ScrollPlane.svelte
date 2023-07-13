@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { base } from '$app/paths';
-	import { useCurtains } from '../hooks/curtains-hooks';
 	import { ScrollSmoother } from '$lib/gsap';
+	import { useCurtains } from '$lib/utils/curtains-hooks';
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
 
 	export let name: string;
