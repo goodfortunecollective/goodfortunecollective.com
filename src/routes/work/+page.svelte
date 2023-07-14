@@ -13,16 +13,43 @@
 	$: filter = $page.url.hash.slice(1);
 
 	/**
+	 * @param {any} projects
+	 * @param {string} category
+	 */
+	const countProjectsByCategory = (projects: any, category: string) => {
+		let count = 0;
+		for (let i = 0; i < projects.length; i++) {
+			if (projects[i].content.category.indexOf(category) !== -1) {
+				count++;
+			}
+		}
+		return count;
+	};
+
+	/**
+	 * @param {any} projects
+	 * @param {any} categories
+	 */
+	const getCategoriesByProject = (projects: any, categories: any) => {
+		categories.forEach((category: any) => {
+			category.count = countProjectsByCategory(projects, category.value);
+		});
+		return categories;
+	};
+
+	const categories = getCategoriesByProject(data.projects, data.categories.data.datasource_entries);
+
+	/**
 	 * @param {string} filter
 	 */
-	const getProjectsByCategory = (filter: string, projects: any) => {
-		if (filter) {
+	const getProjectsByFilter = (projects: any, filter: string) => {
+		if (filter && filter !== 'all') {
 			return projects.filter((project: any) => project.content.category.indexOf(filter) !== -1);
 		}
 		return projects;
 	};
 
-	$: projects = getProjectsByCategory(filter, data.projects);
+	$: projects = getProjectsByFilter(data.projects, filter);
 
 	onMount(() => {
 		if (data.story) {
@@ -34,14 +61,22 @@
 <section class="pt-[var(--header-height)] pb-32">
 	<div class="max-w-6xl mx-auto relative">
 		<MenuList class="z-10 absolute top-0 right-0 flex flex-col items-end gap-4">
-			<MenuItem name="All Projects" total={data.projects.length} url={`${base}/work`} />
-			{#each data.categories.data.datasource_entries as category, i}
-				<MenuItem
-					name={category.name}
-					total={0}
-					url={`${base}/work#${category.value}`}
-					delay={i * 50}
-				/>
+			<MenuItem
+				name="All Projects"
+				sup={data.projects.length}
+				url={`${base}/work#all`}
+				selected={!filter || filter === 'all'}
+			/>
+			{#each categories as category, i}
+				{#if category.count > 0}
+					<MenuItem
+						name={category.name}
+						sup={category.count}
+						url={`${base}/work#${category.value}`}
+						delay={i * 50}
+						selected={filter === category.value}
+					/>
+				{/if}
 			{/each}
 		</MenuList>
 	</div>

@@ -147,7 +147,7 @@
 	}
 
 	.plane-wrapper:nth-child(even) {
-		margin: 10vh 0 10vh 25%;
+		// margin: 10vh 0 10vh 25%;
 	}
 
 	.plane-wrapper:first-child {
