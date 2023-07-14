@@ -1,6 +1,6 @@
-import {DOMMesh} from "../core/DOMMesh.js";
-import {RenderTarget} from './RenderTarget.js';
-import {Texture} from '../core/Texture.js';
+import { DOMMesh } from '../core/DOMMesh.js';
+import { RenderTarget } from './RenderTarget.js';
+import { Texture } from '../core/Texture.js';
 
 /*** SHADERPASS CLASS ***/
 
@@ -22,192 +22,192 @@ import {Texture} from '../core/Texture.js';
  @this: our ShaderPass element
  ***/
 export class ShaderPass extends DOMMesh {
-    constructor(renderer, {
-        // Mesh params
-        widthSegments,
-        heightSegments,
-        renderOrder,
-        depthTest,
-        cullFace,
-        uniforms,
-        vertexShaderID,
-        fragmentShaderID,
-        vertexShader,
-        fragmentShader,
-        texturesOptions,
-        crossOrigin,
+	constructor(
+		renderer,
+		{
+			// Mesh params
+			widthSegments,
+			heightSegments,
+			renderOrder,
+			depthTest,
+			cullFace,
+			uniforms,
+			vertexShaderID,
+			fragmentShaderID,
+			vertexShader,
+			fragmentShader,
+			texturesOptions,
+			crossOrigin,
 
-        // ShaderPass specific params
-        depth = false,
-        clear = true,
-        renderTarget,
-    } = {}) {
-        // force plane defintion to 1x1
-        widthSegments = 1;
-        heightSegments = 1;
+			// ShaderPass specific params
+			depth = false,
+			clear = true,
+			renderTarget
+		} = {}
+	) {
+		// force plane defintion to 1x1
+		widthSegments = 1;
+		heightSegments = 1;
 
-        // always cull back face
-        cullFace = "back";
+		// always cull back face
+		cullFace = 'back';
 
-        // use the renderer container as our HTML element to create a DOMMesh object
-        super(renderer, renderer.container, "ShaderPass", {
-            widthSegments,
-            heightSegments,
-            renderOrder,
-            depthTest,
-            cullFace,
-            uniforms,
-            vertexShaderID,
-            fragmentShaderID,
-            vertexShader,
-            fragmentShader,
-            texturesOptions,
-            crossOrigin
-        });
+		// use the renderer container as our HTML element to create a DOMMesh object
+		super(renderer, renderer.container, 'ShaderPass', {
+			widthSegments,
+			heightSegments,
+			renderOrder,
+			depthTest,
+			cullFace,
+			uniforms,
+			vertexShaderID,
+			fragmentShaderID,
+			vertexShader,
+			fragmentShader,
+			texturesOptions,
+			crossOrigin
+		});
 
-        // return if no gl context
-        if(!this.gl) {
-            return;
-        }
+		// return if no gl context
+		if (!this.gl) {
+			return;
+		}
 
-        // default to scene pass
-        this._isScenePass = true;
+		// default to scene pass
+		this._isScenePass = true;
 
-        this.index = this.renderer.shaderPasses.length;
+		this.index = this.renderer.shaderPasses.length;
 
-        this._depth = depth;
+		this._depth = depth;
 
-        this._shouldClear = clear;
+		this._shouldClear = clear;
 
-        this.target = renderTarget;
-        if(this.target) {
-            // if there's a target defined it's not a scene pass
-            this._isScenePass = false;
-            // inherit clear param
-            this._shouldClear = this.target._shouldClear;
-        }
+		this.target = renderTarget;
+		if (this.target) {
+			// if there's a target defined it's not a scene pass
+			this._isScenePass = false;
+			// inherit clear param
+			this._shouldClear = this.target._shouldClear;
+		}
 
-        // if the program is valid, go on
-        if(this._program.compiled) {
-            this._initShaderPass();
+		// if the program is valid, go on
+		if (this._program.compiled) {
+			this._initShaderPass();
 
-            // add shader pass to our renderer shaderPasses array
-            this.renderer.shaderPasses.push(this);
+			// add shader pass to our renderer shaderPasses array
+			this.renderer.shaderPasses.push(this);
 
-            // wait one tick before adding our shader pass to the scene to avoid flickering black screen for one frame
-            this.renderer.nextRender.add(() => {
-                this.renderer.scene.addShaderPass(this);
-            })
-        }
-    }
+			// wait one tick before adding our shader pass to the scene to avoid flickering black screen for one frame
+			this.renderer.nextRender.add(() => {
+				this.renderer.scene.addShaderPass(this);
+			});
+		}
+	}
 
+	/*** RESTORING CONTEXT ***/
 
-    /*** RESTORING CONTEXT ***/
-
-    /***
+	/***
      Used internally to handle context restoration after the program has been successfully compiled again
-     ***/
-    _programRestored() {
-        // add the shader pass to our draw stack again as it have been emptied
-        this.renderer.scene.addShaderPass(this);
+	 ***/
+	_programRestored() {
+		// add the shader pass to our draw stack again as it have been emptied
+		this.renderer.scene.addShaderPass(this);
 
-        // restore the textures
-        for(let i = 0; i < this.textures.length; i++) {
-            this.textures[i]._parent = this;
-            this.textures[i]._restoreContext();
-        }
+		// restore the textures
+		for (let i = 0; i < this.textures.length; i++) {
+			this.textures[i]._parent = this;
+			this.textures[i]._restoreContext();
+		}
 
-        this._canDraw = true;
-    }
+		this._canDraw = true;
+	}
 
-
-    /***
+	/***
      Here we init additionnal shader pass planes properties
      This mainly consists in creating our render texture and add a frame buffer object
-     ***/
-    _initShaderPass() {
-        // create our frame buffer
-        if(!this.target) {
-            this._createFrameBuffer();
-        }
-        else {
-            // set the render target
-            this.setRenderTarget(this.target);
-            this.target._shaderPass = this;
-        }
+	 ***/
+	_initShaderPass() {
+		// create our frame buffer
+		if (!this.target) {
+			this._createFrameBuffer();
+		} else {
+			// set the render target
+			this.setRenderTarget(this.target);
+			this.target._shaderPass = this;
+		}
 
-        // create a texture from the render target texture
-        const texture = new Texture(this.renderer, {
-            sampler: "uRenderTexture",
-            isFBOTexture: true,
-            fromTexture: this.target.getTexture(),
-        });
+		// create a texture from the render target texture
+		const texture = new Texture(this.renderer, {
+			sampler: 'uRenderTexture',
+			isFBOTexture: true,
+			fromTexture: this.target.getTexture()
+		});
 
-        texture.addParent(this);
+		texture.addParent(this);
 
-        // onReady callback
-        this.loader._setLoaderSize(0);
+		// onReady callback
+		this.loader._setLoaderSize(0);
 
-        this._canDraw = true;
+		this._canDraw = true;
 
-        // be sure we'll update the scene even if drawing is disabled
-        this.renderer.needRender();
-    }
+		// be sure we'll update the scene even if drawing is disabled
+		this.renderer.needRender();
+	}
 
-
-    /***
+	/***
      Here we create our frame buffer object
      We're also adding a render buffer object to handle depth inside our shader pass
-     ***/
-    _createFrameBuffer() {
-        const target = new RenderTarget(this.renderer, {
-            shaderPass: this,
-            clear: this._shouldClear,
-            depth: this._depth,
-            texturesOptions: this._texturesOptions,
-        });
-        this.setRenderTarget(target);
-    }
+	 ***/
+	_createFrameBuffer() {
+		const target = new RenderTarget(this.renderer, {
+			shaderPass: this,
+			clear: this._shouldClear,
+			depth: this._depth,
+			texturesOptions: this._texturesOptions
+		});
+		this.setRenderTarget(target);
+	}
 
+	/*** DRAWING ***/
 
-    /*** DRAWING ***/
-
-    /***
+	/***
      Specific instructions for the Shader pass class to execute before drawing it
-     ***/
-    _startDrawing() {
-        // check if our plane is ready to draw
-        if(this._canDraw) {
-            // even if our plane should not be drawn we still execute its onRender callback and update its uniforms
-            if(this._onRenderCallback) {
-                this._onRenderCallback();
-            }
+	 ***/
+	_startDrawing() {
+		// check if our plane is ready to draw
+		if (this._canDraw) {
+			// even if our plane should not be drawn we still execute its onRender callback and update its uniforms
+			if (this._onRenderCallback) {
+				this._onRenderCallback();
+			}
 
-            // to improve webgl pipeline performance, we might want to update each texture that needs an update here
-            // see https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_best_practices#texImagetexSubImage_uploads_particularly_with_videos_can_cause_pipeline_flushes
+			// to improve webgl pipeline performance, we might want to update each texture that needs an update here
+			// see https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_best_practices#texImagetexSubImage_uploads_particularly_with_videos_can_cause_pipeline_flushes
 
+			if (this._isScenePass) {
+				// if this is a scene pass, check if theres one more coming next and eventually bind it
+				if (
+					this.renderer.state.scenePassIndex + 1 <
+					this.renderer.scene.stacks.scenePasses.length
+				) {
+					this.renderer.bindFrameBuffer(
+						this.renderer.scene.stacks.scenePasses[this.renderer.state.scenePassIndex + 1].target
+					);
 
-            if(this._isScenePass) {
-                // if this is a scene pass, check if theres one more coming next and eventually bind it
-                if(this.renderer.state.scenePassIndex + 1 < this.renderer.scene.stacks.scenePasses.length) {
-                    this.renderer.bindFrameBuffer(this.renderer.scene.stacks.scenePasses[this.renderer.state.scenePassIndex + 1].target);
+					this.renderer.state.scenePassIndex++;
+				} else {
+					this.renderer.bindFrameBuffer(null);
+				}
+			} else if (this.renderer.state.scenePassIndex === null) {
+				// we are rendering a bunch of planes inside a render target, unbind it
+				this.renderer.bindFrameBuffer(null);
+			}
 
-                    this.renderer.state.scenePassIndex++;
-                }
-                else {
-                    this.renderer.bindFrameBuffer(null);
-                }
-            }
-            else if(this.renderer.state.scenePassIndex === null) {
-                // we are rendering a bunch of planes inside a render target, unbind it
-                this.renderer.bindFrameBuffer(null);
-            }
+			// force attribute buffer bindings update
+			this.renderer.state.forceBufferUpdate = true;
 
-            // force attribute buffer bindings update
-            this.renderer.state.forceBufferUpdate = true;
-
-            // now check if we really need to draw it and its textures
-            this._draw();
-        }
-    }
+			// now check if we really need to draw it and its textures
+			this._draw();
+		}
+	}
 }

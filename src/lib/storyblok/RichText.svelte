@@ -13,6 +13,7 @@
 	interface RichTextProps extends SbBlokData {
 		content: any;
 	}
+
 	interface RichTextComponentSegmentsProps {
 		component?: any;
 		blok?: SbBlokData;

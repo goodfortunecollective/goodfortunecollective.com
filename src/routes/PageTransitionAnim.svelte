@@ -3,9 +3,16 @@
 	import { page } from '$app/stores';
 	import { gsap, ScrollSmoother, ScrollTrigger } from '$lib/gsap';
 	import { cls } from '$lib/styles';
+	import { useCurtains } from '$lib/utils/useCurtains';
 
 	let background!: HTMLElement;
 	let isTransition: boolean = false;
+
+	let curtains: any;
+
+	useCurtains((c) => {
+		curtains = c;
+	});
 
 	beforeNavigate(async () => {
 		// @ts-ignore
@@ -15,6 +22,9 @@
 		if (scroll) scroll.paused(true);
 
 		const tl = gsap.timeline();
+
+		// TODO needed?
+		//if(curtains) curtains.updateScrollValues(0, 0);
 
 		tl.fromTo(
 			background,
@@ -30,6 +40,7 @@
 				ease: 'circ.inOut',
 				onComplete: () => {
 					if (scroll) scroll.scrollTo(0, 0);
+					if (curtains) curtains.updateScrollValues(0, 0);
 					// @ts-ignore
 					ScrollTrigger.refresh();
 				}
@@ -49,6 +60,11 @@
 		).then(() => {
 			isTransition = false;
 			const hash = $page.url.hash.slice(1);
+
+			// if(curtains) {
+			// 	console.log('resize')
+			// 	curtains.resize()
+			// }
 
 			if (scroll) {
 				scroll.paused(false);

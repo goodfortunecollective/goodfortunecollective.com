@@ -11,11 +11,6 @@
 	});
 </script>
 
-<svelte:head>
-	<title>Contact</title>
-	<meta name="description" content="Contact" />
-</svelte:head>
-
 <section class="pt-[var(--header-height)] pb-32 h-1/2">
 	{#if data.story}
 		<StoryblokComponent blok={data.story.content} />

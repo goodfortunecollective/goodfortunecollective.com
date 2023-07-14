@@ -6,23 +6,34 @@
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
-*/
+ */
 /* eslint-disable */
 
-let gsap, _coreInitted, _win, _createJS, _ColorFilter, _ColorMatrixFilter,
-	_colorProps = "redMultiplier,greenMultiplier,blueMultiplier,alphaMultiplier,redOffset,greenOffset,blueOffset,alphaOffset".split(","),
-	_windowExists = () => typeof(window) !== "undefined",
+let gsap,
+	_coreInitted,
+	_win,
+	_createJS,
+	_ColorFilter,
+	_ColorMatrixFilter,
+	_colorProps =
+		'redMultiplier,greenMultiplier,blueMultiplier,alphaMultiplier,redOffset,greenOffset,blueOffset,alphaOffset'.split(
+			','
+		),
+	_windowExists = () => typeof window !== 'undefined',
 	_getGSAP = () => gsap || (_windowExists() && (gsap = window.gsap) && gsap.registerPlugin && gsap),
 	_getCreateJS = () => _createJS || (_win && _win.createjs) || _win || {},
-	_warn = message => console.warn(message),
-	_cache = target => {
+	_warn = (message) => console.warn(message),
+	_cache = (target) => {
 		let b = target.getBounds && target.getBounds();
 		if (!b) {
-			b = target.nominalBounds || {x:0, y:0, width: 100, height: 100};
+			b = target.nominalBounds || { x: 0, y: 0, width: 100, height: 100 };
 			target.setBounds && target.setBounds(b.x, b.y, b.width, b.height);
 		}
 		target.cache && target.cache(b.x, b.y, b.width, b.height);
-		_warn("EaselPlugin: for filters to display in EaselJS, you must call the object's cache() method first. GSAP attempted to use the target's getBounds() for the cache but that may not be completely accurate. " + target);
+		_warn(
+			"EaselPlugin: for filters to display in EaselJS, you must call the object's cache() method first. GSAP attempted to use the target's getBounds() for the cache but that may not be completely accurate. " +
+				target
+		);
 	},
 	_parseColorFilter = (target, v, plugin) => {
 		if (!_ColorFilter) {
@@ -33,7 +44,12 @@ let gsap, _coreInitted, _win, _createJS, _ColorFilter, _ColorMatrixFilter,
 		}
 		let filters = target.filters || [],
 			i = filters.length,
-			c, s, e, a, p, pt;
+			c,
+			s,
+			e,
+			a,
+			p,
+			pt;
 		while (i--) {
 			if (filters[i] instanceof _ColorFilter) {
 				s = filters[i];
@@ -48,16 +64,17 @@ let gsap, _coreInitted, _win, _createJS, _ColorFilter, _ColorMatrixFilter,
 		e = s.clone();
 		if (v.tint != null) {
 			c = gsap.utils.splitColor(v.tint);
-			a = (v.tintAmount != null) ? +v.tintAmount : 1;
+			a = v.tintAmount != null ? +v.tintAmount : 1;
 			e.redOffset = +c[0] * a;
 			e.greenOffset = +c[1] * a;
 			e.blueOffset = +c[2] * a;
 			e.redMultiplier = e.greenMultiplier = e.blueMultiplier = 1 - a;
 		} else {
 			for (p in v) {
-				if (p !== "exposure") if (p !== "brightness") {
-					e[p] = +v[p];
-				}
+				if (p !== 'exposure')
+					if (p !== 'brightness') {
+						e[p] = +v[p];
+					}
 			}
 		}
 		if (v.exposure != null) {
@@ -65,7 +82,7 @@ let gsap, _coreInitted, _win, _createJS, _ColorFilter, _ColorMatrixFilter,
 			e.redMultiplier = e.greenMultiplier = e.blueMultiplier = 1;
 		} else if (v.brightness != null) {
 			a = +v.brightness - 1;
-			e.redOffset = e.greenOffset = e.blueOffset = (a > 0) ? a * 255 : 0;
+			e.redOffset = e.greenOffset = e.blueOffset = a > 0 ? a * 255 : 0;
 			e.redMultiplier = e.greenMultiplier = e.blueMultiplier = 1 - Math.abs(a);
 		}
 		i = 8;
@@ -74,21 +91,19 @@ let gsap, _coreInitted, _win, _createJS, _ColorFilter, _ColorMatrixFilter,
 			if (s[p] !== e[p]) {
 				pt = plugin.add(s, p, s[p], e[p]);
 				if (pt) {
-					pt.op = "easel_colorFilter";
+					pt.op = 'easel_colorFilter';
 				}
 			}
 		}
-		plugin._props.push("easel_colorFilter");
+		plugin._props.push('easel_colorFilter');
 		if (!target.cacheID) {
 			_cache(target);
 		}
 	},
-
-	_idMatrix = [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0],
+	_idMatrix = [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0],
 	_lumR = 0.212671,
-	_lumG = 0.715160,
+	_lumG = 0.71516,
 	_lumB = 0.072169,
-
 	_applyMatrix = (m, m2) => {
 		if (!(m instanceof Array) || !(m2 instanceof Array)) {
 			return m2;
@@ -96,17 +111,18 @@ let gsap, _coreInitted, _win, _createJS, _ColorFilter, _ColorMatrixFilter,
 		let temp = [],
 			i = 0,
 			z = 0,
-			y, x;
+			y,
+			x;
 		for (y = 0; y < 4; y++) {
 			for (x = 0; x < 5; x++) {
-				z = (x === 4) ? m[i + 4] : 0;
-				temp[i + x] = m[i]   * m2[x] + m[i+1] * m2[x + 5] +	m[i+2] * m2[x + 10] + m[i+3] * m2[x + 15] +	z;
+				z = x === 4 ? m[i + 4] : 0;
+				temp[i + x] =
+					m[i] * m2[x] + m[i + 1] * m2[x + 5] + m[i + 2] * m2[x + 10] + m[i + 3] * m2[x + 15] + z;
 			}
 			i += 5;
 		}
 		return temp;
 	},
-
 	_setSaturation = (m, n) => {
 		if (isNaN(n)) {
 			return m;
@@ -115,9 +131,11 @@ let gsap, _coreInitted, _win, _createJS, _ColorFilter, _ColorMatrixFilter,
 			r = inv * _lumR,
 			g = inv * _lumG,
 			b = inv * _lumB;
-		return _applyMatrix([r + n, g, b, 0, 0, r, g + n, b, 0, 0, r, g, b + n, 0, 0, 0, 0, 0, 1, 0], m);
+		return _applyMatrix(
+			[r + n, g, b, 0, 0, r, g + n, b, 0, 0, r, g, b + n, 0, 0, 0, 0, 0, 1, 0],
+			m
+		);
 	},
-
 	_colorize = (m, color, amount) => {
 		if (isNaN(amount)) {
 			amount = 1;
@@ -127,9 +145,32 @@ let gsap, _coreInitted, _win, _createJS, _ColorFilter, _ColorMatrixFilter,
 			g = c[1] / 255,
 			b = c[2] / 255,
 			inv = 1 - amount;
-		return _applyMatrix([inv + amount * r * _lumR, amount * r * _lumG, amount * r * _lumB, 0, 0, amount * g * _lumR, inv + amount * g * _lumG, amount * g * _lumB, 0, 0, amount * b * _lumR, amount * b * _lumG, inv + amount * b * _lumB, 0, 0, 0, 0, 0, 1, 0], m);
+		return _applyMatrix(
+			[
+				inv + amount * r * _lumR,
+				amount * r * _lumG,
+				amount * r * _lumB,
+				0,
+				0,
+				amount * g * _lumR,
+				inv + amount * g * _lumG,
+				amount * g * _lumB,
+				0,
+				0,
+				amount * b * _lumR,
+				amount * b * _lumG,
+				inv + amount * b * _lumB,
+				0,
+				0,
+				0,
+				0,
+				0,
+				1,
+				0
+			],
+			m
+		);
 	},
-
 	_setHue = (m, n) => {
 		if (isNaN(n)) {
 			return m;
@@ -137,17 +178,68 @@ let gsap, _coreInitted, _win, _createJS, _ColorFilter, _ColorMatrixFilter,
 		n *= Math.PI / 180;
 		let c = Math.cos(n),
 			s = Math.sin(n);
-		return _applyMatrix([(_lumR + (c * (1 - _lumR))) + (s * (-_lumR)), (_lumG + (c * (-_lumG))) + (s * (-_lumG)), (_lumB + (c * (-_lumB))) + (s * (1 - _lumB)), 0, 0, (_lumR + (c * (-_lumR))) + (s * 0.143), (_lumG + (c * (1 - _lumG))) + (s * 0.14), (_lumB + (c * (-_lumB))) + (s * -0.283), 0, 0, (_lumR + (c * (-_lumR))) + (s * (-(1 - _lumR))), (_lumG + (c * (-_lumG))) + (s * _lumG), (_lumB + (c * (1 - _lumB))) + (s * _lumB), 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1], m);
+		return _applyMatrix(
+			[
+				_lumR + c * (1 - _lumR) + s * -_lumR,
+				_lumG + c * -_lumG + s * -_lumG,
+				_lumB + c * -_lumB + s * (1 - _lumB),
+				0,
+				0,
+				_lumR + c * -_lumR + s * 0.143,
+				_lumG + c * (1 - _lumG) + s * 0.14,
+				_lumB + c * -_lumB + s * -0.283,
+				0,
+				0,
+				_lumR + c * -_lumR + s * -(1 - _lumR),
+				_lumG + c * -_lumG + s * _lumG,
+				_lumB + c * (1 - _lumB) + s * _lumB,
+				0,
+				0,
+				0,
+				0,
+				0,
+				1,
+				0,
+				0,
+				0,
+				0,
+				0,
+				1
+			],
+			m
+		);
 	},
-
 	_setContrast = (m, n) => {
 		if (isNaN(n)) {
 			return m;
 		}
 		n += 0.01;
-		return _applyMatrix([n,0,0,0,128 * (1 - n), 0,n,0,0,128 * (1 - n), 0,0,n,0,128 * (1 - n), 0,0,0,1,0], m);
+		return _applyMatrix(
+			[
+				n,
+				0,
+				0,
+				0,
+				128 * (1 - n),
+				0,
+				n,
+				0,
+				0,
+				128 * (1 - n),
+				0,
+				0,
+				n,
+				0,
+				128 * (1 - n),
+				0,
+				0,
+				0,
+				1,
+				0
+			],
+			m
+		);
 	},
-
 	_parseColorMatrixFilter = (target, v, plugin) => {
 		if (!_ColorMatrixFilter) {
 			_ColorMatrixFilter = _getCreateJS().ColorMatrixFilter;
@@ -157,7 +249,10 @@ let gsap, _coreInitted, _win, _createJS, _ColorFilter, _ColorMatrixFilter,
 		}
 		let filters = target.filters || [],
 			i = filters.length,
-			matrix, startMatrix, s, pg;
+			matrix,
+			startMatrix,
+			s,
+			pg;
 		while (--i > -1) {
 			if (filters[i] instanceof _ColorMatrixFilter) {
 				s = filters[i];
@@ -189,75 +284,79 @@ let gsap, _coreInitted, _win, _createJS, _ColorFilter, _ColorMatrixFilter,
 			if (matrix[i] !== startMatrix[i]) {
 				pg = plugin.add(startMatrix, i, startMatrix[i], matrix[i]);
 				if (pg) {
-					pg.op = "easel_colorMatrixFilter";
+					pg.op = 'easel_colorMatrixFilter';
 				}
 			}
 		}
 
-		plugin._props.push("easel_colorMatrixFilter");
+		plugin._props.push('easel_colorMatrixFilter');
 		if (!target.cacheID) {
 			_cache();
 		}
 
 		plugin._matrix = startMatrix;
 	},
-
-	_initCore = core => {
+	_initCore = (core) => {
 		gsap = core || _getGSAP();
 		if (_windowExists()) {
 			_win = window;
 		}
 		if (gsap) {
-
 			_coreInitted = 1;
 		}
 	};
 
-
 export const EaselPlugin = {
-	version: "3.10.4",
-	name: "easel",
+	version: '3.10.4',
+	name: 'easel',
 	init(target, value, tween, index, targets) {
 		if (!_coreInitted) {
 			_initCore();
 			if (!gsap) {
-				_warn("Please gsap.registerPlugin(EaselPlugin)");
+				_warn('Please gsap.registerPlugin(EaselPlugin)');
 			}
 		}
 		this.target = target;
 		let p, pt, tint, colorMatrix, end, labels, i;
 		for (p in value) {
-
 			end = value[p];
-			if (p === "colorFilter" || p === "tint" || p === "tintAmount" || p === "exposure" || p === "brightness") {
+			if (
+				p === 'colorFilter' ||
+				p === 'tint' ||
+				p === 'tintAmount' ||
+				p === 'exposure' ||
+				p === 'brightness'
+			) {
 				if (!tint) {
 					_parseColorFilter(target, value.colorFilter || value, this);
 					tint = true;
 				}
-
-			} else if (p === "saturation" || p === "contrast" || p === "hue" || p === "colorize" || p === "colorizeAmount") {
+			} else if (
+				p === 'saturation' ||
+				p === 'contrast' ||
+				p === 'hue' ||
+				p === 'colorize' ||
+				p === 'colorizeAmount'
+			) {
 				if (!colorMatrix) {
 					_parseColorMatrixFilter(target, value.colorMatrixFilter || value, this);
 					colorMatrix = true;
 				}
-
-			} else if (p === "frame") {
-				if (typeof(end) === "string" && end.charAt(1) !== "=" && (labels = target.labels)) {
+			} else if (p === 'frame') {
+				if (typeof end === 'string' && end.charAt(1) !== '=' && (labels = target.labels)) {
 					for (i = 0; i < labels.length; i++) {
 						if (labels[i].label === end) {
 							end = labels[i].position;
 						}
 					}
 				}
-				pt = this.add(target, "gotoAndStop", target.currentFrame, end, index, targets, Math.round);
+				pt = this.add(target, 'gotoAndStop', target.currentFrame, end, index, targets, Math.round);
 				if (pt) {
 					pt.op = p;
 				}
-
 			} else if (target[p] != null) {
-				this.add(target, p, "get", end);
+				this.add(target, p, 'get', end);
 			}
-
 		}
 	},
 	render(ratio, data) {
@@ -273,7 +372,7 @@ export const EaselPlugin = {
 	register: _initCore
 };
 
-EaselPlugin.registerCreateJS = createjs => {
+EaselPlugin.registerCreateJS = (createjs) => {
 	_createJS = createjs;
 };
 

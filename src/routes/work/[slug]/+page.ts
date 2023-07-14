@@ -1,17 +1,15 @@
 import { dev } from '$app/environment';
 
-
 export async function load({ params, parent }) {
-    const { storyblokApi } = await parent();
+	const { storyblokApi } = await parent();
 
-    const dataStory = await storyblokApi.get('cdn/stories', {
-        version: dev ? "draft" : "published",
-        starts_with: 'projects',
-        by_slugs: '*/' + params.slug,
-    });
+	const dataStory = await storyblokApi.get('cdn/stories', {
+		version: dev ? 'draft' : 'published',
+		starts_with: 'projects',
+		by_slugs: '*/' + params.slug
+	});
 
-    return {
-        story: dataStory.data.stories[0],
-    };
+	return {
+		story: dataStory.data.stories[0]
+	};
 }
-

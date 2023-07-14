@@ -5,17 +5,14 @@
 	"printWidth": 100,
 	"overrides": [
 		{
-			"files": [
-				"*.svelte"
-			],
+			"files": ["**/*.svelte"],
 			"options": {
-				"bracketSameLine": false
+				"bracketSameLine": false,
+				"parser": "svelte"
 			}
 		},
 		{
-			"files": [
-				"packages/*/README.md"
-			],
+			"files": ["packages/*/README.md"],
 			"options": {
 				"useTabs": false,
 				"tabWidth": 2

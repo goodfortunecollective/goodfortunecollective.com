@@ -7,57 +7,55 @@
  @this: our CacheManager class object
  ***/
 export class CacheManager {
-    constructor() {
-        // never clear cached geometries
-        this.geometries = [];
+	constructor() {
+		// never clear cached geometries
+		this.geometries = [];
 
-        this.clear();
-    }
+		this.clear();
+	}
 
-    /***
+	/***
      Clear WebGL context depending cache arrays (used on init and context restoration)
-     ***/
-    clear() {
-        // only cache images textures for now
-        this.textures = [];
+	 ***/
+	clear() {
+		// only cache images textures for now
+		this.textures = [];
 
-        // cached programs
-        this.programs = [];
-    }
+		// cached programs
+		this.programs = [];
+	}
 
+	/*** GEOMETRIES ***/
 
-    /*** GEOMETRIES ***/
-
-    /***
+	/***
      Check if this geometry is already in our cached geometries array
 
      params:
      @definitionID (integer): the geometry ID
-     ***/
-    getGeometryFromID(definitionID) {
-        return this.geometries.find(element => element.id === definitionID);
-    }
+	 ***/
+	getGeometryFromID(definitionID) {
+		return this.geometries.find((element) => element.id === definitionID);
+	}
 
-    /***
+	/***
      Add a geometry to our cache if not already in it
 
      params:
      @definitionID  (integer): the geometry ID to add to our cache
      @vertices (array): vertices coordinates array to add to our cache
      @uvs (array): uvs coordinates array to add to our cache
-     ***/
-    addGeometry(definitionID, vertices, uvs) {
-        this.geometries.push({
-            id: definitionID,
-            vertices: vertices,
-            uvs: uvs
-        });
-    }
+	 ***/
+	addGeometry(definitionID, vertices, uvs) {
+		this.geometries.push({
+			id: definitionID,
+			vertices: vertices,
+			uvs: uvs
+		});
+	}
 
+	/*** PROGRAMS ***/
 
-    /*** PROGRAMS ***/
-
-    /***
+	/***
      Compare two shaders strings to detect whether they are equal or not
 
      params:
@@ -66,12 +64,12 @@ export class CacheManager {
 
      returns:
      @isSameShader (bool): whether both shaders are equal or not
-     ***/
-    isSameShader(firstShader, secondShader) {
-        return firstShader.localeCompare(secondShader) === 0;
-    }
+	 ***/
+	isSameShader(firstShader, secondShader) {
+		return firstShader.localeCompare(secondShader) === 0;
+	}
 
-    /***
+	/***
      Returns a program from our cache if this program's vertex and fragment shaders code are the same as the one provided
 
      params:
@@ -80,60 +78,59 @@ export class CacheManager {
 
      returns:
      @program (Program class object or null): our program if it has been found
-     ***/
-    getProgramFromShaders(vsCode, fsCode) {
-        return this.programs.find((element) => {
-            return this.isSameShader(element.vsCode, vsCode) && this.isSameShader(element.fsCode, fsCode);
-        });
-    }
+	 ***/
+	getProgramFromShaders(vsCode, fsCode) {
+		return this.programs.find((element) => {
+			return this.isSameShader(element.vsCode, vsCode) && this.isSameShader(element.fsCode, fsCode);
+		});
+	}
 
-    /***
+	/***
      Add a program to our cache
 
      params :
      @program (Program class object) : program to add to our cache
-     ***/
-    addProgram(program) {
-        this.programs.push(program);
-    }
+	 ***/
+	addProgram(program) {
+		this.programs.push(program);
+	}
 
+	/*** TEXTURES ***/
 
-    /*** TEXTURES ***/
-
-    /***
+	/***
      Check if this source is already in our cached textures array
 
      params :
      @source (HTML element) : html image, video or canvas element (only images for now)
-     ***/
-    getTextureFromSource(source) {
-        const src = typeof source === "string" ? source : source.src;
-        // return the texture if the source is the same and if it's not the same texture
-        return this.textures.find(element => element.source && element.source.src === src);
-    }
+	 ***/
+	getTextureFromSource(source) {
+		const src = typeof source === 'string' ? source : source.src;
+		// return the texture if the source is the same and if it's not the same texture
+		return this.textures.find((element) => element.source && element.source.src === src);
+	}
 
-    /***
+	/***
      Add a texture to our cache if not already in it
 
      params :
      @texture (Texture class object) : texture to add to our cache
-     ***/
-    addTexture(texture) {
-        const cachedTexture = this.getTextureFromSource(texture.source);
+	 ***/
+	addTexture(texture) {
+		const cachedTexture = this.getTextureFromSource(texture.source);
 
-        if(!cachedTexture) {
-            this.textures.push(texture);
-        }
-    }
+		if (!cachedTexture) {
+			this.textures.push(texture);
+		}
+	}
 
-    /***
+	/***
      Removes a texture from the cache array
 
      params :
      @texture (Texture class object) : texture to remove from our cache
-     ***/
-    removeTexture(texture) {
-        // remove from our textures array
-        this.textures = this.textures.filter(element => element.uuid !== texture.uuid);
-    }
+	 ***/
+	removeTexture(texture) {
+		// remove from our textures array
+		this.textures = this.textures.filter((element) => element.uuid !== texture.uuid);
+	}
 }

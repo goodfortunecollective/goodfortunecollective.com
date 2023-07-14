@@ -1,7 +1,5 @@
-
 import adapter from '@sveltejs/adapter-vercel';
 import { vitePreprocess } from '@sveltejs/kit/vite';
-
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -12,11 +10,11 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		alias: {
-			'@storyblok/svelte': './node_modules/@storyblok/svelte',
+			'@storyblok/svelte': './node_modules/@storyblok/svelte'
 		},
 		paths: {
-			base: "",
-		},
+			base: ''
+		}
 	}
 };
 

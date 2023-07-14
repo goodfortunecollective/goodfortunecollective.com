@@ -15,6 +15,7 @@
 	function contOnEnter(e) {
 		btnHidden = false;
 	}
+
 	function contOnLeave(e) {
 		btnHidden = true;
 	}
@@ -178,6 +179,7 @@
 		z-index: 11;
 		cursor: pointer;
 		transition: 0.5s opacity ease-out, 0s visibility 0.5s, 0s z-index 0.5s;
+
 		&.inactive {
 			visibility: hidden;
 			opacity: 0;

@@ -14,48 +14,45 @@
 // TODO lot of (unused at the time) methods are missing
 
 export class Vec2 {
-    constructor(
-        x = 0,
-        y = x,
-    ) {
-        this.type = "Vec2";
+	constructor(x = 0, y = x) {
+		this.type = 'Vec2';
 
-        this._x = x;
-        this._y = y;
-    }
+		this._x = x;
+		this._y = y;
+	}
 
-    /***
+	/***
      Getters and setters (with onChange callback)
-     ***/
-    get x() {
-        return this._x;
-    }
+	 ***/
+	get x() {
+		return this._x;
+	}
 
-    get y() {
-        return this._y;
-    }
+	get y() {
+		return this._y;
+	}
 
-    set x(value) {
-        const changed = value !== this._x;
-        this._x = value;
-        changed && this._onChangeCallback && this._onChangeCallback();
-    }
+	set x(value) {
+		const changed = value !== this._x;
+		this._x = value;
+		changed && this._onChangeCallback && this._onChangeCallback();
+	}
 
-    set y(value) {
-        const changed = value !== this._y;
-        this._y = value;
-        changed && this._onChangeCallback && this._onChangeCallback();
-    }
+	set y(value) {
+		const changed = value !== this._y;
+		this._y = value;
+		changed && this._onChangeCallback && this._onChangeCallback();
+	}
 
-    onChange(callback) {
-        if(callback) {
-            this._onChangeCallback = callback;
-        }
+	onChange(callback) {
+		if (callback) {
+			this._onChangeCallback = callback;
+		}
 
-        return this;
-    }
+		return this;
+	}
 
-    /***
+	/***
      Sets the vector from values
 
      params:
@@ -64,15 +61,15 @@ export class Vec2 {
 
      returns:
      @this (Vec2): this vector after being set
-     ***/
-    set(x, y) {
-        this._x = x;
-        this._y = y;
+	 ***/
+	set(x, y) {
+		this._x = x;
+		this._y = y;
 
-        return this;
-    }
+		return this;
+	}
 
-    /***
+	/***
      Adds a vector to this vector
 
      params:
@@ -80,16 +77,15 @@ export class Vec2 {
 
      returns:
      @this (Vec2): this vector after addition
-     ***/
-    add(vector) {
-        this._x += vector.x;
-        this._y += vector.y;
+	 ***/
+	add(vector) {
+		this._x += vector.x;
+		this._y += vector.y;
 
-        return this;
-    }
+		return this;
+	}
 
-
-    /***
+	/***
      Adds a scalar to this vector
 
      params:
@@ -97,16 +93,15 @@ export class Vec2 {
 
      returns:
      @this (Vec2): this vector after addition
-     ***/
-    addScalar(value) {
-        this._x += value;
-        this._y += value;
+	 ***/
+	addScalar(value) {
+		this._x += value;
+		this._y += value;
 
-        return this;
-    }
+		return this;
+	}
 
-
-    /***
+	/***
      Subtracts a vector from this vector
 
      params:
@@ -114,16 +109,15 @@ export class Vec2 {
 
      returns:
      @this (Vec2): this vector after subtraction
-     ***/
-    sub(vector) {
-        this._x -= vector.x;
-        this._y -= vector.y;
+	 ***/
+	sub(vector) {
+		this._x -= vector.x;
+		this._y -= vector.y;
 
-        return this;
-    }
+		return this;
+	}
 
-
-    /***
+	/***
      Subtracts a scalar to this vector
 
      params:
@@ -131,16 +125,15 @@ export class Vec2 {
 
      returns:
      @this (Vec2): this vector after subtraction
-     ***/
-    subScalar(value) {
-        this._x -= value;
-        this._y -= value;
+	 ***/
+	subScalar(value) {
+		this._x -= value;
+		this._y -= value;
 
-        return this;
-    }
+		return this;
+	}
 
-
-    /***
+	/***
      Multiplies a vector with this vector
 
      params:
@@ -148,16 +141,15 @@ export class Vec2 {
 
      returns:
      @this (Vec2): this vector after multiplication
-     ***/
-    multiply(vector) {
-        this._x *= vector.x;
-        this._y *= vector.y;
+	 ***/
+	multiply(vector) {
+		this._x *= vector.x;
+		this._y *= vector.y;
 
-        return this;
-    }
+		return this;
+	}
 
-
-    /***
+	/***
      Multiplies a scalar with this vector
 
      params:
@@ -165,16 +157,15 @@ export class Vec2 {
 
      returns:
      @this (Vec2): this vector after multiplication
-     ***/
-    multiplyScalar(value) {
-        this._x *= value;
-        this._y *= value;
+	 ***/
+	multiplyScalar(value) {
+		this._x *= value;
+		this._y *= value;
 
-        return this;
-    }
+		return this;
+	}
 
-
-    /***
+	/***
      Copy a vector into this vector
 
      params:
@@ -182,27 +173,25 @@ export class Vec2 {
 
      returns:
      @this (Vec2): this vector after copy
-     ***/
-    copy(vector) {
-        this._x = vector.x;
-        this._y = vector.y;
+	 ***/
+	copy(vector) {
+		this._x = vector.x;
+		this._y = vector.y;
 
-        return this;
-    }
+		return this;
+	}
 
-
-    /***
+	/***
      Clone this vector
 
      returns:
      @vector (Vec2): cloned vector
-     ***/
-    clone() {
-        return new Vec2(this._x, this._y);
-    }
+	 ***/
+	clone() {
+		return new Vec2(this._x, this._y);
+	}
 
-
-    /***
+	/***
      Merges this vector with a vector when values are NaN. Mostly used internally.
 
      params:
@@ -210,16 +199,15 @@ export class Vec2 {
 
      returns:
      @vector (Vec2): sanitized vector
-     ***/
-    sanitizeNaNValuesWith(vector) {
-        this._x = isNaN(this._x) ? vector.x : parseFloat(this._x);
-        this._y = isNaN(this._y) ? vector.y : parseFloat(this._y);
+	 ***/
+	sanitizeNaNValuesWith(vector) {
+		this._x = isNaN(this._x) ? vector.x : parseFloat(this._x);
+		this._y = isNaN(this._y) ? vector.y : parseFloat(this._y);
 
-        return this;
-    }
+		return this;
+	}
 
-
-    /***
+	/***
      Apply max values to this vector
 
      params:
@@ -227,16 +215,15 @@ export class Vec2 {
 
      returns:
      @vector (Vec2): vector with max values applied
-     ***/
-    max(vector) {
-        this._x = Math.max(this._x, vector.x);
-        this._y = Math.max(this._y, vector.y);
+	 ***/
+	max(vector) {
+		this._x = Math.max(this._x, vector.x);
+		this._y = Math.max(this._y, vector.y);
 
-        return this;
-    }
+		return this;
+	}
 
-
-    /***
+	/***
      Apply min values to this vector
 
      params:
@@ -244,16 +231,15 @@ export class Vec2 {
 
      returns:
      @vector (Vec2): vector with min values applied
-     ***/
-    min(vector) {
-        this._x = Math.min(this._x, vector.x);
-        this._y = Math.min(this._y, vector.y);
+	 ***/
+	min(vector) {
+		this._x = Math.min(this._x, vector.x);
+		this._y = Math.min(this._y, vector.y);
 
-        return this;
-    }
+		return this;
+	}
 
-
-    /***
+	/***
      Checks if 2 vectors are equal
 
      params:
@@ -261,32 +247,30 @@ export class Vec2 {
 
      returns:
      @isEqual (bool): whether the vectors are equals or not
-     ***/
-    equals(vector) {
-        return this._x === vector.x && this._y === vector.y;
-    }
+	 ***/
+	equals(vector) {
+		return this._x === vector.x && this._y === vector.y;
+	}
 
-
-    /***
+	/***
      Normalize this vector
 
      returns:
      @this (Vec2): normalized vector
-     ***/
-    normalize() {
-        // normalize
-        let len = this._x * this._x + this._y * this._y;
-        if (len > 0) {
-            len = 1 / Math.sqrt(len);
-        }
-        this._x *= len;
-        this._y *= len;
+	 ***/
+	normalize() {
+		// normalize
+		let len = this._x * this._x + this._y * this._y;
+		if (len > 0) {
+			len = 1 / Math.sqrt(len);
+		}
+		this._x *= len;
+		this._y *= len;
 
-        return this;
-    }
+		return this;
+	}
 
-
-    /***
+	/***
      Calculates the dot product of 2 vectors
 
      params:
@@ -294,8 +278,8 @@ export class Vec2 {
 
      returns:
      @dotProduct (float): dot product of the 2 vectors
-     ***/
-    dot(vector) {
-        return this._x * vector.x + this._y * vector.y;
-    }
+	 ***/
+	dot(vector) {
+		return this._x * vector.x + this._y * vector.y;
+	}
 }

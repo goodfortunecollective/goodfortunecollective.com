@@ -14,11 +14,6 @@
 	});
 </script>
 
-<svelte:head>
-	<title>About</title>
-	<meta name="description" content="About" />
-</svelte:head>
-
 <section class="about pt-[var(--header-height)] pb-32">
 	<!--h-1/2 -->
 	{#if data.story}

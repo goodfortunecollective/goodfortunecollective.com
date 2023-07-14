@@ -6,15 +6,18 @@
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
-*/
+ */
 /* eslint-disable */
 
-let gsap, _coreInitted, _getUnit,
+let gsap,
+	_coreInitted,
+	_getUnit,
 	_DEG2RAD = Math.PI / 180,
-	_getGSAP = () => gsap || (typeof(window) !== "undefined" && (gsap = window.gsap) && gsap.registerPlugin && gsap),
-	_round = value => Math.round(value * 10000) / 10000,
+	_getGSAP = () =>
+		gsap || (typeof window !== 'undefined' && (gsap = window.gsap) && gsap.registerPlugin && gsap),
+	_round = (value) => Math.round(value * 10000) / 10000,
 	_bonusValidated = 1, //<name>Physics2DPlugin</name>
-	_initCore = core => {
+	_initCore = (core) => {
 		gsap = core || _getGSAP();
 		if (!_coreInitted) {
 			_getUnit = gsap.utils.getUnit;
@@ -23,7 +26,6 @@ let gsap, _coreInitted, _getUnit,
 	};
 
 class PhysicsProp {
-
 	constructor(target, p, velocity, acceleration, stepsPerTimeUnit) {
 		let cache = target._gsap,
 			curVal = cache.get(target, p);
@@ -40,13 +42,11 @@ class PhysicsProp {
 			this.acc = this.a = 0;
 		}
 	}
-
 }
 
-
 export const Physics2DPlugin = {
-	version:"3.10.4",
-	name:"physics2D",
+	version: '3.10.4',
+	name: 'physics2D',
 	register: _initCore,
 	init(target, value, tween) {
 		_coreInitted || _initCore();
@@ -54,9 +54,10 @@ export const Physics2DPlugin = {
 			angle = +value.angle || 0,
 			velocity = +value.velocity || 0,
 			acceleration = +value.acceleration || 0,
-			xProp = value.xProp || "x",
-			yProp = value.yProp || "y",
-			aAngle = (value.accelerationAngle || value.accelerationAngle === 0) ? +value.accelerationAngle : angle;
+			xProp = value.xProp || 'x',
+			yProp = value.yProp || 'y',
+			aAngle =
+				value.accelerationAngle || value.accelerationAngle === 0 ? +value.accelerationAngle : angle;
 		data.target = target;
 		data.tween = tween;
 		data.step = 0;
@@ -70,14 +71,31 @@ export const Physics2DPlugin = {
 		data.fr = 1 - (+value.friction || 0);
 		data._props.push(xProp, yProp);
 
-		data.xp = new PhysicsProp(target, xProp, Math.cos(angle) * velocity, Math.cos(aAngle) * acceleration, data.sps);
-		data.yp = new PhysicsProp(target, yProp, Math.sin(angle) * velocity, Math.sin(aAngle) * acceleration, data.sps);
+		data.xp = new PhysicsProp(
+			target,
+			xProp,
+			Math.cos(angle) * velocity,
+			Math.cos(aAngle) * acceleration,
+			data.sps
+		);
+		data.yp = new PhysicsProp(
+			target,
+			yProp,
+			Math.sin(angle) * velocity,
+			Math.sin(aAngle) * acceleration,
+			data.sps
+		);
 		data.skipX = data.skipY = 0;
 	},
 	render(ratio, data) {
 		let { xp, yp, tween, target, step, sps, fr, skipX, skipY } = data,
 			time = tween._from ? tween._dur - tween._time : tween._time,
-			x, y, tt, steps, remainder, i;
+			x,
+			y,
+			tt,
+			steps,
+			remainder,
+			i;
 		if (fr === 1) {
 			tt = time * time * 0.5;
 			x = xp.s + xp.vel * time + xp.acc * tt;
@@ -131,7 +149,6 @@ export const Physics2DPlugin = {
 		}
 	}
 };
-
 
 _getGSAP() && gsap.registerPlugin(Physics2DPlugin);
 

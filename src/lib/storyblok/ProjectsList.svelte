@@ -1,16 +1,15 @@
 <script lang="ts">
 	import { storyblokEditable } from '@storyblok/svelte';
 
-	import Plane from '$lib/components/Plane.svelte';
-	import Planes from '$lib/components/Planes.svelte';
+	import ScrollPlane from '$lib/components/ScrollPlane.svelte';
 
 	export let blok: any;
 </script>
 
 <section use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	<Planes>
+	<div class="max-w-6xl mx-auto">
 		{#each blok.projects as { name, slug, content }}
-			<Plane {name} {slug} {content} />
+			<ScrollPlane {name} {slug} {content} />
 		{/each}
-	</Planes>
+	</div>
 </section>
