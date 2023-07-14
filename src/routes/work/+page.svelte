@@ -5,6 +5,7 @@
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
 	import ScrollPlane from '$lib/components/ScrollPlane.svelte';
+
 	import MenuList from './MenuList.svelte';
 	import MenuItem from './MenuItem.svelte';
 

@@ -69,7 +69,6 @@
 </section>
 <section>
 	<div class="max-w-6xl mx-auto">
-		<a href="{base}/work/"> &#10229; </a>
 		{#if data.story}
 			<StoryblokComponent blok={data.story.content} />
 		{/if}
