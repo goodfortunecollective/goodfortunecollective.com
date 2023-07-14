@@ -1,9 +1,11 @@
-import { curtains } from '../stores';
+
 import { onMount } from 'svelte';
 
+import { curtains } from '$lib/stores';
+
 export function useCurtains(
-	setup = (curtainsInstance: any) => {},
-	cleanUp = (curtainsInstance: any) => {}
+	setup = (curtainsInstance: any) => { },
+	cleanUp = (curtainsInstance: any) => { }
 ) {
 	let isMounted: boolean = false;
 	let curtainsInstance: any;

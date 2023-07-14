@@ -1,5 +1,5 @@
 <script lang="ts">
-	const getIndexText = (index: number) => ('0' + (index + 1)).slice(-2);
+	import { zeroPad } from '$lib/utils/text';
 
 	export let index: number;
 </script>
@@ -7,5 +7,5 @@
 <span
 	class="flex gap-4 items-center font-bold after:h-px after:bg-black after-px-4 after:block after:w-16"
 >
-	{getIndexText(index)}
+	{zeroPad(index + 1)}
 </span>

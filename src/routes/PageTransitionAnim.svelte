@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import { gsap, ScrollSmoother, ScrollTrigger } from '$lib/gsap';
 	import { cls } from '$lib/styles';
-	import { useCurtains } from '$lib/utils/curtains-hooks';
+	import { useCurtains } from '$lib/utils/useCurtains';
 
 	let background!: HTMLElement;
 	let isTransition: boolean = false;
