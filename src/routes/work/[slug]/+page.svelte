@@ -18,11 +18,6 @@
 	onDestroy(() => {});
 </script>
 
-<svelte:head>
-	<title>{data.story.name}</title>
-	<meta name="description" content={data.story.content.description} />
-</svelte:head>
-
 <section class="pt-[var(--header-height)] project-header">
 	<div class="flex flex-row max-w-6xl pt-16 pb-32 mx-auto">
 		<div class="flex flex-col px-12 project-header-text md:w-3/4">
@@ -74,12 +69,13 @@
 </section>
 <section>
 	<div class="max-w-6xl mx-auto">
-		<a href="{base}/work/"> &#10229; </a>
 		{#if data.story}
 			<StoryblokComponent blok={data.story.content} />
 		{/if}
 		<div class="flex justify-center mt-16 align-center">
-			<a href="{base}/work/"><Heading size="h1" as="h3">All projects</Heading></a>
+			<a href="{base}/work/">
+				<Heading size="h1" as="h3">All projects</Heading>
+			</a>
 		</div>
 	</div>
 </section>
@@ -96,6 +92,7 @@
 		h5 {
 			color: $green;
 		}
+
 		p {
 			margin: 0;
 		}

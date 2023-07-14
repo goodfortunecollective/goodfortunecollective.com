@@ -15,7 +15,7 @@
 		</dt>
 		<dd class="text-xl">{@html content}</dd>
 	{:else}
-		<div class="flex items-start gap-4">
+		<div class="flex items-start gap-4 flex-wrap md:flex-nowrap">
 			<NumberedListItem index={$$restProps.index} />
 			<dd class="text-xl">{@html content}</dd>
 		</div>

@@ -6,14 +6,17 @@
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
-*/
+ */
 /* eslint-disable */
 
-let gsap, _coreInitted, _getUnit,
-	_getGSAP = () => gsap || (typeof(window) !== "undefined" && (gsap = window.gsap) && gsap.registerPlugin && gsap),
-	_round = value => Math.round(value * 10000) / 10000,
+let gsap,
+	_coreInitted,
+	_getUnit,
+	_getGSAP = () =>
+		gsap || (typeof window !== 'undefined' && (gsap = window.gsap) && gsap.registerPlugin && gsap),
+	_round = (value) => Math.round(value * 10000) / 10000,
 	_bonusValidated = 1, //<name>PhysicsPropsPlugin</name>
-	_initCore = core => {
+	_initCore = (core) => {
 		gsap = core || _getGSAP();
 		if (!_coreInitted) {
 			_getUnit = gsap.utils.getUnit;
@@ -22,7 +25,6 @@ let gsap, _coreInitted, _getUnit,
 	};
 
 class PhysicsProp {
-
 	constructor(target, p, velocity, acceleration, friction, stepsPerTimeUnit) {
 		let cache = target._gsap,
 			curVal = cache.get(target, p);
@@ -38,15 +40,13 @@ class PhysicsProp {
 		} else {
 			this.acc = this.a = 0;
 		}
-		this.fr = 1 - (friction || 0) ;
+		this.fr = 1 - (friction || 0);
 	}
-
 }
 
-
 export const PhysicsPropsPlugin = {
-	version:"3.10.4",
-	name:"physicsProps",
+	version: '3.10.4',
+	name: 'physicsProps',
 	register: _initCore,
 	init(target, value, tween) {
 		_coreInitted || _initCore();
@@ -70,7 +70,11 @@ export const PhysicsPropsPlugin = {
 		let { vProps, tween, target, step, hasFr, sps } = data,
 			i = vProps.length,
 			time = tween._from ? tween._dur - tween._time : tween._time,
-			curProp, steps, remainder, j, tt;
+			curProp,
+			steps,
+			remainder,
+			j,
+			tt;
 		if (hasFr) {
 			time *= sps;
 			steps = (time | 0) - step;
@@ -107,15 +111,22 @@ export const PhysicsPropsPlugin = {
 					curProp.v *= curProp.fr;
 					curProp.val += curProp.v;
 				}
-				curProp.set(target, curProp.p, _round(curProp.val + (curProp.v * remainder * curProp.fr)) + curProp.u);
+				curProp.set(
+					target,
+					curProp.p,
+					_round(curProp.val + curProp.v * remainder * curProp.fr) + curProp.u
+				);
 			}
 			data.step += steps;
-
 		} else {
 			tt = time * time * 0.5;
 			while (i--) {
 				curProp = vProps[i];
-				curProp.set(target, curProp.p, _round(curProp.s + curProp.vel * time + curProp.acc * tt) + curProp.u);
+				curProp.set(
+					target,
+					curProp.p,
+					_round(curProp.s + curProp.vel * time + curProp.acc * tt) + curProp.u
+				);
 			}
 		}
 	},
@@ -127,7 +138,6 @@ export const PhysicsPropsPlugin = {
 		}
 	}
 };
-
 
 _getGSAP() && gsap.registerPlugin(PhysicsPropsPlugin);
 

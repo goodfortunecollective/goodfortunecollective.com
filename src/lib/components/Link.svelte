@@ -29,6 +29,7 @@
 					transform: scale(1) translate(0, 0);
 				}
 			}
+
 			.arrow-default {
 				transform: scale(0, 1) translate(45px, 0);
 			}
@@ -85,6 +86,7 @@
 			transform: rotate(40deg);
 			transform-origin: top right;
 		}
+
 		&:after {
 			transform: rotate(-40deg);
 			transform-origin: bottom right;
