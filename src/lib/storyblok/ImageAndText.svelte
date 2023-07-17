@@ -1,29 +1,33 @@
 <script lang="ts">
-	import { renderRichText, storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+	import { cva } from 'class-variance-authority';
 
 	export let blok: any;
-	$: content = renderRichText(blok.content);
+
+	const variants = cva('flex flex-col gap-8', {
+		variants: {
+			layoutDirection: {
+				left: 'md:flex-row',
+				right: 'md:flex-row-reverse'
+			}
+		},
+		defaultVariants: {
+			layoutDirection: 'left'
+		}
+	});
 </script>
 
-<div use:storyblokEditable={blok} {...$$restProps} class={'image-and-text my-12 ' + blok.class}>
-	<div class="flex flex-col gap-8 lg:flex-row">
+<div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
+	<div class={variants({ layoutDirection: blok.layoutDirection })}>
 		<div class="flex md:w-1/2">
-			<figure class="image-block">
-				<img class="image-block-img" src={blok.image.filename} alt={blok.id} />
+			<figure>
+				<img src={blok.image.filename} alt={blok.id} />
 			</figure>
 		</div>
-		<div class="flex flex-col md:w-1/2 md:justify-center">
-			{@html content}
+		<div class="flex flex-col md:w-1/2 md:justify-center px-6 xl:px-0">
+			{#each blok.content as b}
+				<StoryblokComponent blok={b} />
+			{/each}
 		</div>
 	</div>
 </div>
-
-<style lang="scss">
-	.text-block {
-		:global(p),
-		:global(h3),
-		:global(ul) {
-			color: #929292;
-		}
-	}
-</style>
