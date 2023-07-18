@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { curtains } from '../lib/stores';
-	import { ScrollSmoother } from '$lib/gsap';
+	import { gsap, ScrollSmoother } from '$lib/gsap';
 	import { Curtains } from '$lib/vendors/curtainsjs/core/Curtains';
 	import { onMount } from 'svelte';
 
@@ -21,6 +21,7 @@
 			new Curtains({
 				container: 'canvas',
 				watchScroll: false,
+				autoRender: false,
 				pixelRatio: Math.min(1.5, window.devicePixelRatio) // limit pixel ratio for performance
 			})
 		);
@@ -30,12 +31,19 @@
 		$curtains
 			.onError(() => {
 				// we will add a class to the document body to display original images
-				document.body.classList.add('no-curtains', 'planes-loaded');
+				document.body.classList.add('no-curtains');
 			})
 			.onContextLost(() => {
 				// on context lost, try to restore the context
 				$curtains.restoreContext();
 			});
+
+		const onRender = () => {
+			if($curtains) $curtains.render()
+		}
+
+		gsap.ticker.fps(60)
+		gsap.ticker.add(onRender)
 
 		window.addEventListener('smoothScrollUpdate', scrollonUpdate);
 
@@ -43,7 +51,10 @@
 			// this function is called when the component is destroyed
 			window.removeEventListener('smoothScrollUpdate', scrollonUpdate);
 
-			if ($curtains) $curtains.dispose();
+			if ($curtains) {
+				gsap.ticker.remove(onRender)
+				$curtains.dispose();
+			}
 			curtains.set(null);
 		};
 	});
