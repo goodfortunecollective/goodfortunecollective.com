@@ -6,7 +6,7 @@
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
 	import { isPageHidden, isTransitioning } from '../stores';
 
-	import type { Curtains, Plane as PlaneType } from '@types/curtainsjs';
+	import type { Curtains, Plane as PlaneType, PlaneParams } from '@types/curtainsjs';
 
 	export let name: string;
 	export let slug: string;
@@ -130,14 +130,15 @@
 		}
 	});
 
-	isPageHidden.subscribe(async (value: boolean) => {
+	isPageHidden.subscribe((value: boolean) => {
 		isHidden = value;
 		if (value && isTransition && !canCreatePlane) {
 			// coming from a page transition
-			// wait for old planes to be removed first
-			await tick();
+			// wait a couple ticks for old planes to be removed first
 			canCreatePlane = true;
-			createPlane();
+			setTimeout(() => {
+				createPlane();
+			}, 32);
 		}
 	});
 

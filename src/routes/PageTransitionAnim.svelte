@@ -5,7 +5,7 @@
 	import { gsap, ScrollSmoother, ScrollTrigger } from '$lib/gsap';
 	import { cls } from '$lib/styles';
 	import { useCurtains } from '$lib/utils/useCurtains';
-	import { CurtainsInstance } from '../lib/utils/useCurtains';
+	import type { CurtainsInstance } from '../lib/utils/useCurtains';
 
 	let background!: HTMLElement;
 
@@ -19,8 +19,9 @@
 		// @ts-ignore
 		const scroll = ScrollSmoother.get();
 
-		isPageHidden.set(false);
 		isTransitioning.set(true);
+		isPageHidden.set(false);
+
 		if (scroll) scroll.paused(true);
 
 		const tl = gsap.timeline();
@@ -43,6 +44,7 @@
 					if (curtains) {
 						curtains.updateScrollValues(0, 0);
 					}
+
 					// @ts-ignore
 					ScrollTrigger.refresh();
 				}
