@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { storyblokEditable } from '@storyblok/svelte';
 
-	import ScrollPlane from '$lib/components/ScrollPlane.svelte';
+	import { ScrollPlane } from '$lib/components';
 
 	export let blok: any;
 </script>

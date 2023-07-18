@@ -1,6 +1,7 @@
 <script lang="ts">
-	import NumberedListItem from '$lib/components/NumberedListItem.svelte';
 	import { renderRichText, storyblokEditable } from '@storyblok/svelte';
+
+	import { NumberedListItem } from '$lib/components';
 
 	export let blok: any;
 
