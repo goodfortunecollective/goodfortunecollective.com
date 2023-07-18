@@ -49,7 +49,7 @@
             vec3 vertexPosition = aVertexPosition;
 
             // cool effect on scroll
-            vertexPosition.x += sin((vertexPosition.y / 1.5 + 1.0) * 3.141592) * (uScrollVelocity * uEffectStrength);
+            vertexPosition.y += sin(((vertexPosition.x + 1.0) / 2.0) * 3.141592) * (uScrollVelocity * uEffectStrength);
 
             gl_Position = uPMatrix * uMVMatrix * vec4(vertexPosition, 1.0);
 
@@ -67,12 +67,18 @@
 
         uniform sampler2D planeTexture;
         uniform float uOpacity;
+        uniform float uScrollVelocity;
+        uniform float uEffectStrength;
 
         void main( void ) {
             // just display our texture
             vec4 color = texture2D(planeTexture, vTextureCoord);
+            vec4 rColor = texture2D(planeTexture, vTextureCoord + vec2(0.0, uScrollVelocity * uEffectStrength) * 0.15);
+            vec4 bColor = texture2D(planeTexture, vTextureCoord - vec2(0.0, uScrollVelocity * uEffectStrength) * 0.15);
+
             color.a *= uOpacity;
-            gl_FragColor = color;
+
+            gl_FragColor = vec4(rColor.r, color.g, bColor.b, color.a);
         }
     `;
 
@@ -90,7 +96,7 @@
 			effectStrength: {
 				name: 'uEffectStrength',
 				type: '1f',
-				value: 0.0025
+				value: 0.005
 			},
 			opacity: {
 				name: 'uOpacity',
@@ -111,10 +117,10 @@
 				const velocity = clamp(scroll.getVelocity() * 0.01, -60, 60);
 				plane.uniforms.scrollVelocity.value = velocity;
 
-				plane.rotation.z = velocity * 0.00125;
+				//plane.rotation.z = velocity * 0.00125;
 
 				// scale plane and its texture
-				plane.scale.y = 1 + Math.abs(velocity * 0.0025);
+				//plane.scale.y = 1 + Math.abs(velocity * 0.0025);
 				plane.textures[0].scale.y = 1 + Math.abs(velocity * 0.005);
 			});
 		}
