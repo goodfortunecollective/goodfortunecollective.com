@@ -71,7 +71,6 @@
         uniform float uEffectStrength;
 
         void main( void ) {
-            // just display our texture
             vec4 color = texture2D(planeTexture, vTextureCoord);
             vec4 rColor = texture2D(planeTexture, vTextureCoord + vec2(0.0, uScrollVelocity * uEffectStrength) * 0.15);
             vec4 bColor = texture2D(planeTexture, vTextureCoord - vec2(0.0, uScrollVelocity * uEffectStrength) * 0.15);
