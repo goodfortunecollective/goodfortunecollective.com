@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { base } from '$app/paths';
-	import { ScrollSmoother } from '$lib/gsap';
-	import { useCurtains } from '$lib/utils/useCurtains';
-	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
+	import {base} from '$app/paths';
+	import {ScrollSmoother} from '$lib/gsap';
+	import {useCurtains} from '$lib/utils/useCurtains';
+	import {Plane} from '$lib/vendors/curtainsjs/core/Plane';
 
 	export let name: string;
 	export let slug: string;
@@ -182,13 +182,21 @@
 	}
 
 	.plane a {
-		display: block;
+		display: flex;
+		overflow: hidden;
 		width: 100%;
 		height: 100%;
 	}
 
 	.plane img {
 		display: none;
+
+		@at-root.no-curtains & {
+			display: block;
+			min-width: 100%;
+			min-height: 100%;
+			object-fit: cover;
+		}
 	}
 
 	@media screen and (max-width: 720px) {
