@@ -96,9 +96,6 @@
 				plane.scale.y = 1 + Math.abs(velocity * 0.0025);
 				plane.textures[0].scale.y = 1 + Math.abs(velocity * 0.005);
 			});
-
-			// TODO notice how y position is different after having navigated?
-			console.log('add plane', planeEl.getBoundingClientRect());
 		},
 		(curtains) => {
 			if (plane) {

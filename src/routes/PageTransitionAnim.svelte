@@ -82,6 +82,14 @@
 				}
 			}
 		});
+
+		// resize curtains to avoid misplaced plane after navigation
+		// TODO would be better to understand why they're misplaced instead
+		tl.call(() => {
+			if(curtains) {
+				curtains.resize()
+			}
+		}, null, 2.1) // add a small delay after effective DOM change
 	});
 </script>
 
