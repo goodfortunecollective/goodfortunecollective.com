@@ -5,10 +5,11 @@
 	import { gsap, ScrollSmoother, ScrollTrigger } from '$lib/gsap';
 	import { cls } from '$lib/styles';
 	import { useCurtains } from '$lib/utils/useCurtains';
+	import { CurtainsInstance } from '../lib/utils/useCurtains';
 
 	let background!: HTMLElement;
 
-	let curtains: any;
+	let curtains: CurtainsInstance;
 
 	useCurtains((c) => {
 		curtains = c;

@@ -6,12 +6,14 @@
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
 	import { isPageHidden, isTransitioning } from '../stores';
 
+	import type { Curtains, Plane as PlaneType } from '@types/curtainsjs';
+
 	export let name: string;
 	export let slug: string;
 	export let content: any;
 
 	let planeEl: HTMLElement;
-	let plane: undefined | Plane;
+	let plane: undefined | PlaneType;
 
 	// only add planes when the page is hidden during transition
 	let canCreatePlane,
@@ -146,6 +148,7 @@
 		},
 		(curtainsInstance) => {
 			// TODO not triggered after using work page filters!!
+			// https://github.com/sveltejs/svelte/issues/5268 ?
 			console.log('unmount');
 			if (plane) {
 				plane.remove();

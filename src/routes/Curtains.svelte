@@ -12,11 +12,6 @@
 
 		if ($curtains) {
 			$curtains.updateScrollValues(0, event.detail.offsetY);
-
-			// force plane visibility if not visible in the first place
-			$curtains.planes.forEach((plane) => {
-				plane.uniforms.opacity.value = 1;
-			});
 			// $curtains.needRender();
 		}
 	}

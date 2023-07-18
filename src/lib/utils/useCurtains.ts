@@ -1,7 +1,8 @@
 import { onMount } from 'svelte';
 import { curtains } from '$lib/stores';
+import type { Curtains } from '@types/curtainsjs';
 
-type CurtainsInstance = null | Curtains;
+export type CurtainsInstance = null | Curtains;
 
 export function useCurtains(
 	setup: (curtainsInstance: CurtainsInstance) => void = (curtainsInstance: CurtainsInstance) => {},
