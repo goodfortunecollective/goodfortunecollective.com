@@ -1,14 +1,14 @@
-
 import { onMount } from 'svelte';
-
 import { curtains } from '$lib/stores';
 
+type CurtainsInstance = null | Curtains;
+
 export function useCurtains(
-	setup = (curtainsInstance: any) => { },
-	cleanUp = (curtainsInstance: any) => { }
+	setup: (curtainsInstance: CurtainsInstance) => void = (curtainsInstance: CurtainsInstance) => {},
+	cleanUp: (curtainsInstance: CurtainsInstance) => void = (curtainsInstance: CurtainsInstance) => {}
 ) {
 	let isMounted: boolean = false;
-	let curtainsInstance: any;
+	let curtainsInstance: CurtainsInstance = null;
 
 	const launchCallback = () => {
 		if (curtainsInstance && isMounted) {

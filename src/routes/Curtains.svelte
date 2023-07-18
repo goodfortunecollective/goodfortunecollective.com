@@ -1,8 +1,8 @@
 <script lang="ts">
-	import {curtains} from '../lib/stores';
-	import {gsap, ScrollSmoother} from '$lib/gsap';
-	import {Curtains} from '$lib/vendors/curtainsjs/core/Curtains';
-	import {onMount} from 'svelte';
+	import { curtains } from '../lib/stores';
+	import { gsap, ScrollSmoother } from '$lib/gsap';
+	import { Curtains } from '$lib/vendors/curtainsjs/core/Curtains';
+	import { onMount } from 'svelte';
 
 	let scroll: ScrollSmoother | null = null;
 
@@ -12,6 +12,11 @@
 
 		if ($curtains) {
 			$curtains.updateScrollValues(0, event.detail.offsetY);
+
+			// force plane visibility if not visible in the first place
+			$curtains.planes.forEach((plane) => {
+				plane.uniforms.opacity.value = 1;
+			});
 			// $curtains.needRender();
 		}
 	}
@@ -20,15 +25,12 @@
 		// 0 - no touch (pointer/mouse only)
 		// 1 - touch-only device (like a phone)
 		// 2 - device can accept touch input and mouse/pointer (like Windows tablets)
-		const touchCapability =
-			window.matchMedia &&
-			window.matchMedia('(hover: none), (pointer: coarse)').matches
+		const touchCapability: number =
+			window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches
 				? 1
-				: 'ontouchstart' in window ||
-				navigator.maxTouchPoints > 0 ||
-				navigator.msMaxTouchPoints > 0
-					? 2
-					: 0
+				: 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
+				? 2
+				: 0;
 
 		if (touchCapability !== 1) {
 			curtains.set(
@@ -56,10 +58,9 @@
 			document.body.classList.add('no-curtains');
 		}
 
-
 		const onRender = () => {
 			if ($curtains) $curtains.render();
-		}
+		};
 
 		gsap.ticker.fps(60);
 		gsap.ticker.add(onRender);
@@ -79,7 +80,7 @@
 	});
 </script>
 
-<div id="canvas"/>
+<div id="canvas" />
 
 <style lang="scss">
 	#canvas {
