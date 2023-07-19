@@ -1,21 +1,29 @@
 <script lang="ts">
-	import { fly } from 'svelte/transition';
+	import { fade } from 'svelte/transition';
 	import { quartOut, cubicOut } from 'svelte/easing';
+	import { isPageHidden } from '$lib/stores';
 
 	export let pathname: string = '';
 
-	function onPageChange(e) {
+	function onPageChange(e): void {
 		e.target.style.position = 'absolute';
 		e.target.style.width = '100%';
+	}
+
+	function onOldContentRemoved(): void {
+		// old content has been removed, page is hidden
+		// we can add curtains planes
+		isPageHidden.set(true);
 	}
 </script>
 
 {#key pathname}
 	<div
-		in:fly={{ easing: cubicOut, y: 100, opacity: 0, duration: 100, delay: 1500 }}
+		in:fade={{ easing: cubicOut, duration: 100, delay: 1500 }}
 		on:outrostart={onPageChange}
-		out:fly={{ easing: quartOut, y: -100, opacity: 1, duration: 100, delay: 1200 }}
+		out:fade={{ easing: quartOut, duration: 100, delay: 1200 }}
 		on:outrostart={onPageChange}
+		on:outroend={onOldContentRemoved}
 	>
 		<slot />
 	</div>
