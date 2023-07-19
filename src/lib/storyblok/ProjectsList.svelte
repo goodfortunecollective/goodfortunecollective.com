@@ -4,12 +4,36 @@
 	import { ProjectListItem } from '$lib/components';
 
 	export let blok: any;
+
+	const projectGridItemsClasses = [
+		'col-span-5 col-start-7 mt-[16.66%] z-2 text-right',
+		'col-span-6 col-start-2 -mt-[25%] z-1 text-left',
+		'col-span-6 col-start-5 mt-[8.33%] z-2 text-right',
+		'col-span-4 col-start-2 -mt-[16.66%] z-1 text-left',
+		'col-span-4 col-start-8 -mt-[16.66%] z-2 text-right',
+		'col-span-7 col-start-1 -mt-[4.166%] z-1 text-left'
+	];
+
+	const getProjectGridItemClass = (index) => {
+		if (index === 0) {
+			return 'col-span-11 z-1 text-left';
+		} else {
+			return projectGridItemsClasses[(index - 1) % 6];
+		}
+	};
 </script>
 
 <section use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	<div class="max-w-6xl mx-auto">
-		{#each blok.projects as { name, slug, content }}
-			<ProjectListItem {name} {slug} {content} />
+	<div class="ProjectListPage-list grid grid-cols-12 mb-64">
+		{#each blok.projects as { name, slug, content }, index}
+			<ProjectListItem
+				{name}
+				{slug}
+				{content}
+				isMainItem={false}
+				layout={index % 2 === 0 ? 'right' : 'left'}
+				class={getProjectGridItemClass(index + 1)}
+			/>
 		{/each}
 	</div>
 </section>
