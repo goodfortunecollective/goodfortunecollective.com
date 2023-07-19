@@ -44,7 +44,6 @@
 				trigger: headingEl,
 				start: '50% 80%',
 				end: 'bottom 20%',
-				markers: true,
 				once: true,
 				onEnter: ({ progress, direction, isActive }) => {
 					console.log('on enter', as, headingEl.innerText, progress, direction, isActive);
