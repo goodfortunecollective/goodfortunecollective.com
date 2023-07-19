@@ -5,6 +5,7 @@
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
 	import { ProjectListItem } from '$lib/components';
+	import { ScrollTrigger } from '$lib/gsap';
 
 	import MenuList from './MenuList.svelte';
 	import MenuItem from './MenuItem.svelte';
@@ -74,7 +75,14 @@
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
 	});
+
+	async function hashchange() {
+		// @ts-ignore
+		ScrollTrigger.refresh();
+	}
 </script>
+
+<svelte:window on:hashchange={hashchange} />
 
 <section class="ProjectListPage pt-[var(--header-height)] pb-32">
 	<div class="max-w-6xl mx-auto relative">
