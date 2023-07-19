@@ -2,17 +2,12 @@
 	import { base } from '$app/paths';
 	import { cls } from '$lib/styles';
 	import ScrollPlane from './ScrollPlane.svelte';
-	import { onMount } from 'svelte';
 
 	export let name: string;
 	export let slug: string;
 	export let content: any;
 	export let isMainItem: boolean;
 	export let layout: boolean;
-
-	console.log(content);
-
-	onMount(() => {});
 </script>
 
 <a
