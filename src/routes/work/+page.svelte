@@ -64,7 +64,7 @@
 
 	const getProjectGridItemClass = (index) => {
 		if (index === 0) {
-			return 'col-span-10 z-1 text-right ProjectListPage-list-main-item';
+			return 'col-span-11 z-1 text-left';
 		} else {
 			return projectGridItemsClasses[(index - 1) % 6];
 		}
@@ -103,7 +103,13 @@
 	<div class="ProjectListPage-list grid grid-cols-12">
 		{#each projects as { name, slug, content }, index}
 			<div class={cls(getProjectGridItemClass(index), 'ProjectListPage-list-item')}>
-				<ProjectListItem {name} {slug} {content} />
+				<ProjectListItem
+					{name}
+					{slug}
+					{content}
+					isMainItem={index === 0}
+					layout={index % 2 === 0 ? 'left' : 'right'}
+				/>
 			</div>
 		{/each}
 	</div>
@@ -114,16 +120,4 @@
 {/if}
 
 <style lang="scss">
-	.ProjectListPage-list-main-item :global(.ProjectListItem) {
-		flex-direction: row;
-		align-items: flex-end;
-	}
-
-	.ProjectListPage-list-main-item :global(.ProjectListItem-thumb) {
-		flex-basis: 75%;
-	}
-
-	.ProjectListPage-list-main-item :global(.ProjectListItem-infos) {
-		flex-basis: 25%;
-	}
 </style>
