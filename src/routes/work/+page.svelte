@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
+	import { cls } from '$lib/styles';
 
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
-	import { ScrollPlane } from '$lib/components';
+	import { ProjectListItem } from '$lib/components';
 
 	import MenuList from './MenuList.svelte';
 	import MenuItem from './MenuItem.svelte';
@@ -52,6 +53,23 @@
 
 	$: projects = getProjectsByFilter(data.projects, filter);
 
+	const projectGridItemsClasses = [
+		'col-span-5 col-start-7 mt-[16.66%] z-2 text-right',
+		'col-span-6 col-start-2 -mt-[25%] z-1 text-left',
+		'col-span-6 col-start-5 mt-[8.33%] z-2 text-right',
+		'col-span-4 col-start-2 -mt-[16.66%] z-1 text-left',
+		'col-span-4 col-start-8 -mt-[16.66%] z-2 text-right',
+		'col-span-7 col-start-1 -mt-[4.166%] z-1 text-left'
+	];
+
+	const getProjectGridItemClass = (index) => {
+		if (index === 0) {
+			return 'col-span-10 z-1 text-right ProjectListPage-list-main-item';
+		} else {
+			return projectGridItemsClasses[(index - 1) % 6];
+		}
+	};
+
 	onMount(() => {
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
@@ -59,7 +77,7 @@
 	});
 </script>
 
-<section class="pt-[var(--header-height)] pb-32">
+<section class="ProjectListPage pt-[var(--header-height)] pb-32">
 	<div class="max-w-6xl mx-auto relative">
 		<MenuList class="z-10 absolute top-0 right-0 flex flex-col items-end gap-4">
 			<MenuItem
@@ -81,11 +99,31 @@
 			{/each}
 		</MenuList>
 	</div>
-	{#each projects as { name, slug, content }}
-		<ScrollPlane {name} {slug} {content} />
-	{/each}
+
+	<div class="ProjectListPage-list grid grid-cols-12">
+		{#each projects as { name, slug, content }, index}
+			<div class={cls(getProjectGridItemClass(index), 'ProjectListPage-list-item')}>
+				<ProjectListItem {name} {slug} {content} />
+			</div>
+		{/each}
+	</div>
 </section>
 
 {#if data.story}
 	<StoryblokComponent blok={data.story.content} />
 {/if}
+
+<style lang="scss">
+	.ProjectListPage-list-main-item :global(.ProjectListItem) {
+		flex-direction: row;
+		align-items: flex-end;
+	}
+
+	.ProjectListPage-list-main-item :global(.ProjectListItem-thumb) {
+		flex-basis: 75%;
+	}
+
+	.ProjectListPage-list-main-item :global(.ProjectListItem-infos) {
+		flex-basis: 25%;
+	}
+</style>
