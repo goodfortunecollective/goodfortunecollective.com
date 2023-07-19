@@ -107,9 +107,9 @@
 
 	const createPlane = () => {
 		if (curtains && canCreatePlane) {
-			plane = new Plane(curtains, planeEl, params);
+			params.renderOrder = curtains.planes.length;
 
-			plane.setRenderOrder(curtains.planes.length);
+			plane = new Plane(curtains, planeEl, params);
 
 			console.log('add plane', plane);
 
