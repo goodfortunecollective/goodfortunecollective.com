@@ -13,17 +13,14 @@
 // TODO lot of (unused at the time) methods are missing
 
 export class Quat {
-    constructor(
-        elements = new Float32Array([0, 0, 0, 1]),
-        axisOrder = "XYZ"
-    ) {
-        this.type = "Quat";
-        this.elements = elements;
-        // rotation axis order
-        this.axisOrder = axisOrder;
-    }
+	constructor(elements = new Float32Array([0, 0, 0, 1]), axisOrder = 'XYZ') {
+		this.type = 'Quat';
+		this.elements = elements;
+		// rotation axis order
+		this.axisOrder = axisOrder;
+	}
 
-    /***
+	/***
      Sets the quaternion values from an array
 
      params:
@@ -31,17 +28,17 @@ export class Quat {
 
      returns:
      @this (Quat class object): this quaternion after being set
-     ***/
-    setFromArray(array) {
-        this.elements[0] = array[0];
-        this.elements[1] = array[1];
-        this.elements[2] = array[2];
-        this.elements[3] = array[3];
+	 ***/
+	setFromArray(array) {
+		this.elements[0] = array[0];
+		this.elements[1] = array[1];
+		this.elements[2] = array[2];
+		this.elements[3] = array[3];
 
-        return this;
-    }
+		return this;
+	}
 
-    /***
+	/***
      Sets the quaternion axis order
 
      params:
@@ -49,30 +46,29 @@ export class Quat {
 
      returns:
      @this (Quat class object): this quaternion after axis order has been set
-     ***/
-    setAxisOrder(axisOrder) {
-        // force uppercase for strict equality tests
-        axisOrder = axisOrder.toUpperCase();
+	 ***/
+	setAxisOrder(axisOrder) {
+		// force uppercase for strict equality tests
+		axisOrder = axisOrder.toUpperCase();
 
-        switch (axisOrder) {
-            case "XYZ" :
-            case "YXZ" :
-            case "ZXY" :
-            case "ZYX" :
-            case "YZX" :
-            case "XZY" :
-                this.axisOrder = axisOrder;
-                break;
-            default :
-                // apply a default axis order
-                this.axisOrder = "XYZ";
-        }
+		switch (axisOrder) {
+			case 'XYZ':
+			case 'YXZ':
+			case 'ZXY':
+			case 'ZYX':
+			case 'YZX':
+			case 'XZY':
+				this.axisOrder = axisOrder;
+				break;
+			default:
+				// apply a default axis order
+				this.axisOrder = 'XYZ';
+		}
 
-        return this;
-    }
+		return this;
+	}
 
-
-    /***
+	/***
      Copy a quaternion into this quaternion
 
      params:
@@ -80,41 +76,41 @@ export class Quat {
 
      returns:
      @this (Quat): this quaternion after copy
-     ***/
-    copy(quaternion) {
-        this.elements = quaternion.elements;
-        this.axisOrder = quaternion.axisOrder;
+	 ***/
+	copy(quaternion) {
+		this.elements = quaternion.elements;
+		this.axisOrder = quaternion.axisOrder;
 
-        return this;
-    }
+		return this;
+	}
 
-
-    /***
+	/***
      Clone a quaternion
 
      returns:
      @clonedQuaternion (Quat): cloned quaternion
-     ***/
-    clone() {
-        return new Quat().copy(this);
-    }
+	 ***/
+	clone() {
+		return new Quat().copy(this);
+	}
 
-
-    /***
+	/***
      Checks if 2 quaternions are equal
 
      returns:
      @isEqual (bool): whether the quaternions are equals or not
-     ***/
-    equals(quaternion) {
-        return this.elements[0] === quaternion.elements[0]
-            && this.elements[1] === quaternion.elements[1]
-            && this.elements[2] === quaternion.elements[2]
-            && this.elements[3] === quaternion.elements[3]
-            && this.axisOrder === quaternion.axisOrder;
-    }
+	 ***/
+	equals(quaternion) {
+		return (
+			this.elements[0] === quaternion.elements[0] &&
+			this.elements[1] === quaternion.elements[1] &&
+			this.elements[2] === quaternion.elements[2] &&
+			this.elements[3] === quaternion.elements[3] &&
+			this.axisOrder === quaternion.axisOrder
+		);
+	}
 
-    /***
+	/***
      Sets a rotation quaternion using Euler angles and its axis order
 
      params:
@@ -122,57 +118,52 @@ export class Quat {
 
      returns :
      @this (Quat class object): quaternion after having applied the rotation
-     ***/
-    setFromVec3(vector) {
-        const ax = vector.x * 0.5;
-        const ay = vector.y * 0.5;
-        const az = vector.z * 0.5;
+	 ***/
+	setFromVec3(vector) {
+		const ax = vector.x * 0.5;
+		const ay = vector.y * 0.5;
+		const az = vector.z * 0.5;
 
-        const cosx = Math.cos(ax);
-        const cosy = Math.cos(ay);
-        const cosz = Math.cos(az);
-        const sinx = Math.sin(ax);
-        const siny = Math.sin(ay);
-        const sinz = Math.sin(az);
+		const cosx = Math.cos(ax);
+		const cosy = Math.cos(ay);
+		const cosz = Math.cos(az);
+		const sinx = Math.sin(ax);
+		const siny = Math.sin(ay);
+		const sinz = Math.sin(az);
 
-        // XYZ order
-        if(this.axisOrder === "XYZ") {
-            this.elements[0] = sinx * cosy * cosz + cosx * siny * sinz;
-            this.elements[1] = cosx * siny * cosz - sinx * cosy * sinz;
-            this.elements[2] = cosx * cosy * sinz + sinx * siny * cosz;
-            this.elements[3] = cosx * cosy * cosz - sinx * siny * sinz;
-        }
-        else if(this.axisOrder === "YXZ") {
-            this.elements[0] = sinx * cosy * cosz + cosx * siny * sinz;
-            this.elements[1] = cosx * siny * cosz - sinx * cosy * sinz;
-            this.elements[2] = cosx * cosy * sinz - sinx * siny * cosz;
-            this.elements[3] = cosx * cosy * cosz + sinx * siny * sinz;
-        }
-        else if(this.axisOrder === "ZXY") {
-            this.elements[0] = sinx * cosy * cosz - cosx * siny * sinz;
-            this.elements[1] = cosx * siny * cosz + sinx * cosy * sinz;
-            this.elements[2] = cosx * cosy * sinz + sinx * siny * cosz;
-            this.elements[3] = cosx * cosy * cosz - sinx * siny * sinz;
-        }
-        else if(this.axisOrder === "ZYX") {
-            this.elements[0] = sinx * cosy * cosz - cosx * siny * sinz;
-            this.elements[1] = cosx * siny * cosz + sinx * cosy * sinz;
-            this.elements[2] = cosx * cosy * sinz - sinx * siny * cosz;
-            this.elements[3] = cosx * cosy * cosz + sinx * siny * sinz;
-        }
-        else if(this.axisOrder === "YZX") {
-            this.elements[0] = sinx * cosy * cosz + cosx * siny * sinz;
-            this.elements[1] = cosx * siny * cosz + sinx * cosy * sinz;
-            this.elements[2] = cosx * cosy * sinz - sinx * siny * cosz;
-            this.elements[3] = cosx * cosy * cosz - sinx * siny * sinz;
-        }
-        else if(this.axisOrder === "XZY") {
-            this.elements[0] = sinx * cosy * cosz - cosx * siny * sinz;
-            this.elements[1] = cosx * siny * cosz - sinx * cosy * sinz;
-            this.elements[2] = cosx * cosy * sinz + sinx * siny * cosz;
-            this.elements[3] = cosx * cosy * cosz + sinx * siny * sinz;
-        }
+		// XYZ order
+		if (this.axisOrder === 'XYZ') {
+			this.elements[0] = sinx * cosy * cosz + cosx * siny * sinz;
+			this.elements[1] = cosx * siny * cosz - sinx * cosy * sinz;
+			this.elements[2] = cosx * cosy * sinz + sinx * siny * cosz;
+			this.elements[3] = cosx * cosy * cosz - sinx * siny * sinz;
+		} else if (this.axisOrder === 'YXZ') {
+			this.elements[0] = sinx * cosy * cosz + cosx * siny * sinz;
+			this.elements[1] = cosx * siny * cosz - sinx * cosy * sinz;
+			this.elements[2] = cosx * cosy * sinz - sinx * siny * cosz;
+			this.elements[3] = cosx * cosy * cosz + sinx * siny * sinz;
+		} else if (this.axisOrder === 'ZXY') {
+			this.elements[0] = sinx * cosy * cosz - cosx * siny * sinz;
+			this.elements[1] = cosx * siny * cosz + sinx * cosy * sinz;
+			this.elements[2] = cosx * cosy * sinz + sinx * siny * cosz;
+			this.elements[3] = cosx * cosy * cosz - sinx * siny * sinz;
+		} else if (this.axisOrder === 'ZYX') {
+			this.elements[0] = sinx * cosy * cosz - cosx * siny * sinz;
+			this.elements[1] = cosx * siny * cosz + sinx * cosy * sinz;
+			this.elements[2] = cosx * cosy * sinz - sinx * siny * cosz;
+			this.elements[3] = cosx * cosy * cosz + sinx * siny * sinz;
+		} else if (this.axisOrder === 'YZX') {
+			this.elements[0] = sinx * cosy * cosz + cosx * siny * sinz;
+			this.elements[1] = cosx * siny * cosz + sinx * cosy * sinz;
+			this.elements[2] = cosx * cosy * sinz - sinx * siny * cosz;
+			this.elements[3] = cosx * cosy * cosz - sinx * siny * sinz;
+		} else if (this.axisOrder === 'XZY') {
+			this.elements[0] = sinx * cosy * cosz - cosx * siny * sinz;
+			this.elements[1] = cosx * siny * cosz - sinx * cosy * sinz;
+			this.elements[2] = cosx * cosy * sinz + sinx * siny * cosz;
+			this.elements[3] = cosx * cosy * cosz + sinx * siny * sinz;
+		}
 
-        return this;
-    }
+		return this;
+	}
 }

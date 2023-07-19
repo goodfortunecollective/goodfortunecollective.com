@@ -8,7 +8,7 @@
 
 <div use:storyblokEditable={blok} class={blok.class}>
 	{#if blok.wrapped}
-		<div class="max-w-6xl mx-auto px-8">
+		<div class="max-w-6xl px-8 mx-auto">
 			<Link {...$$restProps} href={blok.href} label={blok.label} />
 		</div>
 	{:else}

@@ -6,15 +6,24 @@
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
-*/
+ */
 /* eslint-disable */
 
-let gsap, _coreInitted, _toArray, _getUnit, _first, _ticker, _time1, _time2, _getCache,
-	_getGSAP = () => gsap || typeof(window) !== "undefined" && (gsap = window.gsap),
+let gsap,
+	_coreInitted,
+	_toArray,
+	_getUnit,
+	_first,
+	_ticker,
+	_time1,
+	_time2,
+	_getCache,
+	_getGSAP = () => gsap || (typeof window !== 'undefined' && (gsap = window.gsap)),
 	_lookup = {},
-	_round = value => Math.round(value * 10000) / 10000,
-	_getID = target => _getCache(target).id,
-	_getByTarget = target => _lookup[_getID(typeof(target) === "string" ? _toArray(target)[0] : target)],
+	_round = (value) => Math.round(value * 10000) / 10000,
+	_getID = (target) => _getCache(target).id,
+	_getByTarget = (target) =>
+		_lookup[_getID(typeof target === 'string' ? _toArray(target)[0] : target)],
 	_onTick = (time) => {
 		let pt = _first,
 			val;
@@ -24,7 +33,8 @@ let gsap, _coreInitted, _toArray, _getUnit, _first, _ticker, _time1, _time2, _ge
 			_time1 = time;
 			while (pt) {
 				val = pt.g(pt.t, pt.p);
-				if (val !== pt.v1 || time - pt.t1 > 0.2) { //use a threshold of 0.2 seconds for zeroing-out velocity. If we only use 0.05 and things update slightly slower, like some Android devices dispatch "touchmove" events sluggishly so 2 or 3 ticks of the gsap.ticker may elapse inbetween, thus it may appear like the object is not moving but it actually is but it's not updating as frequently. A threshold of 0.2 seconds seems to be a good balance. We want to update things frequently (0.05 seconds) when they're moving so that we can respond to fast motions accurately, but we want to be more resistant to go back to a zero velocity.
+				if (val !== pt.v1 || time - pt.t1 > 0.2) {
+					//use a threshold of 0.2 seconds for zeroing-out velocity. If we only use 0.05 and things update slightly slower, like some Android devices dispatch "touchmove" events sluggishly so 2 or 3 ticks of the gsap.ticker may elapse inbetween, thus it may appear like the object is not moving but it actually is but it's not updating as frequently. A threshold of 0.2 seconds seems to be a good balance. We want to update things frequently (0.05 seconds) when they're moving so that we can respond to fast motions accurately, but we want to be more resistant to go back to a zero velocity.
 					pt.v2 = pt.v1;
 					pt.v1 = val;
 					pt.t2 = pt.t1;
@@ -34,8 +44,7 @@ let gsap, _coreInitted, _toArray, _getUnit, _first, _ticker, _time1, _time2, _ge
 			}
 		}
 	},
-	_types = {deg: 360, rad: Math.PI * 2},
-
+	_types = { deg: 360, rad: Math.PI * 2 },
 	_initCore = () => {
 		gsap = _getGSAP();
 		if (gsap) {
@@ -48,7 +57,6 @@ let gsap, _coreInitted, _toArray, _getUnit, _first, _ticker, _time1, _time2, _ge
 	};
 
 class PropTracker {
-
 	constructor(target, property, type, next) {
 		this.t = target;
 		this.p = property;
@@ -61,11 +69,9 @@ class PropTracker {
 			next._prev = this;
 		}
 	}
-
 }
 
 export class VelocityTracker {
-
 	constructor(target, property) {
 		if (!_coreInitted) {
 			_initCore();
@@ -82,15 +88,18 @@ export class VelocityTracker {
 	}
 
 	get(property, skipRecentTick) {
-		let pt = this._props[property] || console.warn("Not tracking " + property + " velocity."),
-			val, dif, rotationCap;
+		let pt = this._props[property] || console.warn('Not tracking ' + property + ' velocity.'),
+			val,
+			dif,
+			rotationCap;
 		val = parseFloat(skipRecentTick ? pt.v1 : pt.g(pt.t, pt.p));
-		dif = (val - parseFloat(pt.v2));
+		dif = val - parseFloat(pt.v2);
 		rotationCap = pt.rCap;
-		if (rotationCap) { //rotational values need special interpretation so that if, for example, they go from 179 to -178 degrees it is interpreted as a change of 3 instead of -357.
+		if (rotationCap) {
+			//rotational values need special interpretation so that if, for example, they go from 179 to -178 degrees it is interpreted as a change of 3 instead of -357.
 			dif = dif % rotationCap;
 			if (dif !== dif % (rotationCap / 2)) {
-				dif = (dif < 0) ? dif + rotationCap : dif - rotationCap;
+				dif = dif < 0 ? dif + rotationCap : dif - rotationCap;
 			}
 		}
 		return _round(dif / ((skipRecentTick ? pt.t1 : _ticker.time) - pt.t2));
@@ -107,7 +116,7 @@ export class VelocityTracker {
 	}
 
 	isTracking(property) {
-		return (property in this._props);
+		return property in this._props;
 	}
 
 	add(property, type) {
@@ -122,7 +131,8 @@ export class VelocityTracker {
 
 	remove(property) {
 		let pt = this._props[property],
-			prev, next;
+			prev,
+			next;
 		if (pt) {
 			prev = pt._prev;
 			next = pt._next;
@@ -154,10 +164,11 @@ export class VelocityTracker {
 		}
 		let result = [],
 			targs = _toArray(targets),
-			a = properties.split(","),
-			t = (types || "").split(","),
+			a = properties.split(','),
+			t = (types || '').split(','),
 			i = targs.length,
-			tracker, j;
+			tracker,
+			j;
 		while (i--) {
 			tracker = _getByTarget(targs[i]) || new VelocityTracker(targs[i]);
 			j = a.length;
@@ -170,14 +181,14 @@ export class VelocityTracker {
 	}
 
 	static untrack(targets, properties) {
-		let props = (properties || "").split(",");
-		_toArray(targets).forEach(target => {
+		let props = (properties || '').split(',');
+		_toArray(targets).forEach((target) => {
 			let tracker = _getByTarget(target);
 			if (tracker) {
 				if (!props.length) {
 					tracker.kill(1);
 				} else {
-					props.forEach(p => tracker.remove(p));
+					props.forEach((p) => tracker.remove(p));
 				}
 			}
 		});
@@ -190,12 +201,13 @@ export class VelocityTracker {
 
 	static getVelocity(target, property) {
 		let tracker = _getByTarget(target);
-		return (!tracker || !tracker.isTracking(property)) ? console.warn("Not tracking velocity of " + property) : tracker.get(property);
+		return !tracker || !tracker.isTracking(property)
+			? console.warn('Not tracking velocity of ' + property)
+			: tracker.get(property);
 	}
 }
 
 VelocityTracker.getByTarget = _getByTarget;
-
 
 _getGSAP() && gsap.registerPlugin(VelocityTracker);
 

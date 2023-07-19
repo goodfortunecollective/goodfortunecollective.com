@@ -164,6 +164,7 @@
 		if (!btnHidden) return;
 		btnHidden = false;
 	}
+
 	function hideBtn() {
 		if (btnHidden) return;
 		btnHidden = true;
@@ -205,8 +206,10 @@
 						src={blok.video}
 						autoplay
 						muted
-						loop><track kind="captions" /></video
+						loop
 					>
+						<track kind="captions" />
+					</video>
 					<div
 						bind:this={videoBtn}
 						class={'video-block-btn' +
@@ -236,6 +239,7 @@
 
 <style lang="scss">
 	@import '../../vars.scss';
+
 	.video-block-btn {
 		position: absolute;
 		display: flex;

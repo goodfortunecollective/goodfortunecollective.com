@@ -1,5 +1,5 @@
-import {TextureLoader} from "./TextureLoader.js";
-import {throwWarning} from "../utils/utils.js";
+import { TextureLoader } from './TextureLoader.js';
+import { throwWarning } from '../utils/utils.js';
 
 /*** PLANE TEXTURE LOADER CLASS ***/
 
@@ -20,91 +20,92 @@ import {throwWarning} from "../utils/utils.js";
  @this: our PlaneTextureLoader element
  ***/
 export class PlaneTextureLoader extends TextureLoader {
-    constructor(renderer, parent, {
-        sourcesLoaded = 0,
-        sourcesToLoad = 0,
-        complete = false,
+	constructor(
+		renderer,
+		parent,
+		{
+			sourcesLoaded = 0,
+			sourcesToLoad = 0,
+			complete = false,
 
-        onComplete = () => {},
-    } = {}) {
+			onComplete = () => {}
+		} = {}
+	) {
+		super(renderer, parent.crossOrigin);
+		this.type = 'PlaneTextureLoader';
 
-        super(renderer, parent.crossOrigin);
-        this.type = "PlaneTextureLoader";
+		this._parent = parent;
+		if (
+			this._parent.type !== 'Plane' &&
+			this._parent.type !== 'PingPongPlane' &&
+			this._parent.type !== 'ShaderPass'
+		) {
+			throwWarning(this.type + ': Wrong parent type assigned to this loader');
+			this._parent = null;
+		}
 
-        this._parent = parent;
-        if(this._parent.type !== "Plane" && this._parent.type !== "PingPongPlane" && this._parent.type !== "ShaderPass") {
-            throwWarning(this.type + ": Wrong parent type assigned to this loader");
-            this._parent = null;
-        }
+		this.sourcesLoaded = sourcesLoaded;
+		this.sourcesToLoad = sourcesToLoad;
+		this.complete = complete;
 
-        this.sourcesLoaded = sourcesLoaded;
-        this.sourcesToLoad = sourcesToLoad;
-        this.complete = complete;
+		this.onComplete = onComplete;
+	}
 
-        this.onComplete = onComplete;
-    }
+	/*** TRACK LOADING ***/
 
-
-    /*** TRACK LOADING ***/
-
-    /***
+	/***
      Sets the total number of assets to load before firing the onComplete event
 
      params:
      @size (int): our curtains object OR our curtains renderer object
-     ***/
-    _setLoaderSize(size) {
-        this.sourcesToLoad = size;
+	 ***/
+	_setLoaderSize(size) {
+		this.sourcesToLoad = size;
 
-        if(this.sourcesToLoad === 0) {
-            this.complete = true;
-            this.renderer.nextRender.add(() => this.onComplete && this.onComplete());
-        }
-    }
+		if (this.sourcesToLoad === 0) {
+			this.complete = true;
+			this.renderer.nextRender.add(() => this.onComplete && this.onComplete());
+		}
+	}
 
-
-    /***
+	/***
      Increment the number of sources loaded
-     ***/
-    _increment() {
-        this.sourcesLoaded++;
-        if(this.sourcesLoaded >= this.sourcesToLoad && !this.complete) {
-            this.complete = true;
-            this.renderer.nextRender.add(() => this.onComplete && this.onComplete());
-        }
-    }
+	 ***/
+	_increment() {
+		this.sourcesLoaded++;
+		if (this.sourcesLoaded >= this.sourcesToLoad && !this.complete) {
+			this.complete = true;
+			this.renderer.nextRender.add(() => this.onComplete && this.onComplete());
+		}
+	}
 
+	/*** UPDATE PARENT SOURCES AND TEXTURES ARAYS ***/
 
-    /*** UPDATE PARENT SOURCES AND TEXTURES ARAYS ***/
-
-    /***
+	/***
      Adds the source to the correct parent assets array
 
      params:
      @source (html element): html image, video or canvas element that has been loaded
      @sourceType (string): either "image", "video" or "canvas"
-     ***/
-    _addSourceToParent(source, sourceType) {
-        // add the source if it is not already in the correct parent assets array
-        if(sourceType === "image") {
-            const parentAssetArray = this._parent["images"];
-            const isInParent = parentAssetArray.find((element) => element.src === source.src);
-            !isInParent && parentAssetArray.push(source);
-        }
-        else if(sourceType === "video") {
-            const parentAssetArray = this._parent["videos"];
-            const isInParent = parentAssetArray.find((element) => element.src === source.src);
-            !isInParent && parentAssetArray.push(source);
-        }
-        else if(sourceType === "canvas") {
-            const parentAssetArray = this._parent["canvases"];
-            const isInParent = parentAssetArray.find((element) => element.isSameNode(source));
-            !isInParent && parentAssetArray.push(source);
-        }
-    }
+	 ***/
+	_addSourceToParent(source, sourceType) {
+		// add the source if it is not already in the correct parent assets array
+		if (sourceType === 'image') {
+			const parentAssetArray = this._parent['images'];
+			const isInParent = parentAssetArray.find((element) => element.src === source.src);
+			!isInParent && parentAssetArray.push(source);
+		} else if (sourceType === 'video') {
+			const parentAssetArray = this._parent['videos'];
+			const isInParent = parentAssetArray.find((element) => element.src === source.src);
+			!isInParent && parentAssetArray.push(source);
+		} else if (sourceType === 'canvas') {
+			const parentAssetArray = this._parent['canvases'];
+			const isInParent = parentAssetArray.find((element) => element.isSameNode(source));
+			!isInParent && parentAssetArray.push(source);
+		}
+	}
 
-
-    /***
+	/***
      Adds the loader parent to the newly created texture
      Also adds the source to the correct parent assets array
 
@@ -112,11 +113,11 @@ export class PlaneTextureLoader extends TextureLoader {
      @texture (Texture class object): our newly created texture
      @source (html element): html image, video or canvas element that has been loaded
      @sourceType (string): either "image", "video" or "canvas"
-     ***/
-    _addToParent(texture, source, sourceType) {
-        this._addSourceToParent(source, sourceType);
+	 ***/
+	_addToParent(texture, source, sourceType) {
+		this._addSourceToParent(source, sourceType);
 
-        // add the texture to the parent
-        this._parent && texture.addParent(this._parent);
-    }
+		// add the texture to the parent
+		this._parent && texture.addParent(this._parent);
+	}
 }

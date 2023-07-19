@@ -137,6 +137,7 @@
 			transform: rotate(40deg);
 			transform-origin: top right;
 		}
+
 		&:after {
 			transform: rotate(-40deg);
 			transform-origin: bottom right;

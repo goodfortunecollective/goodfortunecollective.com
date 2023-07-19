@@ -1,12 +1,14 @@
 <script lang="ts">
-	export let href = { url: '' };
+	export let href = { url: '', cached_url: '' };
 	export let label = '';
 	export let isExternal = false;
+
+	export let url = href.url ? href.url : href.cached_url;
 </script>
 
 <a
 	{...$$restProps}
-	href={href.url}
+	href={url}
 	target={isExternal ? '_blank' : undefined}
 	rel={isExternal ? 'noopener' : undefined}
 	class="flex flex-row items-stretch h-10 text-xs font-bold tracking-widest uppercase link"
@@ -29,6 +31,7 @@
 					transform: scale(1) translate(0, 0);
 				}
 			}
+
 			.arrow-default {
 				transform: scale(0, 1) translate(45px, 0);
 			}
@@ -85,6 +88,7 @@
 			transform: rotate(40deg);
 			transform-origin: top right;
 		}
+
 		&:after {
 			transform: rotate(-40deg);
 			transform-origin: bottom right;

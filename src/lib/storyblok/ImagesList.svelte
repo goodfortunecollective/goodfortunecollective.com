@@ -45,11 +45,13 @@
 		&:last-child {
 			margin-bottom: 0;
 		}
+
 		@media (min-width: $media-md) {
 			&:nth-child(2n + 1) {
 				.list-item-text {
 					order: 3;
 				}
+
 				.list-item-image {
 					order: 2;
 				}

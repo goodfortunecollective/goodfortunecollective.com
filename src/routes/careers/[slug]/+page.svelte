@@ -15,11 +15,6 @@
 	onDestroy(() => {});
 </script>
 
-<svelte:head>
-	<title>careers SLUG</title>
-	<meta name="description" content="Careers SLUG" />
-</svelte:head>
-
 <section class="pt-[var(--header-height)] pb-32">
 	<div class="max-w-6xl mx-auto">
 		<a href="{base}/careers/"> &#10229; </a>

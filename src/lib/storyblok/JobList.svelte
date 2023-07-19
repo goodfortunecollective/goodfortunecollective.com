@@ -4,8 +4,7 @@
 
 	import { base } from '$app/paths';
 	import { dev } from '$app/environment';
-	import { Heading } from '$lib/components';
-	import LinkListItem from '$lib/components/LinkListItem.svelte';
+	import { Heading, LinkListItem } from '$lib/components';
 
 	export let blok: any;
 
