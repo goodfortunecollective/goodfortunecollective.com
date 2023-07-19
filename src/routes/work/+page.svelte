@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
-	import { cls } from '$lib/styles';
 
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
@@ -102,15 +101,14 @@
 
 	<div class="ProjectListPage-list grid grid-cols-12">
 		{#each projects as { name, slug, content }, index}
-			<div class={cls(getProjectGridItemClass(index), 'ProjectListPage-list-item')}>
-				<ProjectListItem
-					{name}
-					{slug}
-					{content}
-					isMainItem={index === 0}
-					layout={index % 2 === 0 ? 'left' : 'right'}
-				/>
-			</div>
+			<ProjectListItem
+				{name}
+				{slug}
+				{content}
+				isMainItem={index === 0}
+				layout={index % 2 === 0 ? 'left' : 'right'}
+				class={getProjectGridItemClass(index)}
+			/>
 		{/each}
 	</div>
 </section>

@@ -15,7 +15,8 @@
 	class={cls(
 		'ProjectListItem',
 		isMainItem && 'ProjectListItem--is-main',
-		`ProjectListItem--is-${layout}-layout`
+		`ProjectListItem--is-${layout}-layout`,
+		$$props.class
 	)}
 	data-id={slug}
 >
