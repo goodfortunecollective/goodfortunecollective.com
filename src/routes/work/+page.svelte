@@ -99,7 +99,7 @@
 		</MenuList>
 	</div>
 
-	<div class="ProjectListPage-list grid grid-cols-12">
+	<div class="ProjectListPage-list grid grid-cols-12 mb-32">
 		{#each projects as { name, slug, content }, index}
 			<ProjectListItem
 				{name}
