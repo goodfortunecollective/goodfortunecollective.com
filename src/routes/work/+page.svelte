@@ -4,7 +4,7 @@
 
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
-	import { ScrollPlane } from '$lib/components';
+	import { ProjectListItem } from '$lib/components';
 
 	import MenuList from './MenuList.svelte';
 	import MenuItem from './MenuItem.svelte';
@@ -52,6 +52,23 @@
 
 	$: projects = getProjectsByFilter(data.projects, filter);
 
+	const projectGridItemsClasses = [
+		'col-span-5 col-start-7 mt-[16.66%] z-2 text-right',
+		'col-span-6 col-start-2 -mt-[25%] z-1 text-left',
+		'col-span-6 col-start-5 mt-[8.33%] z-2 text-right',
+		'col-span-4 col-start-2 -mt-[16.66%] z-1 text-left',
+		'col-span-4 col-start-8 -mt-[16.66%] z-2 text-right',
+		'col-span-7 col-start-1 -mt-[4.166%] z-1 text-left'
+	];
+
+	const getProjectGridItemClass = (index) => {
+		if (index === 0) {
+			return 'col-span-11 z-1 text-left';
+		} else {
+			return projectGridItemsClasses[(index - 1) % 6];
+		}
+	};
+
 	onMount(() => {
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
@@ -59,7 +76,7 @@
 	});
 </script>
 
-<section class="pt-[var(--header-height)] pb-32">
+<section class="ProjectListPage pt-[var(--header-height)] pb-32">
 	<div class="max-w-6xl mx-auto relative">
 		<MenuList class="z-10 absolute top-0 right-0 flex flex-col items-end gap-4">
 			<MenuItem
@@ -81,11 +98,24 @@
 			{/each}
 		</MenuList>
 	</div>
-	{#each projects as { name, slug, content }}
-		<ScrollPlane {name} {slug} {content} />
-	{/each}
+
+	<div class="ProjectListPage-list grid grid-cols-12">
+		{#each projects as { name, slug, content }, index}
+			<ProjectListItem
+				{name}
+				{slug}
+				{content}
+				isMainItem={index === 0}
+				layout={index % 2 === 0 ? 'left' : 'right'}
+				class={getProjectGridItemClass(index)}
+			/>
+		{/each}
+	</div>
 </section>
 
 {#if data.story}
 	<StoryblokComponent blok={data.story.content} />
 {/if}
+
+<style lang="scss">
+</style>
