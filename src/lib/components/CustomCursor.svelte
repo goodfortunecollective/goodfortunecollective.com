@@ -5,6 +5,7 @@
 	export let cursorType: string | undefined;
 	export let isHidden: boolean = true;
 	let cursorEl!: HTMLElement;
+	$: touchCapability = 2 as number;
 
 	const lerp = (source: number = 0, target: number = 0, amount: number = 0.1): number => {
 		amount = amount < 0 ? 0 : amount;
@@ -23,17 +24,31 @@
 	};
 
 	const onPointerMove = (e) => {
+		if (touchCapability === 1) return;
+
 		const scroll = ScrollSmoother.get();
 		currentPosition.x = e.clientX;
 		currentPosition.y = e.clientY + scroll.scrollTop();
 	};
 
 	const onRender = () => {
+		if (touchCapability === 1) return;
+
 		lerpedPosition.x = lerp(lerpedPosition.x, currentPosition.x);
 		lerpedPosition.y = lerp(lerpedPosition.y, currentPosition.y);
 	};
 
 	onMount(() => {
+		// 0 - no touch (pointer/mouse only)
+		// 1 - touch-only device (like a phone)
+		// 2 - device can accept touch input and mouse/pointer (like Windows tablets)
+		touchCapability =
+			window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches
+				? 1
+				: 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
+				? 2
+				: 0;
+
 		window.addEventListener('mousemove', onPointerMove);
 		gsap.ticker.add(onRender);
 
@@ -44,7 +59,7 @@
 	});
 </script>
 
-<div class={'CustomCursor' + (isHidden ? ' is-hidden' : '')}>
+<div class={'CustomCursor' + (isHidden || touchCapability === 1 ? ' is-hidden' : '')}>
 	<div
 		class={'CustomCursor-inner' + (cursorType ? ` is-${cursorType}` : '')}
 		style="--cursor-x: {lerpedPosition.x}px; --cursor-y: {lerpedPosition.y}px"
