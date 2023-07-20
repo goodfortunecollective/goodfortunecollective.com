@@ -45,8 +45,16 @@
 				start: '50% 80%',
 				end: 'bottom 20%',
 				once: true,
-				onEnter: ({ progress, direction, isActive }) => {
-					//console.log('on enter', as, headingEl.innerText, progress, direction, isActive);
+				onEnter: ({ isActive }) => {
+					// force animation to play on first load
+					// super dirty but not working otherwise...
+					if (isActive) {
+						setTimeout(() => {
+							if (headingTl && !headingTl.isActive()) {
+								headingTl.restart();
+							}
+						});
+					}
 				}
 			});
 
@@ -54,9 +62,7 @@
 				headingTl = gsap
 					.timeline({
 						scrollTrigger,
-						onStart: () => {
-							//console.log('on start', as, headingEl.innerText);
-						}
+						delay: as === 'h1' ? $delay_anim_page : 0
 					})
 					.from(chars, {
 						duration: 0.8,
@@ -66,9 +72,7 @@
 						rotationX: 180,
 						transformOrigin: '0% 50% -50',
 						ease: 'back',
-						stagger: 0.01,
-						//delay: $delay_anim_page
-						delay: as === 'h1' ? $delay_anim_page : 0
+						stagger: 0.01
 					});
 			}
 		}
