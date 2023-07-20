@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import { storyblokEditable } from '@storyblok/svelte';
+	import CustomCursor from '../components/CustomCursor.svelte';
 
 	import { gsap, SplitText } from '$lib/gsap';
 	import { delay_anim_page } from '$lib/stores';
@@ -10,7 +11,6 @@
 	let video!: HTMLElement;
 	let videoInteractive!: HTMLElement;
 	let videoPlayer!: HTMLElement;
-	let videoBtn!: HTMLElement;
 
 	let videoPlaying = true;
 	let btnHidden = true;
@@ -29,10 +29,6 @@
 			window.requestAnimationFrame(function () {
 				if (videoInteractive) transformElement(videoInteractive, position);
 			});
-		} else if (!btnHidden) {
-			(xy[0] -= videoInteractive.getBoundingClientRect().left),
-				(xy[1] -= videoInteractive.getBoundingClientRect().top);
-			gsap.to(videoBtn, 0.2, { x: xy[0], y: xy[1] });
 		}
 	}
 
@@ -133,12 +129,12 @@
 								});
 							}
 							isMouseLocked = true;
-							showBtn();
+							videoOnEnter();
 						} else {
 							// if (videoInteractive) videoInteractive.style.pointerEvents = 'all';
 							isMouseLocked = false;
 
-							hideBtn();
+							videoOnLeave();
 						}
 					}
 				},
@@ -153,20 +149,10 @@
 	});
 
 	function videoOnEnter() {
-		showBtn();
-	}
-
-	function videoOnLeave() {
-		hideBtn();
-	}
-
-	function showBtn() {
-		if (!btnHidden) return;
 		btnHidden = false;
 	}
 
-	function hideBtn() {
-		if (btnHidden) return;
+	function videoOnLeave() {
 		btnHidden = true;
 	}
 
@@ -190,11 +176,13 @@
 <svelte:window on:mousemove={handleMousemove} />
 
 <section use:storyblokEditable={blok} {...$$restProps} class="flex w-screen h-screen bg-black">
+	<CustomCursor isHidden={btnHidden} cursorType={videoPlaying ? 'pause' : 'play'} />
+
 	<div class="relative flex w-full h-full max-w-6xl mx-auto">
 		<div class="relative w-full h-full perspective-800">
 			<div
 				bind:this={video}
-				class="absolute w-full h-full transform-gpu preserve-3d"
+				class="absolute w-full h-full transform-gpu preserve-3d cursor-pointer"
 				on:mouseenter={videoOnEnter}
 				on:mouseleave={videoOnLeave}
 			>
@@ -210,13 +198,6 @@
 					>
 						<track kind="captions" />
 					</video>
-					<div
-						bind:this={videoBtn}
-						class={'video-block-btn' +
-							(videoPlaying ? ' playing' : '') +
-							(btnHidden ? ' hidden' : '')}
-						on:click={playPauseVideo}
-					/>
 				</div>
 			</div>
 		</div>
@@ -236,64 +217,3 @@
 	</div>
 </section>
 <div class="h-[50vh]" />
-
-<style lang="scss">
-	@import '../../vars.scss';
-
-	.video-block-btn {
-		position: absolute;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		top: 0;
-		left: 0;
-		// top: 50%;
-		// left: 50%;
-		width: 86px;
-		height: 86px;
-		background: $black;
-		border-radius: 100%;
-		transform: translate(-50%, -50%);
-		cursor: pointer;
-		z-index: 13;
-		transition: 0.5s opacity ease-out, 0s visibility 0.5s, 0s z-index 0.5s;
-
-		// play
-		&:before {
-			display: inline-block;
-			width: 0;
-			height: 0;
-			border-top: 7px solid transparent;
-			border-bottom: 7px solid transparent;
-			border-left: 12px solid $white;
-			margin-left: 2px;
-			content: '';
-			opacity: 1;
-		}
-
-		// pause
-		&:after {
-			position: absolute;
-			width: 10px;
-			height: 18px;
-			border-right: 2px solid $white;
-			border-left: 2px solid $white;
-			opacity: 0;
-			content: '';
-		}
-
-		&.playing {
-			&:before {
-				opacity: 0;
-			}
-
-			&:after {
-				opacity: 1;
-			}
-		}
-
-		&.hidden {
-			opacity: 0;
-		}
-	}
-</style>

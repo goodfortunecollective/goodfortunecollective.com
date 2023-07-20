@@ -1,15 +1,14 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
-	import { gsap } from 'gsap';
+	import CustomCursor from '../components/CustomCursor.svelte';
 
 	export let blok: any;
 
 	export let videoVisible = false;
 	export let videoPlaying = false;
-	export let btnHidden = false;
+	export let btnHidden = true;
 	let video!: HTMLElement;
-	let btn!: HTMLElement;
 	export let posterUrl = null;
 
 	function contOnEnter(e) {
@@ -18,14 +17,6 @@
 
 	function contOnLeave(e) {
 		btnHidden = true;
-	}
-
-	function contOnMove(e) {
-		let x = e.pageX - e.currentTarget.getBoundingClientRect().left,
-			y = e.pageY - e.currentTarget.getBoundingClientRect().top - window.scrollY;
-		// console.log('page x : ' + e.pageX + ' - ' + 'y : ' + e.pageY);
-		// console.log('x : ' + x + ' - ' + 'y : ' + y);
-		gsap.to(btn, 0.2, { x: x, y: y });
 	}
 
 	function showVideo() {
@@ -58,8 +49,7 @@
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	<div
-		class="flex items-center justify-center my-12 video-block"
-		on:mousemove={contOnMove}
+		class="flex items-center justify-center my-12 video-block cursor-pointer"
 		on:mouseenter={contOnEnter}
 		on:mouseleave={contOnLeave}
 		data-id={blok.id}
@@ -86,11 +76,8 @@
 			/>
 		{/if}
 		<!-- {#if blok.poster}{/if} -->
-		<div
-			class={'video-block-btn' + (videoPlaying ? ' playing' : '') + (btnHidden ? ' hidden' : '')}
-			on:click={showVideo}
-			bind:this={btn}
-		/>
+		<CustomCursor isHidden={btnHidden} cursorType={videoPlaying ? 'pause' : 'play'} />
+
 		<figure
 			class={'video-block-poster' + (videoVisible ? ' inactive' : '')}
 			on:click={showVideo}
@@ -113,63 +100,6 @@
 		width: 100%;
 		height: auto;
 		z-index: 10;
-	}
-
-	.video-block-btn {
-		position: absolute;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		top: 0;
-		left: 0;
-		// top: 50%;
-		// left: 50%;
-		width: 86px;
-		height: 86px;
-		background: $black;
-		border-radius: 100%;
-		transform: translate(-50%, -50%);
-		cursor: pointer;
-		z-index: 13;
-		transition: 0.5s opacity ease-out, 0s visibility 0.5s, 0s z-index 0.5s;
-
-		// play
-		&:before {
-			display: inline-block;
-			width: 0;
-			height: 0;
-			border-top: 7px solid transparent;
-			border-bottom: 7px solid transparent;
-			border-left: 12px solid $white;
-			margin-left: 2px;
-			content: '';
-			opacity: 1;
-		}
-
-		// pause
-		&:after {
-			position: absolute;
-			width: 10px;
-			height: 18px;
-			border-right: 2px solid $white;
-			border-left: 2px solid $white;
-			opacity: 0;
-			content: '';
-		}
-
-		&.playing {
-			&:before {
-				opacity: 0;
-			}
-
-			&:after {
-				opacity: 1;
-			}
-		}
-
-		&.hidden {
-			opacity: 0;
-		}
 	}
 
 	.video-block-poster {
