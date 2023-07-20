@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount, tick } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 
 	import { base } from '$app/paths';
@@ -8,6 +8,16 @@
 
 	import MenuList from './MenuList.svelte';
 	import MenuItem from './MenuItem.svelte';
+
+	import { ScrollTrigger } from '$lib/gsap';
+	import type { Curtains } from '@types/curtainsjs';
+	import { useCurtains } from '../../lib/utils/useCurtains';
+
+	let curtains: undefined | Curtains;
+
+	useCurtains((curtainsInstance) => {
+		curtains = curtainsInstance;
+	});
 
 	export let data;
 
@@ -44,6 +54,12 @@
 	 * @param {string} filter
 	 */
 	const getProjectsByFilter = (projects: any, filter: string) => {
+		// update scrollbar + update planes sizes and positions
+		tick().then(() => {
+			ScrollTrigger.refresh();
+			if (curtains) curtains.resize();
+		});
+
 		if (filter && filter !== 'all') {
 			return projects.filter((project: any) => project.content.category.indexOf(filter) !== -1);
 		}
@@ -57,7 +73,7 @@
 		'col-span-6 col-start-2 -mt-[25%] z-1 text-left',
 		'col-span-6 col-start-5 mt-[8.33%] z-2 text-right',
 		'col-span-4 col-start-2 -mt-[16.66%] z-1 text-left',
-		'col-span-4 col-start-8 -mt-[16.66%] z-2 text-right',
+		'col-span-4 col-start-8 mt-[16.66%] z-2 text-right',
 		'col-span-7 col-start-1 -mt-[4.166%] z-1 text-left'
 	];
 
@@ -99,16 +115,18 @@
 		</MenuList>
 	</div>
 
-	<div class="ProjectListPage-list grid grid-cols-12">
-		{#each projects as { name, slug, content }, index}
-			<ProjectListItem
-				{name}
-				{slug}
-				{content}
-				isMainItem={index === 0}
-				layout={index % 2 === 0 ? 'left' : 'right'}
-				class={getProjectGridItemClass(index)}
-			/>
+	<div class="ProjectListPage-list">
+		{#each projects as { name, slug, content }, index (content._uid)}
+			<div class="grid grid-cols-12">
+				<ProjectListItem
+					{name}
+					{slug}
+					{content}
+					isMainItem={index === 0}
+					layout={index % 2 === 0 ? 'left' : 'right'}
+					class={getProjectGridItemClass(index)}
+				/>
+			</div>
 		{/each}
 	</div>
 </section>
