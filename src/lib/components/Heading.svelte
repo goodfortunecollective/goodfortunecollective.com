@@ -44,7 +44,6 @@
 				trigger: headingEl,
 				start: '50% 80%',
 				end: 'bottom 20%',
-				markers: true,
 				once: true,
 				onEnter: ({ isActive }) => {
 					// force animation to play on first load
