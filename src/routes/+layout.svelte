@@ -3,7 +3,7 @@
 	import { custom_event } from 'svelte/internal';
 
 	import { page } from '$app/stores';
-	import { ScrollSmoother, gsap } from '$lib/gsap';
+	import { ScrollSmoother, ScrollTrigger, gsap } from '$lib/gsap';
 
 	import type { LayoutData } from './$types';
 
@@ -23,6 +23,9 @@
 	let ref: any;
 
 	onMount(() => {
+		// @ts-ignore
+		ScrollTrigger.normalizeScroll(true);
+
 		// @ts-ignore
 		scroll = ScrollSmoother.create({
 			wrapper: '#smooth-wrapper',

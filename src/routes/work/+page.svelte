@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy, onMount, tick } from 'svelte';
+	import { onMount } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 
 	import { base } from '$app/paths';
@@ -54,12 +54,6 @@
 	 * @param {string} filter
 	 */
 	const getProjectsByFilter = (projects: any, filter: string) => {
-		// update scrollbar + update planes sizes and positions
-		tick().then(() => {
-			ScrollTrigger.refresh();
-			if (curtains) curtains.resize();
-		});
-
 		if (filter && filter !== 'all') {
 			return projects.filter((project: any) => project.content.category.indexOf(filter) !== -1);
 		}
@@ -90,7 +84,16 @@
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
 	});
+
+	// update scrollbar + update planes sizes and positions
+	async function hashchange() {
+		// @ts-ignore
+		ScrollTrigger.refresh();
+		if (curtains) curtains.resize();
+	}
 </script>
+
+<svelte:window on:hashchange={hashchange} />
 
 <section class="ProjectListPage pt-[var(--header-height)] pb-32">
 	<div class="max-w-6xl mx-auto relative">
@@ -115,7 +118,7 @@
 		</MenuList>
 	</div>
 
-	<div class="ProjectListPage-list">
+	<div class="ProjectListPage-list mb-32">
 		{#each projects as { name, slug, content }, index (content._uid)}
 			<div class="grid grid-cols-12">
 				<ProjectListItem
