@@ -27,7 +27,7 @@
 
 	const createScrollTriggerTl = () => {
 		if (canCreateTl) {
-			console.log('create scroll tl', as, headingEl.innerText);
+			//console.log('create scroll tl', as, headingEl.innerText);
 
 			if (headingTl) headingTl.kill();
 
@@ -46,7 +46,7 @@
 				end: 'bottom 20%',
 				once: true,
 				onEnter: ({ progress, direction, isActive }) => {
-					console.log('on enter', as, headingEl.innerText, progress, direction, isActive);
+					//console.log('on enter', as, headingEl.innerText, progress, direction, isActive);
 				}
 			});
 
@@ -55,7 +55,7 @@
 					.timeline({
 						scrollTrigger,
 						onStart: () => {
-							console.log('on start', as, headingEl.innerText);
+							//console.log('on start', as, headingEl.innerText);
 						}
 					})
 					.from(chars, {

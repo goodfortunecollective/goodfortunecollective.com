@@ -72,7 +72,7 @@
 		{#if data.story}
 			<StoryblokComponent blok={data.story.content} />
 		{/if}
-		<div class="flex justify-center align-center mt-72 pb-[1600px]">
+		<div class="flex justify-center align-center mt-72">
 			<a href="{base}/work/">
 				<Heading size="h1" as="h3">All projects</Heading>
 			</a>

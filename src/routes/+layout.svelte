@@ -22,9 +22,19 @@
 
 	let ref: any;
 
+	let smoothScrollContentEl: HTMLElement;
+	let resizeObserver: ResizeObserver | undefined;
+
 	onMount(() => {
 		// @ts-ignore
 		ScrollTrigger.normalizeScroll(true);
+
+		// each time our smooth scroll content div size change, refresh scroll trigger
+		resizeObserver = new ResizeObserver(() => {
+			// @ts-ignore
+			ScrollTrigger.refresh();
+		});
+		resizeObserver.observe(smoothScrollContentEl);
 
 		// @ts-ignore
 		scroll = ScrollSmoother.create({
@@ -57,6 +67,10 @@
 				}
 			}
 		}
+
+		return () => {
+			if (resizeObserver) resizeObserver.disconnect();
+		};
 	});
 
 	function handleCompleteLoader() {
@@ -70,7 +84,7 @@
 <main bind:this={ref}>
 	<PageTransitionAnim />
 	<div id="smooth-wrapper" class="z-10">
-		<div id="smooth-content">
+		<div id="smooth-content" bind:this={smoothScrollContentEl}>
 			<PageTransition pathname={data.pathname}>
 				<slot />
 				<Footer />

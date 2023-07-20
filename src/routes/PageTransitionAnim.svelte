@@ -2,7 +2,7 @@
 	import { beforeNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { isTransitioning, isPageHidden } from '$lib/stores';
-	import { gsap, ScrollSmoother, ScrollTrigger } from '$lib/gsap';
+	import { gsap, ScrollSmoother } from '$lib/gsap';
 	import { cls } from '$lib/styles';
 	import { useCurtains } from '$lib/utils/useCurtains';
 	import type { CurtainsInstance } from '../lib/utils/useCurtains';
@@ -44,9 +44,6 @@
 					if (curtains) {
 						curtains.updateScrollValues(0, 0);
 					}
-
-					// @ts-ignore
-					ScrollTrigger.refresh();
 				}
 			}
 		);

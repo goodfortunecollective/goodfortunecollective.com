@@ -10,7 +10,7 @@
 		e.target.style.width = '100%';
 	}
 
-	function onOldContentRemoved(): void {
+	function onOldContentRemoved(e): void {
 		// old content has been removed, page is hidden
 		// we can add curtains planes
 		isPageHidden.set(true);
@@ -20,7 +20,6 @@
 {#key pathname}
 	<div
 		in:fade={{ easing: cubicOut, duration: 100, delay: 1500 }}
-		on:outrostart={onPageChange}
 		out:fade={{ easing: quartOut, duration: 100, delay: 1200 }}
 		on:outrostart={onPageChange}
 		on:outroend={onOldContentRemoved}
