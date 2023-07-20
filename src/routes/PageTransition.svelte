@@ -2,6 +2,7 @@
 	import { fade } from 'svelte/transition';
 	import { quartOut, cubicOut } from 'svelte/easing';
 	import { isPageHidden } from '$lib/stores';
+	import { ScrollTrigger } from '$lib/gsap';
 
 	export let pathname: string = '';
 
@@ -10,17 +11,19 @@
 		e.target.style.width = '100%';
 	}
 
-	function onOldContentRemoved(): void {
+	function onOldContentRemoved(e): void {
 		// old content has been removed, page is hidden
 		// we can add curtains planes
 		isPageHidden.set(true);
+
+		// @ts-ignore
+		ScrollTrigger.refresh();
 	}
 </script>
 
 {#key pathname}
 	<div
 		in:fade={{ easing: cubicOut, duration: 100, delay: 1500 }}
-		on:outrostart={onPageChange}
 		out:fade={{ easing: quartOut, duration: 100, delay: 1200 }}
 		on:outrostart={onPageChange}
 		on:outroend={onOldContentRemoved}
