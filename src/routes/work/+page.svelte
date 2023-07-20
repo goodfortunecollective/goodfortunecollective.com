@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
+	import { navigating } from '$app/stores';
 
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
@@ -78,6 +79,15 @@
 		}
 	};
 
+	// force removing all projects planes when navigating away
+	// works even if we have used the filters
+	$: useCurtainsPlanes = true as boolean;
+	$: if ($navigating) {
+		if (curtains && $navigating.from.route.id === '/work') {
+			useCurtainsPlanes = false;
+		}
+	}
+
 	onMount(() => {
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
@@ -124,6 +134,7 @@
 					{content}
 					isMainItem={index === 0}
 					layout={index % 2 === 0 ? 'left' : 'right'}
+					{useCurtainsPlanes}
 					class={getProjectGridItemClass(index)}
 				/>
 			</div>
