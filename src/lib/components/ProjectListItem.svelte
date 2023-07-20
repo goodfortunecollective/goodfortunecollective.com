@@ -8,6 +8,7 @@
 	export let content: any;
 	export let isMainItem: boolean;
 	export let layout: boolean;
+	export let useCurtainsPlanes: boolean = true;
 </script>
 
 <a
@@ -21,7 +22,21 @@
 	data-id={slug}
 >
 	<div class="ProjectListItem-thumb">
-		<ScrollPlane {slug} {content} {name} />
+		{#if useCurtainsPlanes}
+			<ScrollPlane {slug} {content} {name} />
+		{:else}
+			<div class="ProjectListItem-thumb-image">
+				<img
+					src={content.thumbnail
+						? content.thumbnail.filename.replace('//a-us.storyblok.com', '//a2-us.storyblok.com')
+						: 'https://source.unsplash.com/random/?Motion&1'}
+					crossorigin=""
+					data-sampler="planeTexture"
+					alt={name}
+				/>
+			</div>
+		{/if}
+
 		<div class="ProjectListItem-thumb-hover-title text-white font-degular-display text-6xl">
 			<div class="ProjectListItem-thumb-hover-title-inner">
 				{name}
@@ -59,6 +74,19 @@
 		&-thumb {
 			width: 100%;
 			position: relative;
+
+			&-image {
+				display: flex;
+				aspect-ratio: 16 / 9;
+				overflow: hidden;
+
+				img {
+					display: block;
+					min-width: 100%;
+					min-height: 100%;
+					object-fit: cover;
+				}
+			}
 
 			&-hover-title {
 				position: absolute;
