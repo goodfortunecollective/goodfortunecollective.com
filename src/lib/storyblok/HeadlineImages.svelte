@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { storyblokEditable } from '@storyblok/svelte';
 	import { Draggable } from '$lib/vendors/gsap/Draggable.js';
+	import CustomCursor from '../components/CustomCursor.svelte';
 
 	export let blok: any;
 
@@ -13,6 +14,7 @@
 	let imagesCols = ['', '', ''];
 	let imagesClasses = ['', '', ''];
 	let imagesDraggable = null;
+	let imagesDraggableRatio: number = 0;
 	let imagesWrapper!: HTMLElement;
 
 	imagesCols = [
@@ -28,6 +30,19 @@
 		'-mt-16 md:-mt-32'
 	];
 
+	const imagesParallax = [
+		// 1st line
+		'0.25',
+		'0.5',
+		'0.33',
+		'0.05',
+		// 2nd line
+		'0.3',
+		'0.4',
+		'0.2',
+		'0.15'
+	];
+
 	for (let i = 0; i < imagesCols.length; i++) {
 		imagesClasses[i] = imageClass + ' image-block-' + i + ' ' + imagesCols[i];
 	}
@@ -37,9 +52,29 @@
 		imagesDraggable = Draggable.create('.images-wrapper', {
 			type: 'x',
 			bounds: '.headline-images',
-			inertia: true
+			inertia: true,
+			onDrag: function () {
+				imagesDraggableRatio = 1 - (this.x - this.minX) / (this.maxX - this.minX);
+			},
+			onThrowUpdate: function () {
+				imagesDraggableRatio = 1 - (this.x - this.minX) / (this.maxX - this.minX);
+			}
 		});
 	}
+
+	$: getParallax = (index) => {
+		return imagesParallax[index] * imagesDraggableRatio;
+	};
+
+	$: showCursor = false as boolean;
+
+	const onMouseEnter = () => {
+		showCursor = true;
+	};
+
+	const onMouseLeave = () => {
+		showCursor = false;
+	};
 
 	onMount(() => {
 		initDraggable();
@@ -48,26 +83,29 @@
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	<div class={blockClasses}>
-		<div class={wrapperClasses} bind:this={imagesWrapper}>
-			{#each blok.images as item, i}
-				<figure class={imagesClasses[i]}>
-					<img
-						class="image-block-img"
-						src={item.filename}
-						alt={item.name ? item.name : 'Image ' + i}
-					/>
-					{#if item.name && blok.show_title}
-						<figcaption
-							class="my-4 text-sm font-bold tracking-widest uppercase image-block-caption"
-						>
-							<span class="caption-number"
-								>{#if i <= 10}0{/if}{i + 1}</span
+		<CustomCursor cursorType="horizontal-drag" isHidden={!showCursor} />
+		<div on:mouseenter={onMouseEnter} on:mouseleave={onMouseLeave}>
+			<div class={wrapperClasses} bind:this={imagesWrapper}>
+				{#each blok.images as item, i}
+					<figure class={imagesClasses[i]} style="--parallax: {getParallax(i)}">
+						<img
+							class="image-block-img"
+							src={item.filename}
+							alt={item.name ? item.name : 'Image ' + i}
+						/>
+						{#if item.name && blok.show_title}
+							<figcaption
+								class="my-4 text-sm font-bold tracking-widest uppercase image-block-caption"
 							>
-							<span class="opacity-50 caption-text">{item.name}</span>
-						</figcaption>
-					{/if}
-				</figure>
-			{/each}
+								<span class="caption-number"
+									>{#if i <= 10}0{/if}{i + 1}</span
+								>
+								<span class="opacity-50 caption-text">{item.name}</span>
+							</figcaption>
+						{/if}
+					</figure>
+				{/each}
+			</div>
 		</div>
 	</div>
 </div>
@@ -77,6 +115,10 @@
 
 	.images-wrapper {
 		width: 160vw;
+
+		figure {
+			transform: translate3d(calc(100% * var(--parallax)), 0, 0);
+		}
 	}
 
 	.image-block {

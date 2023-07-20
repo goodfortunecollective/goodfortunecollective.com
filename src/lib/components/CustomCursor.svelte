@@ -1,0 +1,155 @@
+<script lang="ts">
+	import { gsap, ScrollSmoother } from '$lib/gsap';
+	import { onMount } from 'svelte';
+
+	export let cursorType: string | undefined;
+	export let isHidden: boolean = true;
+	let cursorEl!: HTMLElement;
+
+	const lerp = (source: number = 0, target: number = 0, amount: number = 0.1): number => {
+		amount = amount < 0 ? 0 : amount;
+		amount = amount > 1 ? 1 : amount;
+		return (1 - amount) * source + amount * target;
+	};
+
+	const currentPosition = {
+		x: 0 as number,
+		y: 0 as number
+	};
+
+	$: lerpedPosition = {
+		x: 0 as number,
+		y: 0 as number
+	};
+
+	const onPointerMove = (e) => {
+		const scroll = ScrollSmoother.get();
+		currentPosition.x = e.clientX;
+		currentPosition.y = e.clientY + scroll.scrollTop();
+	};
+
+	const onRender = () => {
+		lerpedPosition.x = lerp(lerpedPosition.x, currentPosition.x);
+		lerpedPosition.y = lerp(lerpedPosition.y, currentPosition.y);
+	};
+
+	onMount(() => {
+		window.addEventListener('mousemove', onPointerMove);
+		gsap.ticker.add(onRender);
+
+		return () => {
+			window.removeEventListener('mousemove', onPointerMove);
+			gsap.ticker.remove(onRender);
+		};
+	});
+</script>
+
+<div class={'CustomCursor' + (isHidden ? ' is-hidden' : '')}>
+	<div
+		class={'CustomCursor-inner' + (cursorType ? ` is-${cursorType}` : '')}
+		style="--cursor-x: {lerpedPosition.x}px; --cursor-y: {lerpedPosition.y}px"
+		bind:this={cursorEl}
+	/>
+</div>
+
+<style lang="scss">
+	@import '../../vars.scss';
+
+	.CustomCursor {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100vh;
+		overflow: visible;
+		z-index: 999;
+		pointer-events: none;
+		transition: 0.5s opacity ease-out, 0s visibility 0.5s, 0s z-index 0.5s;
+
+		&-inner {
+			position: absolute;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			top: var(--cursor-y);
+			left: var(--cursor-x);
+			// top: 50%;
+			// left: 50%;
+			width: 86px;
+			height: 86px;
+			background: $black;
+			border-radius: 100%;
+			transform: translate(-50%, -50%);
+			cursor: pointer;
+			z-index: 13;
+
+			// play
+			&.is-play:before {
+				display: inline-block;
+				width: 0;
+				height: 0;
+				border-top: 7px solid transparent;
+				border-bottom: 7px solid transparent;
+				border-left: 12px solid $white;
+				margin-left: 2px;
+				content: '';
+			}
+
+			// pause
+			&.is-pause:before {
+				position: absolute;
+				width: 10px;
+				height: 18px;
+				border-right: 2px solid $white;
+				border-left: 2px solid $white;
+				content: '';
+			}
+
+			// horizontal drag
+			&.is-horizontal-drag:before {
+				position: absolute;
+				color: $white;
+				font-size: 1.25rem;
+				left: 15px;
+				top: 50%;
+				transform: translate3d(0, -50%, 0);
+				content: '˂';
+			}
+
+			&.is-horizontal-drag:after {
+				position: absolute;
+				color: $white;
+				font-size: 1.25rem;
+				right: 15px;
+				top: 50%;
+				transform: translate3d(0, -50%, 0);
+				content: '˃';
+			}
+
+			// vertical drag
+			&.is-vertical-drag:before {
+				position: absolute;
+				color: $white;
+				font-size: 1.25rem;
+				top: 15px;
+				left: 50%;
+				transform: translate3d(-50%, 0, 0);
+				content: '˄';
+			}
+
+			&.is-vertical-drag:after {
+				position: absolute;
+				color: $white;
+				font-size: 1.25rem;
+				bottom: 15px;
+				left: 50%;
+				transform: translate3d(-50%, 0, 0);
+				content: '˅';
+			}
+		}
+
+		&.is-hidden {
+			opacity: 0;
+		}
+	}
+</style>
