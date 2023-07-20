@@ -157,10 +157,11 @@
 		(curtainsInstance) => {
 			// TODO not triggered after using work page filters!!
 			// https://github.com/sveltejs/svelte/issues/5268 ?
-			console.log('unmount');
 			if (plane) {
+				console.log('plane removed', plane.renderOrder, curtainsInstance);
 				plane.remove();
 				plane = null;
+				curtainsInstance.resize();
 			}
 		}
 	);

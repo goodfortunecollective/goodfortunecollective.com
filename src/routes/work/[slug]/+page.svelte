@@ -32,10 +32,13 @@
 				scrollTrigger: {
 					trigger: scrollBottomContainerEl,
 					end: 'top center',
-					scrub: 0.5,
-					markers: true
+					scrub: 0.5
 				},
 				onComplete: () => {
+					gsap.to(scrollBottomEl, {
+						opacity: 0
+					});
+
 					goto(`${base}/work`);
 				}
 			}
@@ -50,9 +53,6 @@
 					trigger: scrollBottomEl,
 					end: 'center center',
 					scrub: 0.5
-				},
-				onComplete: () => {
-					// goto(`${base}/work`);
 				}
 			}
 		);

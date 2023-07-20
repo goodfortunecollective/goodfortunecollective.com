@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
+	import { navigating } from '$app/stores';
 
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
@@ -8,6 +9,15 @@
 
 	import MenuList from './MenuList.svelte';
 	import MenuItem from './MenuItem.svelte';
+
+	import type { Curtains } from '@types/curtainsjs';
+	import { useCurtains } from '../../lib/utils/useCurtains';
+
+	let curtains: undefined | Curtains;
+
+	useCurtains((curtainsInstance) => {
+		curtains = curtainsInstance;
+	});
 
 	export let data;
 
@@ -57,7 +67,7 @@
 		'col-span-6 col-start-2 -mt-[25%] z-1 text-left',
 		'col-span-6 col-start-5 mt-[8.33%] z-2 text-right',
 		'col-span-4 col-start-2 -mt-[16.66%] z-1 text-left',
-		'col-span-4 col-start-8 -mt-[16.66%] z-2 text-right',
+		'col-span-4 col-start-8 mt-[16.66%] z-2 text-right',
 		'col-span-7 col-start-1 -mt-[4.166%] z-1 text-left'
 	];
 
@@ -69,12 +79,28 @@
 		}
 	};
 
+	// force removing all projects planes when navigating away
+	// works even if we have used the filters
+	$: useCurtainsPlanes = true as boolean;
+	$: if ($navigating) {
+		if (curtains && $navigating.from.route.id === '/work') {
+			useCurtainsPlanes = false;
+		}
+	}
+
 	onMount(() => {
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
 	});
+
+	// update planes sizes and positions
+	async function hashchange() {
+		if (curtains) curtains.resize();
+	}
 </script>
+
+<svelte:window on:hashchange={hashchange} />
 
 <section class="ProjectListPage pt-[var(--header-height)] pb-32">
 	<div class="max-w-6xl mx-auto relative">
@@ -99,16 +125,19 @@
 		</MenuList>
 	</div>
 
-	<div class="ProjectListPage-list grid grid-cols-12 mb-32">
-		{#each projects as { name, slug, content }, index}
-			<ProjectListItem
-				{name}
-				{slug}
-				{content}
-				isMainItem={index === 0}
-				layout={index % 2 === 0 ? 'left' : 'right'}
-				class={getProjectGridItemClass(index)}
-			/>
+	<div class="ProjectListPage-list mb-32">
+		{#each projects as { name, slug, content }, index (content._uid)}
+			<div class="grid grid-cols-12">
+				<ProjectListItem
+					{name}
+					{slug}
+					{content}
+					isMainItem={index === 0}
+					layout={index % 2 === 0 ? 'left' : 'right'}
+					{useCurtainsPlanes}
+					class={getProjectGridItemClass(index)}
+				/>
+			</div>
 		{/each}
 	</div>
 </section>
