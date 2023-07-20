@@ -9,7 +9,6 @@
 	import MenuList from './MenuList.svelte';
 	import MenuItem from './MenuItem.svelte';
 
-	import { ScrollTrigger } from '$lib/gsap';
 	import type { Curtains } from '@types/curtainsjs';
 	import { useCurtains } from '../../lib/utils/useCurtains';
 
@@ -85,10 +84,8 @@
 		}
 	});
 
-	// update scrollbar + update planes sizes and positions
+	// update planes sizes and positions
 	async function hashchange() {
-		// @ts-ignore
-		ScrollTrigger.refresh();
 		if (curtains) curtains.resize();
 	}
 </script>

@@ -2,7 +2,6 @@
 	import { fade } from 'svelte/transition';
 	import { quartOut, cubicOut } from 'svelte/easing';
 	import { isPageHidden } from '$lib/stores';
-	import { ScrollTrigger } from '$lib/gsap';
 
 	export let pathname: string = '';
 
@@ -15,9 +14,6 @@
 		// old content has been removed, page is hidden
 		// we can add curtains planes
 		isPageHidden.set(true);
-
-		// @ts-ignore
-		ScrollTrigger.refresh();
 	}
 </script>
 
