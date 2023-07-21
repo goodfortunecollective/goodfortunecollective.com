@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onDestroy, tick } from 'svelte';
 	import { base } from '$app/paths';
+	import { clamp } from '../utils/maths';
 	import { ScrollSmoother } from '$lib/gsap';
 	import { useCurtains } from '$lib/utils/useCurtains';
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
@@ -21,10 +22,6 @@
 		isHidden: boolean = false;
 
 	let curtains: undefined | Curtains;
-
-	const clamp = (value = 0, min = 0, max = 0) => {
-		return Math.max(min, Math.min(value, max));
-	};
 
 	const vs = `
         precision mediump float;
