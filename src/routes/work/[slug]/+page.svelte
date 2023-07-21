@@ -3,16 +3,59 @@
 	import { useStoryblokBridge, StoryblokComponent, renderRichText } from '@storyblok/svelte';
 
 	import { base } from '$app/paths';
+	import { goto } from '$app/navigation';
+
 	import { Heading } from '$lib/components';
+	import { gsap } from '$lib/gsap';
 
 	export let data;
+
+	let isExit = false;
+
+	let scrollBottomContainerEl: HTMLElement;
+	let scrollBottomEl: HTMLElement;
+	let scrollProgressBottomEl: HTMLElement;
+
 	$: description = renderRichText(data.story.content.description);
 
 	onMount(() => {
-		// console.log(data.story.content);
+		isExit = false;
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
+
+		gsap.fromTo(
+			scrollBottomEl,
+			{ y: 0 },
+			{
+				y: '-=300',
+				scrollTrigger: {
+					trigger: scrollBottomContainerEl,
+					end: 'top center',
+					scrub: 0.5
+				},
+				onComplete: () => {
+					gsap.to(scrollBottomEl, {
+						opacity: 0
+					});
+
+					goto(`${base}/work`);
+				}
+			}
+		);
+
+		gsap.fromTo(
+			scrollProgressBottomEl,
+			{ scaleY: 0 },
+			{
+				scaleY: 1,
+				scrollTrigger: {
+					trigger: scrollBottomEl,
+					end: 'center center',
+					scrub: 0.5
+				}
+			}
+		);
 	});
 
 	onDestroy(() => {});
@@ -72,10 +115,17 @@
 		{#if data.story}
 			<StoryblokComponent blok={data.story.content} />
 		{/if}
-		<div class="flex justify-center align-center mt-72">
-			<a href="{base}/work/">
-				<Heading size="h1" as="h3">All projects</Heading>
-			</a>
+		<div bind:this={scrollBottomContainerEl} class=" mt-72 pb-[100vh]">
+			<div
+				bind:this={scrollBottomEl}
+				class="flex flex-col justify-center items-center text-center gap-8"
+			>
+				<p class="uppercase font-medium tracking-widest">Scroll</p>
+				<div class="h-48 w-px bg-gray-100">
+					<div bind:this={scrollProgressBottomEl} class="bg-black h-full origin-top" />
+				</div>
+				<span class="font-degular-display leading-8 text-[10em]">All projects</span>
+			</div>
 		</div>
 	</div>
 </section>
