@@ -23,6 +23,7 @@
 
 	// avoid division by 0
 	let ww: number = 1;
+	let scrollPosition: number = 0;
 	let videoBBox: DOMRect | undefined;
 	$: videoTransformEffect = 0;
 
@@ -44,10 +45,11 @@
 	const onResize = () => {
 		ww = window.innerHeight;
 		videoBBox = video.getBoundingClientRect();
+		scrollPosition = window.pageYOffset;
 	};
 
 	const onScroll = (e: any) => {
-		videoTransformEffect = clamp(e.detail.offsetY / (window.innerHeight * 0.5), 0, 1);
+		scrollPosition = e.detail.offsetY;
 	};
 
 	const onMouseMove = (e: MouseEvent) => {
@@ -56,8 +58,14 @@
 	};
 
 	const onRender = () => {
+		videoTransformEffect = clamp(scrollPosition / (window.innerHeight * 0.5), 0, 1);
+
 		// bail if translation is almost complete
-		if (videoTransformEffect >= 0.99) return;
+		if (videoTransformEffect >= 0.99) {
+			videoRotation.x = 0;
+			videoRotation.y = 0;
+			return;
+		}
 
 		videoRotation.x =
 			(1 - videoTransformEffect) *
