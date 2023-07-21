@@ -1,17 +1,12 @@
 <script lang="ts">
 	import { gsap, ScrollSmoother } from '$lib/gsap';
+	import { lerp } from '../utils/maths';
 	import { onMount } from 'svelte';
 
 	export let cursorType: string | undefined;
 	export let isHidden: boolean = true;
 	let cursorEl!: HTMLElement;
 	$: touchCapability = 2 as number;
-
-	const lerp = (source: number = 0, target: number = 0, amount: number = 0.1): number => {
-		amount = amount < 0 ? 0 : amount;
-		amount = amount > 1 ? 1 : amount;
-		return (1 - amount) * source + amount * target;
-	};
 
 	const currentPosition = {
 		x: 0 as number,

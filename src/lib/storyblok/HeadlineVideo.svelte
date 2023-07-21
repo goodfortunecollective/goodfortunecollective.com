@@ -2,12 +2,14 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { storyblokEditable } from '@storyblok/svelte';
 	import CustomCursor from '../components/CustomCursor.svelte';
+	import { clamp } from '../utils/maths';
 
 	import { gsap, SplitText } from '$lib/gsap';
 	import { delay_anim_page } from '$lib/stores';
 
 	export let blok: any;
 
+	let videoContainer!: HTMLElement;
 	let video!: HTMLElement;
 	let videoInteractive!: HTMLElement;
 	let videoPlayer!: HTMLElement;
@@ -16,39 +18,90 @@
 	let btnHidden = true;
 
 	let constrain = 100;
-	let isMouseLocked = false;
-	let animCompleted = false;
 
 	let tlSplitText: any = null;
-	let tl: any = null;
 
-	function handleMousemove(event: MouseEvent) {
-		let xy = [event.clientX, event.clientY];
-		if (!isMouseLocked) {
-			let position = xy.concat([video]);
-			window.requestAnimationFrame(function () {
-				if (videoInteractive) transformElement(videoInteractive, position);
-			});
+	// avoid division by 0
+	let ww: number = 1;
+	let scrollPosition: number = 0;
+	let videoBBox: DOMRect | undefined;
+	$: videoTransformEffect = 0;
+
+	interface DOMPosition {
+		x: number;
+		y: number;
+	}
+
+	$: videoRotation = {
+		x: 0,
+		y: 0
+	} as DOMPosition;
+
+	const mousePosition: DOMPosition = {
+		x: 0,
+		y: 0
+	};
+
+	const onResize = () => {
+		ww = window.innerHeight;
+		videoBBox = video.getBoundingClientRect();
+		scrollPosition = window.pageYOffset;
+	};
+
+	const onScroll = (e: any) => {
+		scrollPosition = e.detail.offsetY;
+	};
+
+	const onMouseMove = (e: MouseEvent) => {
+		mousePosition.x = e.clientX;
+		mousePosition.y = e.clientY;
+	};
+
+	const onRender = () => {
+		videoTransformEffect = clamp(scrollPosition / (window.innerHeight * 0.5), 0, 1);
+
+		// bail if translation is almost complete
+		if (videoTransformEffect >= 0.99) {
+			videoRotation.x = 0;
+			videoRotation.y = 0;
+			return;
 		}
-	}
 
-	function transforms(x: number, y: number, el: HTMLElement) {
-		let box = el.getBoundingClientRect();
-		let calcX = -(y - box.y - box.height / 2) / constrain;
-		let calcY = (x - box.x - box.width / 2) / constrain;
+		videoRotation.x =
+			(1 - videoTransformEffect) *
+			(-(mousePosition.y - videoBBox.y - videoBBox.height / 2) / constrain);
+		videoRotation.y =
+			(1 - videoTransformEffect) *
+			((mousePosition.x - videoBBox.x - videoBBox.width / 2) / constrain);
+	};
 
-		return (
-			'perspective(1000px) ' + '   rotateX(' + calcX + 'deg) ' + '   rotateY(' + calcY + 'deg) '
-		);
-	}
-
-	function transformElement(el: HTMLElement, xyEl: [x: number, y: number, el: HTMLElement]) {
-		el.style.transform = transforms.apply(null, xyEl);
-	}
+	// function handleMousemove(event: MouseEvent) {
+	// 	let xy = [event.clientX, event.clientY];
+	// 	if (!isMouseLocked) {
+	// 		window.requestAnimationFrame(function () {
+	// 			if (videoInteractive) transformElement(videoInteractive, xy);
+	// 		});
+	// 	}
+	// }
+	//
+	// function transforms(x: number, y: number, el: HTMLElement) {
+	// 	let calcX =
+	// 		(1 - videoTransformEffect) * (-(y - videoBBox.y - videoBBox.height / 2) / constrain);
+	// 	let calcY = (1 - videoTransformEffect) * ((x - videoBBox.x - videoBBox.width / 2) / constrain);
+	//
+	// 	return (
+	// 		'perspective(1000px) ' + '   rotateX(' + calcX + 'deg) ' + '   rotateY(' + calcY + 'deg) '
+	// 	);
+	// }
+	//
+	// function transformElement(el: HTMLElement, xy: [x: number, y: number]) {
+	// 	el.style.transform = transforms.apply(null, xy);
+	// }
 
 	onMount(() => {
-		tl = gsap.timeline();
-		tl.set(video, { scale: 0.15, opacity: 0, rotationY: 0 });
+		window.addEventListener('smoothScrollUpdate', onScroll);
+		gsap.ticker.add(onRender);
+		onResize();
 
 		const splitText = gsap.utils.toArray('[data-gsap="split-text"]');
 
@@ -58,6 +111,14 @@
 				start: 'center 55%',
 				end: 'center 30%',
 				toggleActions: 'play reverse play reverse' // onEnter onLeave onEnterBack onLeaveBack
+			},
+			onStart: () => {
+				// move video behind title
+				if (videoContainer) videoContainer.style.zIndex = '9';
+			},
+			onReverseComplete: () => {
+				// move video on top of title
+				if (videoContainer) videoContainer.style.zIndex = '11';
 			}
 		});
 		tlSplitText.addLabel('start');
@@ -89,63 +150,10 @@
 			);
 		});
 
-		tl.to(video, {
-			scale: 0.65,
-			opacity: 0.5,
-			rotationY: -25,
-			duration: 1,
-			delay: $delay_anim_page,
-			onComplete: () => {
-				animCompleted = true;
-			}
-		});
-
-		tl.fromTo(
-			video,
-			{
-				scale: 0.65,
-				opacity: 0.5,
-				rotationY: -25
-			},
-			{
-				scrollTrigger: {
-					trigger: '#h-intro',
-					start: 'bottom 55%',
-					end: 'bottom 30%',
-					toggleActions: 'play none none none', // onEnter onLeave onEnterBack onLeaveBack
-					scrub: true,
-					immediateRender: false,
-					onUpdate: (self) => {
-						if (!animCompleted) return;
-
-						if (self.progress > 0.25) {
-							if (!isMouseLocked && videoInteractive) {
-								gsap.to(videoInteractive, {
-									// pointerEvents: 'click',
-									rotateX: 0,
-									rotateY: 0,
-									duration: 0.1,
-									ease: 'circ.inOut'
-								});
-							}
-							isMouseLocked = true;
-							videoOnEnter();
-						} else {
-							// if (videoInteractive) videoInteractive.style.pointerEvents = 'all';
-							isMouseLocked = false;
-
-							videoOnLeave();
-						}
-					}
-				},
-				scale: 1,
-				opacity: 1,
-				rotationY: 0,
-				y: '50%',
-				duration: 1,
-				ease: 'circ.inOut'
-			}
-		);
+		return () => {
+			window.removeEventListener('smoothScrollUpdate', onScroll);
+			gsap.ticker.remove(onRender);
+		};
 	});
 
 	function videoOnEnter() {
@@ -165,32 +173,34 @@
 	}
 
 	onDestroy(() => {
-		if (tl) tl.kill();
 		if (tlSplitText) tlSplitText.kill();
 
-		tl = null;
 		tlSplitText = null;
 	});
 </script>
 
-<svelte:window on:mousemove={handleMousemove} />
+<svelte:window on:mousemove={onMouseMove} on:resize={onResize} />
 
 <section use:storyblokEditable={blok} {...$$restProps} class="flex w-screen h-screen bg-black">
 	<CustomCursor isHidden={btnHidden} cursorType={videoPlaying ? 'pause' : 'play'} />
 
 	<div class="relative flex w-full h-full max-w-6xl mx-auto">
-		<div class="relative w-full h-full perspective-800">
+		<div class="relative w-full h-full perspective-800" bind:this={videoContainer}>
 			<div
 				bind:this={video}
-				class="absolute w-full h-full transform-gpu preserve-3d cursor-pointer"
-				on:mouseenter={videoOnEnter}
-				on:mouseleave={videoOnLeave}
+				class="HeadlineVideo-container absolute w-full h-full transform-gpu preserve-3d cursor-pointer"
+				style="--video-effect: {videoTransformEffect}; --rotation-x: {videoRotation.x}deg; --rotation-y: {videoRotation.y}deg"
 			>
-				<div bind:this={videoInteractive} class="w-full h-full preserve-3d">
+				<div
+					bind:this={videoInteractive}
+					class="HeadlineVideo-container-interactive w-full h-full preserve-3d"
+				>
 					<video
 						bind:this={videoPlayer}
 						on:click={playPauseVideo}
-						class="absolute inset-0 w-full h-full aspect-video"
+						on:mouseenter={videoOnEnter}
+						on:mouseleave={videoOnLeave}
+						class="w-full aspect-video"
 						src={blok.video}
 						autoplay
 						muted
@@ -217,3 +227,31 @@
 	</div>
 </section>
 <div class="h-[50vh]" />
+
+<style lang="scss">
+	.HeadlineVideo {
+		&-container {
+			// prettier-ignore
+			transform:
+				translate3d(
+					0,
+					calc(var(--video-effect) * 50vh),
+					0
+				)
+				scale3d(
+					calc(0.65 + var(--video-effect) * 0.35),
+					calc(0.65 + var(--video-effect) * 0.35),
+					1
+				)
+				rotateX(var(--rotation-x))
+				rotateY(var(--rotation-y));
+
+			opacity: calc(0.5 + var(--video-effect) * 2);
+
+			&-interactive {
+				display: flex;
+				align-items: center;
+			}
+		}
+	}
+</style>
