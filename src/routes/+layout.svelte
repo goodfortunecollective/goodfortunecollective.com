@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { custom_event } from 'svelte/internal';
 
+	import { dev } from '$app/environment';
 	import { page } from '$app/stores';
 	import { ScrollSmoother, ScrollTrigger, gsap } from '$lib/gsap';
 
@@ -95,7 +96,7 @@
 
 <Curtains />
 
-<Loader on:complete={handleCompleteLoader} />
+<Loader on:complete={handleCompleteLoader} skip={dev || Boolean(data.preview)} />
 
 <style>
 </style>

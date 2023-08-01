@@ -58,3 +58,5 @@ export const components: any = {
 	'text-cols': TextCols,
 	'video': Video,
 };
+
+export const isPreview = (url: URL) => url.searchParams.has('_storyblok')

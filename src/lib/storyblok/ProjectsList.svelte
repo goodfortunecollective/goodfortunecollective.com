@@ -11,7 +11,7 @@
 		'col-span-6 col-start-5 mt-[8.33%] z-2 text-right',
 		'col-span-4 col-start-2 -mt-[16.66%] z-1 text-left',
 		'col-span-4 col-start-8 mt-[16.66%] z-2 text-right',
-		'col-span-7 col-start-1 -mt-[4.166%] z-1 text-left'
+		'col-span-7 col-start-2 -mt-[4.166%] z-1 text-left'
 	];
 
 	const getProjectGridItemClass = (index) => {
