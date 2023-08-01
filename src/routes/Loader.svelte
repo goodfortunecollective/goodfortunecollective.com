@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { createEventDispatcher, onMount } from 'svelte';
 
-	import { dev } from '$app/environment';
 	import { gsap } from '$lib/gsap';
 	import { cls } from '$lib/styles';
 	import { delay_anim_page } from '$lib/stores';
 	import { Gfc } from '$lib/components';
+
+	// avoid to reload the loader animation each time we update the page
+	export let skip: boolean = false;
 
 	const dispatch = createEventDispatcher();
 
@@ -25,7 +27,7 @@
 	onMount(async () => {
 		const tl = gsap.timeline();
 
-		if (dev) {
+		if (skip) {
 			requestAnimationFrame(ready);
 			return;
 		}
@@ -111,7 +113,7 @@
 			},
 			'<'
 		).then(() => {
-			if (!dev) {
+			if (!skip) {
 				ready();
 			}
 		});

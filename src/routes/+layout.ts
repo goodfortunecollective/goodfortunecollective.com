@@ -3,9 +3,9 @@ import { PUBLIC_STORYBLOK_ACCESS_TOKEN } from '$env/static/public';
 
 import type { LayoutLoad } from './$types';
 
-import { components } from '$lib/storyblok';
+import { components, isPreview } from '$lib/storyblok';
 
-export const load: LayoutLoad = async ({ url: { pathname } }) => {
+export const load: LayoutLoad = async ({ url }) => {
 	storyblokInit({
 		accessToken: PUBLIC_STORYBLOK_ACCESS_TOKEN,
 		use: [apiPlugin],
@@ -19,6 +19,7 @@ export const load: LayoutLoad = async ({ url: { pathname } }) => {
 
 	return {
 		storyblokApi: storyblokApi,
-		pathname: pathname
+		pathname: url.pathname,
+		preview: isPreview(url),
 	};
 };
