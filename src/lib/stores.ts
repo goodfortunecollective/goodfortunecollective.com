@@ -8,3 +8,4 @@ export const curtains = writable(null as CurtainsInstance);
 // page transition states
 export const isTransitioning = writable(false as boolean);
 export const isPageHidden = writable(false as boolean);
+

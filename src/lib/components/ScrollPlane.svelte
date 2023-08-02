@@ -108,7 +108,7 @@
 
 			plane = new Plane(curtains, planeEl, params);
 
-			// console.log('add plane', plane);
+			console.log('add plane', plane);
 
 			plane.onRender(() => {
 				const scroll = ScrollSmoother.get();

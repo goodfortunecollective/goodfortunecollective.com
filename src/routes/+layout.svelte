@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, setContext } from 'svelte';
 	import { custom_event } from 'svelte/internal';
 
 	import { dev } from '$app/environment';
@@ -25,6 +25,8 @@
 
 	let smoothScrollContentEl: HTMLElement;
 	let resizeObserver: ResizeObserver | undefined;
+
+	setContext('storyblok-preview', data.preview);
 
 	onMount(() => {
 		// @ts-ignore
@@ -96,7 +98,7 @@
 
 <Curtains />
 
-<Loader on:complete={handleCompleteLoader} skip={dev || Boolean(data.preview)} />
+<Loader on:complete={handleCompleteLoader} skip={dev || data.preview} />
 
 <style>
 </style>
