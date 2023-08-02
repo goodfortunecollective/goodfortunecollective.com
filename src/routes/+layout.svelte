@@ -96,7 +96,7 @@
 
 <Curtains />
 
-<Loader on:complete={handleCompleteLoader} skip={dev || Boolean(data.preview)} />
+<Loader on:complete={handleCompleteLoader} skip={dev || data.preview} />
 
 <style>
 </style>
