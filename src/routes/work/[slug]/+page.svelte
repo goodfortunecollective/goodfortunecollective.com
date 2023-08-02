@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
+	import { onMount, onDestroy, getContext } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent, renderRichText } from '@storyblok/svelte';
 
 	import { base } from '$app/paths';
@@ -18,11 +18,15 @@
 
 	$: description = renderRichText(data.story.content.description);
 
+	const preview = getContext('storyblok-preview');
+
 	onMount(() => {
 		isExit = false;
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
+
+		if (preview) return;
 
 		gsap.fromTo(
 			scrollBottomEl,
