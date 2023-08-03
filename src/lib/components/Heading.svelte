@@ -32,7 +32,7 @@
 			if (headingTl) headingTl.kill();
 
 			const text = new SplitText(headingEl, {
-				type: 'lines, chars',
+				type: 'chars, lines',
 				tag: 'span',
 				charsClass: 'split-char'
 			});
