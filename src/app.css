@@ -39,7 +39,7 @@
 
 	.split-char {
 		display: inline-block !important;
-		overflow: hidden;
+		white-space: nowrap;
 	}
 }
 
