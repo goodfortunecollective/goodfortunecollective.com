@@ -7,7 +7,7 @@
 	export let slug: string;
 	export let content: any;
 	export let isMainItem: boolean;
-	export let layout: boolean;
+	export let layout: 'left' | 'right' = 'left';
 	export let useCurtainsPlanes: boolean = true;
 </script>
 

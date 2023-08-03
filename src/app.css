@@ -36,6 +36,11 @@
 		background: currentColor;
 		content: '';
 	}
+
+	.split-char {
+		display: inline-block !important;
+		overflow: hidden;
+	}
 }
 
 :root {
