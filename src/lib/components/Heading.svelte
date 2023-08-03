@@ -32,7 +32,9 @@
 			if (headingTl) headingTl.kill();
 
 			const text = new SplitText(headingEl, {
-				type: 'chars'
+				type: 'lines, chars',
+				tag: 'span',
+				charsClass: 'split-char'
 			});
 
 			let chars = text.chars;
@@ -133,3 +135,6 @@
      </div>
     ```
   -->
+
+<style lang="scss">
+</style>

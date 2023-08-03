@@ -71,7 +71,7 @@
 		'col-span-7 col-start-2 -mt-[4.166%] z-1 text-left'
 	];
 
-	const getProjectGridItemClass = (index) => {
+	const getProjectGridItemClass = (index: number) => {
 		if (index === 0) {
 			return 'col-span-11 z-1 text-left';
 		} else {
@@ -83,7 +83,7 @@
 	// works even if we have used the filters
 	$: useCurtainsPlanes = true as boolean;
 	$: if ($navigating) {
-		if (curtains && $navigating.from.route.id === '/work') {
+		if (curtains && $navigating?.from?.route.id === '/work') {
 			useCurtainsPlanes = false;
 		}
 	}
@@ -103,42 +103,44 @@
 <svelte:window on:hashchange={hashchange} />
 
 <section class="ProjectListPage pt-[var(--header-height)] pb-32">
-	<div class="max-w-6xl mx-auto relative">
-		<MenuList class="z-10 absolute top-0 right-0 flex flex-col items-end gap-4">
-			<MenuItem
-				name="All Projects"
-				sup={data.projects.length}
-				url={`${base}/work#all`}
-				selected={!filter || filter === 'all'}
-			/>
-			{#each categories as category, i}
-				{#if category.count > 0}
-					<MenuItem
-						name={category.name}
-						sup={category.count}
-						url={`${base}/work#${category.value}`}
-						delay={i * 50}
-						selected={filter === category.value}
-					/>
-				{/if}
-			{/each}
-		</MenuList>
-	</div>
-
-	<div class="ProjectListPage-list mb-32">
-		{#each projects as { name, slug, content }, index (content._uid)}
-			<div class="grid grid-cols-12">
-				<ProjectListItem
-					{name}
-					{slug}
-					{content}
-					isMainItem={index === 0}
-					layout={index % 2 === 0 ? 'left' : 'right'}
-					{useCurtainsPlanes}
-					class={getProjectGridItemClass(index)}
+	<div class="mt-16">
+		<div class="max-w-6xl mx-auto relative">
+			<MenuList class="z-10 absolute top-0 right-0 flex flex-col items-end gap-4">
+				<MenuItem
+					name="All Projects"
+					sup={data.projects.length}
+					url={`${base}/work#all`}
+					selected={!filter || filter === 'all'}
 				/>
-			</div>
-		{/each}
+				{#each categories as category, i}
+					{#if category.count > 0}
+						<MenuItem
+							name={category.name}
+							sup={category.count}
+							url={`${base}/work#${category.value}`}
+							delay={i * 50}
+							selected={filter === category.value}
+						/>
+					{/if}
+				{/each}
+			</MenuList>
+		</div>
+
+		<div class="ProjectListPage-list mb-32">
+			{#each projects as { name, slug, content }, index (content._uid)}
+				<div class="grid grid-cols-12">
+					<ProjectListItem
+						{name}
+						{slug}
+						{content}
+						isMainItem={index === 0}
+						layout={index % 2 === 0 ? 'left' : 'right'}
+						{useCurtainsPlanes}
+						class={getProjectGridItemClass(index)}
+					/>
+				</div>
+			{/each}
+		</div>
 	</div>
 </section>
 
