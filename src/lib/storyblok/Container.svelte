@@ -24,7 +24,6 @@
 	use:storyblokEditable={blok}
 	{...$$restProps}
 	class={cls(variants({ backgroundColor: blok.backgroundColor }), blok.class)}
-	style={blok.style}
 >
 	{#each blok.children as b}
 		<StoryblokComponent blok={b} />
