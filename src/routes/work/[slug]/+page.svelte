@@ -10,8 +10,7 @@
 
 	export let data;
 
-	let isExit = false;
-
+	let tl: any = null;
 	let scrollBottomContainerEl: HTMLElement;
 	let scrollBottomEl: HTMLElement;
 	let scrollProgressBottomEl: HTMLElement;
@@ -20,15 +19,19 @@
 
 	const preview = getContext('storyblok-preview');
 
+	let isExit = false;
+
 	onMount(() => {
-		isExit = false;
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
 
+		// avoid auto navigation animation on Storyblok preview
 		if (preview) return;
 
-		gsap.fromTo(
+		tl = gsap.timeline();
+
+		tl.fromTo(
 			scrollBottomEl,
 			{ y: 0 },
 			{
@@ -39,16 +42,22 @@
 					scrub: 0.5
 				},
 				onComplete: () => {
+					if (isExit) return;
+
 					gsap.to(scrollBottomEl, {
-						opacity: 0
+						opacity: 0,
+						onComplete: () => {
+							console.log('yooooooo', scrollBottomEl);
+							goto(`${base}/work`);
+						}
 					});
 
-					goto(`${base}/work`);
+					isExit = true;
 				}
 			}
 		);
 
-		gsap.fromTo(
+		tl.fromTo(
 			scrollProgressBottomEl,
 			{ scaleY: 0 },
 			{
@@ -62,7 +71,13 @@
 		);
 	});
 
-	onDestroy(() => {});
+	onDestroy(() => {
+		console.log('onDestroy page work/[slug]');
+		if (tl) {
+			tl.kill();
+			tl = null;
+		}
+	});
 </script>
 
 <section class="pt-[var(--header-height)] bg-black text-white">

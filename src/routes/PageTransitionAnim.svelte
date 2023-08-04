@@ -8,8 +8,8 @@
 	import type { CurtainsInstance } from '../lib/utils/useCurtains';
 
 	let background!: HTMLElement;
-
 	let curtains: CurtainsInstance;
+	let tl: any;
 
 	useCurtains((c) => {
 		curtains = c;
@@ -24,7 +24,7 @@
 
 		if (scroll) scroll.paused(true);
 
-		const tl = gsap.timeline();
+		tl = gsap.timeline();
 
 		tl.fromTo(
 			background,

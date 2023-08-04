@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { delay_anim_page } from '$lib/stores';
-	import { gsap, SplitText, ScrollTrigger } from '$lib/gsap';
-	import { isPageHidden, isTransitioning } from '../stores';
-	import { cls } from '$lib/styles';
 	import { onDestroy, onMount } from 'svelte';
+
+	import { delay_anim_page, isPageHidden, isTransitioning } from '$lib/stores';
+	import { gsap, SplitText, ScrollTrigger } from '$lib/gsap';
+	import { cls } from '$lib/styles';
 
 	export let as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1';
 	export let size: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1';
@@ -135,6 +135,3 @@
      </div>
     ```
   -->
-
-<style lang="scss">
-</style>
