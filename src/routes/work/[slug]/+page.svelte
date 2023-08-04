@@ -47,7 +47,6 @@
 					gsap.to(scrollBottomEl, {
 						opacity: 0,
 						onComplete: () => {
-							console.log('yooooooo', scrollBottomEl);
 							goto(`${base}/work`);
 						}
 					});
