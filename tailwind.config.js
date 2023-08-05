@@ -3,8 +3,22 @@ export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
 		extend: {
+			screens: {
+				"3xl": "1920px",
+				"4xl": "2160px",
+			},
+			maxWidth: {
+				'8xl': '88rem',
+				'9xl': '96rem',
+				'10xl': '104rem',
+				'11xl': '112rem',
+				'12xl': '120rem',
+			},
 			fontFamily: {
 				'degular-display': ['degular-display', 'cursive']
+			},
+			fontSize: {
+				'10xl': '10rem',
 			},
 			gridTemplateColumns: {
 				// Simple 24 column grid

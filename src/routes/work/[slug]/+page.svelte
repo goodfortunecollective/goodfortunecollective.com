@@ -71,7 +71,6 @@
 	});
 
 	onDestroy(() => {
-		console.log('onDestroy page work/[slug]');
 		if (tl) {
 			tl.kill();
 			tl = null;

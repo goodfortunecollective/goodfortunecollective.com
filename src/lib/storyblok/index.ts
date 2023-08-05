@@ -1,6 +1,8 @@
 import Container from './Container.svelte';
 import Figure from './Figure.svelte';
 import Figures from './Figures.svelte';
+import Footer from './Footer.svelte';
+import Header from './Header.svelte';
 import Heading from './Heading.svelte';
 import HeadingDescription from './HeadingDescription.svelte';
 import HeadingList from './HeadingList.svelte';
@@ -31,6 +33,8 @@ export const components: any = {
 	'container': Container,
 	'figure': Figure,
 	'figures': Figures,
+	'footer': Footer,
+	'header': Header,
 	'heading': Heading,
 	'heading-description': HeadingDescription,
 	'heading-list': HeadingList,
@@ -60,3 +64,7 @@ export const components: any = {
 };
 
 export const isPreview = (url: URL) => url.searchParams.has('_storyblok')
+
+export const getComponentByName = (component: any, name: string) => {
+	return component.content.find((blok: any) => blok.component === name)
+}

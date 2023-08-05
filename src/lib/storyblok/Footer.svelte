@@ -1,24 +1,49 @@
 <script lang="ts">
-	// import SocialLinks from '$lib/storyblok/SocialLinks.svelte';
+	import { cva } from 'class-variance-authority';
+	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+
+	import { cls } from '$lib/styles';
+
+	export let blok: any;
+
+	export let theme: 'dark' | 'light' = 'light';
+
+	const variants = cva('', {
+		variants: {
+			theme: {
+				light: '',
+				dark: 'bg-black text-white'
+			}
+		},
+		defaultVariants: {
+			theme: 'light'
+		}
+	});
 </script>
 
-<footer id="footer" class="bg-white">
-	<div class="max-w-6xl py-6 mx-auto">
-		<div class="py-2 md:flex md:items-center md:justify-between">
-			<div class="pt-8 pb-2 footer-col">
-				<p class="text-xs leading-5 text-center text-gray-500 uppercase">
+<footer
+	use:storyblokEditable={blok}
+	{...$$restProps}
+	id="footer"
+	class={cls('pt-1 -translate-y-1', variants({ theme: theme }))}
+>
+	<div class="w-full py-6 mx-auto">
+		<div class="grid grid-cols-12 py-2">
+			<div class="col-span-4 col-start-2 pt-8 pb-2 footer-col">
+				<p class="flex gap-4 text-xs 3xl:text-sm leading-5 tracking-wider text-gray-500 uppercase">
 					<strong>Let’s work together</strong>
-					<a href="mailto:partners@goodfortunecollective.com">partners@goodfortunecollective.com</a>
+					<a href={`mailto:${blok.email}`}>{blok.email}</a>
 				</p>
 			</div>
-			<div class="pt-8 pb-2 footer-col">
-				<p class="text-xs leading-5 text-center text-gray-500 uppercase">
-					<strong>Find us in</strong> <a href="#">Vancouver, Canada</a>
+			<div class="col-span-4 col-start-8 pt-8 pb-2 footer-col">
+				<p class="flex gap-4 text-xs 3xl:text-sm leading-5 tracking-wider text-gray-500 uppercase">
+					<strong>Find us in</strong><span>Vancouver, Canada</span>
 				</p>
 			</div>
 		</div>
-		<div class="py-2 md:flex md:items-center md:justify-between">
-			<div class="flex justify-center pt-2 pb-8 text-sm text-gray-400 md:justify-start md:pb-0">
+		<div class="grid grid-cols-12 py-2">
+			<div class="col-span-4 col-start-2 pt-2 pb-8 text-sm text-gray-400 md:pb-0">
+				<StoryblokComponent blok={blok.social_links[0]} />
 				<!--<SocialLinks />-->
 			</div>
 			<!-- <div class="flex justify-center pb-8 space-x-6 text-sm md:pb-0">
@@ -45,8 +70,8 @@
 					<span class="">Be</span>
 				</a>
 			</div> -->
-			<div>
-				<p class="text-xs leading-5 text-center text-gray-500 uppercase">
+			<div class="col-span-4 col-start-8">
+				<p class="text-xs 3xl:text-sm leading-5 tracking-wider text-gray-500 uppercase">
 					&copy; {new Date().getFullYear().toString()} Good Fortune Collective. All rights reserved.
 				</p>
 			</div>
@@ -55,7 +80,7 @@
 </footer>
 
 <style lang="scss">
-	@import '../vars.scss';
+	@import '../../vars.scss';
 
 	.footer-col {
 		position: relative;

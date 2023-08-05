@@ -9,12 +9,12 @@
 	export let size: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1';
 
 	const textSizes = {
-		h1: 'text-6xl md:text-8xl',
-		h2: 'text-5xl',
-		h3: 'text-4xl',
-		h4: 'text-3xl',
-		h5: 'text-xl',
-		h6: 'text-lg'
+		h1: 'text-6xl md:text-8xl 3xl:text-9xl 4xl:text-10xl',
+		h2: 'text-5xl 3xl:text-6xl 4xl:text-7xl',
+		h3: 'text-4xl 3xl:text-5xl 4xl:text-6xl',
+		h4: 'text-3xl 3xl:text-4xl 4xl:text-5xl',
+		h5: 'text-2xl 3xl:text-3xl 4xl:text-4xl',
+		h6: 'text-xl 3xl:text-2xl 4xl:text-3xl'
 	};
 
 	let headingTl: any = null;

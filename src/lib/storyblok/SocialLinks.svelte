@@ -10,7 +10,7 @@
 		variants: {
 			intent: {
 				primary: 'gap-16 text-xl',
-				secondary: 'gap-12 text-md'
+				secondary: 'gap-12 text-md font-bold'
 			}
 		},
 		defaultVariants: {
