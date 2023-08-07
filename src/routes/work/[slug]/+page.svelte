@@ -47,7 +47,6 @@
 					gsap.to(scrollBottomEl, {
 						opacity: 0,
 						onComplete: () => {
-							console.log('yooooooo', scrollBottomEl);
 							goto(`${base}/work`);
 						}
 					});
@@ -72,7 +71,6 @@
 	});
 
 	onDestroy(() => {
-		console.log('onDestroy page work/[slug]');
 		if (tl) {
 			tl.kill();
 			tl = null;

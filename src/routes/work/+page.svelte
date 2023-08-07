@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 	import { navigating } from '$app/stores';
 
@@ -92,10 +92,6 @@
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
-	});
-
-	onDestroy(() => {
-		console.log('onDestro page work');
 	});
 
 	// update planes sizes and positions

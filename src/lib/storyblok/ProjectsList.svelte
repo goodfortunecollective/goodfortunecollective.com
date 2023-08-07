@@ -24,7 +24,7 @@
 </script>
 
 <section use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	<div class="ProjectListPage-list mb-64">
+	<div class="mb-64">
 		{#each blok.projects as { name, slug, content }, index (content._uid)}
 			<div class="grid grid-cols-12">
 				<ProjectListItem

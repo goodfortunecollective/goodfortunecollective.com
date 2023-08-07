@@ -14,7 +14,9 @@
 	class="flex flex-row items-stretch h-10 text-xs font-bold tracking-widest uppercase link"
 >
 	<span class="flex items-center pr-4">{label}</span>
-	<span class="relative flex items-center justify-center ml-[50px] text-4xl">
+	<span
+		class="relative flex items-center justify-center ml-[50px] text-4xl 3xl:text-5xl 4xl:text-6xl"
+	>
 		<span class="arrow arrow-default" /><span class="flex items-center justify-center link-circle">
 			<span class="arrow arrow-hover" />
 		</span>

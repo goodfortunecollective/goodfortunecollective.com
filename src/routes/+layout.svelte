@@ -1,16 +1,17 @@
 <script lang="ts">
 	import { onMount, setContext } from 'svelte';
 	import { custom_event } from 'svelte/internal';
+	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 
 	import { dev } from '$app/environment';
 	import { page } from '$app/stores';
 	import { ScrollSmoother, ScrollTrigger, gsap } from '$lib/gsap';
 
+	import { getComponentByName } from '$lib/storyblok';
+
 	import type { LayoutData } from './$types';
 
 	import Loader from './Loader.svelte';
-	import Header from './Header.svelte';
-	import Footer from './Footer.svelte';
 	import Curtains from './Curtains.svelte';
 	import PageTransition from './PageTransition.svelte';
 	import PageTransitionAnim from './PageTransitionAnim.svelte';
@@ -29,6 +30,15 @@
 	setContext('storyblok-preview', data.preview);
 
 	onMount(() => {
+		if (data.settings) {
+			useStoryblokBridge(
+				data.settings.id,
+				(newSettingsStory) => (data.settings = newSettingsStory)
+			);
+		}
+
+		console.log('data.settings', data.settings.content.content[0]);
+
 		// @ts-ignore
 		ScrollTrigger.normalizeScroll(true);
 
@@ -83,14 +93,18 @@
 	}
 </script>
 
-<Header />
+{#if data.settings}
+	<StoryblokComponent blok={getComponentByName(data.settings.content, 'header')} />
+{/if}
 <main bind:this={ref}>
 	<PageTransitionAnim />
 	<div id="smooth-wrapper" class="z-10">
 		<div id="smooth-content" bind:this={smoothScrollContentEl}>
 			<PageTransition pathname={data.pathname}>
 				<slot />
-				<Footer />
+				{#if data.settings}
+					<StoryblokComponent blok={getComponentByName(data.settings.content, 'footer')} />
+				{/if}
 			</PageTransition>
 		</div>
 	</div>

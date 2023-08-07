@@ -181,20 +181,17 @@
 
 <svelte:window on:mousemove={onMouseMove} on:resize={onResize} />
 
-<section use:storyblokEditable={blok} {...$$restProps} class="flex w-screen h-screen bg-black">
+<section use:storyblokEditable={blok} {...$$restProps} class="grid grid-cols-12 h-screen bg-black">
 	<CustomCursor isHidden={btnHidden} cursorType={videoPlaying ? 'pause' : 'play'} />
 
-	<div class="relative flex w-full h-full max-w-6xl mx-auto">
+	<div class="col-span-10 col-start-2 w-full h-full mx-auto relative">
 		<div class="relative w-full h-full perspective-800" bind:this={videoContainer}>
 			<div
 				bind:this={video}
 				class="HeadlineVideo-container absolute w-full h-full transform-gpu preserve-3d cursor-pointer"
 				style="--video-effect: {videoTransformEffect}; --rotation-x: {videoRotation.x}deg; --rotation-y: {videoRotation.y}deg"
 			>
-				<div
-					bind:this={videoInteractive}
-					class="HeadlineVideo-container-interactive w-full h-full preserve-3d"
-				>
+				<div bind:this={videoInteractive} class="flex items-center w-full h-full preserve-3d">
 					<video
 						bind:this={videoPlayer}
 						on:click={playPauseVideo}
@@ -213,7 +210,10 @@
 		</div>
 		<div class="absolute z-10 flex items-center w-full h-full">
 			<div class="flex flex-col gap-24" id="h-intro">
-				<h1 data-gsap="split-text" class="text-6xl text-cyan-500 font-degular-display md:text-9xl">
+				<h1
+					data-gsap="split-text"
+					class="text-6xl 3xl:text-9xl text-cyan-500 font-degular-display md:text-9xl"
+				>
 					{blok.headline}
 				</h1>
 				<h2
@@ -247,11 +247,6 @@
 				rotateY(var(--rotation-y));
 
 			opacity: calc(0.5 + var(--video-effect) * 2);
-
-			&-interactive {
-				display: flex;
-				align-items: center;
-			}
 		}
 	}
 </style>
