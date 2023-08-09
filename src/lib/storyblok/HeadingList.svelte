@@ -14,10 +14,10 @@
 				right: 'flex-row-reverse'
 			},
 			columnIndex: {
-				'0': 'md:w-5/12',
-				'1': '',
-				'2': 'md:w-4/12',
-				'3': 'md:w-1/12'
+				'0': 'col-span-5 col-start-6',
+				'1': 'col-span-5 col-start-2',
+				'2': 'col-span-5 col-start-5',
+				'3': 'col-span-5 col-start-2'
 			}
 		},
 		defaultVariants: {
@@ -31,21 +31,16 @@
 <div
 	use:storyblokEditable={blok}
 	{...$$restProps}
-	class={cls(
-		'max-w-6xl mx-auto px-6 xl:px-0 md:flex justify-between',
-		variants({ layoutDirection: blok.layoutDirection }),
-		blok.class
-	)}
+	class={cls('g px-6 xl:px-0', variants({ layoutDirection: blok.layoutDirection }), blok.class)}
 >
-	<div class="md:w-4/12 lg:absolute">
-		<Heading as="h3" size="h2">{blok.heading}</Heading>
+	<div class="grid grid-cols-12 lg:absolute">
+		<Heading as="h3" size="h2" class="col-span-4 col-start-2">{blok.heading}</Heading>
 	</div>
 
-	<dl class="flex flex-col gap-24 mt-16">
+	<dl class="grid grid-cols-12 gap-24">
 		{#each blok.list as b, index}
-			<div class={cls('flex justify-start', variants({ layoutDirection: blok.layoutDirection }))}>
-				<div class={cls(variants({ columnIndex: getColumnIndex(index) }))} />
-				<div class="md:w-7/12 min-w-[500px]">
+			<div class={cls('min-w-[500px] mt-16', variants({ columnIndex: getColumnIndex(index) }))}>
+				<div class={cls('flex justify-start', variants({ layoutDirection: blok.layoutDirection }))}>
 					<StoryblokComponent blok={b} {index} />
 				</div>
 			</div>

@@ -24,13 +24,3 @@
 		</div>
 	</div>
 </div>
-
-<style lang="scss">
-	.text-block {
-		:global(p),
-		:global(h3),
-		:global(ul) {
-			color: #929292;
-		}
-	}
-</style>

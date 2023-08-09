@@ -12,13 +12,13 @@
 	{#if blok.heading}
 		<dt class="flex gap-4 mb-4">
 			<NumberedListItem index={$$restProps.index} />
-			<span class="uppercase font-bold">{blok.heading}</span>
+			<span class="uppercase font-bold 3xl:text-2xl 4xl:text-3xl">{blok.heading}</span>
 		</dt>
-		<dd class="text-xl">{@html content}</dd>
+		<dd class="text-xl 4xl:text-3xl leading-7">{@html content}</dd>
 	{:else}
 		<div class="flex items-start gap-4 flex-wrap md:flex-nowrap">
 			<NumberedListItem index={$$restProps.index} />
-			<dd class="text-xl">{@html content}</dd>
+			<dd class="text-xl 4xl:text-3xl leading-7">{@html content}</dd>
 		</div>
 	{/if}
 </div>

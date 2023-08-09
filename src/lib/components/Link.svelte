@@ -11,7 +11,7 @@
 	href={url}
 	target={isExternal ? '_blank' : undefined}
 	rel={isExternal ? 'noopener' : undefined}
-	class="flex flex-row items-stretch h-10 text-xs font-bold tracking-widest uppercase link"
+	class="flex flex-row items-stretch h-10 text-xs 3xl:text-md 4xl:text-lg font-bold tracking-widest uppercase link"
 >
 	<span class="flex items-center pr-4">{label}</span>
 	<span

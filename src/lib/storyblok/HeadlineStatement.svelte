@@ -9,29 +9,33 @@
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	<div class="max-w-6xl mx-auto">
-		<div class="flex flex-col items-stretch gap-12 px-8 pt-16 pb-8 lg:flex-row lg:gap-0">
-			<div class="flex flex-col justify-between space md:w-1/2">
-				<Heading as="h2" size="h1">{blok.title}</Heading>
+	<div class="pt-8 grid grid-cols-12 lg:pt-[8.33vw] gap-8">
+		<div class="col-span-10 lg:col-span-4 col-start-2">
+			<div class="flex flex-col h-full">
+				<Heading as="h2" size="h1" class="flex-1 max-w-screen-md">{blok.title}</Heading>
 				{#if blok.children.length}
-					<div class="hidden mt-8 lg:block">
+					<div class="hidden mt-8 lg:flex">
 						{#each blok.children as b}
 							<StoryblokComponent blok={b} />
 						{/each}
 					</div>
 				{/if}
 			</div>
-			<div class="flex items-end flex-1 text-xl">
-				<div class="pt-0 leading-6 text lg:pt-24">{@html content}</div>
-			</div>
-			{#if blok.children.length}
-				<div class="mt-4 lg:hidden">
-					{#each blok.children as b}
-						<StoryblokComponent blok={b} />
-					{/each}
-				</div>
-			{/if}
 		</div>
+		<div class="col-span-10 col-start-2 lg:col-span-5 lg:col-start-7">
+			<div
+				class="lg:pt-24 text-xl xl:text-2xl 4xl:text-4xl leading-9 4xl:leading-loose max-w-screen-xl"
+			>
+				{@html content}
+			</div>
+		</div>
+		{#if blok.children.length}
+			<div class="lg:hidden col-span-10 col-start-2">
+				{#each blok.children as b}
+					<StoryblokComponent blok={b} />
+				{/each}
+			</div>
+		{/if}
 	</div>
 </div>
 
