@@ -109,7 +109,7 @@
 		class:motion-safe:-translate-y-full={offscreen}
 		bind:clientHeight
 	>
-		<nav class="col-span-10 col-start-2 px-8 xl:px-0 py-6" aria-label="Global">
+		<nav class="col-span-10 col-start-2 py-6" aria-label="Global">
 			<div class="flex items-center justify-between">
 				<a href="{base}/" class="-m-1.5 p-1.5" bind:this={logo}>
 					<span class="sr-only">Good Fortune Collective</span>

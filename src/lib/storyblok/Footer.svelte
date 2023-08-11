@@ -37,25 +37,33 @@
 	id="footer"
 	class={cls('pt-1 -translate-y-1', variants({ theme }))}
 >
-	<div class="w-full py-6 mx-auto">
+	<div class="w-full py-6">
 		<div class="grid grid-cols-12 py-2">
-			<div class="col-span-4 col-start-2 pt-8 pb-2 footer-col">
-				<p class="flex gap-4 text-xs 3xl:text-sm leading-5 tracking-wider text-gray-500 uppercase">
+			<div class="col-span-10 md:col-span-5 lg:col-span-4 col-start-2 pt-8 pb-2 footer-col">
+				<p
+					class="flex flex-col md:flex-row gap-4 text-xs 3xl:text-sm leading-5 tracking-wider text-gray-500 uppercase"
+				>
 					<strong>Let’s work together</strong>
 					<a href={`mailto:${blok.email}`}>{blok.email}</a>
 				</p>
 			</div>
-			<div class="col-span-4 col-start-8 pt-8 pb-2 footer-col">
-				<p class="flex gap-4 text-xs 3xl:text-sm leading-5 tracking-wider text-gray-500 uppercase">
+			<div class="col-span-10 md:col-span-4 col-start-2 md:col-start-8 pt-8 pb-2 footer-col">
+				<p
+					class="flex flex-col md:flex-row gap-4 text-xs 3xl:text-sm leading-5 tracking-wider text-gray-500 uppercase"
+				>
 					<strong>Find us in</strong><span>Vancouver, Canada</span>
 				</p>
 			</div>
 		</div>
 		<div class="grid grid-cols-12 py-2">
-			<div class="col-span-4 col-start-2 pt-2 pb-8 text-sm text-gray-400 md:pb-0">
+			<div
+				class="col-span-10 md:col-span-4 col-start-2 pt-2 pb-4 md:pb-8 text-sm text-gray-400 md:pb-0"
+			>
 				<StoryblokComponent blok={blok.social_links[0]} />
 			</div>
-			<div class="col-span-4 col-start-8">
+			<div
+				class="col-span-10 md:col-span-4 lg:col-span-4 col-start-2 md:col-start-8 lg:col-start-8"
+			>
 				<p class="text-xs 3xl:text-sm leading-5 tracking-wider text-gray-500 uppercase">
 					&copy; {new Date().getFullYear().toString()} Good Fortune Collective. All rights reserved.
 				</p>
