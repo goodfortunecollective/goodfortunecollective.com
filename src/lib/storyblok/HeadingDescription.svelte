@@ -6,16 +6,15 @@
 	export let blok: any;
 </script>
 
-<div
-	use:storyblokEditable={blok}
-	{...$$restProps}
-	class={'heading-richtext-2col max-w-5xl mx-auto ' + blok.class}
->
-	<div class="flex flex-col gap-8 px-8 pt-32 lg:flex-row lg:px-24 lg:gap-0">
-		<Heading as="h2" size="h5" class="font-bold tracking-widest uppercase md:w-1/2 title"
+<div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
+	<div class="grid grid-cols-12 pt-24 md:pt-32 gap-8 md:gap-0">
+		<Heading
+			as="h2"
+			size="h5"
+			class="col-start-2 md:col-start-3 col-span-10  md:col-span-3 font-bold tracking-widest uppercase  w-full lg:w-1/2 title"
 			>{blok.heading}</Heading
 		>
-		<div class="flex-1 text-lg text text-block">
+		<div class="col-start-2 md:col-start-7 col-span-10 md:col-span-5 text-lg">
 			<div class="flex flex-col gap-{blok.gap}">
 				{#each blok.content as b}
 					<StoryblokComponent blok={b} />

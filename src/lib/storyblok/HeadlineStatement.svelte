@@ -9,8 +9,8 @@
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	<div class="pt-8 grid grid-cols-12 lg:pt-[8.33vw] gap-8">
-		<div class="col-span-10 lg:col-span-4 col-start-2">
+	<div class="pt-8 grid grid-cols-12 lg:pt-[8.33vw] gap-8 lg:gap-0">
+		<div class="col-span-10 lg:col-span-4 col-start-2 lg:col-start-2">
 			<div class="flex flex-col h-full">
 				<Heading as="h2" size="h1" class="flex-1 max-w-screen-md">{blok.title}</Heading>
 				{#if blok.children.length}
@@ -22,7 +22,7 @@
 				{/if}
 			</div>
 		</div>
-		<div class="col-span-10 col-start-2 lg:col-span-5 lg:col-start-7">
+		<div class="col-span-10 lg:col-span-5 col-start-2 lg:col-start-7">
 			<div
 				class="lg:pt-24 text-xl xl:text-2xl 4xl:text-4xl leading-9 4xl:leading-loose max-w-screen-xl"
 			>
