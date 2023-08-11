@@ -39,7 +39,9 @@
 >
 	<div class="w-full py-6">
 		<div class="grid grid-cols-12 py-2">
-			<div class="col-span-10 md:col-span-5 lg:col-span-4 col-start-2 pt-8 pb-2 footer-col">
+			<div
+				class="col-span-10 md:col-span-5 lg:col-span-4 col-start-2 md:col-start-2 lg:col-start-2 pt-8 pb-2 footer-col"
+			>
 				<p
 					class="flex flex-col md:flex-row gap-4 text-xs 3xl:text-sm leading-5 tracking-wider text-gray-500 uppercase"
 				>
@@ -57,7 +59,7 @@
 		</div>
 		<div class="grid grid-cols-12 py-2">
 			<div
-				class="col-span-10 md:col-span-4 col-start-2 pt-2 pb-4 md:pb-8 text-sm text-gray-400 md:pb-0"
+				class="col-span-10 md:col-span-4 col-start-2 md:col-start-2 pt-2 pb-4 md:pb-0 text-sm text-gray-400"
 			>
 				<StoryblokComponent blok={blok.social_links[0]} />
 			</div>
