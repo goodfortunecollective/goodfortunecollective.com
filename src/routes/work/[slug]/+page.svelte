@@ -26,6 +26,9 @@
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
 
+		// debug
+		return;
+
 		// avoid auto navigation animation on Storyblok preview
 		if (preview) return;
 
@@ -79,48 +82,54 @@
 </script>
 
 <section class="pt-[var(--header-height)] bg-black text-white">
-	<div class="flex flex-row max-w-6xl pt-16 pb-32 mx-auto">
-		<div class="flex flex-col px-12 md:w-3/4">
-			<div class="flex flex-row gap-4">
+	<div class="grid grid-cols-12 pt-16 pb-32">
+		<div class="col-start-2 col-span-6">
+			<div class="grid grid-cols-12">
 				{#if data.story.content.client}
-					<div class="flex flex-col md:w-1/5">
+					<div class="col-start-1 col-span-2">
 						<h5 class="mb-2 text-sm font-bold tracking-wide uppercase">Client</h5>
 						{data.story.content.client}
 					</div>
 				{/if}
 				{#if data.story.content.solutions}
-					<div class="flex flex-col md:w-1/5">
+					<div class="col-start-4 col-span-2">
 						<h5 class="mb-2 text-sm font-bold tracking-wide uppercase">Solutions</h5>
-						{#each data.story.content.solutions as item}
-							<span>{item}</span>
-						{/each}
+						<ul class="leading-loose">
+							{#each data.story.content.solutions as item}
+								<li>{item}</li>
+							{/each}
+						</ul>
 					</div>
 				{/if}
 				{#if data.story.content.roles}
-					<div class="flex flex-col md:w-1/5">
+					<div class="col-start-7 col-span-2">
 						<h5 class="mb-2 text-sm font-bold tracking-wide uppercase">Roles</h5>
-						{#each data.story.content.roles as item}
-							<span>{item}</span>
-						{/each}
+						<ul class="leading-loose">
+							{#each data.story.content.roles as item}
+								<li>{item}</li>
+							{/each}
+						</ul>
 					</div>
 				{/if}
 				{#if data.story.content.deliverables}
-					<div class="flex flex-col md:w-1/5">
+					<div class="col-start-10 col-span-2">
 						<h5 class="mb-2 text-sm font-bold tracking-wide uppercase">Deliverables</h5>
-						{#each data.story.content.deliverables as item}
-							<span>{item}</span>
-						{/each}
+						<ul class="leading-loose">
+							{#each data.story.content.deliverables as item}
+								<li>{item}</li>
+							{/each}
+						</ul>
 					</div>
 				{/if}
 			</div>
-			<Heading size="h1" class="mt-6">{data.story.name}</Heading>
+			<Heading as="h1" size="h1" class="mt-6">{data.story.name}</Heading>
 			{#if data.story.content.description}
-				<div class="mt-12">
+				<div class="mt-12 w-1/2 leading-loose">
 					{@html description}
 				</div>
 			{/if}
 		</div>
-		<figure class="md:w-1/4">
+		<figure class="col-start-10 col-span-3">
 			{#if data.story.content.thumbnail}
 				<img src={data.story.content.thumbnail.filename} alt={data.story.content.title} />
 			{/if}
@@ -128,21 +137,19 @@
 	</div>
 </section>
 <section>
-	<div class="max-w-6xl mx-auto">
-		{#if data.story}
-			<StoryblokComponent blok={data.story.content} />
-		{/if}
-		<div bind:this={scrollBottomContainerEl} class=" mt-72 pb-[100vh]">
-			<div
-				bind:this={scrollBottomEl}
-				class="flex flex-col justify-center items-center text-center gap-8"
-			>
-				<p class="uppercase font-medium tracking-widest">Scroll</p>
-				<div class="h-48 w-px bg-gray-100">
-					<div bind:this={scrollProgressBottomEl} class="bg-black h-full origin-top" />
-				</div>
-				<span class="font-degular-display leading-8 text-[10em]">All projects</span>
+	{#if data.story}
+		<StoryblokComponent blok={data.story.content} />
+	{/if}
+	<div bind:this={scrollBottomContainerEl} class=" mt-72 pb-[100vh]">
+		<div
+			bind:this={scrollBottomEl}
+			class="flex flex-col justify-center items-center text-center gap-8"
+		>
+			<p class="uppercase font-medium tracking-widest">Scroll</p>
+			<div class="h-48 w-px bg-gray-100">
+				<div bind:this={scrollProgressBottomEl} class="bg-black h-full origin-top" />
 			</div>
+			<span class="font-degular-display leading-8 text-[10em]">All projects</span>
 		</div>
 	</div>
 </section>

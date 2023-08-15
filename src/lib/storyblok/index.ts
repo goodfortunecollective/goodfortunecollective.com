@@ -26,7 +26,6 @@ import SocialLinks from './SocialLinks.svelte';
 import SubHeadline from './SubHeadline.svelte';
 import TagsList from './TagsList.svelte';
 import Text from './Text.svelte';
-import TextCols from './TextCols.svelte';
 import Video from './Video.svelte';
 
 export const components: any = {
@@ -59,7 +58,6 @@ export const components: any = {
 	'subheadline': SubHeadline,
 	'text': Text,
 	'tags-list': TagsList,
-	'text-cols': TextCols,
 	'video': Video,
 };
 

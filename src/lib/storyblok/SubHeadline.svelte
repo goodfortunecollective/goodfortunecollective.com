@@ -7,8 +7,8 @@
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	<div class="grid grid-cols-12 pt-16 pb-8">
-		<div class="col-span-3 col-start-2">
+	<div class="grid grid-cols-12 pt-16 pb-8 gap-8 lg:gap-0">
+		<div class="col-start-2 col-span-10 lg:col-start-2 lg:col-span-3">
 			<Heading as="h2" size="h3">{blok.title}</Heading>
 			{#if blok.links.length}
 				<div class="hidden mt-8 lg:block">
@@ -18,7 +18,7 @@
 				</div>
 			{/if}
 		</div>
-		<div class="col-span-5 col-start-6">
+		<div class="col-start-2 col-span-10 lg:col-span-5 md:col-start-6">
 			<div class="flex flex-col gap-8 lg:pl-48">
 				{#each blok.content as b}
 					<StoryblokComponent blok={b} />
