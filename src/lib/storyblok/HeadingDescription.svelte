@@ -10,7 +10,7 @@
 	<div class="grid grid-cols-12 pt-24 md:pt-32 gap-8 md:gap-0">
 		<Heading
 			as="h2"
-			size="h5"
+			size="h6"
 			class="col-start-2 md:col-start-3 col-span-10  md:col-span-3 font-bold tracking-widest uppercase  w-full lg:w-1/2 title"
 			>{blok.heading}</Heading
 		>

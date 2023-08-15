@@ -33,7 +33,7 @@
 		<div class="flex flex-col justify-between space md:w-1/2">
 			<Heading as="h2" size="h1" class="text-9xl">Join us</Heading>
 			<div class="mt-8">
-				<Link href={{ url: base + '/careers/' }} label="We're good people" class="mt-8" />
+				<Link href={base + '/careers/'} label="We're good people" class="mt-8" />
 			</div>
 		</div>
 	</div>

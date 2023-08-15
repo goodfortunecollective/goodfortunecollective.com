@@ -21,17 +21,17 @@
 
 <section id="jobs" use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	{#if blok.title}
-		<div class="max-w-6xl mx-auto">
-			<div class="flex flex-col gap-8 px-8 lg:flex-row lg:pt-32 lg:gap-32 lg:px-0">
-				<Heading as="h2" size="h3" class="w-full lg:w-1/4">{blok.title}</Heading>
-				{#if jobs}
-					<ul class="flex-1 w-full">
-						{#each jobs.data.stories as { name, slug }}
-							<LinkListItem {name} url="{base}/careers/{slug}" label="Apply Now" />
-						{/each}
-					</ul>
-				{/if}
-			</div>
+		<div class="grid grid-cols-12 gap-8 md:gap-0">
+			<Heading as="h2" size="h3" class="col-start-2 md:col-start-2 col-span-10 md:col-span-3"
+				>{blok.title}</Heading
+			>
+			{#if jobs}
+				<ul class="col-start-2 md:col-start-6 col-span-10 md:col-span-6">
+					{#each jobs.data.stories as { name, slug }}
+						<LinkListItem {name} url="{base}/careers/{slug}" label="Apply Now" />
+					{/each}
+				</ul>
+			{/if}
 		</div>
 	{:else}
 		<div>
