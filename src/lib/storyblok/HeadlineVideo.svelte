@@ -212,6 +212,24 @@
 				</video>
 			</div>
 		</div>
+
+		<div class="absolute top-0 left-0 z-10 flex items-center w-full h-full">
+			<div class="flex flex-col gap-24" id="h-intro">
+				<h1
+					data-gsap="split-text"
+					class="max-w-6xl text-7xl 3xl:text-9xl text-cyan-500 font-degular-display"
+				>
+					{blok.headline}
+				</h1>
+				<h2
+					data-gsap="split-text"
+					class="max-w-md lg:max-w-2xl text-5xl 3xl:text-7xl text-white font-degular-display"
+				>
+					{blok.subheadline}
+				</h2>
+			</div>
+		</div>
+
 		<div class="absolute top-0 left-0 z-10 flex items-center justify-end w-full h-full">
 			<div class="max-w-xs w-full relative mr-24">
 				<div class="w-full absolute inline-flex items-center justify-center gap-4">
@@ -220,23 +238,6 @@
 						<strong>{blok.description}</strong>
 					</div>
 				</div>
-			</div>
-		</div>
-
-		<div class="absolute top-0 left-0 z-10 flex items-center w-full h-full">
-			<div class="flex flex-col gap-24" id="h-intro">
-				<h1
-					data-gsap="split-text"
-					class="max-w-6xl text-6xl 3xl:text-9xl text-cyan-500 font-degular-display md:text-9xl"
-				>
-					{blok.headline}
-				</h1>
-				<h2
-					data-gsap="split-text"
-					class="max-w-2xl text-4xl text-white font-degular-display md:text-7xl"
-				>
-					{blok.subheadline}
-				</h2>
 			</div>
 		</div>
 	</div>
