@@ -13,6 +13,7 @@
 	let video!: HTMLElement;
 	let videoPlayer!: HTMLElement;
 	let line!: HTMLElement;
+	let container!: HTMLElement;
 
 	let videoPlaying = true;
 	let btnHidden = true;
@@ -21,6 +22,7 @@
 
 	let tl: any = null;
 	let tlSplitText: any = null;
+	let tlContainer: any = null;
 
 	// avoid division by 0
 	let ww: number = 1;
@@ -81,11 +83,21 @@
 		gsap.ticker.add(onRender);
 		onResize();
 
+		tlContainer = gsap.timeline({
+			scrollTrigger: {
+				trigger: container,
+				start: 'center 50%',
+				end: '+=50%',
+				scrub: true,
+				pin: true
+			}
+		});
+
 		const splitText = gsap.utils.toArray('[data-gsap="split-text"]');
 
 		tlSplitText = gsap.timeline({
 			scrollTrigger: {
-				trigger: '#h-intro',
+				trigger: videoContainer,
 				start: 'center 55%',
 				end: 'center 30%',
 				toggleActions: 'play reverse play reverse' // onEnter onLeave onEnterBack onLeaveBack
@@ -130,7 +142,7 @@
 
 		tl = gsap.timeline({
 			scrollTrigger: {
-				trigger: '#h-intro',
+				trigger: videoContainer,
 				start: 'center 55%',
 				end: 'center 30%',
 				toggleActions: 'play reverse play reverse' // onEnter onLeave onEnterBack onLeaveBack
@@ -179,9 +191,13 @@
 		if (tl) {
 			tl.kill();
 		}
+		if (tlContainer) {
+			tlContainer.kill();
+		}
 
 		tlSplitText = null;
 		tl = null;
+		tlContainer = null;
 	});
 </script>
 
@@ -190,7 +206,7 @@
 <section use:storyblokEditable={blok} {...$$restProps} class="grid grid-cols-12 h-screen bg-black">
 	<CustomCursor isHidden={btnHidden} cursorType={videoPlaying ? 'pause' : 'play'} />
 
-	<div class="col-start-2 col-span-10 w-full h-full relative">
+	<div class="col-start-2 col-span-10 w-full h-full relative" bind:this={container}>
 		<div class="relative w-full h-full perspective-800" bind:this={videoContainer}>
 			<div
 				bind:this={video}
@@ -214,7 +230,7 @@
 		</div>
 
 		<div class="absolute top-0 left-0 z-10 flex items-center w-full h-full">
-			<div class="flex flex-col gap-24" id="h-intro">
+			<div class="flex flex-col gap-24">
 				<h1
 					data-gsap="split-text"
 					class="max-w-6xl text-7xl 3xl:text-9xl text-cyan-500 font-degular-display"
@@ -249,11 +265,6 @@
 		&-container {
 			// prettier-ignore
 			transform:
-				translate3d(
-					0,
-					calc(var(--video-effect) * 50vh),
-					0
-				)
 				scale3d(
 					calc(0.65 + var(--video-effect) * 0.35),
 					calc(0.65 + var(--video-effect) * 0.35),
