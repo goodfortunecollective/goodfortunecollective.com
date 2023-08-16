@@ -83,16 +83,16 @@
 
 <section class="pt-[var(--header-height)] bg-black text-white">
 	<div class="grid grid-cols-12 pt-16 pb-32">
-		<div class="col-start-2 col-span-6">
-			<div class="grid grid-cols-12">
+		<div class="col-start-2 col-span-8 lg:col-start-2 lg:col-span-6">
+			<div class="grid grid-cols-6 gap-8 lg:gap-0">
 				{#if data.story.content.client}
-					<div class="col-start-1 col-span-2">
+					<div class="col-start-1 lg:col-start-1 col-span-3 md:col-span-2">
 						<h5 class="mb-2 text-sm font-bold tracking-wide uppercase">Client</h5>
 						{data.story.content.client}
 					</div>
 				{/if}
 				{#if data.story.content.solutions}
-					<div class="col-start-4 col-span-2">
+					<div class="col-start-4 lg:col-start-4 col-span-2 lg:col-span-2">
 						<h5 class="mb-2 text-sm font-bold tracking-wide uppercase">Solutions</h5>
 						<ul class="leading-loose">
 							{#each data.story.content.solutions as item}
@@ -102,7 +102,7 @@
 					</div>
 				{/if}
 				{#if data.story.content.roles}
-					<div class="col-start-7 col-span-2">
+					<div class="col-start-1 lg:col-start-7 col-span-2 lg:col-span-2">
 						<h5 class="mb-2 text-sm font-bold tracking-wide uppercase">Roles</h5>
 						<ul class="leading-loose">
 							{#each data.story.content.roles as item}
@@ -112,7 +112,7 @@
 					</div>
 				{/if}
 				{#if data.story.content.deliverables}
-					<div class="col-start-10 col-span-2">
+					<div class="col-start-4 lg:col-start-10 col-span-2 lg:col-span-2">
 						<h5 class="mb-2 text-sm font-bold tracking-wide uppercase">Deliverables</h5>
 						<ul class="leading-loose">
 							{#each data.story.content.deliverables as item}
@@ -124,12 +124,12 @@
 			</div>
 			<Heading as="h1" size="h1" class="mt-6">{data.story.name}</Heading>
 			{#if data.story.content.description}
-				<div class="mt-12 w-1/2 leading-loose">
+				<div class="mt-12 w-full md:w-2/3 leading-loose">
 					{@html description}
 				</div>
 			{/if}
 		</div>
-		<figure class="col-start-10 col-span-3">
+		<figure class="col-start-10 md:col-start-10 col-span-3 md:col-span-3">
 			{#if data.story.content.thumbnail}
 				<img src={data.story.content.thumbnail.filename} alt={data.story.content.title} />
 			{/if}
