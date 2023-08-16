@@ -184,7 +184,7 @@
 <section use:storyblokEditable={blok} {...$$restProps} class="grid grid-cols-12 h-screen bg-black">
 	<CustomCursor isHidden={btnHidden} cursorType={videoPlaying ? 'pause' : 'play'} />
 
-	<div class="col-span-10 col-start-2 w-full h-full mx-auto relative">
+	<div class="col-span-10 col-start-2 w-full h-full relative">
 		<div class="relative w-full h-full perspective-800" bind:this={videoContainer}>
 			<div
 				bind:this={video}

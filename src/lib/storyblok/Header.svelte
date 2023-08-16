@@ -105,11 +105,11 @@
 	{/if}
 
 	<header
-		class="grid grid-cols-12 fixed w-full top-0 z-30 h-[var(--header-height)] transition-transform ease-in mix-blend-difference"
+		class="grid grid-cols-24 fixed w-full top-0 z-30 h-[var(--header-height)] transition-transform ease-in mix-blend-difference"
 		class:motion-safe:-translate-y-full={offscreen}
 		bind:clientHeight
 	>
-		<nav class="col-span-10 col-start-2 py-6" aria-label="Global">
+		<nav class="col-start-3 lg:col-start-2 col-span-20 lg:col-span-22 py-6" aria-label="Global">
 			<div class="flex items-center justify-between">
 				<a href="{base}/" class="-m-1.5 p-1.5" bind:this={logo}>
 					<span class="sr-only">Good Fortune Collective</span>

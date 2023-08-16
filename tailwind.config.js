@@ -25,7 +25,9 @@ export default {
 				24: 'repeat(24, minmax(0, 1fr))'
 			},
 			gridColumn: {
-				'span-16': 'span 16 / span 16'
+				'span-16': 'span 16 / span 16',
+				'span-20': 'span 20 / span 20',
+				'span-22': 'span 22 / span 22',
 			},
 			gridColumnStart: {
 				13: '13',
