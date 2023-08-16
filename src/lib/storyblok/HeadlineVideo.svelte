@@ -11,14 +11,15 @@
 
 	let videoContainer!: HTMLElement;
 	let video!: HTMLElement;
-	let videoInteractive!: HTMLElement;
 	let videoPlayer!: HTMLElement;
+	let line!: HTMLElement;
 
 	let videoPlaying = true;
 	let btnHidden = true;
 
 	let constrain = 100;
 
+	let tl: any = null;
 	let tlSplitText: any = null;
 
 	// avoid division by 0
@@ -75,29 +76,6 @@
 			((mousePosition.x - videoBBox.x - videoBBox.width / 2) / constrain);
 	};
 
-	// function handleMousemove(event: MouseEvent) {
-	// 	let xy = [event.clientX, event.clientY];
-	// 	if (!isMouseLocked) {
-	// 		window.requestAnimationFrame(function () {
-	// 			if (videoInteractive) transformElement(videoInteractive, xy);
-	// 		});
-	// 	}
-	// }
-	//
-	// function transforms(x: number, y: number, el: HTMLElement) {
-	// 	let calcX =
-	// 		(1 - videoTransformEffect) * (-(y - videoBBox.y - videoBBox.height / 2) / constrain);
-	// 	let calcY = (1 - videoTransformEffect) * ((x - videoBBox.x - videoBBox.width / 2) / constrain);
-	//
-	// 	return (
-	// 		'perspective(1000px) ' + '   rotateX(' + calcX + 'deg) ' + '   rotateY(' + calcY + 'deg) '
-	// 	);
-	// }
-	//
-	// function transformElement(el: HTMLElement, xy: [x: number, y: number]) {
-	// 	el.style.transform = transforms.apply(null, xy);
-	// }
-
 	onMount(() => {
 		window.addEventListener('smoothScrollUpdate', onScroll);
 		gsap.ticker.add(onRender);
@@ -150,6 +128,28 @@
 			);
 		});
 
+		tl = gsap.timeline({
+			scrollTrigger: {
+				trigger: '#h-intro',
+				start: 'center 55%',
+				end: 'center 30%',
+				toggleActions: 'play reverse play reverse' // onEnter onLeave onEnterBack onLeaveBack
+			}
+		});
+		tl.addLabel('start');
+
+		tl.from(
+			line,
+			{
+				duration: 0.8,
+				scaleX: 0,
+				transformOrigin: 'right center',
+				ease: 'back',
+				delay: $delay_anim_page
+			},
+			'start'
+		);
+
 		return () => {
 			window.removeEventListener('smoothScrollUpdate', onScroll);
 			gsap.ticker.remove(onRender);
@@ -173,9 +173,15 @@
 	}
 
 	onDestroy(() => {
-		if (tlSplitText) tlSplitText.kill();
+		if (tlSplitText) {
+			tlSplitText.kill();
+		}
+		if (tl) {
+			tl.kill();
+		}
 
 		tlSplitText = null;
+		tl = null;
 	});
 </script>
 
@@ -184,35 +190,44 @@
 <section use:storyblokEditable={blok} {...$$restProps} class="grid grid-cols-12 h-screen bg-black">
 	<CustomCursor isHidden={btnHidden} cursorType={videoPlaying ? 'pause' : 'play'} />
 
-	<div class="col-span-10 col-start-2 w-full h-full relative">
+	<div class="col-start-2 col-span-10 w-full h-full relative">
 		<div class="relative w-full h-full perspective-800" bind:this={videoContainer}>
 			<div
 				bind:this={video}
 				class="HeadlineVideo-container absolute w-full h-full transform-gpu preserve-3d cursor-pointer"
 				style="--video-effect: {videoTransformEffect}; --rotation-x: {videoRotation.x}deg; --rotation-y: {videoRotation.y}deg"
 			>
-				<div bind:this={videoInteractive} class="flex items-center w-full h-full preserve-3d">
-					<video
-						bind:this={videoPlayer}
-						on:click={playPauseVideo}
-						on:mouseenter={videoOnEnter}
-						on:mouseleave={videoOnLeave}
-						class="w-full aspect-video"
-						src={blok.video}
-						autoplay
-						muted
-						loop
-					>
-						<track kind="captions" />
-					</video>
+				<video
+					bind:this={videoPlayer}
+					on:click={playPauseVideo}
+					on:mouseenter={videoOnEnter}
+					on:mouseleave={videoOnLeave}
+					class="w-full aspect-video"
+					src={blok.video}
+					autoplay
+					muted
+					loop
+				>
+					<track kind="captions" />
+				</video>
+			</div>
+		</div>
+		<div class="absolute top-0 left-0 z-10 flex items-center justify-end w-full h-full">
+			<div class="max-w-xs w-full relative mr-24">
+				<div class="w-full absolute inline-flex items-center justify-center gap-4">
+					<hr bind:this={line} class="w-32 h-px" />
+					<div class="w-[10rem] text-xs text-white uppercase" data-gsap="split-text">
+						<strong>{blok.description}</strong>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="absolute z-10 flex items-center w-full h-full">
+
+		<div class="absolute top-0 left-0 z-10 flex items-center w-full h-full">
 			<div class="flex flex-col gap-24" id="h-intro">
 				<h1
 					data-gsap="split-text"
-					class="text-6xl 3xl:text-9xl text-cyan-500 font-degular-display md:text-9xl"
+					class="max-w-6xl text-6xl 3xl:text-9xl text-cyan-500 font-degular-display md:text-9xl"
 				>
 					{blok.headline}
 				</h1>
