@@ -7,6 +7,7 @@
 
 	export let as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1';
 	export let size: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1';
+	export let animated: boolean = true;
 
 	const textSizes = {
 		h1: 'text-6xl md:text-7xl xl:text-8xl 4xl:text-10xl',
@@ -26,7 +27,7 @@
 		isHidden: boolean = false;
 
 	const createScrollTriggerTl = () => {
-		if (canCreateTl) {
+		if (canCreateTl && animated) {
 			//console.log('create scroll tl', as, headingEl.innerText);
 
 			if (headingTl) headingTl.kill();

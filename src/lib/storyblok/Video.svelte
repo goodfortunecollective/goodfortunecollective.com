@@ -4,12 +4,12 @@
 	import CustomCursor from '../components/CustomCursor.svelte';
 
 	export let blok: any;
-
 	export let videoVisible = false;
 	export let videoPlaying = false;
 	export let btnHidden = true;
-	let video!: HTMLElement;
 	export let posterUrl = null;
+
+	let video!: HTMLElement;
 
 	function contOnEnter(e) {
 		btnHidden = false;
@@ -49,7 +49,7 @@
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	<div
-		class="flex items-center justify-center my-12 video-block cursor-pointer"
+		class="flex items-center justify-center video-block cursor-pointer"
 		on:mouseenter={contOnEnter}
 		on:mouseleave={contOnLeave}
 		data-id={blok.id}

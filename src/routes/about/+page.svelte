@@ -15,13 +15,9 @@
 </script>
 
 <section class="about pt-[var(--header-height)] pb-32">
-	<!--h-1/2 -->
 	{#if data.story}
 		<StoryblokComponent blok={data.story.content} />
 	{/if}
-</section>
-<section>
-	<!-- <img src="{base}/img/good-fortune-collective-circle.png" alt="Good Fortune Collective" /> -->
 </section>
 <section class="grid grid-cols-12 mb-2 gap-8 lg:gap-0">
 	<div class="col-start-2 lg:col-start-2 col-span-10 lg:col-span-4">

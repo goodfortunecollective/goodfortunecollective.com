@@ -82,7 +82,7 @@
 </script>
 
 <section class="pt-[var(--header-height)] bg-black text-white">
-	<div class="grid grid-cols-12 pt-16 pb-32">
+	<div class="grid grid-cols-12 pt-16 pb-16">
 		<div class="col-start-2 col-span-8 lg:col-start-2 lg:col-span-6">
 			<div class="grid grid-cols-12 gap-8 lg:gap-0">
 				{#if data.story.content.client}
@@ -122,16 +122,22 @@
 					</div>
 				{/if}
 			</div>
-			<Heading as="h1" size="h1" class="mt-6">{data.story.name}</Heading>
+			<Heading as="h1" size="h1" class="mt-6" animated={true}>{data.story.name}</Heading>
 			{#if data.story.content.description}
 				<div class="mt-12 w-full md:w-2/3 leading-loose">
 					{@html description}
 				</div>
 			{/if}
 		</div>
-		<figure class="col-start-10 md:col-start-10 col-span-3 md:col-span-3">
+		<figure class="col-start-10 lg:col-start-10 col-span-3 lg:col-span-3">
 			{#if data.story.content.thumbnail}
-				<img src={data.story.content.thumbnail.filename} alt={data.story.content.title} />
+				<div class="w-full h-full relative">
+					<img
+						src={data.story.content.thumbnail.filename}
+						class="w-full h-full absolute inset-0 object-cover object-top"
+						alt={data.story.content.title}
+					/>
+				</div>
 			{/if}
 		</figure>
 	</div>
