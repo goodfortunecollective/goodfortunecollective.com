@@ -1,15 +1,22 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
-	import CustomCursor from '../components/CustomCursor.svelte';
+	import { onDestroy, onMount } from 'svelte';
+	import { storyblokEditable } from '@storyblok/svelte';
 
+	import { CustomCursor } from '$lib/components';
+	import { gsap } from '$lib/gsap';
+
+	let tl: any = null;
 	export let blok: any;
 	export let videoVisible = false;
 	export let videoPlaying = false;
 	export let btnHidden = true;
 	export let posterUrl = null;
 
+	let videoContainer!: HTMLElement;
 	let video!: HTMLElement;
+
+	$: innerWidth = 0;
+	$: offsetWidth = 0;
 
 	function contOnEnter(e) {
 		btnHidden = false;
@@ -44,11 +51,39 @@
 			blok.poster && blok.poster.filename
 				? blok.poster.filename
 				: 'https://vumbnail.com/' + blok.id + '.jpg';
+
+		const scale = offsetWidth / innerWidth;
+
+		tl = gsap.timeline();
+
+		tl.from(videoContainer, {
+			scale,
+			duration: 1,
+			scrollTrigger: {
+				trigger: videoContainer,
+				scrub: true,
+				start: 'top top%',
+				end: 'bottom 90%'
+			}
+		});
+	});
+
+	onDestroy(() => {
+		if (tl) {
+			tl.kill();
+			tl = null;
+		}
 	});
 </script>
 
+<svelte:window bind:innerWidth />
+
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
+	<div class="grid grid-cols-12">
+		<div class="col-start-2 col-span-10" bind:offsetWidth />
+	</div>
 	<div
+		bind:this={videoContainer}
 		class="flex items-center justify-center video-block cursor-pointer"
 		on:mouseenter={contOnEnter}
 		on:mouseleave={contOnLeave}
@@ -75,8 +110,6 @@
 				on:click={playPauseVideo}
 			/>
 		{/if}
-		<!-- {#if blok.poster}{/if} -->
-		<CustomCursor isHidden={btnHidden} cursorType={videoPlaying ? 'pause' : 'play'} />
 
 		<figure
 			class={'video-block-poster' + (videoVisible ? ' inactive' : '')}
@@ -86,6 +119,7 @@
 			<img class="video-block-poster-img" src={posterUrl} alt={blok.id} />
 		</figure>
 	</div>
+	<CustomCursor isHidden={btnHidden} cursorType={videoPlaying ? 'pause' : 'play'} />
 </div>
 
 <style lang="scss">
