@@ -8,7 +8,7 @@
 	export let textClasses = ['md:col-start-14', 'md:col-start-4'];
 </script>
 
-<div use:storyblokEditable={blok} {...$$restProps} class={'images-list-block ' + blok.class}>
+<div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	<div class="flex flex-col list">
 		{#each blok.list as item, i}
 			<div class="flex px-8 py-16 md:px-0 md:grid md:grid-cols-24 md:gap-2 md:py-32 list-item">
@@ -31,15 +31,6 @@
 
 <style lang="scss">
 	@import '../../vars.scss';
-
-	.images-list-block {
-		background: #1c1c1c;
-		color: $white;
-	}
-
-	.list {
-		// color: $grayDark;
-	}
 
 	.list-item {
 		&:last-child {
