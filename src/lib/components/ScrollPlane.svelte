@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onDestroy, tick } from 'svelte';
 	import { base } from '$app/paths';
+	import { cls } from '$lib/styles';
 	import { clamp } from '../utils/maths';
 	import { ScrollSmoother } from '$lib/gsap';
 	import { useCurtains } from '$lib/utils/useCurtains';
@@ -12,6 +13,7 @@
 	export let name: string;
 	export let slug: string;
 	export let content: any;
+	export let hover: boolean = false;
 
 	let planeEl: HTMLElement;
 	let plane: undefined | PlaneType;
@@ -164,7 +166,7 @@
 	);
 </script>
 
-<div class="ScrollPlane" bind:this={planeEl}>
+<div>
 	<img
 		src={content.thumbnail
 			? content.thumbnail.filename.replace('//a-us.storyblok.com', '//a2-us.storyblok.com')

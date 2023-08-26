@@ -2,6 +2,7 @@
 	import { storyblokEditable } from '@storyblok/svelte';
 
 	import { ProjectListItem } from '$lib/components';
+	import { project_list_hover } from '$lib/stores';
 
 	export let blok: any;
 
@@ -14,7 +15,7 @@
 		'col-span-7 col-start-2 -mt-[4.166%] z-1 text-left'
 	];
 
-	const getProjectGridItemClass = (index) => {
+	const getProjectGridItemClass = (index: number) => {
 		if (index === 0) {
 			return 'col-span-11 z-1 text-left';
 		} else {
@@ -28,6 +29,7 @@
 		{#each blok.projects as { name, slug, content }, index (content._uid)}
 			<div class="grid grid-cols-12">
 				<ProjectListItem
+					hover={$project_list_hover.includes(slug)}
 					{name}
 					{slug}
 					{content}

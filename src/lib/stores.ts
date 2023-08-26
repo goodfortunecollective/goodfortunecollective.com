@@ -9,3 +9,5 @@ export const curtains = writable(null as CurtainsInstance);
 export const isTransitioning = writable(false as boolean);
 export const isPageHidden = writable(false as boolean);
 
+// work items hover state
+export const project_list_hover = writable([] as Array<string>);

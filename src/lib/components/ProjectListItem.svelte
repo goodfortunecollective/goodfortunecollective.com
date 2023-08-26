@@ -1,14 +1,25 @@
 <script lang="ts">
 	import { base } from '$app/paths';
 	import { cls } from '$lib/styles';
-	import ScrollPlane from './ScrollPlane.svelte';
+	import { ScrollPlane } from '$lib/components';
+
+	import { project_list_hover } from '$lib/stores';
 
 	export let name: string;
 	export let slug: string;
 	export let content: any;
 	export let isMainItem: boolean;
 	export let layout: 'left' | 'right' = 'left';
+	export let hover: boolean = false;
 	export let useCurtainsPlanes: boolean = true;
+
+	function onEnter() {
+		$project_list_hover = [slug, ...$project_list_hover];
+	}
+
+	function onLeave() {
+		$project_list_hover = $project_list_hover.filter((item) => item !== slug);
+	}
 </script>
 
 <a
@@ -21,11 +32,13 @@
 	)}
 	data-id={slug}
 >
-	<div class="ProjectListItem-thumb">
+	<div class="ProjectListItem-thumb" on:mouseenter={onEnter} on:mouseleave={onLeave}>
 		{#if useCurtainsPlanes}
-			<ScrollPlane {slug} {content} {name} />
+			<ScrollPlane {hover} {slug} {content} {name} />
 		{:else}
-			<div class="ProjectListItem-thumb-image">
+			<div
+				class={cls(hover && 'scale-50', 'transition-all duration-100 ProjectListItem-thumb-image')}
+			>
 				<img
 					src={content.thumbnail
 						? content.thumbnail.filename.replace('//a-us.storyblok.com', '//a2-us.storyblok.com')

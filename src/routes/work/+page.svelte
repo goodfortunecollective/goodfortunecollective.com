@@ -6,6 +6,7 @@
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
 	import { ProjectListItem } from '$lib/components';
+	import { project_list_hover } from '$lib/stores';
 
 	import MenuList from './MenuList.svelte';
 	import MenuItem from './MenuItem.svelte';
@@ -127,9 +128,10 @@
 		</div>
 
 		<div class="ProjectListPage-list mb-32">
-			{#each projects as { name, slug, content }, index (content._uid)}
+			{#each projects as { name, slug, content }, index}
 				<div class="grid grid-cols-12">
 					<ProjectListItem
+						hover={$project_list_hover.includes(slug)}
 						{name}
 						{slug}
 						{content}
