@@ -166,7 +166,7 @@
 	);
 </script>
 
-<div>
+<div class="ScrollPlane" bind:this={planeEl}>
 	<img
 		src={content.thumbnail
 			? content.thumbnail.filename.replace('//a-us.storyblok.com', '//a2-us.storyblok.com')

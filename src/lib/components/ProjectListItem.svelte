@@ -36,9 +36,7 @@
 		{#if useCurtainsPlanes}
 			<ScrollPlane {hover} {slug} {content} {name} />
 		{:else}
-			<div
-				class={cls(hover && 'scale-50', 'transition-all duration-100 ProjectListItem-thumb-image')}
-			>
+			<div class="ProjectListItem-thumb-image">
 				<img
 					src={content.thumbnail
 						? content.thumbnail.filename.replace('//a-us.storyblok.com', '//a2-us.storyblok.com')

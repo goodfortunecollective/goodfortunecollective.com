@@ -6,6 +6,12 @@
 
 	export let blok: any;
 
+	let list_hover: string[] = [];
+
+	project_list_hover.subscribe((value) => {
+		list_hover = value;
+	});
+
 	const projectGridItemsClasses = [
 		'col-span-5 col-start-7 mt-[16.66%] z-2 text-right',
 		'col-span-6 col-start-2 -mt-[25%] z-1 text-left',
@@ -29,7 +35,7 @@
 		{#each blok.projects as { name, slug, content }, index (content._uid)}
 			<div class="grid grid-cols-12">
 				<ProjectListItem
-					hover={$project_list_hover.includes(slug)}
+					hover={list_hover.includes(slug)}
 					{name}
 					{slug}
 					{content}
