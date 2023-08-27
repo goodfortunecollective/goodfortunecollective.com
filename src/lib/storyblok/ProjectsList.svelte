@@ -35,7 +35,7 @@
 		{#each blok.projects as { name, slug, content }, index (content._uid)}
 			<div class="grid grid-cols-12">
 				<ProjectListItem
-					hover={list_hover.includes(slug)}
+					hover={list_hover.includes(name)}
 					{name}
 					{slug}
 					{content}

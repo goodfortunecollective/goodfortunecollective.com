@@ -17,6 +17,7 @@
 	import PageTransitionAnim from './PageTransitionAnim.svelte';
 
 	import '../app.css';
+	import ProjectListHover from '$lib/components/ProjectListHover.svelte';
 
 	export let data: LayoutData;
 
@@ -108,6 +109,7 @@
 			</PageTransition>
 		</div>
 	</div>
+	<ProjectListHover />
 </main>
 
 <Curtains />

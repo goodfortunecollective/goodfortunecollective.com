@@ -13,7 +13,7 @@
 	export let name: string;
 	export let slug: string;
 	export let content: any;
-	export let hover: boolean = false;
+	export let hoverOthers: boolean = false;
 
 	let planeEl: HTMLElement;
 	let plane: undefined | PlaneType;
@@ -122,6 +122,16 @@
 				// scale plane and its texture
 				//plane.scale.y = 1 + Math.abs(velocity * 0.0025);
 				plane.textures[0].scale.y = 1 + Math.abs(velocity * 0.005);
+
+				plane.scale.x = clamp(hoverOthers ? plane.scale.x - 0.02 : plane.scale.x + 0.02, 0.75, 1);
+
+				plane.scale.y = clamp(hoverOthers ? plane.scale.y - 0.02 : plane.scale.y + 0.02, 0.75, 1);
+
+				plane.uniforms.opacity.value = clamp(
+					hoverOthers ? plane.uniforms.opacity.value - 0.02 : plane.uniforms.opacity.value + 0.02,
+					0.5,
+					1
+				);
 			});
 		}
 	};

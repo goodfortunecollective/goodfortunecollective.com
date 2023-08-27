@@ -13,12 +13,18 @@
 	export let hover: boolean = false;
 	export let useCurtainsPlanes: boolean = true;
 
+	let list_hover: string[] = [];
+
+	project_list_hover.subscribe((value) => {
+		list_hover = value;
+	});
+
 	function onEnter() {
-		$project_list_hover = [slug, ...$project_list_hover];
+		$project_list_hover = [name, ...$project_list_hover];
 	}
 
 	function onLeave() {
-		$project_list_hover = $project_list_hover.filter((item) => item !== slug);
+		$project_list_hover = $project_list_hover.filter((item) => item !== name);
 	}
 </script>
 
@@ -34,7 +40,12 @@
 >
 	<div class="ProjectListItem-thumb" on:mouseenter={onEnter} on:mouseleave={onLeave}>
 		{#if useCurtainsPlanes}
-			<ScrollPlane {hover} {slug} {content} {name} />
+			<ScrollPlane
+				{slug}
+				{content}
+				{name}
+				hoverOthers={list_hover.length > 0 && !list_hover.includes(name)}
+			/>
 		{:else}
 			<div class="ProjectListItem-thumb-image">
 				<img
@@ -47,12 +58,6 @@
 				/>
 			</div>
 		{/if}
-
-		<div class="ProjectListItem-thumb-hover-title text-white font-degular-display text-6xl">
-			<div class="ProjectListItem-thumb-hover-title-inner">
-				{name}
-			</div>
-		</div>
 	</div>
 
 	<div class="ProjectListItem-infos">
@@ -96,24 +101,6 @@
 					min-width: 100%;
 					min-height: 100%;
 					object-fit: cover;
-				}
-			}
-
-			&-hover-title {
-				position: absolute;
-				top: 50%;
-				right: 0;
-				left: 0;
-				pointer-events: none;
-				text-align: center;
-				transform: translate3d(0, -50%, 0);
-				overflow: hidden;
-				line-height: 120%;
-
-				&-inner {
-					transform: translate3d(0, 100%, 0);
-					opacity: 0;
-					transition: transform 0.3s ease-out, opacity 0.3s linear;
 				}
 			}
 		}
