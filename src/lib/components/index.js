@@ -6,4 +6,3 @@ export { default as LinkListItem } from './LinkListItem.svelte';
 export { default as NumberedListItem } from './NumberedListItem.svelte';
 export { default as ScrollPlane } from './ScrollPlane.svelte';
 export { default as ProjectListItem } from './ProjectListItem.svelte';
-export { default as Video } from './Video.svelte';

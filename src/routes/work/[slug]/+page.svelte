@@ -122,7 +122,7 @@
 					</div>
 				{/if}
 			</div>
-			<Heading as="h1" size="h1" class="mt-6" animated={true}>{data.story.name}</Heading>
+			<Heading as="h1" size="h1" class="mt-6" animated={false}>{data.story.name}</Heading>
 			{#if data.story.content.description}
 				<div class="mt-12 w-full md:w-2/3 leading-loose">
 					{@html description}
