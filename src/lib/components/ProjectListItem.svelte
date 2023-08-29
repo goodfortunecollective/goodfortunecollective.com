@@ -10,7 +10,6 @@
 	export let content: any;
 	export let isMainItem: boolean;
 	export let layout: 'left' | 'right' = 'left';
-	export let hover: boolean = false;
 	export let useCurtainsPlanes: boolean = true;
 
 	let list_hover: string[] = [];

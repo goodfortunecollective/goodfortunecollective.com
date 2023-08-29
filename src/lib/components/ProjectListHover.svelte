@@ -5,12 +5,20 @@
 	import { gsap } from '$lib/gsap';
 	import { project_list_hover } from '$lib/stores';
 
+	import { slide } from '$lib/transitions';
+
 	let titleEl!: HTMLElement;
 	let list_hover: string[] = [];
 	let locked = false;
 
+	$: title = list_hover[0] || '';
+
 	project_list_hover.subscribe((value) => {
-		if (!locked) list_hover = value;
+		if (!locked) {
+			if (value.length > 0 && value[0] !== list_hover[0]) {
+				list_hover = value;
+			}
+		}
 	});
 
 	beforeNavigate(() => {
@@ -57,9 +65,20 @@
 						class="mt-6 text-6xl md:text-7xl xl:text-8xl 4xl:text-10xl w-full font-degular-display"
 						bind:this={titleEl}
 					>
-						<span class="ProjectListHover-title" style="--color: {locked ? '#fff' : '#000'};"
-							>{list_hover[0]}</span
+						<span
+							class="ProjectListHover-title relative"
+							style="--color: {locked ? '#fff' : '#000'};"
 						>
+							{#key title}
+								<span
+									in:slide={{ duration: 200, delay: 200, direction: 'bottom' }}
+									out:slide={{ duration: 200, direction: 'top' }}
+									class="inline-block"
+								>
+									{title}
+								</span>
+							{/key}
+						</span>
 					</p>
 				</div>
 			</div>
