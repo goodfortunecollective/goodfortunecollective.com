@@ -56,16 +56,18 @@
 
 		tl = gsap.timeline();
 
-		tl.from(videoContainer, {
-			scale,
-			duration: 1,
-			scrollTrigger: {
-				trigger: videoContainer,
-				scrub: true,
-				start: 'top top%',
-				end: 'bottom 90%'
-			}
-		});
+		if (blok.animated) {
+			tl.from(videoContainer, {
+				scale,
+				duration: 1,
+				scrollTrigger: {
+					trigger: videoContainer,
+					scrub: true,
+					start: 'top top%',
+					end: 'bottom 90%'
+				}
+			});
+		}
 	});
 
 	onDestroy(() => {
