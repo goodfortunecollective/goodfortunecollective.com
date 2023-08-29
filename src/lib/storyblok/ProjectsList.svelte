@@ -13,12 +13,12 @@
 	});
 
 	const projectGridItemsClasses = [
-		'col-span-5 col-start-7 mt-[16.66%] z-2 text-right',
-		'col-span-6 col-start-2 -mt-[25%] z-1 text-left',
-		'col-span-6 col-start-5 mt-[8.33%] z-2 text-right',
-		'col-span-4 col-start-2 -mt-[16.66%] z-1 text-left',
-		'col-span-4 col-start-8 mt-[16.66%] z-2 text-right',
-		'col-span-7 col-start-2 -mt-[4.166%] z-1 text-left'
+		'col-span-10 col-start-1 mt-[16.66%] text-left md:col-span-5 md:col-start-7 md:mt-[16.66%] md:text-right md:z-2',
+		'col-span-10 col-start-3 -mt-[25%] z-1 text-right md:text-left md:col-span-6 md:col-start-2 -mt-[25%]',
+		'col-span-10 col-start-1 mt-[8.33%] z-2 text-left md:text-right md:col-span-6 md:col-start-5 md:mt-[8.33%]',
+		'col-span-10 col-start-3 -mt-[16.66%] z-1 text-right md:text-left md:col-span-4 md:col-start-2 md:-mt-[16.66%]',
+		'col-span-10 col-start-1 mt-[16.66%] z-2 text-right md:text-right md:col-span-4 md:col-start-8 md:mt-[16.66%]',
+		'col-span-10 col-start-3 -mt-[4.166%] z-1 text-right md:text-left md:col-span-7 md:col-start-2 md:-mt-[4.166%]'
 	];
 
 	const getProjectGridItemClass = (index: number) => {
@@ -31,7 +31,7 @@
 </script>
 
 <section use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	<div class="mb-64">
+	<div class="mb-16 md:mb-64">
 		{#each blok.projects as { name, slug, content }, index (content._uid)}
 			<div class="grid grid-cols-12">
 				<ProjectListItem

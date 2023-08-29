@@ -106,12 +106,19 @@
 		}
 
 		&-infos {
-			width: 50%;
+			width: 100%;
 			//box-sizing: border-box;
-			position: absolute;
-			bottom: 0;
-			padding-top: 1rem;
-			transform: translate3d(0, 100%, 0);
+			position: relative;
+			padding: 1rem 8.3333%;
+
+			@media (min-width: $media-md) {
+				width: 50%;
+				position: absolute;
+				bottom: 0;
+				transform: translate3d(0, 100%, 0);
+				padding: 0;
+				padding-top: 1rem;
+			}
 
 			&-inner {
 				position: relative;
@@ -133,11 +140,14 @@
 		&-summary {
 			opacity: 0;
 			transform: translate3d(0, 100%, 0);
-			position: absolute;
-			right: 0;
-			bottom: 0;
-			left: 0;
 			transition: transform 0.3s ease-out, opacity 0.3s linear;
+
+			@media (min-width: $media-md) {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				left: 0;
+			}
 		}
 
 		&--is-main {
@@ -170,8 +180,13 @@
 
 		&--is-right-layout {
 			.ProjectListItem-infos {
-				right: 0;
-				left: 50%;
+				left: 0;
+				right: 50%;
+
+				@media (min-width: $media-md) {
+					right: 0;
+					left: 50%;
+				}
 			}
 		}
 

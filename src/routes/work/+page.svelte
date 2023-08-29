@@ -103,7 +103,7 @@
 
 <svelte:window on:hashchange={hashchange} />
 
-<section class="ProjectListPage pt-[var(--header-height)] pb-32">
+<section class="pt-[var(--header-height)] pb-32">
 	<div class="mt-16">
 		<div class="relative">
 			<MenuList class="z-10 absolute top-0 right-0 flex flex-col items-end gap-4">
@@ -127,7 +127,7 @@
 			</MenuList>
 		</div>
 
-		<div class="ProjectListPage-list mb-32">
+		<div class="mb-32">
 			{#each projects as { name, slug, content }, index}
 				<div class="grid grid-cols-12">
 					<ProjectListItem
