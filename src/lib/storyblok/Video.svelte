@@ -47,26 +47,36 @@
 	}
 
 	onMount(() => {
+		let mm = gsap.matchMedia();
+
 		posterUrl =
 			blok.poster && blok.poster.filename
 				? blok.poster.filename
 				: 'https://vumbnail.com/' + blok.id + '.jpg';
 
+		const clipPath = (2 / 12) * 100;
 		const scale = offsetWidth / innerWidth;
 
 		tl = gsap.timeline();
 
 		if (blok.animated) {
-			tl.from(videoContainer, {
-				scale,
-				duration: 1,
-				scrollTrigger: {
-					trigger: videoContainer,
-					scrub: true,
-					start: 'top top%',
-					end: 'bottom 90%'
-				}
-			});
+			mm.add(
+				'(min-width: 800px)',
+				() => {
+					tl.from(videoContainer, {
+						clipPath: `inset(${clipPath}%)`,
+						scale,
+						duration: 1,
+						scrollTrigger: {
+							trigger: videoContainer,
+							scrub: true,
+							start: 'top top%',
+							end: 'bottom 90%'
+						}
+					});
+				},
+				videoContainer
+			);
 		}
 	});
 
