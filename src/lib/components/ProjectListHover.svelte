@@ -71,8 +71,8 @@
 						>
 							{#key title}
 								<span
-									in:slide={{ duration: 200, delay: 200, direction: 'bottom' }}
-									out:slide={{ duration: 200, direction: 'top' }}
+									in:slide|global={{ duration: 200, delay: 200, direction: 'bottom' }}
+									out:slide|global={{ duration: 200, direction: 'top' }}
 									class="inline-block"
 								>
 									{title}

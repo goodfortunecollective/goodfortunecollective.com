@@ -82,8 +82,8 @@
 			<!-- Background backdrop, show/hide based on slide-over state. -->
 			<div class="fixed inset-0 z-20" />
 			<div
-				in:fade
-				out:fade={{ delay: 500 }}
+				in:fade|global
+				out:fade|global={{ delay: 500 }}
 				class="fixed inset-y-0 right-0 z-20 w-full px-6 py-6 overflow-y-auto bg-black sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
 			>
 				<div class="flow-root mt-24">
@@ -92,8 +92,8 @@
 							{#each navigation as { name, path }, i}<a
 									href="{base}/{path}"
 									class="block px-3 py-2 -mx-3 text-xl font-semibold leading-7 text-white"
-									in:fly={{ x: -48, duration: 500, delay: 300 + 50 * i }}
-									out:fly={{ x: -48, duration: 500, delay: 300 - 50 * i }}
+									in:fly|global={{ x: -48, duration: 500, delay: 300 + 50 * i }}
+									out:fly|global={{ x: -48, duration: 500, delay: 300 - 50 * i }}
 									on:click={closeMobileMenu}>{name}</a
 								>
 							{/each}

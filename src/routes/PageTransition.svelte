@@ -19,8 +19,8 @@
 
 {#key pathname}
 	<div
-		in:fade={{ easing: cubicOut, duration: 100, delay: 1500 }}
-		out:fade={{ easing: quartOut, duration: 100, delay: 1200 }}
+		in:fade|global={{ easing: cubicOut, duration: 100, delay: 1500 }}
+		out:fade|global={{ easing: quartOut, duration: 100, delay: 1200 }}
 		on:outrostart={onPageChange}
 		on:outroend={onOldContentRemoved}
 	>

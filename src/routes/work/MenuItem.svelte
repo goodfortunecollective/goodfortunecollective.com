@@ -11,7 +11,7 @@
 	export let delay: number = 0;
 </script>
 
-<li in:fade={{ delay }} out:fade class="whitespace-nowrap text-right">
+<li in:fade|global={{ delay }} out:fade|global class="whitespace-nowrap text-right">
 	<a href={url}>
 		<span class={cls(selected && 'font-bold')}>{name}</span>
 		<sup class="font-features sups">{zeroPad(sup)}</sup>
