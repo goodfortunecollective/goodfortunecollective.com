@@ -15,11 +15,11 @@
 	"devDependencies": {
 		"@playwright/test": "^1.37.1",
 		"@sveltejs/adapter-vercel": "^3.0.3",
-		"@sveltejs/kit": "^1.24.0",
+		"@sveltejs/kit": "^1.24.1",
 		"@tailwindcss/typography": "^0.5.9",
-		"@types/cookie": "^0.5.1",
-		"@typescript-eslint/eslint-plugin": "^6.5.0",
-		"@typescript-eslint/parser": "^6.5.0",
+		"@types/cookie": "^0.5.2",
+		"@typescript-eslint/eslint-plugin": "^6.6.0",
+		"@typescript-eslint/parser": "^6.6.0",
 		"autoprefixer": "^10.4.15",
 		"class-variance-authority": "^0.7.0",
 		"eslint": "^8.48.0",
@@ -27,7 +27,7 @@
 		"eslint-plugin-svelte": "^2.33.0",
 		"postcss": "^8.4.29",
 		"prettier": "^3.0.3",
-		"prettier-plugin-svelte": "^2.10.1",
+		"prettier-plugin-svelte": "^3.0.3",
 		"sass": "^1.66.1",
 		"svelte": "^4.2.0",
 		"svelte-check": "^3.5.1",
@@ -41,7 +41,7 @@
 	"type": "module",
 	"dependencies": {
 		"@storyblok/svelte": "^3.1.6",
-		"@types/curtainsjs": "^8.1.0",
+		"@types/curtainsjs": "^8.1.1",
 		"clsx": "^2.0.0",
 		"gsap": "^3.12.2",
 		"tailwind-merge": "^1.14.0"
