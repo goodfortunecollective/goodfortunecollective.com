@@ -3,14 +3,13 @@
 
 	import { ProjectListItem } from '$lib/components';
 	import { project_list_hover } from '$lib/stores';
+	import { onMount } from 'svelte';
+
+	import { ScrollTrigger } from '$lib/gsap';
 
 	export let blok: any;
 
-	let list_hover: string[] = [];
-
-	project_list_hover.subscribe((value) => {
-		list_hover = value;
-	});
+	let containerEl: HTMLElement;
 
 	const projectGridItemsClasses = [
 		'col-span-10 col-start-1 mt-[16.66%] text-left md:col-span-5 md:col-start-7 md:mt-[16.66%] md:text-right md:z-2',
@@ -28,14 +27,25 @@
 			return projectGridItemsClasses[(index - 1) % 6];
 		}
 	};
+
+	onMount(() => {
+		// @ts-ignore
+		const scrollTrigger = ScrollTrigger.create({
+				trigger: containerEl,
+				start: "top center",	
+				end: "bottom center",
+				onToggle: (self:any) => {if(!self.isActive) { $project_list_hover = ['']}},
+			});
+	});
+
 </script>
 
 <section use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	<div class="mb-16 md:mb-64">
+	<div class="mb-16 md:mb-64" bind:this={containerEl}>
 		{#each blok.projects as { name, slug, content }, index (content._uid)}
 			<div class="grid grid-cols-12">
 				<ProjectListItem
-					hover={list_hover.includes(name)}
+					hover={$project_list_hover.includes(name)}
 					{name}
 					{slug}
 					{content}

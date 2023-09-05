@@ -1,18 +1,18 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
-	import { navigating } from '$app/stores';
+	import type { Curtains } from '@types/curtainsjs';
 
 	import { base } from '$app/paths';
-	import { page } from '$app/stores';
+	import { navigating, page } from '$app/stores';
 	import { ProjectListItem } from '$lib/components';
+	import { ScrollTrigger } from '$lib/gsap';
 	import { project_list_hover } from '$lib/stores';
+	import { useCurtains } from '$lib/utils/useCurtains';
 
 	import MenuList from './MenuList.svelte';
 	import MenuItem from './MenuItem.svelte';
 
-	import type { Curtains } from '@types/curtainsjs';
-	import { useCurtains } from '../../lib/utils/useCurtains';
 
 	let curtains: undefined | Curtains;
 
@@ -21,6 +21,8 @@
 	});
 
 	export let data;
+
+	let containerEl: HTMLElement;
 
 	$: filter = $page.url.hash.slice(1);
 
@@ -93,6 +95,14 @@
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
+
+		// @ts-ignore
+		const scrollTrigger = ScrollTrigger.create({
+				trigger: containerEl,
+				start: "top center",	
+				end: "bottom center",
+				onToggle: (self:any) => {if(!self.isActive) { $project_list_hover = ['']}},
+			});
 	});
 
 	// update planes sizes and positions
@@ -127,7 +137,7 @@
 			</MenuList>
 		</div>
 
-		<div class="mb-32">
+		<div class="mb-32" bind:this={containerEl}>
 			{#each projects as { name, slug, content }, index}
 				<div class="grid grid-cols-12">
 					<ProjectListItem

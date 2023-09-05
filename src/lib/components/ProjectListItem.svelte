@@ -21,10 +21,6 @@
 	function onEnter() {
 		$project_list_hover = [name, ...$project_list_hover];
 	}
-
-	function onLeave() {
-		$project_list_hover = $project_list_hover.filter((item) => item !== name);
-	}
 </script>
 
 <a
@@ -37,7 +33,7 @@
 	)}
 	data-id={slug}
 >
-	<div class="ProjectListItem-thumb" on:mouseenter={onEnter} on:mouseleave={onLeave}>
+	<div class="ProjectListItem-thumb" on:mouseenter={onEnter}>
 		{#if useCurtainsPlanes}
 			<ScrollPlane
 				{slug}

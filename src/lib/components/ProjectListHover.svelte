@@ -36,17 +36,17 @@
 				onComplete: () => {
 					setTimeout(() => {
 						locked = false;
-						project_list_hover.set([]);
+						$project_list_hover = [''];
 					}, 2000);
 				}
 			});
 		} else {
-			project_list_hover.set([]);
+			$project_list_hover = [''];
 		}
 	});
 </script>
 
-{#if list_hover.length > 0}
+{#if list_hover.length > 0 || list_hover[0] !== ''}
 	<div class="fixed top-0 left-0 w-screen h-screen pointer-events-none z-50">
 		<section class="pt-[var(--header-height)]">
 			<div class="grid grid-cols-12 pt-16 pb-16">
@@ -72,7 +72,7 @@
 							{#key title}
 								<span
 									in:slide|global={{ duration: 200, delay: 200, direction: 'bottom' }}
-									out:slide|global={{ duration: 200, direction: 'top' }}
+									
 									class="inline-block"
 								>
 									{title}
