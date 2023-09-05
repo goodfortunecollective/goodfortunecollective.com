@@ -43,6 +43,10 @@
 		"@storyblok/svelte": "^3.1.6",
 		"@types/curtainsjs": "^8.1.1",
 		"clsx": "^2.0.0",
-		"tailwind-merge": "^1.14.0"
+		"gsap": "3.12.1",
+		"tailwind-merge": "^1.1 .0"
+	},
+	"dependencies-comments": {
+		"gsap": "Need to be sync with @lib/gsap package extension version"
 	}
 }

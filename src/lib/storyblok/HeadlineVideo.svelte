@@ -4,7 +4,7 @@
 	import CustomCursor from '../components/CustomCursor.svelte';
 	import { clamp } from '../utils/maths';
 
-	import { gsap, SplitText } from '$lib/gsap';
+	import gsap, { SplitText } from '$lib/gsap';
 	import { delay_anim_page } from '$lib/stores';
 
 	export let blok: any;

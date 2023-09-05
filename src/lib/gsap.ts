@@ -7,7 +7,7 @@ import { SplitText } from '$lib/vendors/gsap/SplitText.js';
 import { Draggable } from '$lib/vendors/gsap/Draggable.js';
 import { InertiaPlugin } from '$lib/vendors/gsap/InertiaPlugin.js';
 
-import { gsap } from '$lib/vendors/gsap/';
+import gsap from 'gsap';
 
 if (browser) {
 	gsap.registerPlugin(
@@ -20,5 +20,5 @@ if (browser) {
 	);
 }
 
-export * from '$lib/vendors/gsap/';
 export { ScrollSmoother, ScrollTrigger, MotionPathPlugin, SplitText, Draggable, InertiaPlugin };
+export default gsap;

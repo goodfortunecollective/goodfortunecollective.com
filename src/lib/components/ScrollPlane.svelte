@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { onDestroy, tick } from 'svelte';
-	import { base } from '$app/paths';
-	import { cls } from '$lib/styles';
 	import { clamp } from '../utils/maths';
 	import { ScrollSmoother } from '$lib/gsap';
 	import { useCurtains } from '$lib/utils/useCurtains';

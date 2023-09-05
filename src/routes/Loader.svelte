@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher, onMount } from 'svelte';
 
-	import { gsap } from '$lib/gsap';
+	import gsap from '$lib/gsap';
 	import { cls } from '$lib/styles';
 	import { delay_anim_page } from '$lib/stores';
 	import { Gfc } from '$lib/components';

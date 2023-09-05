@@ -3,7 +3,7 @@
 	import { storyblokEditable } from '@storyblok/svelte';
 
 	import { CustomCursor } from '$lib/components';
-	import { gsap } from '$lib/gsap';
+	import gsap from '$lib/gsap';
 
 	let tl: any = null;
 	export let blok: any;

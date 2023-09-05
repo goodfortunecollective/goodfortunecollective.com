@@ -5,7 +5,7 @@
 
 	import { dev } from '$app/environment';
 	import { page } from '$app/stores';
-	import { ScrollSmoother, ScrollTrigger, gsap } from '$lib/gsap';
+	import gsap, { ScrollSmoother, ScrollTrigger } from '$lib/gsap';
 
 	import { getComponentByName } from '$lib/storyblok';
 

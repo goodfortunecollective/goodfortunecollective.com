@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { gsap, ScrollSmoother } from '$lib/gsap';
+	import gsap, { ScrollSmoother } from '$lib/gsap';
 	import { lerp } from '../utils/maths';
 	import { onMount } from 'svelte';
 

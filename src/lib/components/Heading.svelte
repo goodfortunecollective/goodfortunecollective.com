@@ -2,7 +2,7 @@
 	import { onDestroy, onMount } from 'svelte';
 
 	import { delay_anim_page, isPageHidden, isTransitioning } from '$lib/stores';
-	import { gsap, SplitText, ScrollTrigger } from '$lib/gsap';
+	import gsap, { SplitText, ScrollTrigger } from '$lib/gsap';
 	import { cls } from '$lib/styles';
 
 	export let as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1';

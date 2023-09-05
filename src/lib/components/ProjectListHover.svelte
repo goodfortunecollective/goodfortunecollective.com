@@ -2,7 +2,7 @@
 	import { beforeNavigate, afterNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 
-	import { gsap } from '$lib/gsap';
+	import gsap from '$lib/gsap';
 	import { project_list_hover } from '$lib/stores';
 
 	import { slide } from '$lib/transitions';

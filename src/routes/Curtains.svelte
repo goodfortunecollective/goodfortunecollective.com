@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { curtains } from '../lib/stores';
-	import { gsap } from '$lib/gsap';
+	import gsap from '$lib/gsap';
 	import { Curtains } from '$lib/vendors/curtainsjs/core/Curtains';
 	import { onMount } from 'svelte';
 

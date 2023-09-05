@@ -6,7 +6,7 @@
 	import { goto } from '$app/navigation';
 
 	import { Heading } from '$lib/components';
-	import { gsap } from '$lib/gsap';
+	import gsap from '$lib/gsap';
 
 	export let data;
 

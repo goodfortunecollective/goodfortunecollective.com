@@ -2,7 +2,7 @@
 	import { StoryblokComponent, storyblokEditable } from '@storyblok/svelte';
 	import { onMount } from 'svelte';
 
-	import { gsap } from '$lib/gsap';
+	import gsap from '$lib/gsap';
 
 	export let blok: any;
 

@@ -4,7 +4,7 @@
 	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 
 	import { base } from '$app/paths';
-	import { gsap } from '$lib/gsap';
+	import gsap from '$lib/gsap';
 	import { Gfc } from '$lib/components';
 
 	export let blok: any;
