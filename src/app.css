@@ -41,6 +41,10 @@
 		display: inline-block !important;
 		white-space: nowrap;
 	}
+
+	.split-line {
+		overflow: clip;
+	}
 }
 
 :root {
