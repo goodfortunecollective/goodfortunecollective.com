@@ -17,13 +17,14 @@
 				linesClass: 'split-line'
 			});
 
+			const scrollTrigger = {
+				trigger: element,
+				start: 'bottom 80%',
+				toggleActions: 'restart pause resume reverse'
+			};
+
 			animChars = gsap.from(text.chars, {
-				scrollTrigger: {
-					trigger: element,
-					start: 'bottom 80%',
-					markers: true,
-					toggleActions: 'restart pause resume reverse'
-				},
+				scrollTrigger,
 				duration: 0.2,
 				ease: 'circ.out',
 				y: 40,
@@ -31,12 +32,7 @@
 			});
 
 			animLines = gsap.from(text.lines, {
-				scrollTrigger: {
-					trigger: element,
-					start: 'bottom 80%',
-					markers: true,
-					toggleActions: 'restart pause resume reverse'
-				},
+				scrollTrigger,
 				duration: 0.2,
 				ease: 'circ.out',
 				rotateX: 40,
