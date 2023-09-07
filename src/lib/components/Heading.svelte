@@ -21,7 +21,7 @@
 	{...$$restProps}
 	class={cls(textSizes[size], 'w-full font-degular-display', $$props.class)}
 >
-	<TextTransition enabled={animated}>
+	<TextTransition type="heading" enabled={animated}>
 		<slot />
 	</TextTransition>
 </svelte:element>

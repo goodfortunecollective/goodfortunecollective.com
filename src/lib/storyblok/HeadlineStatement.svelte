@@ -2,6 +2,7 @@
 	import { renderRichText, storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 
 	import { Heading } from '$lib/components';
+	import TextTransition from '$lib/components/TextTransition.svelte';
 
 	export let blok: any;
 
@@ -26,7 +27,7 @@
 			<div
 				class="lg:pt-24 text-xl xl:text-2xl 4xl:text-4xl leading-9 4xl:leading-loose max-w-screen-xl"
 			>
-				{@html content}
+				<TextTransition>{@html content}</TextTransition>
 			</div>
 		</div>
 		{#if blok.children.length}

@@ -2,6 +2,7 @@
 	import { onMount, onDestroy } from 'svelte';
 
 	import gsap, { SplitText } from '$lib/gsap';
+	import { Timeline } from '$lib/vendors/gsap/gsap-core';
 
 	let element: HTMLSpanElement;
 
@@ -9,35 +10,44 @@
 	let animLines: any = null;
 
 	export let enabled: boolean = true;
+	export let type: 'heading' | 'p' = 'p';
 
 	onMount(() => {
 		if (enabled) {
 			const text = new SplitText(element, {
 				type: 'lines,words,chars',
-				linesClass: 'split-line'
+				linesClass: 'split-line',
+				charClass: 'split-char'
 			});
 
-			const scrollTrigger = {
-				trigger: element,
-				start: 'bottom 80%',
-				toggleActions: 'restart pause resume reverse'
-			};
+			if (type === 'heading') {
+				animChars = gsap.from(text.chars, {
+					scrollTrigger: {
+						trigger: element,
+						start: 'bottom 80%',
+						toggleActions: 'restart pause resume reverse'
+					},
+					duration: 0.2,
+					ease: 'circ.out',
+					yPercent: 100,
+					stagger: 0.01
+				});
+			}
 
-			animChars = gsap.from(text.chars, {
-				scrollTrigger,
-				duration: 0.2,
-				ease: 'circ.out',
-				y: 40,
-				stagger: 0.01
-			});
-
-			animLines = gsap.from(text.lines, {
-				scrollTrigger,
-				duration: 0.2,
-				ease: 'circ.out',
-				rotateX: 40,
-				stagger: 0.01
-			});
+			if (type === 'p') {
+				animLines = gsap.from(text.lines, {
+					scrollTrigger: {
+						trigger: element,
+						toggleActions: 'restart pause resume reverse',
+						start: 'bottom 90%'
+					},
+					duration: 0.6,
+					autoAlpha: 0,
+					ease: 'circ.out',
+					yPercent: 25,
+					stagger: 0.2
+				});
+			}
 		}
 	});
 	onDestroy(() => {
@@ -53,6 +63,6 @@
 	});
 </script>
 
-<span bind:this={element}>
-	<slot />
+<span bind:this={element} class="inline-block">
+	<span class="wrap" /><slot />
 </span>

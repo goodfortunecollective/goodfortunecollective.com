@@ -67,12 +67,11 @@
 					>
 						<span
 							class="ProjectListHover-title relative"
-							style="--color: {locked ? '#fff' : '#000'};"
+							style="--color: {locked ? '#fff' : '#b8b68d'};"
 						>
 							{#key title}
 								<span
 									in:slide|global={{ duration: 200, delay: 200, direction: 'bottom' }}
-									
 									class="inline-block"
 								>
 									{title}
