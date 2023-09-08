@@ -10,4 +10,4 @@ export const isTransitioning = writable(false as boolean);
 export const isPageHidden = writable(false as boolean);
 
 // work items hover state
-export const project_list_hover = writable([] as Array<string>);
+export const project_list_hover = writable('' as string);

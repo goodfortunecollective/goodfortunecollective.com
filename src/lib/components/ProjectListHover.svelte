@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { cubicIn, cubicOut } from 'svelte/easing';
+
 	import { beforeNavigate, afterNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 
@@ -8,27 +10,25 @@
 	import { slide } from '$lib/transitions';
 
 	let titleEl!: HTMLElement;
-	let list_hover: string[] = [];
+	let list_hover: string = '';
 	let locked = false;
 
-	$: title = list_hover[0] || '';
+	$: title = list_hover;
 
 	project_list_hover.subscribe((value) => {
 		if (!locked) {
-			if (value.length > 0 && value[0] !== list_hover[0]) {
-				list_hover = value;
-			}
+			list_hover = value;
 		}
 	});
 
 	beforeNavigate(() => {
-		if (list_hover.length > 0) {
+		if (list_hover !== '') {
 			locked = true;
 		}
 	});
 
 	afterNavigate(() => {
-		if (list_hover.length > 0 && $page.url.pathname.includes('/work')) {
+		if (list_hover !== '' && $page.url.pathname.includes('/work')) {
 			gsap.to(titleEl, {
 				startColor: '#000',
 				endColor: '#fff',
@@ -36,17 +36,17 @@
 				onComplete: () => {
 					setTimeout(() => {
 						locked = false;
-						$project_list_hover = [''];
+						$project_list_hover = '';
 					}, 2000);
 				}
 			});
 		} else {
-			$project_list_hover = [''];
+			$project_list_hover = '';
 		}
 	});
 </script>
 
-{#if list_hover.length > 0 || list_hover[0] !== ''}
+{#if list_hover !== ''}
 	<div class="fixed top-0 left-0 w-screen h-screen pointer-events-none z-50">
 		<section class="pt-[var(--header-height)]">
 			<div class="grid grid-cols-12 pt-16 pb-16">
@@ -66,13 +66,18 @@
 						bind:this={titleEl}
 					>
 						<span
-							class="ProjectListHover-title relative"
-							style="--color: {locked ? '#fff' : '#b8b68d'};"
+							class="ProjectListHover-title relative block"
+							style="--color: {locked ? '#fff' : '#cbc873'};"
 						>
 							{#key title}
 								<span
-									in:slide|global={{ duration: 200, delay: 200, direction: 'bottom' }}
-									class="inline-block"
+									in:slide|global={{
+										duration: 700,
+										direction: 'bottom',
+										easing: cubicOut
+									}}
+									out:slide|global={{ duration: 500, direction: 'top', easing: cubicOut }}
+									class="inline-block absolute"
 								>
 									{title}
 								</span>

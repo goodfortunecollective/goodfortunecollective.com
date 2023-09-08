@@ -31,13 +31,16 @@
 	onMount(() => {
 		// @ts-ignore
 		const scrollTrigger = ScrollTrigger.create({
-				trigger: containerEl,
-				start: "top center",	
-				end: "bottom center",
-				onToggle: (self:any) => {if(!self.isActive) { $project_list_hover = ['']}},
-			});
+			trigger: containerEl,
+			start: 'top center',
+			end: 'bottom center',
+			onToggle: (self: any) => {
+				if (!self.isActive) {
+					$project_list_hover = '';
+				}
+			}
+		});
 	});
-
 </script>
 
 <section use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
@@ -45,7 +48,6 @@
 		{#each blok.projects as { name, slug, content }, index (content._uid)}
 			<div class="grid grid-cols-12">
 				<ProjectListItem
-					hover={$project_list_hover.includes(name)}
 					{name}
 					{slug}
 					{content}

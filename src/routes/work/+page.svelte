@@ -13,7 +13,6 @@
 	import MenuList from './MenuList.svelte';
 	import MenuItem from './MenuItem.svelte';
 
-
 	let curtains: undefined | Curtains;
 
 	useCurtains((curtainsInstance) => {
@@ -98,11 +97,15 @@
 
 		// @ts-ignore
 		const scrollTrigger = ScrollTrigger.create({
-				trigger: containerEl,
-				start: "top center",	
-				end: "bottom center",
-				onToggle: (self:any) => {if(!self.isActive) { $project_list_hover = ['']}},
-			});
+			trigger: containerEl,
+			start: 'top center',
+			end: 'bottom center',
+			onToggle: (self: any) => {
+				if (!self.isActive) {
+					$project_list_hover = '';
+				}
+			}
+		});
 	});
 
 	// update planes sizes and positions
@@ -141,7 +144,7 @@
 			{#each projects as { name, slug, content }, index}
 				<div class="grid grid-cols-12">
 					<ProjectListItem
-						hover={$project_list_hover.includes(slug)}
+						hover={$project_list_hover === name}
 						{name}
 						{slug}
 						{content}

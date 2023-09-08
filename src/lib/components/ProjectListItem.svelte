@@ -12,14 +12,14 @@
 	export let layout: 'left' | 'right' = 'left';
 	export let useCurtainsPlanes: boolean = true;
 
-	let list_hover: string[] = [];
+	let list_hover: string = '';
 
-	project_list_hover.subscribe((value) => {
+	project_list_hover.subscribe((value: string) => {
 		list_hover = value;
 	});
 
 	function onEnter() {
-		$project_list_hover = [name, ...$project_list_hover];
+		$project_list_hover = name;
 	}
 </script>
 
@@ -33,14 +33,9 @@
 	)}
 	data-id={slug}
 >
-	<div class="ProjectListItem-thumb" on:mouseenter={onEnter}>
+	<div class="ProjectListItem-thumb will-change-transform" on:mouseenter={onEnter}>
 		{#if useCurtainsPlanes}
-			<ScrollPlane
-				{slug}
-				{content}
-				{name}
-				hoverOthers={list_hover.length > 0 && !list_hover.includes(name)}
-			/>
+			<ScrollPlane {slug} {content} {name} hover={list_hover === name} />
 		{:else}
 			<div class="ProjectListItem-thumb-image">
 				<img

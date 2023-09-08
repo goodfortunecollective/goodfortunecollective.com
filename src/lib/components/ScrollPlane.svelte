@@ -3,14 +3,15 @@
 	import { ScrollSmoother } from '$lib/gsap';
 	import { useCurtains } from '$lib/utils/useCurtains';
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
-	import { isPageHidden, isTransitioning } from '../stores';
+
+	import { isPageHidden, isTransitioning } from '$lib/stores';
 
 	import type { Curtains, Plane as PlaneType, PlaneParams } from '@types/curtainsjs';
 
 	export let name: string;
 	export let slug: string;
 	export let content: any;
-	export let hoverOthers: boolean = false;
+	export let hover: boolean = false;
 
 	let planeEl: HTMLElement;
 	let plane: undefined | PlaneType;
@@ -101,13 +102,15 @@
 		}
 	};
 
+	function easeInSine(x: number): number {
+		return 1 - Math.cos((x * Math.PI) / 2);
+	}
+
 	const createPlane = () => {
 		if (curtains && canCreatePlane) {
 			params.renderOrder = curtains.planes.length;
 
 			plane = new Plane(curtains, planeEl, params);
-
-			console.log('add plane', plane);
 
 			plane.onRender(() => {
 				const scroll = ScrollSmoother.get();
@@ -120,15 +123,11 @@
 				//plane.scale.y = 1 + Math.abs(velocity * 0.0025);
 				plane.textures[0].scale.y = 1 + Math.abs(velocity * 0.005);
 
-				plane.scale.x = clamp(hoverOthers ? plane.scale.x - 0.02 : plane.scale.x + 0.02, 0.75, 1);
-
-				plane.scale.y = clamp(hoverOthers ? plane.scale.y - 0.02 : plane.scale.y + 0.02, 0.75, 1);
-
-				plane.uniforms.opacity.value = clamp(
-					hoverOthers ? plane.uniforms.opacity.value - 0.02 : plane.uniforms.opacity.value + 0.02,
-					0.5,
-					1
-				);
+				if (hover) {
+					plane.textures[0].scale.y = 1.1;
+				}
+				plane.scale.x = clamp(hover ? plane.scale.x - 0.04 : plane.scale.x + 0.04, 0.9, 1);
+				plane.scale.y = plane.scale.x;
 			});
 		}
 	};
