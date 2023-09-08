@@ -121,12 +121,16 @@
 
 				// scale plane and its texture
 				//plane.scale.y = 1 + Math.abs(velocity * 0.0025);
-				plane.textures[0].scale.y = 1 + Math.abs(velocity * 0.005);
+				//plane.textures[0].scale.y = 1 + Math.abs(velocity * 0.005);
 
-				if (hover) {
-					plane.textures[0].scale.y = 1.1;
-				}
-				plane.scale.x = clamp(hover ? plane.scale.x - 0.04 : plane.scale.x + 0.04, 0.9, 1);
+				plane.textures[0].scale.y = clamp(
+					!hover ? plane.textures[0].scale.y - 0.02 : plane.textures[0].scale.y + 0.02,
+					1,
+					1.15
+				);
+				plane.textures[0].scale.x = plane.textures[0].scale.y;
+
+				plane.scale.x = clamp(hover ? plane.scale.x - 0.01 : plane.scale.x + 0.01, 0.9, 1);
 				plane.scale.y = plane.scale.x;
 			});
 		}
