@@ -11,10 +11,11 @@
 
 	export let enabled: boolean = true;
 	export let type: 'heading' | 'p' = 'p';
+	export let text: any = null;
 
 	onMount(() => {
 		if (enabled) {
-			const text = new SplitText(element, {
+			text = new SplitText(element, {
 				type: 'lines,words,chars',
 				linesClass: 'split-line',
 				charClass: 'split-char'
@@ -30,7 +31,8 @@
 					duration: 0.2,
 					ease: 'circ.out',
 					yPercent: 100,
-					stagger: 0.01
+					stagger: 0.01,
+					onComplete: transitionEnded
 				});
 			}
 
@@ -45,11 +47,19 @@
 					autoAlpha: 0,
 					ease: 'circ.out',
 					yPercent: 25,
-					stagger: 0.2
+					stagger: 0.2,
+					onComplete: transitionEnded
 				});
 			}
 		}
 	});
+
+	const transitionEnded = () => {
+		text.lines.forEach((line) => {
+			line.classList.add('overflow-visible');
+		});
+	};
+
 	onDestroy(() => {
 		if (animChars) {
 			animChars.kill();
