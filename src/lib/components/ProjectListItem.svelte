@@ -2,6 +2,7 @@
 	import { base } from '$app/paths';
 	import { cls } from '$lib/styles';
 	import { ScrollPlane } from '$lib/components';
+	import { onMount } from 'svelte';
 
 	import { project_list_hover } from '$lib/stores';
 
@@ -21,7 +22,61 @@
 	function onEnter() {
 		$project_list_hover = name;
 	}
+
+
+	// parallax
+	let projectEl: HTMLElement;
+	let ww: number;
+	let wh: number;
+	let initScroll: number = 0;
+	let currentScroll: number = 0;
+	let projectDOMRect: DOMRect;
+	const parallaxStrength: number = 0.2;
+	$: parallaxEffect = 0;
+
+	const onResize = () => {
+		ww = window.innerWidth
+		wh = window.innerHeight
+		initScroll = window.pageYOffset
+
+		if(projectEl) {
+			projectDOMRect = projectEl.getBoundingClientRect()
+		}
+
+		applyParallax()
+	}
+
+	const applyParallax = () => {
+		if(!projectDOMRect || !ww || !wh) return
+
+		const planeOffsetTop = projectDOMRect.top + projectDOMRect.height / 2 - wh * 0.5;
+		// get a float value based on window height (0 means the plane is centered)
+		const distanceToCenter = planeOffsetTop - (currentScroll - initScroll);
+
+		// parallax strength is based on item relative width
+		const itemParallaxStrength = ww / projectDOMRect.width - 1
+
+		// get parallax effect
+		parallaxEffect = distanceToCenter * parallaxStrength * itemParallaxStrength;
+	}
+
+	const onScroll = (event: any) => {
+		currentScroll = event.detail.offsetY;
+		applyParallax()
+	}
+
+	onMount(() => {
+		onResize()
+		window.addEventListener('smoothScrollUpdate', onScroll);
+
+		return () => {
+			// this function is called when the component is destroyed
+			window.removeEventListener('smoothScrollUpdate', onScroll);
+		}
+	})
 </script>
+
+<svelte:window on:resize={onResize} />
 
 <a
 	href="{base}/work/{slug}"
@@ -32,6 +87,8 @@
 		$$props.class
 	)}
 	data-id={slug}
+	bind:this={projectEl}
+	style="--parallax-effect: {parallaxEffect};"
 >
 	<div class="ProjectListItem-thumb will-change-transform" on:mouseenter={onEnter}>
 		{#if useCurtainsPlanes}
@@ -76,6 +133,8 @@
 		position: relative;
 		overflow: visible;
 		//margin: 200px 0;
+
+		transform: translate3d(0, calc(var(--parallax-effect) * 1px), 0);
 
 		&-thumb {
 			width: 100%;

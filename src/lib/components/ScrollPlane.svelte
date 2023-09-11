@@ -132,6 +132,9 @@
 
 				plane.scale.x = clamp(hover ? plane.scale.x - 0.01 : plane.scale.x + 0.01, 0.9, 1);
 				plane.scale.y = plane.scale.x;
+
+				// not super optimized but since we're translating its parent container it's mandatory
+				plane.updatePosition()
 			});
 		}
 	};
