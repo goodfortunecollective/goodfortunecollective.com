@@ -63,6 +63,6 @@
 	});
 </script>
 
-<span bind:this={element} class="inline-block">
+<span bind:this={element} class="inline-block break-words">
 	<span class="wrap" /><slot />
 </span>

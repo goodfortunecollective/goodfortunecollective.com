@@ -83,16 +83,16 @@
 
 <section class="pt-[var(--header-height)] bg-black text-white">
 	<div class="grid grid-cols-12 pt-16 pb-16">
-		<div class="col-start-2 col-span-8 lg:col-start-2 lg:col-span-6">
+		<div class="col-span-8 col-start-2 lg:col-start-2 lg:col-span-6">
 			<div class="grid grid-cols-12 gap-8 lg:gap-0">
 				{#if data.story.content.client}
-					<div class="col-start-1 lg:col-start-1 col-span-2 lg:col-span-3">
+					<div class="col-span-2 col-start-1 lg:col-start-1 lg:col-span-3">
 						<h5 class="mb-2 text-sm font-bold tracking-wide uppercase">Client</h5>
 						{data.story.content.client}
 					</div>
 				{/if}
 				{#if data.story.content.solutions}
-					<div class="col-start-4 lg:col-start-4 col-span-2 lg:col-span-3">
+					<div class="col-span-2 col-start-4 lg:col-start-4 lg:col-span-3">
 						<h5 class="mb-2 text-sm font-bold tracking-wide uppercase">Solutions</h5>
 						<ul class="leading-loose">
 							{#each data.story.content.solutions as item}
@@ -102,7 +102,7 @@
 					</div>
 				{/if}
 				{#if data.story.content.roles}
-					<div class="col-start-1 lg:col-start-7 col-span-2 lg:col-span-3">
+					<div class="col-span-2 col-start-1 lg:col-start-7 lg:col-span-3">
 						<h5 class="mb-2 text-sm font-bold tracking-wide uppercase">Roles</h5>
 						<ul class="leading-loose">
 							{#each data.story.content.roles as item}
@@ -112,7 +112,7 @@
 					</div>
 				{/if}
 				{#if data.story.content.deliverables}
-					<div class="col-start-4 lg:col-start-10 col-span-2 lg:col-span-3">
+					<div class="col-span-2 col-start-4 lg:col-start-10 lg:col-span-3">
 						<h5 class="mb-2 text-sm font-bold tracking-wide uppercase">Deliverables</h5>
 						<ul class="leading-loose">
 							{#each data.story.content.deliverables as item}
@@ -122,19 +122,19 @@
 					</div>
 				{/if}
 			</div>
-			<Heading as="h1" size="h1" class="mt-6" animated={false}>{data.story.name}</Heading>
+			<Heading as="h1" size="h1" class="mt-6" animated={true}>{data.story.name}</Heading>
 			{#if data.story.content.description}
-				<div class="mt-12 w-full md:w-2/3 leading-loose">
+				<div class="w-full mt-12 leading-loose md:w-2/3">
 					{@html description}
 				</div>
 			{/if}
 		</div>
-		<figure class="col-start-10 lg:col-start-10 col-span-3 lg:col-span-3">
+		<figure class="col-span-3 col-start-10 lg:col-start-10 lg:col-span-3">
 			{#if data.story.content.thumbnail}
-				<div class="w-full h-full relative">
+				<div class="relative w-full h-full">
 					<img
 						src={data.story.content.thumbnail.filename}
-						class="w-full h-full absolute inset-0 object-cover object-top"
+						class="absolute inset-0 object-cover object-top w-full h-full"
 						alt={data.story.content.title}
 					/>
 				</div>
@@ -149,11 +149,11 @@
 	<div bind:this={scrollBottomContainerEl} class=" mt-72 pb-[100vh]">
 		<div
 			bind:this={scrollBottomEl}
-			class="flex flex-col justify-center items-center text-center gap-8"
+			class="flex flex-col items-center justify-center gap-8 text-center"
 		>
-			<p class="uppercase font-medium tracking-widest">Scroll</p>
-			<div class="h-48 w-px bg-gray-100">
-				<div bind:this={scrollProgressBottomEl} class="bg-black h-full origin-top" />
+			<p class="font-medium tracking-widest uppercase">Scroll</p>
+			<div class="w-px h-48 bg-gray-100">
+				<div bind:this={scrollProgressBottomEl} class="h-full origin-top bg-black" />
 			</div>
 			<span class="font-degular-display leading-8 text-[10em]">All projects</span>
 		</div>
