@@ -13,6 +13,9 @@
 	let imagesDraggable = null;
 	let imagesWrapper!: HTMLElement;
 
+	if (blok.crop_images) blockClasses += ' crop';
+	if (blok.full_width) blockClasses += ' full-width';
+
 	for (let i = 0; i < blok.images.length; i++) {
 		imagesClasses[i] = imageClass;
 
@@ -72,18 +75,49 @@
 		color: $white;
 	}
 
+	.images-block {
+		height: 70vh;
+
+		&.full-width {
+			height: auto;
+		}
+
+		&.crop {
+			height: auto;
+		}
+	}
+
 	.image-block {
 		position: relative;
-		width: 50vw;
+		height: 100%;
 
-		@media (min-width: $media-md) {
-			width: 30vw;
+		.full-width & {
+			width: 85vw;
+		}
+
+		.crop & {
+			width: 50vw;
+			height: auto;
+
+			@media (min-width: $media-md) {
+				width: 30vw;
+			}
+			.image-block-img {
+				aspect-ratio: 1/1;
+				object-fit: cover;
+				height: auto;
+				width: 100%;
+				max-width: 100%;
+			}
 		}
 	}
 
 	.image-block-img {
-		aspect-ratio: 1/1;
-		object-fit: cover;
+		height: 100%;
+		width: auto;
+		max-width: inherit;
+		// aspect-ratio: 1/1;
+		// object-fit: cover;
 	}
 
 	.caption-number {
