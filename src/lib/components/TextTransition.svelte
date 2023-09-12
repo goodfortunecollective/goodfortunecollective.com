@@ -31,8 +31,7 @@
 					duration: 0.2,
 					ease: 'circ.out',
 					yPercent: 100,
-					stagger: 0.01,
-					onComplete: transitionEnded
+					stagger: 0.01
 				});
 			}
 
@@ -47,18 +46,11 @@
 					autoAlpha: 0,
 					ease: 'circ.out',
 					yPercent: 25,
-					stagger: 0.2,
-					onComplete: transitionEnded
+					stagger: 0.2
 				});
 			}
 		}
 	});
-
-	const transitionEnded = () => {
-		text.lines.forEach((line) => {
-			line.classList.add('overflow-visible');
-		});
-	};
 
 	onDestroy(() => {
 		if (animChars) {
