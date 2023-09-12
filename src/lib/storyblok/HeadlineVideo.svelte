@@ -24,7 +24,8 @@
 	let tlSplitText: any = null;
 	let tlContainer: any = null;
 
-	let bgOpacity: Float = 1;
+	let bgOpacity: number = 1;
+	let titleScale: number = 1;
 
 	// avoid division by 0
 	let ww: number = 1;
@@ -102,6 +103,7 @@
 						// self.getVelocity()
 					);
 					bgOpacity = 1 - self.progress;
+					titleScale = 1 - self.progress;
 					console.log('opacity : ' + (1 - self.progress));
 				}
 			}
@@ -249,6 +251,7 @@
 				<h1
 					data-gsap="split-text"
 					class="max-w-6xl leading-none text-10xl 3xl:text-9xl z-[8] text-cyan-500 font-degular-display"
+					style="transform:scale({titleScale})"
 				>
 					{blok.headline}
 				</h1>
