@@ -3,15 +3,16 @@
 	import { ScrollSmoother } from '$lib/gsap';
 	import { useCurtains } from '$lib/utils/useCurtains';
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
+	import gsap from '$lib/gsap';
+	import { onMount } from 'svelte';
 
-	import { isPageHidden, isTransitioning } from '$lib/stores';
+	import { isPageHidden, isTransitioning, project_list_hover } from '$lib/stores';
 
 	import type { Curtains, Plane as PlaneType, PlaneParams } from '@types/curtainsjs';
 
 	export let name: string;
 	export let slug: string;
 	export let content: any;
-	export let hover: boolean = false;
 
 	let planeEl: HTMLElement;
 	let plane: undefined | PlaneType;
@@ -117,22 +118,6 @@
 				const velocity = clamp(scroll.getVelocity() * 0.01, -60, 60);
 				plane.uniforms.scrollVelocity.value = velocity;
 
-				//plane.rotation.z = velocity * 0.00125;
-
-				// scale plane and its texture
-				//plane.scale.y = 1 + Math.abs(velocity * 0.0025);
-				//plane.textures[0].scale.y = 1 + Math.abs(velocity * 0.005);
-
-				plane.textures[0].scale.y = clamp(
-					!hover ? plane.textures[0].scale.y - 0.02 : plane.textures[0].scale.y + 0.02,
-					1,
-					1.15
-				);
-				plane.textures[0].scale.x = plane.textures[0].scale.y;
-
-				plane.scale.x = clamp(hover ? plane.scale.x - 0.01 : plane.scale.x + 0.01, 0.9, 1);
-				plane.scale.y = plane.scale.x;
-
 				// not super optimized but since we're translating its parent container it's mandatory
 				plane.updatePosition()
 			});
@@ -161,6 +146,7 @@
 		}
 	});
 
+
 	useCurtains(
 		(curtainsInstance) => {
 			curtains = curtainsInstance;
@@ -177,6 +163,64 @@
 			}
 		}
 	);
+
+
+	// hover
+	let hoverTl: GSAPTimeline = gsap.timeline();
+	project_list_hover.subscribe(value => {
+		if(!plane) return
+
+		if(hoverTl.isActive()) hoverTl.kill()
+
+		const hoverTransition = {
+			planeScale: plane.scale.x,
+			textureScale: plane.textures[0].scale.x,
+			opacity: plane.uniforms.opacity.value
+		}
+
+		if(value === name || !value) {
+			console.log('reset plane ', name,' hover because value is', value)
+			hoverTl.to(hoverTransition, {
+				planeScale: 1,
+				textureScale: 1,
+				opacity: 1,
+				duration: 0.5,
+				onUpdate: () => {
+					plane.scale.x = hoverTransition.planeScale;
+					plane.scale.y = hoverTransition.planeScale;
+
+					plane.textures[0].scale.x = hoverTransition.textureScale;
+					plane.textures[0].scale.y = hoverTransition.textureScale;
+
+					plane.uniforms.opacity.value = hoverTransition.opacity
+				}
+			})
+		}
+		else {
+			console.log('set active plane ', name,' hover because value is', value)
+			hoverTl.to(hoverTransition, {
+				planeScale: 0.9,
+				textureScale: 1.15,
+				opacity: 0.5,
+				duration: 0.5,
+				onUpdate: () => {
+					plane.scale.x = hoverTransition.planeScale;
+					plane.scale.y = hoverTransition.planeScale;
+
+					plane.textures[0].scale.x = hoverTransition.textureScale;
+					plane.textures[0].scale.y = hoverTransition.textureScale;
+
+					plane.uniforms.opacity.value = hoverTransition.opacity
+				}
+			})
+		}
+	})
+
+	onMount(() => {
+		return () => {
+			hoverTl.kill()
+		}
+	})
 </script>
 
 <div class="ScrollPlane" bind:this={planeEl}>
