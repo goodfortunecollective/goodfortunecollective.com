@@ -24,6 +24,8 @@
 	let tlSplitText: any = null;
 	let tlContainer: any = null;
 
+	let bgOpacity: Float = 1;
+
 	// avoid division by 0
 	let ww: number = 1;
 	let scrollPosition: number = 0;
@@ -89,7 +91,19 @@
 				start: 'center 50%',
 				end: '+=50%',
 				scrub: true,
-				pin: true
+				pin: true,
+				onUpdate: (self) => {
+					console.log(
+						'progress:',
+						self.progress.toFixed(3)
+						// 'direction:',
+						// self.direction,
+						// 'velocity',
+						// self.getVelocity()
+					);
+					bgOpacity = 1 - self.progress;
+					console.log('opacity : ' + (1 - self.progress));
+				}
 			}
 		});
 
@@ -104,11 +118,11 @@
 			},
 			onStart: () => {
 				// move video behind title
-				if (videoContainer) videoContainer.style.zIndex = '9';
+				// if (videoContainer) videoContainer.style.zIndex = '9';
 			},
 			onReverseComplete: () => {
 				// move video on top of title
-				if (videoContainer) videoContainer.style.zIndex = '11';
+				// if (videoContainer) videoContainer.style.zIndex = '11';
 			}
 		});
 		tlSplitText.addLabel('start');
@@ -203,14 +217,15 @@
 
 <svelte:window on:mousemove={onMouseMove} on:resize={onResize} />
 
-<section use:storyblokEditable={blok} {...$$restProps} class="grid grid-cols-12 h-screen bg-black">
+<section use:storyblokEditable={blok} {...$$restProps} class="grid h-screen grid-cols-12">
+	<div class="absolute w-full h-full z-[-1] bg-black" style="opacity:{bgOpacity}" />
 	<CustomCursor isHidden={btnHidden} cursorType={videoPlaying ? 'pause' : 'play'} />
 
-	<div class="col-start-2 col-span-10 w-full h-full relative" bind:this={container}>
-		<div class="relative w-full h-full perspective-800" bind:this={videoContainer}>
+	<div class="relative w-full h-full col-span-10 col-start-2" bind:this={container}>
+		<div class="relative w-full h-full z-[9] video-cont perspective-800" bind:this={videoContainer}>
 			<div
 				bind:this={video}
-				class="HeadlineVideo-container absolute w-full h-full transform-gpu preserve-3d cursor-pointer"
+				class="absolute w-full h-full cursor-pointer HeadlineVideo-container transform-gpu preserve-3d mt-[10vh]"
 				style="--video-effect: {videoTransformEffect}; --rotation-x: {videoRotation.x}deg; --rotation-y: {videoRotation.y}deg"
 			>
 				<video
@@ -229,17 +244,17 @@
 			</div>
 		</div>
 
-		<div class="absolute top-0 left-0 z-10 flex items-center w-full h-full">
-			<div class="flex flex-col gap-24">
+		<div class="absolute top-0 left-0 flex items-start w-full h-full title-cont">
+			<div class="flex flex-col justify-between h-full py-[10vh]">
 				<h1
 					data-gsap="split-text"
-					class="max-w-6xl text-7xl 3xl:text-9xl text-cyan-500 font-degular-display"
+					class="max-w-6xl leading-none text-10xl 3xl:text-9xl z-[8] text-cyan-500 font-degular-display"
 				>
 					{blok.headline}
 				</h1>
 				<h2
 					data-gsap="split-text"
-					class="max-w-md lg:max-w-2xl text-5xl 3xl:text-7xl text-white font-degular-display"
+					class="z-10 max-w-md mb-[5vh] text-5xl text-white lg:max-w-2xl 3xl:text-7xl font-degular-display"
 				>
 					{blok.subheadline}
 				</h2>
@@ -247,8 +262,8 @@
 		</div>
 
 		<div class="absolute top-0 left-0 z-10 flex items-center justify-end w-full h-full">
-			<div class="max-w-xs w-full relative mr-24">
-				<div class="w-full absolute inline-flex items-center justify-center gap-4">
+			<div class="relative w-full max-w-xs mr-24">
+				<div class="absolute inline-flex items-center justify-center w-full gap-4">
 					<hr bind:this={line} class="w-32 h-px" />
 					<div class="w-[10rem] text-xs text-white uppercase" data-gsap="split-text">
 						<strong>{blok.description}</strong>
@@ -273,7 +288,7 @@
 				rotateX(var(--rotation-x))
 				rotateY(var(--rotation-y));
 
-			opacity: calc(0.5 + var(--video-effect) * 2);
+			// opacity: calc(0.5 + var(--video-effect) * 2);
 		}
 	}
 </style>
