@@ -88,7 +88,7 @@
 	<a
 		href="#"
 		bind:this={backToTopBtn}
-		class="absolute right-[20px] md:right-[60px] top-[-90px] back-to-top-btn w-[20px] h-[66px]"
+		class="absolute right-[20px] md:right-[60px] top-[-50px] back-to-top-btn w-[20px] h-[66px]"
 	>
 		<div class="arrow" />
 	</a>
