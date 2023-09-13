@@ -221,7 +221,11 @@
 
 <section use:storyblokEditable={blok} {...$$restProps} class="grid h-screen grid-cols-12">
 	<div class="absolute w-full h-full z-[-1] bg-black" style="opacity:{bgOpacity}" />
-	<CustomCursor isHidden={btnHidden} cursorType={videoPlaying ? 'pause' : 'play'} />
+	<CustomCursor
+		isHidden={btnHidden}
+		cursorType={videoPlaying ? 'pause' : 'play'}
+		bgColor="#dbfa45"
+	/>
 
 	<div class="relative w-full h-full col-span-10 col-start-2" bind:this={container}>
 		<div class="relative w-full h-full z-[9] video-cont perspective-800" bind:this={videoContainer}>
@@ -294,15 +298,11 @@
 				)
 				rotateX(var(--rotation-x))
 				rotateY(var(--rotation-y));
-
 			// opacity: calc(0.5 + var(--video-effect) * 2);
 		}
 	}
 	.title {
 		-webkit-text-stroke: 1px white;
 		// text-shadow: -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
-	}
-	:global(.CustomCursor .CustomCursor-inner) {
-		background: #dbfa45;
 	}
 </style>
