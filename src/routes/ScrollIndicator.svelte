@@ -31,7 +31,7 @@
 </script>
 
 <div
-	class="fixed bottom-[60px] right-[60px] z-40 w-[20px] h-[20px] mix-blend-difference"
+	class="fixed bottom-[20px] right-[20px] lg:bottom-[60px] lg:right-[60px] z-40 w-[20px] h-[20px] mix-blend-difference"
 	id="scroll-indicator"
 >
 	<div class="absolute w-full h-full border-2 border-white rounded-full opacity-20" />
