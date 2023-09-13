@@ -246,11 +246,13 @@
 			</div>
 		</div>
 
-		<div class="absolute top-0 left-0 flex items-start w-full h-full title-cont">
+		<div
+			class="absolute top-0 left-0 flex items-start w-full h-full pointer-events-none title-cont"
+		>
 			<div class="flex flex-col justify-between h-full py-[10vh]">
 				<h1
 					data-gsap="split-text"
-					class="max-w-6xl leading-none text-10xl 3xl:text-9xl z-[8] text-cyan-500 font-degular-display"
+					class="max-w-6xl leading-none text-10xl 3xl:text-9xl z-[8] text-black font-degular-display title tracking-wide"
 					style="transform:scale({titleScale})"
 				>
 					{blok.headline}
@@ -264,7 +266,9 @@
 			</div>
 		</div>
 
-		<div class="absolute top-0 left-0 z-10 flex items-center justify-end w-full h-full">
+		<div
+			class="absolute top-0 left-0 z-10 flex items-center justify-end w-full h-full pointer-events-none"
+		>
 			<div class="relative w-full max-w-xs mr-24">
 				<div class="absolute inline-flex items-center justify-center w-full gap-4">
 					<hr bind:this={line} class="w-32 h-px" />
@@ -293,5 +297,12 @@
 
 			// opacity: calc(0.5 + var(--video-effect) * 2);
 		}
+	}
+	.title {
+		-webkit-text-stroke: 1px white;
+		// text-shadow: -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
+	}
+	:global(.CustomCursor .CustomCursor-inner) {
+		background: #dbfa45;
 	}
 </style>
