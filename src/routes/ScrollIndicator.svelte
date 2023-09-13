@@ -30,7 +30,7 @@
 	});
 </script>
 
-<div class={cls('fixed bottom-[60px] right-[60px] z-40 w-[20px] h-[20px]')} id="scroll-indicator">
+<div class="fixed bottom-[60px] right-[60px] z-40 w-[20px] h-[20px]" id="scroll-indicator">
 	<div class="absolute w-full h-full border-2 border-white rounded-full opacity-20" />
 
 	<svg width="20" height="20" style="transform:rotate(-90deg)">
