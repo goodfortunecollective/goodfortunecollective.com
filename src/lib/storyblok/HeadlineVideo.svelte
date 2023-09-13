@@ -14,6 +14,7 @@
 	let videoPlayer!: HTMLElement;
 	let line!: HTMLElement;
 	let container!: HTMLElement;
+	let background!: HTMLElement;
 
 	let videoPlaying = true;
 	let btnHidden = true;
@@ -21,6 +22,7 @@
 	let constrain = 100;
 
 	let tl: any = null;
+	let tlBackground: any = null;
 	let tlSplitText: any = null;
 	let tlContainer: any = null;
 
@@ -86,25 +88,31 @@
 		gsap.ticker.add(onRender);
 		onResize();
 
+		tlBackground = gsap.timeline({
+			scrollTrigger: {
+				trigger: container,
+				start: '=+50%',
+				end: '=+75%',
+				scrub: true,
+				pin: true,
+				onUpdate: (self) => {
+					bgOpacity = 1 - self.progress;
+				}
+			}
+		});
+
 		tlContainer = gsap.timeline({
 			scrollTrigger: {
 				trigger: container,
 				start: 'center 50%',
-				end: '+=50%',
+				end: '+=150% bottom',
 				scrub: true,
 				pin: true,
+
+				markers: true,
 				onUpdate: (self) => {
-					console.log(
-						'progress:',
-						self.progress.toFixed(3)
-						// 'direction:',
-						// self.direction,
-						// 'velocity',
-						// self.getVelocity()
-					);
-					bgOpacity = 1 - self.progress;
-					titleScale = 1 - self.progress;
-					console.log('opacity : ' + (1 - self.progress));
+					// bgOpacity = 1 - self.progress;
+					titleScale = 1 - self.progress * 0.35;
 				}
 			}
 		});
@@ -131,24 +139,17 @@
 
 		splitText.forEach((content) => {
 			const text = new SplitText(content, {
-				type: 'lines,words,chars'
+				type: 'lines,words,chars',
+				linesClass: 'split-line',
+				charClass: 'split-char'
 			});
 
-			let chars = text.chars;
-
-			// @ts-ignore
-			gsap.set(content, { perspective: 400 });
-
 			tlSplitText.from(
-				chars,
+				text.chars,
 				{
-					duration: 0.8,
-					opacity: 0,
-					scale: 0,
-					y: 80,
-					rotationX: 180,
-					transformOrigin: '0% 50% -50',
-					ease: 'back',
+					duration: 0.2,
+					ease: 'circ.out',
+					yPercent: 100,
 					stagger: 0.01,
 					delay: $delay_anim_page
 				},
@@ -211,6 +212,11 @@
 			tlContainer.kill();
 		}
 
+		if (tlBackground) {
+			tlBackground.kill();
+		}
+
+		tlBackground = null;
 		tlSplitText = null;
 		tl = null;
 		tlContainer = null;
@@ -220,7 +226,11 @@
 <svelte:window on:mousemove={onMouseMove} on:resize={onResize} />
 
 <section use:storyblokEditable={blok} {...$$restProps} class="grid h-screen grid-cols-12">
-	<div class="absolute w-full h-full z-[-1] bg-black" style="opacity:{bgOpacity}" />
+	<div
+		bind:this={background}
+		class="absolute w-screen h-[200vh] z-[-1] bg-black"
+		style="opacity:{bgOpacity}"
+	/>
 	<CustomCursor
 		isHidden={btnHidden}
 		cursorType={videoPlaying ? 'pause' : 'play'}
@@ -256,14 +266,14 @@
 			<div class="flex flex-col justify-between h-full py-[10vh]">
 				<h1
 					data-gsap="split-text"
-					class="max-w-6xl leading-none text-10xl 3xl:text-9xl z-[8] text-black font-degular-display title tracking-wide"
+					class="max-w-6xl text-[11rem] leading-[8rem] 3xl:text-[12rem] 3xl:leading-[9rem] z-[8] text-black font-degular-display title tracking-wide"
 					style="transform:scale({titleScale})"
 				>
 					{blok.headline}
 				</h1>
 				<h2
 					data-gsap="split-text"
-					class="z-10 max-w-md mb-[5vh] text-5xl text-white lg:max-w-2xl 3xl:text-7xl font-degular-display"
+					class="z-10 max-w-md mb-[5vh] text-7xl text-white lg:max-w-2xl font-degular-display"
 				>
 					{blok.subheadline}
 				</h2>
@@ -284,7 +294,7 @@
 		</div>
 	</div>
 </section>
-<div class="h-[50vh]" />
+<div class="h-[100vh]" />
 
 <style lang="scss">
 	.HeadlineVideo {
@@ -292,8 +302,8 @@
 			// prettier-ignore
 			transform:
 				scale3d(
-					calc(0.65 + var(--video-effect) * 0.35),
-					calc(0.65 + var(--video-effect) * 0.35),
+					calc(0.5 + var(--video-effect) * 0.5),
+					calc(0.5 + var(--video-effect) * 0.5),
 					1
 				)
 				rotateX(var(--rotation-x))
