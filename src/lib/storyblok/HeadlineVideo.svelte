@@ -287,7 +287,7 @@
 				<div class="absolute inline-flex items-center justify-center w-full gap-4">
 					<hr bind:this={line} class="w-32 h-px" />
 					<div class="w-[10rem] text-xs text-white uppercase" data-gsap="split-text">
-						<strong>{blok.description}</strong>
+						<h3 class="leading-3"><strong data-gsap="split-text">{blok.description}</strong></h3>
 					</div>
 				</div>
 			</div>
