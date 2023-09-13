@@ -9,8 +9,6 @@
 	export let sup: number;
 	export let selected: boolean;
 	export let delay: number = 0;
-
-	console.log(selected);
 </script>
 
 <li
