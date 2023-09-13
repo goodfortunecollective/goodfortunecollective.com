@@ -12,6 +12,7 @@
 	import type { LayoutData } from './$types';
 
 	import Loader from './Loader.svelte';
+	import ScrollIndicator from './ScrollIndicator.svelte';
 	import Curtains from './Curtains.svelte';
 	import PageTransition from './PageTransition.svelte';
 	import PageTransitionAnim from './PageTransitionAnim.svelte';
@@ -113,6 +114,8 @@
 </main>
 
 <Curtains />
+
+<ScrollIndicator />
 
 <Loader on:complete={handleCompleteLoader} skip={dev || data.preview} />
 
