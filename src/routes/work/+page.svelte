@@ -119,7 +119,7 @@
 <section class="pt-[var(--header-height)] pb-32">
 	<div class="mt-16">
 		<div class="relative">
-			<MenuList class="z-10 absolute top-0 right-0 flex flex-col items-end gap-4">
+			<MenuList class="absolute top-0 right-0 z-10 flex flex-col items-end gap-4">
 				<MenuItem
 					name="All Projects"
 					sup={data.projects.length}
