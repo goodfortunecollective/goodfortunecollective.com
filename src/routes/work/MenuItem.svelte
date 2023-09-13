@@ -9,12 +9,17 @@
 	export let sup: number;
 	export let selected: boolean;
 	export let delay: number = 0;
+
+	console.log(selected);
 </script>
 
 <li
 	in:fade|global={{ delay }}
 	out:fade|global
-	class="mb-2 text-sm font-bold tracking-wider text-right uppercase menu-item whitespace-nowrap"
+	class={cls(
+		'mb-2 text-sm font-bold tracking-wider text-right uppercase menu-item whitespace-nowrap' +
+			(selected ? ' active' : '')
+	)}
 >
 	<a href={url}>
 		<span class={cls(selected && 'font-bold')}>{name}</span>

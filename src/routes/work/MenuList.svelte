@@ -2,7 +2,7 @@
 	let clazz: string;
 	export { clazz as class };
 
-	let isOpen = false;
+	let isOpen = true;
 
 	function toggleDropdown() {
 		isOpen = !isOpen;
