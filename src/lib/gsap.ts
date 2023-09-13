@@ -5,6 +5,7 @@ import { MotionPathPlugin } from '$lib/vendors/gsap/MotionPathPlugin.js';
 import { ScrollSmoother } from '$lib/vendors/gsap/ScrollSmoother.js';
 import { SplitText } from '$lib/vendors/gsap/SplitText.js';
 import { Draggable } from '$lib/vendors/gsap/Draggable.js';
+import { ScrollToPlugin } from '$lib/vendors/gsap/ScrollToPlugin';
 import { Flip } from '$lib/vendors/gsap/Flip.js';
 import { InertiaPlugin } from '$lib/vendors/gsap/InertiaPlugin.js';
 
@@ -14,6 +15,7 @@ if (browser) {
 	gsap.registerPlugin(
 		ScrollSmoother,
 		ScrollTrigger,
+		ScrollToPlugin,
 		MotionPathPlugin,
 		SplitText,
 		Draggable,
@@ -22,5 +24,5 @@ if (browser) {
 	);
 }
 
-export { ScrollSmoother, ScrollTrigger, MotionPathPlugin, SplitText, Draggable, InertiaPlugin, Flip };
+export { ScrollSmoother, ScrollTrigger,ScrollToPlugin, MotionPathPlugin, SplitText, Draggable, InertiaPlugin, Flip };
 export default gsap;
