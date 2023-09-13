@@ -21,7 +21,7 @@
 	const variants = cva('', {
 		variants: {
 			theme: {
-				light: '',
+				light: 'light',
 				dark: 'bg-black text-white'
 			}
 		},
@@ -170,6 +170,10 @@
 			bottom: 0;
 			content: '';
 			background: white;
+
+			#footer.light & {
+				background: black;
+			}
 		}
 
 		&:after {
@@ -196,6 +200,9 @@
 				right: 0;
 				background: white;
 				content: '';
+				#footer.light & {
+					background: black;
+				}
 			}
 
 			&:before {
