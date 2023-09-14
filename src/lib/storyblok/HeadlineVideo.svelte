@@ -14,6 +14,7 @@
 	let videoPlayer!: HTMLElement;
 	let line!: HTMLElement;
 	let container!: HTMLElement;
+	let background!: HTMLElement;
 
 	let videoPlaying = true;
 	let btnHidden = true;
@@ -21,8 +22,12 @@
 	let constrain = 100;
 
 	let tl: any = null;
+	let tlBackground: any = null;
 	let tlSplitText: any = null;
 	let tlContainer: any = null;
+
+	let bgOpacity: number = 1;
+	let titleScale: number = 1;
 
 	// avoid division by 0
 	let ww: number = 1;
@@ -51,13 +56,13 @@
 		scrollPosition = window.pageYOffset;
 	};
 
-	const onScroll = (e: any) => {
-		scrollPosition = e.detail.offsetY;
+	const onScroll = (event: any) => {
+		scrollPosition = event.detail.offsetY;
 	};
 
-	const onMouseMove = (e: MouseEvent) => {
-		mousePosition.x = e.clientX;
-		mousePosition.y = e.clientY;
+	const onMouseMove = (event: MouseEvent) => {
+		mousePosition.x = event.clientX;
+		mousePosition.y = event.clientY;
 	};
 
 	const onRender = () => {
@@ -83,13 +88,27 @@
 		gsap.ticker.add(onRender);
 		onResize();
 
+		tlBackground = gsap.timeline({
+			scrollTrigger: {
+				trigger: container,
+				start: '=+50%',
+				end: '=+100%',
+				onUpdate: (self) => {
+					bgOpacity = 1 - self.progress;
+				}
+			}
+		});
+
 		tlContainer = gsap.timeline({
 			scrollTrigger: {
 				trigger: container,
 				start: 'center 50%',
-				end: '+=50%',
+				end: '+=150% bottom',
 				scrub: true,
-				pin: true
+				pin: true,
+				onUpdate: (self) => {
+					titleScale = 1 - self.progress * 0.35;
+				}
 			}
 		});
 
@@ -104,35 +123,28 @@
 			},
 			onStart: () => {
 				// move video behind title
-				if (videoContainer) videoContainer.style.zIndex = '9';
+				// if (videoContainer) videoContainer.style.zIndex = '9';
 			},
 			onReverseComplete: () => {
 				// move video on top of title
-				if (videoContainer) videoContainer.style.zIndex = '11';
+				// if (videoContainer) videoContainer.style.zIndex = '11';
 			}
 		});
 		tlSplitText.addLabel('start');
 
 		splitText.forEach((content) => {
 			const text = new SplitText(content, {
-				type: 'lines,words,chars'
+				type: 'lines,words,chars',
+				linesClass: 'split-line',
+				charClass: 'split-char'
 			});
 
-			let chars = text.chars;
-
-			// @ts-ignore
-			gsap.set(content, { perspective: 400 });
-
 			tlSplitText.from(
-				chars,
+				text.chars,
 				{
-					duration: 0.8,
-					opacity: 0,
-					scale: 0,
-					y: 80,
-					rotationX: 180,
-					transformOrigin: '0% 50% -50',
-					ease: 'back',
+					duration: 0.2,
+					ease: 'circ.out',
+					yPercent: 100,
 					stagger: 0.01,
 					delay: $delay_anim_page
 				},
@@ -195,6 +207,11 @@
 			tlContainer.kill();
 		}
 
+		if (tlBackground) {
+			tlBackground.kill();
+		}
+
+		tlBackground = null;
 		tlSplitText = null;
 		tl = null;
 		tlContainer = null;
@@ -203,14 +220,23 @@
 
 <svelte:window on:mousemove={onMouseMove} on:resize={onResize} />
 
-<section use:storyblokEditable={blok} {...$$restProps} class="grid grid-cols-12 h-screen bg-black">
-	<CustomCursor isHidden={btnHidden} cursorType={videoPlaying ? 'pause' : 'play'} />
+<section use:storyblokEditable={blok} {...$$restProps} class="grid h-screen grid-cols-12">
+	<div
+		bind:this={background}
+		class="absolute w-screen h-[250vh] z-[-1] bg-black"
+		style="opacity:{bgOpacity}"
+	/>
+	<CustomCursor
+		isHidden={btnHidden}
+		cursorType={videoPlaying ? 'pause' : 'play'}
+		bgColor="#dbfa45"
+	/>
 
-	<div class="col-start-2 col-span-10 w-full h-full relative" bind:this={container}>
-		<div class="relative w-full h-full perspective-800" bind:this={videoContainer}>
+	<div class="relative w-full h-full col-span-10 col-start-2" bind:this={container}>
+		<div class="relative w-full h-full z-[9] video-cont perspective-800" bind:this={videoContainer}>
 			<div
 				bind:this={video}
-				class="HeadlineVideo-container absolute w-full h-full transform-gpu preserve-3d cursor-pointer"
+				class="absolute w-full h-full cursor-pointer HeadlineVideo-container transform-gpu preserve-3d mt-[10vh]"
 				style="--video-effect: {videoTransformEffect}; --rotation-x: {videoRotation.x}deg; --rotation-y: {videoRotation.y}deg"
 			>
 				<video
@@ -229,36 +255,41 @@
 			</div>
 		</div>
 
-		<div class="absolute top-0 left-0 z-10 flex items-center w-full h-full">
-			<div class="flex flex-col gap-24">
+		<div
+			class="absolute top-0 left-0 flex items-start w-full h-full pointer-events-none title-cont"
+		>
+			<div class="flex flex-col justify-between h-full py-[10vh]">
 				<h1
 					data-gsap="split-text"
-					class="max-w-6xl text-7xl 3xl:text-9xl text-cyan-500 font-degular-display"
+					class="max-w-6xl text-6xl leading-[4rem] md:text-[11rem] md:leading-[8rem] 3xl:text-[12rem] 3xl:leading-[9rem] z-[8] text-black font-degular-display title tracking-wide"
+					style="transform:scale({titleScale})"
 				>
 					{blok.headline}
 				</h1>
 				<h2
 					data-gsap="split-text"
-					class="max-w-md lg:max-w-2xl text-5xl 3xl:text-7xl text-white font-degular-display"
+					class="z-10 max-w-md mb-[5vh] text-5xl md:text-7xl text-white lg:max-w-2xl font-degular-display"
 				>
 					{blok.subheadline}
 				</h2>
 			</div>
 		</div>
 
-		<div class="absolute top-0 left-0 z-10 flex items-center justify-end w-full h-full">
-			<div class="max-w-xs w-full relative mr-24">
-				<div class="w-full absolute inline-flex items-center justify-center gap-4">
+		<div
+			class="absolute top-0 left-0 z-10 flex items-center justify-end w-full h-full pointer-events-none"
+		>
+			<div class="relative w-full max-w-xs mr-24">
+				<div class="absolute inline-flex items-center justify-center w-full gap-4">
 					<hr bind:this={line} class="w-32 h-px" />
 					<div class="w-[10rem] text-xs text-white uppercase" data-gsap="split-text">
-						<strong>{blok.description}</strong>
+						<h3 class="leading-3"><strong data-gsap="split-text">{blok.description}</strong></h3>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
-<div class="h-[50vh]" />
+<div class="h-[150vh]" />
 
 <style lang="scss">
 	.HeadlineVideo {
@@ -266,14 +297,17 @@
 			// prettier-ignore
 			transform:
 				scale3d(
-					calc(0.65 + var(--video-effect) * 0.35),
-					calc(0.65 + var(--video-effect) * 0.35),
+					calc(0.5 + var(--video-effect) * 0.5),
+					calc(0.5 + var(--video-effect) * 0.5),
 					1
 				)
 				rotateX(var(--rotation-x))
 				rotateY(var(--rotation-y));
-
-			opacity: calc(0.5 + var(--video-effect) * 2);
+			// opacity: calc(0.5 + var(--video-effect) * 2);
 		}
+	}
+	.title {
+		-webkit-text-stroke: 1px white;
+		// text-shadow: -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
 	}
 </style>

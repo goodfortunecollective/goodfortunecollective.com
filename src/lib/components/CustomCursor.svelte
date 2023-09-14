@@ -5,6 +5,7 @@
 
 	export let cursorType: string | undefined;
 	export let isHidden: boolean = true;
+	export let bgColor: string | undefined;
 	let cursorEl!: HTMLElement;
 	$: touchCapability = 2 as number;
 
@@ -57,7 +58,12 @@
 <div class={'CustomCursor' + (isHidden || touchCapability === 1 ? ' is-hidden' : '')}>
 	<div
 		class={'CustomCursor-inner' + (cursorType ? ` is-${cursorType}` : '')}
-		style="--cursor-x: {lerpedPosition.x}px; --cursor-y: {lerpedPosition.y}px"
+		style={'--cursor-x: ' +
+			lerpedPosition.x +
+			'px; --cursor-y: ' +
+			lerpedPosition.y +
+			'px;' +
+			(bgColor ? 'background-color:' + bgColor + ';' : '')}
 		bind:this={cursorEl}
 	/>
 </div>
