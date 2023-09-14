@@ -54,6 +54,9 @@
 
 		.list {
 			position: relative;
+			padding-left: 40px;
+			overflow: hidden;
+
 			&:after {
 				position: absolute;
 				top: 0;
