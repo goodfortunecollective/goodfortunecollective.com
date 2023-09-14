@@ -63,7 +63,7 @@
 			right: 15px;
 			left: 30px;
 			height: 1px;
-			background: $white;
+			background: currentColor;
 			content: '';
 		}
 	}

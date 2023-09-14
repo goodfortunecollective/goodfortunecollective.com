@@ -8,22 +8,37 @@
 
 	const variants = cva('', {
 		variants: {
-			backgroundColor: {
+			palette: {
 				transparent: '',
-				black: 'bg-black text-white',
-				grey: 'bg-zinc-200'
+				'#1a1a1a': 'text-white',
+				'#bec6c4': ''
 			}
 		},
 		defaultVariants: {
-			backgroundColor: 'transparent'
+			palette: 'transparent'
 		}
+		// variants: {
+		// 	backgroundColor: {
+		// 		transparent: '',
+		// 		black: 'bg-black text-white',
+		// 		grey: 'bg-zinc-200'
+		// 	}
+		// },
+		// defaultVariants: {
+		// 	backgroundColor: 'transparent'
+		// }
 	});
 </script>
 
 <div
 	use:storyblokEditable={blok}
 	{...$$restProps}
-	class={cls(variants({ backgroundColor: blok.backgroundColor }), blok.class)}
+	class={cls(
+		variants({ palette: blok.palette.value }),
+		blok.class + (blok.text_white ? ' text-white' : '')
+	)}
+	style={(blok.palette.value ? `background-color:${blok.palette.value};` : '') +
+		(blok.customBackgroundColor ? `background-color:${blok.customBackgroundColor.color};` : '')}
 >
 	{#each blok.children as b}
 		<StoryblokComponent blok={b} />

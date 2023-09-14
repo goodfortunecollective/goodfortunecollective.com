@@ -29,7 +29,7 @@
 			left: 0;
 			width: 35%;
 			height: 1px;
-			background: #333;
+			background: currentColor;
 			content: '';
 		}
 
