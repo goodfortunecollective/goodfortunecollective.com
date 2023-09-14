@@ -56,13 +56,13 @@
 		scrollPosition = window.pageYOffset;
 	};
 
-	const onScroll = (e: any) => {
-		scrollPosition = e.detail.offsetY;
+	const onScroll = (event: any) => {
+		scrollPosition = event.detail.offsetY;
 	};
 
-	const onMouseMove = (e: MouseEvent) => {
-		mousePosition.x = e.clientX;
-		mousePosition.y = e.clientY;
+	const onMouseMove = (event: MouseEvent) => {
+		mousePosition.x = event.clientX;
+		mousePosition.y = event.clientY;
 	};
 
 	const onRender = () => {
@@ -92,9 +92,7 @@
 			scrollTrigger: {
 				trigger: container,
 				start: '=+50%',
-				end: '=+75%',
-				scrub: true,
-				pin: true,
+				end: '=+100%',
 				onUpdate: (self) => {
 					bgOpacity = 1 - self.progress;
 				}
@@ -108,10 +106,7 @@
 				end: '+=150% bottom',
 				scrub: true,
 				pin: true,
-
-				markers: true,
 				onUpdate: (self) => {
-					// bgOpacity = 1 - self.progress;
 					titleScale = 1 - self.progress * 0.35;
 				}
 			}
@@ -228,7 +223,7 @@
 <section use:storyblokEditable={blok} {...$$restProps} class="grid h-screen grid-cols-12">
 	<div
 		bind:this={background}
-		class="absolute w-screen h-[200vh] z-[-1] bg-black"
+		class="absolute w-screen h-[250vh] z-[-1] bg-black"
 		style="opacity:{bgOpacity}"
 	/>
 	<CustomCursor
@@ -266,14 +261,14 @@
 			<div class="flex flex-col justify-between h-full py-[10vh]">
 				<h1
 					data-gsap="split-text"
-					class="max-w-6xl text-[11rem] leading-[8rem] 3xl:text-[12rem] 3xl:leading-[9rem] z-[8] text-black font-degular-display title tracking-wide"
+					class="max-w-6xl text-6xl leading-[4rem] md:text-[11rem] md:leading-[8rem] 3xl:text-[12rem] 3xl:leading-[9rem] z-[8] text-black font-degular-display title tracking-wide"
 					style="transform:scale({titleScale})"
 				>
 					{blok.headline}
 				</h1>
 				<h2
 					data-gsap="split-text"
-					class="z-10 max-w-md mb-[5vh] text-7xl text-white lg:max-w-2xl font-degular-display"
+					class="z-10 max-w-md mb-[5vh] text-5xl md:text-7xl text-white lg:max-w-2xl font-degular-display"
 				>
 					{blok.subheadline}
 				</h2>
@@ -294,7 +289,7 @@
 		</div>
 	</div>
 </section>
-<div class="h-[100vh]" />
+<div class="h-[150vh]" />
 
 <style lang="scss">
 	.HeadlineVideo {
