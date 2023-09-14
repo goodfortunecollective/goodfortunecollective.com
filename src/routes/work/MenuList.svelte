@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	let clazz: string;
 	export { clazz as class };
 
@@ -7,6 +8,14 @@
 	function toggleDropdown() {
 		isOpen = !isOpen;
 	}
+	onMount(async () => {
+		window.addEventListener('scroll', onScroll);
+	});
+
+	const onScroll = (event: any) => {
+		if (window.scrollY > 100 && isOpen) toggleDropdown();
+		else if (window.scrollY <= 100 && !isOpen) toggleDropdown();
+	};
 </script>
 
 <div class={clazz + (isOpen ? ' opened' : '')} id="menu-list">
