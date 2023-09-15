@@ -12,7 +12,7 @@
 		h3: 'text-4xl 3xl:text-5xl 4xl:text-6xl',
 		h4: 'text-3xl 3xl:text-4xl 4xl:text-5xl',
 		h5: 'text-2xl 3xl:text-3xl 4xl:text-4xl',
-		h6: 'text-xl 3xl:text-2xl 4xl:text-3xl'
+		h6: 'text-xl md:text-sm lg:text-xl 3xl:text-2xl 4xl:text-3xl'
 	};
 </script>
 

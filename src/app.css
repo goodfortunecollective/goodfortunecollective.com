@@ -44,6 +44,8 @@
 
 	.split-line {
 		overflow: clip;
+		margin-top: -8px;
+		padding: 8px 0;
 	}
 }
 

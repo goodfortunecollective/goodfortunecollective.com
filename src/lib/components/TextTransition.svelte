@@ -11,10 +11,11 @@
 
 	export let enabled: boolean = true;
 	export let type: 'heading' | 'p' = 'p';
+	export let text: any = null;
 
 	onMount(() => {
 		if (enabled) {
-			const text = new SplitText(element, {
+			text = new SplitText(element, {
 				type: 'lines,words,chars',
 				linesClass: 'split-line',
 				charClass: 'split-char'
@@ -50,6 +51,7 @@
 			}
 		}
 	});
+
 	onDestroy(() => {
 		if (animChars) {
 			animChars.kill();
@@ -63,6 +65,6 @@
 	});
 </script>
 
-<span bind:this={element} class="inline-block">
+<span bind:this={element} class="inline-block break-words">
 	<span class="wrap" /><slot />
 </span>

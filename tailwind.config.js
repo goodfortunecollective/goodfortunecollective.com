@@ -4,21 +4,21 @@ export default {
 	theme: {
 		extend: {
 			screens: {
-				"3xl": "1920px",
-				"4xl": "2160px",
+				'3xl': '1920px',
+				'4xl': '2160px'
 			},
 			maxWidth: {
 				'8xl': '88rem',
 				'9xl': '96rem',
 				'10xl': '104rem',
 				'11xl': '112rem',
-				'12xl': '120rem',
+				'12xl': '120rem'
 			},
 			fontFamily: {
 				'degular-display': ['degular-display', 'cursive']
 			},
 			fontSize: {
-				'10xl': '10rem',
+				'10xl': '10rem'
 			},
 			gridTemplateColumns: {
 				// Simple 24 column grid
@@ -27,7 +27,7 @@ export default {
 			gridColumn: {
 				'span-16': 'span 16 / span 16',
 				'span-20': 'span 20 / span 20',
-				'span-22': 'span 22 / span 22',
+				'span-22': 'span 22 / span 22'
 			},
 			gridColumnStart: {
 				13: '13',
