@@ -13,14 +13,12 @@
 	export let layout: 'left' | 'right' = 'left';
 	export let useCurtainsPlanes: boolean = true;
 
-	let list_hover: string = '';
-
-	project_list_hover.subscribe((value: string) => {
-		list_hover = value;
-	});
-
 	function onEnter() {
-		$project_list_hover = name;
+		project_list_hover.set(name);
+	}
+
+	const onLeave = () => {
+		project_list_hover.set(null)
 	}
 
 
@@ -31,7 +29,7 @@
 	let initScroll: number = 0;
 	let currentScroll: number = 0;
 	let projectDOMRect: DOMRect;
-	const parallaxStrength: number = 0.2;
+	const parallaxStrength: number = 0.5;
 	$: parallaxEffect = 0;
 
 	const onResize = () => {
@@ -90,9 +88,9 @@
 	bind:this={projectEl}
 	style="--parallax-effect: {parallaxEffect};"
 >
-	<div class="ProjectListItem-thumb will-change-transform" on:mouseenter={onEnter}>
+	<div class="ProjectListItem-thumb will-change-transform" on:mouseenter={onEnter} on:mouseleave={onLeave}>
 		{#if useCurtainsPlanes}
-			<ScrollPlane {slug} {content} {name} hover={list_hover === name} />
+			<ScrollPlane {slug} {content} {name} />
 		{:else}
 			<div class="ProjectListItem-thumb-image">
 				<img
