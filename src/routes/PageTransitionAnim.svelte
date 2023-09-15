@@ -7,6 +7,7 @@
 	import {useCurtains} from '$lib/utils/useCurtains';
 	import type {CurtainsInstance} from '../lib/utils/useCurtains';
 	import {onMount} from "svelte";
+	import {pageLeaveDuration, pageEnterDuration, pageTransitionPauseDuration} from "../lib/utils/page-transitions";
 
 	let curtains: CurtainsInstance;
 	let tl: any;
@@ -31,7 +32,8 @@
 
 		ctx.clearRect(0, 0, canvasDOMRect.width, canvasDOMRect.height)
 
-		ctx.fillStyle = '#111827'
+		//ctx.fillStyle = '#111827'
+		ctx.fillStyle = '#cbc873'
 
 		ctx.beginPath()
 		ctx.moveTo(0, canvasDOMRect.height * (1 - enteringProgress))
@@ -47,8 +49,8 @@
 
 		//ctx.lineTo(0, canvasDOMRect.height)
 		ctx.bezierCurveTo(
-			canvasDOMRect.width * 0.75, canvasDOMRect.height * Math.pow((1 - leavingProgress), archStrength),
-			canvasDOMRect.width * 0.25, canvasDOMRect.height * Math.pow((1 - leavingProgress), archStrength),
+			canvasDOMRect.width * 0.75, canvasDOMRect.height * Math.pow((1 - leavingProgress), 1 / (archStrength * 0.75)),
+			canvasDOMRect.width * 0.25, canvasDOMRect.height * Math.pow((1 - leavingProgress), 1 / (archStrength * 0.75)),
 			0, canvasDOMRect.height * (1 - leavingProgress)
 		)
 
@@ -80,7 +82,7 @@
 
 		tl.to(canvasTransition, {
 			enteringProgress: 1,
-			duration: 2,
+			duration: pageLeaveDuration / 1000,
 			ease: 'circ.inOut',
 			onUpdate: () => {
 				drawCanvas(canvasTransition.enteringProgress, canvasTransition.leavingProgress)
@@ -91,15 +93,16 @@
 				if (curtains) {
 					curtains.updateScrollValues(0, 0);
 				}
+
 			}
 		}).to(canvasTransition, {
 			leavingProgress: 1,
-			duration: 1.5,
-			ease: 'power4.out',
+			duration: pageEnterDuration / 1000,
+			ease: 'circ.inOut',
 			onUpdate: () => {
 				drawCanvas(canvasTransition.enteringProgress, canvasTransition.leavingProgress)
 			},
-		}).then(() => {
+		}, `+=${pageTransitionPauseDuration / 1000}`).then(() => {
 			isPageHidden.set(false);
 			isTransitioning.set(false);
 
