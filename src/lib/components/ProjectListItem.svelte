@@ -29,7 +29,7 @@
 	let initScroll: number = 0;
 	let currentScroll: number = 0;
 	let projectDOMRect: DOMRect;
-	const parallaxStrength: number = 0.2;
+	const parallaxStrength: number = 0.5;
 	$: parallaxEffect = 0;
 
 	const onResize = () => {

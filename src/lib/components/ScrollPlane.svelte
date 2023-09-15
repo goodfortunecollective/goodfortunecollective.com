@@ -4,7 +4,7 @@
 	import { useCurtains } from '$lib/utils/useCurtains';
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
 	import gsap from '$lib/gsap';
-	import { onMount } from 'svelte';
+	import { onDestroy } from 'svelte';
 
 	import { isPageHidden, isTransitioning, project_list_hover } from '$lib/stores';
 
@@ -166,24 +166,21 @@
 
 
 	// hover
-	let hoverTl: GSAPTimeline = gsap.timeline();
+	let hoverTween = null;
 	project_list_hover.subscribe(value => {
 		if(!plane) return
 
-		if(hoverTl.isActive()) hoverTl.kill()
+		hoverTween?.kill()
 
 		const hoverTransition = {
 			planeScale: plane.scale.x,
 			textureScale: plane.textures[0].scale.x,
-			opacity: plane.uniforms.opacity.value
 		}
 
-		if(value === name || !value) {
-			console.log('reset plane ', name,' hover because value is', value)
-			hoverTl.to(hoverTransition, {
-				planeScale: 1,
-				textureScale: 1,
-				opacity: 1,
+		if(value === name) {
+			hoverTween = gsap.to(hoverTransition, {
+				planeScale: 0.9,
+				textureScale: 1.15,
 				duration: 0.5,
 				onUpdate: () => {
 					plane.scale.x = hoverTransition.planeScale;
@@ -191,17 +188,13 @@
 
 					plane.textures[0].scale.x = hoverTransition.textureScale;
 					plane.textures[0].scale.y = hoverTransition.textureScale;
-
-					plane.uniforms.opacity.value = hoverTransition.opacity
 				}
 			})
 		}
-		else {
-			console.log('set active plane ', name,' hover because value is', value)
-			hoverTl.to(hoverTransition, {
-				planeScale: 0.9,
-				textureScale: 1.15,
-				opacity: 0.5,
+		else if(plane.scale.x !== 1) {
+			hoverTween = gsap.to(hoverTransition, {
+				planeScale: 1,
+				textureScale: 1,
 				duration: 0.5,
 				onUpdate: () => {
 					plane.scale.x = hoverTransition.planeScale;
@@ -210,16 +203,14 @@
 					plane.textures[0].scale.x = hoverTransition.textureScale;
 					plane.textures[0].scale.y = hoverTransition.textureScale;
 
-					plane.uniforms.opacity.value = hoverTransition.opacity
+					console.log(hoverTransition.planeScale)
 				}
 			})
 		}
 	})
 
-	onMount(() => {
-		return () => {
-			hoverTl.kill()
-		}
+	onDestroy(() => {
+		hoverTween?.kill()
 	})
 </script>
 
