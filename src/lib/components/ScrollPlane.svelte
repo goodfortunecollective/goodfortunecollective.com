@@ -202,8 +202,6 @@
 
 					plane.textures[0].scale.x = hoverTransition.textureScale;
 					plane.textures[0].scale.y = hoverTransition.textureScale;
-
-					console.log(hoverTransition.planeScale)
 				}
 			})
 		}
