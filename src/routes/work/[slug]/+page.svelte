@@ -81,9 +81,9 @@
 	});
 </script>
 
-<section class="pt-[var(--header-height)] bg-black text-white">
-	<div class="grid grid-cols-12 pt-16 pb-16">
-		<div class="col-span-8 col-start-2 lg:col-start-2 lg:col-span-6">
+<section class="project-header py-[var(--header-height)] bg-black text-white">
+	<div class="grid h-full grid-cols-12 pt-16 pb-16">
+		<div class="flex flex-col justify-between col-span-8 col-start-2 lg:col-start-2 lg:col-span-6">
 			<div class="grid grid-cols-12 gap-8 lg:gap-0">
 				{#if data.story.content.client}
 					<div class="col-span-2 col-start-1 lg:col-start-1 lg:col-span-3">
@@ -129,7 +129,7 @@
 				</div>
 			{/if}
 		</div>
-		<figure class="col-span-3 col-start-10 lg:col-start-10 lg:col-span-3">
+		<figure class="col-span-3 col-start-10 lg:col-start-9 lg:col-span-4">
 			{#if data.story.content.thumbnail}
 				<div class="relative w-full h-full">
 					<img
@@ -159,3 +159,12 @@
 		</div>
 	</div>
 </section>
+
+<style lang="scss">
+	@import '../../../vars.scss';
+	.project-header {
+		@media (min-width: $media-md) {
+			height: 100vh;
+		}
+	}
+</style>

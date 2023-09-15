@@ -10,7 +10,7 @@
 	import { slide } from '$lib/transitions';
 
 	let titleEl!: HTMLElement;
-	let list_hover: string = '';
+	let list_hover: string | null = null;
 	let locked = false;
 
 	$: title = list_hover;
@@ -22,13 +22,13 @@
 	});
 
 	beforeNavigate(() => {
-		if (list_hover !== '') {
+		if (!!list_hover) {
 			locked = true;
 		}
 	});
 
 	afterNavigate(() => {
-		if (list_hover !== '' && $page.url.pathname.includes('/work')) {
+		if (!!list_hover && $page.url.pathname.includes('/work')) {
 			gsap.to(titleEl, {
 				startColor: '#000',
 				endColor: '#fff',
@@ -36,17 +36,17 @@
 				onComplete: () => {
 					setTimeout(() => {
 						locked = false;
-						$project_list_hover = '';
+						project_list_hover.set(null);
 					}, 2000);
 				}
 			});
 		} else {
-			$project_list_hover = '';
+			project_list_hover.set(null);
 		}
 	});
 </script>
 
-{#if list_hover !== ''}
+{#if !!list_hover}
 	<div class="fixed top-0 left-0 w-screen h-screen pointer-events-none z-50">
 		<section class="pt-[var(--header-height)]">
 			<div class="grid grid-cols-12 pt-16 pb-16">
