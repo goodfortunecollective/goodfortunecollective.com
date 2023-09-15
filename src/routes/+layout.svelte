@@ -19,6 +19,7 @@
 
 	import '../app.css';
 	import ProjectListHover from '$lib/components/ProjectListHover.svelte';
+	import ProjectMenu from '$lib/components/ProjectMenu.svelte';
 
 	export let data: LayoutData;
 
@@ -111,6 +112,7 @@
 		</div>
 	</div>
 	<ProjectListHover />
+	<!-- <ProjectMenu {data} {filter} {categories} /> -->
 </main>
 
 <Curtains />
