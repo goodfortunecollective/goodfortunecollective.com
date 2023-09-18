@@ -18,9 +18,8 @@
 	}
 
 	const onLeave = () => {
-		project_list_hover.set(null)
-	}
-
+		project_list_hover.set(null);
+	};
 
 	// parallax
 	let projectEl: HTMLElement;
@@ -33,45 +32,45 @@
 	$: parallaxEffect = 0;
 
 	const onResize = () => {
-		ww = window.innerWidth
-		wh = window.innerHeight
-		initScroll = window.pageYOffset
+		ww = window.innerWidth;
+		wh = window.innerHeight;
+		initScroll = window.pageYOffset;
 
-		if(projectEl) {
-			projectDOMRect = projectEl.getBoundingClientRect()
+		if (projectEl) {
+			projectDOMRect = projectEl.getBoundingClientRect();
 		}
 
-		applyParallax()
-	}
+		applyParallax();
+	};
 
 	const applyParallax = () => {
-		if(!projectDOMRect || !ww || !wh) return
+		if (!projectDOMRect || !ww || !wh) return;
 
 		const planeOffsetTop = projectDOMRect.top + projectDOMRect.height / 2 - wh * 0.5;
 		// get a float value based on window height (0 means the plane is centered)
 		const distanceToCenter = planeOffsetTop - (currentScroll - initScroll);
 
 		// parallax strength is based on item relative width
-		const itemParallaxStrength = ww / projectDOMRect.width - 1
+		const itemParallaxStrength = ww / projectDOMRect.width - 1;
 
 		// get parallax effect
 		parallaxEffect = distanceToCenter * parallaxStrength * itemParallaxStrength;
-	}
+	};
 
 	const onScroll = (event: any) => {
 		currentScroll = event.detail.offsetY;
-		applyParallax()
-	}
+		applyParallax();
+	};
 
 	onMount(() => {
-		onResize()
+		onResize();
 		window.addEventListener('smoothScrollUpdate', onScroll);
 
 		return () => {
 			// this function is called when the component is destroyed
 			window.removeEventListener('smoothScrollUpdate', onScroll);
-		}
-	})
+		};
+	});
 </script>
 
 <svelte:window on:resize={onResize} />
@@ -88,7 +87,11 @@
 	bind:this={projectEl}
 	style="--parallax-effect: {parallaxEffect};"
 >
-	<div class="ProjectListItem-thumb will-change-transform" on:mouseenter={onEnter} on:mouseleave={onLeave}>
+	<div
+		class="ProjectListItem-thumb will-change-transform"
+		on:mouseenter={onEnter}
+		on:mouseleave={onLeave}
+	>
 		{#if useCurtainsPlanes}
 			<ScrollPlane {slug} {content} {name} />
 		{:else}
