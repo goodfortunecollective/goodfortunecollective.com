@@ -5,7 +5,7 @@
 	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
 
-	import { Heading } from '$lib/components';
+	import { Heading, HoverPlane } from '$lib/components';
 	import gsap from '$lib/gsap';
 
 	export let data;
@@ -131,12 +131,15 @@
 		</div>
 		<figure class="col-span-3 col-start-10 lg:col-start-9 lg:col-span-4">
 			{#if data.story.content.thumbnail}
-				<div class="relative w-full h-full">
+				<!--<div class="relative w-full h-full">
 					<img
 						src={data.story.content.thumbnail.filename}
 						class="absolute inset-0 object-cover object-top w-full h-full"
 						alt={data.story.content.title}
 					/>
+				</div>-->
+				<div class="relative w-full h-full">
+					<HoverPlane content={data.story.content} />
 				</div>
 			{/if}
 		</figure>
