@@ -67,11 +67,42 @@
         uniform float uOpacity;
         uniform float uScrollVelocity;
         uniform float uEffectStrength;
+        uniform float uHoverEffect;
+
+        // http://www.flong.com/texts/code/shapers_exp/
+				float exponentialEasing (float x, float a){
+
+						float epsilon = 0.00001;
+						float min_param_a = 0.0 + epsilon;
+						float max_param_a = 1.0 - epsilon;
+						a = max(min_param_a, min(max_param_a, a));
+
+						if (a < 0.5){
+								// emphasis
+								a = 2.0 * a;
+								float y = pow(x, a);
+								return y;
+						} else {
+								// de-emphasis
+								a = 2.0 * (a-0.5);
+								float y = pow(x, 1.0 / (1.-a));
+								return y;
+						}
+				}
 
         void main( void ) {
-            vec4 color = texture2D(planeTexture, vTextureCoord);
-            vec4 rColor = texture2D(planeTexture, vTextureCoord + vec2(0.0, uScrollVelocity * uEffectStrength) * 0.15);
-            vec4 bColor = texture2D(planeTexture, vTextureCoord - vec2(0.0, uScrollVelocity * uEffectStrength) * 0.15);
+        		vec2 uv = vTextureCoord;
+
+        		float d = exponentialEasing(length( uv - 0.5 ), uHoverEffect) - 1.0 + uHoverEffect * 0.75;
+        		vec2 centerInterp = (uv - 0.5) * d;
+
+        		vec2 rUv = centerInterp * (uHoverEffect * 0.6 + 0.4) + uv;
+						vec2 gUv = centerInterp * (uHoverEffect * 0.9 + 0.1) + uv;
+						vec2 bUv = centerInterp * (uHoverEffect * 0.9 + 0.1) + uv;
+
+            vec4 color = texture2D(planeTexture, gUv);
+            vec4 rColor = texture2D(planeTexture, rUv + vec2(0.0, uScrollVelocity * uEffectStrength) * 0.15);
+            vec4 bColor = texture2D(planeTexture, bUv - vec2(0.0, uScrollVelocity * uEffectStrength) * 0.15);
 
             color.a *= uOpacity;
 
@@ -95,6 +126,11 @@
 				type: '1f',
 				value: 0.005
 			},
+			hoverEffect: {
+				name: 'uHoverEffect',
+				type: '1f',
+				value: 0
+			},
 			opacity: {
 				name: 'uOpacity',
 				type: '1f',
@@ -102,10 +138,6 @@
 			}
 		}
 	};
-
-	function easeInSine(x: number): number {
-		return 1 - Math.cos((x * Math.PI) / 2);
-	}
 
 	const createPlane = () => {
 		if (curtains && canCreatePlane) {
@@ -175,19 +207,24 @@
 		const hoverTransition = {
 			planeScale: plane.scale.x,
 			textureScale: plane.textures[0].scale.x,
+			effect: plane.uniforms.hoverEffect.value
 		}
 
 		if(value === name) {
 			hoverTween = gsap.to(hoverTransition, {
 				planeScale: 0.9,
 				textureScale: 1.15,
+				effect: 1,
 				duration: 0.5,
+				ease: 'power2.inOut',
 				onUpdate: () => {
 					plane.scale.x = hoverTransition.planeScale;
 					plane.scale.y = hoverTransition.planeScale;
 
-					plane.textures[0].scale.x = hoverTransition.textureScale;
-					plane.textures[0].scale.y = hoverTransition.textureScale;
+					//plane.textures[0].scale.x = hoverTransition.textureScale;
+					//plane.textures[0].scale.y = hoverTransition.textureScale;
+
+					plane.uniforms.hoverEffect.value = hoverTransition.effect;
 				}
 			})
 		}
@@ -195,13 +232,17 @@
 			hoverTween = gsap.to(hoverTransition, {
 				planeScale: 1,
 				textureScale: 1,
+				effect: 0,
 				duration: 0.5,
+				ease: 'power2.inOut',
 				onUpdate: () => {
 					plane.scale.x = hoverTransition.planeScale;
 					plane.scale.y = hoverTransition.planeScale;
 
-					plane.textures[0].scale.x = hoverTransition.textureScale;
-					plane.textures[0].scale.y = hoverTransition.textureScale;
+					//plane.textures[0].scale.x = hoverTransition.textureScale;
+					//plane.textures[0].scale.y = hoverTransition.textureScale;
+
+					plane.uniforms.hoverEffect.value = hoverTransition.effect;
 				}
 			})
 		}
