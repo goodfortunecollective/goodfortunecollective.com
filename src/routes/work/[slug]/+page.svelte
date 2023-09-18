@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Body } from 'svelte-body';
 	import { onMount, onDestroy, getContext } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent, renderRichText } from '@storyblok/svelte';
 
@@ -79,9 +80,14 @@
 			tl = null;
 		}
 	});
+
+	// title hover
+	let isTitleHovered = false as boolean
 </script>
 
-<section class="project-header py-[var(--header-height)] bg-black text-white">
+<Body class="work-page" />
+
+<section class="project-header py-[var(--header-height)] relative text-white">
 	<div class="grid h-full grid-cols-12 pt-16 pb-16">
 		<div class="flex flex-col justify-between col-span-8 col-start-2 lg:col-start-2 lg:col-span-6">
 			<div class="grid grid-cols-12 gap-8 lg:gap-0">
@@ -122,7 +128,10 @@
 					</div>
 				{/if}
 			</div>
-			<Heading as="h1" size="h1" class="mt-6" animated={true}>{data.story.name}</Heading>
+			<div on:mouseenter={() => (isTitleHovered = true)} on:mouseleave={() => (isTitleHovered = false)}>
+				<Heading as="h1" size="h1" class="mt-6" animated={true}>{data.story.name}</Heading>
+			</div>
+
 			{#if data.story.content.description}
 				<div class="w-full mt-12 leading-loose md:w-2/3">
 					{@html description}
@@ -131,15 +140,8 @@
 		</div>
 		<figure class="col-span-3 col-start-10 lg:col-start-9 lg:col-span-4">
 			{#if data.story.content.thumbnail}
-				<!--<div class="relative w-full h-full">
-					<img
-						src={data.story.content.thumbnail.filename}
-						class="absolute inset-0 object-cover object-top w-full h-full"
-						alt={data.story.content.title}
-					/>
-				</div>-->
 				<div class="relative w-full h-full">
-					<HoverPlane content={data.story.content} />
+					<HoverPlane content={data.story.content} isTitleHovered="{isTitleHovered}" />
 				</div>
 			{/if}
 		</figure>

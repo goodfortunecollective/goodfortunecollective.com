@@ -1,10 +1,26 @@
 <script lang="ts">
 	import { useCurtains } from '$lib/utils/useCurtains';
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
-	import type { Curtains, Plane as PlaneType, PlaneParams } from '@types/curtainsjs';
+	import { Vec2 } from '$lib/vendors/curtainsjs/math/Vec2';
+	import type { Curtains, Plane as PlaneType, PlaneParams, Vec2 as Vec2Type } from '@types/curtainsjs';
 	import { isPageHidden, isTransitioning } from '$lib/stores';
+	import gsap from '$lib/gsap';
+	import {onDestroy} from "svelte";
 
 	export let content: any;
+	export let isTitleHovered: boolean = false;
+
+	const mousePosition = {
+		x: 0 as number,
+		y: 0 as number
+	}
+
+	const planeDeformation: Vec2Type = new Vec2();
+
+	const onMouseMove = (event) => {
+		mousePosition.x = event.clientX
+		mousePosition.y = event.clientY
+	}
 
 	let planeEl: HTMLElement;
 	let plane: undefined | PlaneType;
@@ -32,14 +48,15 @@
         varying vec3 vVertexPosition;
         varying vec2 vTextureCoord;
 
-        uniform float uScrollVelocity;
+        uniform vec2 uDeformation;
         uniform float uEffectStrength;
 
         void main() {
             vec3 vertexPosition = aVertexPosition;
 
-            // cool effect on scroll
-            vertexPosition.y += sin(((vertexPosition.x + 1.0) / 2.0) * 3.141592) * (uScrollVelocity * uEffectStrength);
+            // cool effect on mouse move
+            vertexPosition.x += sin(((vertexPosition.y + 1.0) / 2.0) * 3.141592) * (uDeformation.x * uEffectStrength);
+            vertexPosition.y += sin(((vertexPosition.x + 1.0) / 2.0) * 3.141592) * (-uDeformation.y * uEffectStrength);
 
             gl_Position = uPMatrix * uMVMatrix * vec4(vertexPosition, 1.0);
 
@@ -57,8 +74,6 @@
 
         uniform sampler2D planeTexture;
         uniform float uOpacity;
-        uniform float uScrollVelocity;
-        uniform float uEffectStrength;
 
         void main( void ) {
             vec4 color = texture2D(planeTexture, vTextureCoord);
@@ -74,21 +89,23 @@
 		fragmentShader: fs,
 		widthSegments: 10,
 		heightSegments: 10,
+		transparent: true,
+		watchScroll: false,
 		uniforms: {
-			scrollVelocity: {
-				name: 'uScrollVelocity',
-				type: '1f',
-				value: 0
+			deformation: {
+				name: 'uDeformation',
+				type: '2f',
+				value: planeDeformation
 			},
 			effectStrength: {
 				name: 'uEffectStrength',
 				type: '1f',
-				value: 0.005
+				value: 0.01
 			},
 			opacity: {
 				name: 'uOpacity',
 				type: '1f',
-				value: 1
+				value: 0
 			}
 		}
 	};
@@ -98,7 +115,25 @@
 			plane = new Plane(curtains, planeEl, params);
 
 			plane.onRender(() => {
+				const planeBBox = plane.getBoundingRect()
 
+				const translation = {
+					x: mousePosition.x - (planeBBox.left + planeBBox.width * 0.5) / curtains.pixelRatio,
+					y: mousePosition.y - (planeBBox.top + planeBBox.height * 0.5) / curtains.pixelRatio
+				}
+
+				const lerpedTranslation = {
+					x: curtains.lerp(plane.relativeTranslation.x, translation.x, 0.1),
+					y: curtains.lerp(plane.relativeTranslation.y, translation.y, 0.1)
+				}
+
+				;(plane.uniforms.deformation.value as Vec2Type).set(
+					lerpedTranslation.x - plane.relativeTranslation.x,
+					lerpedTranslation.y - plane.relativeTranslation.y
+				)
+
+				plane.relativeTranslation.x = lerpedTranslation.x
+				plane.relativeTranslation.y = lerpedTranslation.y
 			});
 		}
 	};
@@ -126,6 +161,46 @@
 	});
 
 
+	// hover
+	let hoverTween = null;
+
+	const onTitleHover = (isHovered = false) => {
+		if(!plane) return
+
+		hoverTween?.kill()
+
+		const hoverTransition = {
+			opacity: plane.uniforms.opacity.value,
+		}
+
+		if(isHovered) {
+			hoverTween = gsap.to(hoverTransition, {
+				opacity: 1,
+				duration: 0.5,
+				onUpdate: () => {
+					plane.uniforms.opacity.value = hoverTransition.opacity;
+				}
+			})
+		}
+		else {
+			hoverTween = gsap.to(hoverTransition, {
+				opacity: 0,
+				duration: 0.5,
+				onUpdate: () => {
+					plane.uniforms.opacity.value = hoverTransition.opacity;
+				}
+			})
+		}
+	}
+
+	onDestroy(() => {
+		hoverTween?.kill()
+	})
+
+	// now make it reactive
+	$: onTitleHover(isTitleHovered)
+
+
 	useCurtains(
 		(curtainsInstance) => {
 			curtains = curtainsInstance;
@@ -143,6 +218,8 @@
 		}
 	);
 </script>
+
+<svelte:window on:mousemove={onMouseMove} />
 
 <div class="HoverPlane" bind:this={planeEl}>
 	<img
