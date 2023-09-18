@@ -5,9 +5,8 @@
 	export let strokeDashArray = '0px';
 	export let strokeDashOffset = '0px';
 
-	const onScroll = (event: any) => {
+	const onScroll = () => {
 		progress = Math.round((100 * window.scrollY) / (documentHeight() - window.innerHeight));
-		// console.log('percentage : ' + progress + '%');
 		let c = Math.PI * (9 * 2);
 		let pct = ((100 - progress) / 100) * c;
 		strokeDashArray = c + 'px';
