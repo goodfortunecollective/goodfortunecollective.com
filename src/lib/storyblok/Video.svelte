@@ -7,8 +7,8 @@
 
 	let tl: any = null;
 	export let blok: any;
-	export let videoVisible = false;
-	export let videoPlaying = false;
+	export let videoVisible = blok.autoplay;
+	export let videoPlaying = blok.autoplay;
 	export let btnHidden = true;
 	export let posterUrl = null;
 
@@ -92,11 +92,11 @@
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	<div class="grid grid-cols-12">
-		<div class="col-start-2 col-span-10" bind:offsetWidth />
+		<div class="col-span-10 col-start-2" bind:offsetWidth />
 	</div>
 	<div
 		bind:this={videoContainer}
-		class="flex items-center justify-center video-block cursor-pointer"
+		class="flex items-center justify-center cursor-pointer video-block"
 		on:mouseenter={contOnEnter}
 		on:mouseleave={contOnLeave}
 		data-id={blok.id}
@@ -120,6 +120,9 @@
 				webkit-playsinline=""
 				poster=""
 				on:click={playPauseVideo}
+				autoplay={blok.autoplay}
+				loop={blok.loop}
+				muted={blok.muted}
 			/>
 		{/if}
 

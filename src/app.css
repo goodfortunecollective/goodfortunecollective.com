@@ -13,6 +13,17 @@
 		background-color: #fff;
 	}
 
+	body.work-page::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 200vh;
+		left: 0;
+		background: black;
+		z-index: 0;
+	}
+
 	.preserve-3d {
 		transform-style: preserve-3d;
 	}

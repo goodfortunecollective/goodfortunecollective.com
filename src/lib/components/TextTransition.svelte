@@ -2,10 +2,8 @@
 	import { onMount, onDestroy } from 'svelte';
 
 	import gsap, { SplitText } from '$lib/gsap';
-	import { Timeline } from '$lib/vendors/gsap/gsap-core';
 
 	let element: HTMLSpanElement;
-
 	let animChars: any = null;
 	let animLines: any = null;
 
