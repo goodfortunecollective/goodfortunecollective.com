@@ -26,6 +26,9 @@
 	@import '../../vars.scss';
 
 	.link {
+		display: inline-flex;
+		overflow: hidden;
+
 		&:hover {
 			.link-circle {
 				&:before {
@@ -34,7 +37,8 @@
 			}
 
 			.arrow-default {
-				transform: scale(0, 1) translate(45px, 0);
+				//transform: scale(0, 1) translate(45px, 0);
+				transform: translate3d(200%, 0, 0);
 			}
 
 			.arrow-hover {
@@ -65,7 +69,7 @@
 			background: $black;
 			z-index: 9;
 			content: '';
-			transition: 0.4s transform ease-out, 0.4s opacity ease-out;
+			transition: 0.5s transform $ease-out-expo, 0.5s opacity $ease-out-expo;
 		}
 	}
 
@@ -73,7 +77,7 @@
 		position: absolute;
 		width: 50%;
 		height: 1px;
-		transition: 0.4s transform ease-out, 0.4s opacity ease-out;
+		transition: 0.5s transform $ease-out-expo, 0.5s opacity $ease-out-expo;
 
 		&:before,
 		&:after {
@@ -111,8 +115,9 @@
 		&.arrow-hover {
 			width: 38%;
 			background: $white;
-			transform: translate(-100%, 0);
+			transform: translate3d(-200%, 0, 0);
 			z-index: 10;
+			transition: 0.5s 0.1s transform $ease-out-expo, 0.5s opacity $ease-out-expo;
 
 			&:before,
 			&:after {
