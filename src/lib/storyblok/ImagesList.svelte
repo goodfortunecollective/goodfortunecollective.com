@@ -19,7 +19,12 @@
 						<StoryblokComponent blok={item} />
 					</div>
 				</div>
-				<figure class={'list-item-image mt-8 md:mt-0 md:col-span-9 ' + imageClasses[i % 2]}>
+				<figure
+					class={'list-item-image md:col-span-9 flex ' +
+						(item.image_position ? 'items-' + item.image_position : '') +
+						' ' +
+						imageClasses[i % 2]}
+				>
 					<img src={item.image.filename} alt={item.title} />
 				</figure>
 			</div>
