@@ -16,7 +16,7 @@
 	let container!: HTMLElement;
 	let background!: HTMLElement;
 
-	let videoPlaying = true;
+	let videoPlaying = blok.autoplay;
 	let btnHidden = true;
 
 	let constrain = 100;
@@ -246,9 +246,9 @@
 					on:mouseleave={videoOnLeave}
 					class="w-full aspect-video"
 					src={blok.video}
-					autoplay
-					muted
-					loop
+					autoplay={blok.autoplay}
+					loop={blok.loop}
+					muted={blok.muted}
 				>
 					<track kind="captions" />
 				</video>
