@@ -22,21 +22,6 @@
 	.list {
 		position: relative;
 
-		&:before,
-		&:after {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 35%;
-			height: 1px;
-			background: #333;
-			content: '';
-		}
-
-		&:after {
-			left: 50%;
-		}
-
 		p {
 			margin-bottom: 1rem;
 		}
