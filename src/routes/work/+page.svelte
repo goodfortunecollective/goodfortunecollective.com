@@ -65,12 +65,12 @@
 	$: projects = getProjectsByFilter(data.projects, filter);
 
 	const projectGridItemsClasses = [
-		'col-span-5 col-start-7 mt-[16.66%] z-2 text-right',
-		'col-span-6 col-start-2 -mt-[25%] z-1 text-left',
-		'col-span-6 col-start-5 mt-[8.33%] z-2 text-right',
-		'col-span-4 col-start-2 -mt-[16.66%] z-1 text-left',
-		'col-span-4 col-start-8 mt-[16.66%] z-2 text-right',
-		'col-span-7 col-start-2 -mt-[4.166%] z-1 text-left'
+		'col-span-10 col-start-3 md:col-span-5 md:col-start-7 md:mt-[16.66%] z-2 text-right',
+		'col-span-10 col-start-1 md:col-span-6 md:col-start-2 md:-mt-[25%] z-1 text-left',
+		'col-span-10 col-start-3 md:col-span-6 md:col-start-5 md:mt-[8.33%] z-2 text-right',
+		'col-span-10 col-start-1 md:col-span-4 md:col-start-2 md:-mt-[16.66%] z-1 text-left',
+		'col-span-10 col-start-3 md:col-span-4 md:col-start-8 md:mt-[16.66%] z-2 text-right',
+		'col-span-10 col-start-1 md:col-span-7 md:col-start-2 md:-mt-[4.166%] z-1 text-left'
 	];
 
 	const getProjectGridItemClass = (index: number) => {
