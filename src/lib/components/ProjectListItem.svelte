@@ -109,7 +109,7 @@
 	</div>
 
 	<div class="ProjectListItem-infos">
-		<div class="ProjectListItem-category uppercase text-sm">
+		<div class="text-sm uppercase ProjectListItem-category">
 			{content.category && content.category[0]}
 		</div>
 		<div class="ProjectListItem-infos-inner">
@@ -162,7 +162,7 @@
 			padding: 1rem 8.3333%;
 
 			@media (min-width: $media-md) {
-				width: 50%;
+				width: 65%;
 				position: absolute;
 				bottom: 0;
 				transform: translate3d(0, 100%, 0);
@@ -212,7 +212,7 @@
 			.ProjectListItem-infos {
 				position: static;
 				transform: none;
-				width: calc(25% - 8.33vw);
+				width: calc(30% - 8.33vw);
 
 				&-inner {
 					padding: 2rem 0 0.5rem 0;
@@ -224,18 +224,18 @@
 		&--is-left-layout {
 			.ProjectListItem-infos {
 				left: 0;
-				right: 50%;
+				right: 35%;
 			}
 		}
 
 		&--is-right-layout {
 			.ProjectListItem-infos {
 				left: 0;
-				right: 50%;
+				right: 35%;
 
 				@media (min-width: $media-md) {
 					right: 0;
-					left: 50%;
+					left: 35%;
 				}
 			}
 		}
