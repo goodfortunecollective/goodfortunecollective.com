@@ -109,11 +109,11 @@
 		class:motion-safe:-translate-y-full={offscreen}
 		bind:clientHeight
 	>
-		<nav class="col-start-3 lg:col-start-2 col-span-20 lg:col-span-22 py-6" aria-label="Global">
+		<nav class="col-start-3 py-12 lg:col-start-2 col-span-20 lg:col-span-22" aria-label="Global">
 			<div class="flex items-center justify-between">
 				<a href="{base}/" class="-m-1.5 p-1.5" bind:this={logo}>
 					<span class="sr-only">Good Fortune Collective</span>
-					<Gfc class="w-auto h-8 3xl:h-10 text-white" alt="" />
+					<Gfc class="w-auto h-8 text-white 3xl:h-10" alt="" />
 				</a>
 				<div class="flex sm:hidden">
 					<button
@@ -151,9 +151,9 @@
 						{/if}
 					</button>
 				</div>
-				<div class="hidden sm:flex sm:gap-x-12">
+				<div class="hidden pt-4 sm:flex sm:gap-x-12">
 					{#each navigation as { name, path }, i}
-						<a href="{base}/{path}" class="text-sm 3xl:text-lg leading-6">
+						<a href="{base}/{path}" class="text-sm leading-6 3xl:text-lg">
 							<span data-gsap="nav-items" class="block text-white">{name}</span>
 						</a>
 					{/each}
