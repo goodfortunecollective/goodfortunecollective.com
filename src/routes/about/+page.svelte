@@ -14,7 +14,7 @@
 	});
 </script>
 
-<section class="about pt-[var(--header-height)] pb-32">
+<section class="about pb-32">
 	{#if data.story}
 		<StoryblokComponent blok={data.story.content} />
 	{/if}

@@ -50,7 +50,6 @@
 		&:before {
 			position: absolute;
 			bottom: 100%;
-			height: var(--header-height);
 			right: 0;
 			left: 0;
 			background: #bec6c4;
