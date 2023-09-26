@@ -11,37 +11,36 @@
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	<div class="pt-8 grid grid-cols-12 lg:pt-[8.33vw] gap-8 lg:gap-0">
-		<div class="col-span-10 lg:col-span-4 col-start-2 lg:col-start-2">
+		<div class="col-span-10 col-start-2 headline-title lg:col-span-8 lg:col-start-2">
 			<div class="flex flex-col h-full">
-				<Heading as="h2" size="h1" class="flex-1 max-w-screen-md">{blok.title}</Heading>
-				{#if blok.children.length}
-					<div class="hidden mt-8 lg:flex">
-						{#each blok.children as b}
-							<StoryblokComponent blok={b} />
-						{/each}
-					</div>
-				{/if}
-			</div>
-		</div>
-		<div class="col-span-10 lg:col-span-5 col-start-2 lg:col-start-7">
-			<div
-				class="lg:pt-24 text-xl xl:text-2xl 4xl:text-4xl leading-9 4xl:leading-loose max-w-screen-xl"
-			>
-				<TextTransition>{@html content}</TextTransition>
+				<Heading as="h1" size="h1" class="flex-1 max-w-screen-md leading-extra-tight"
+					>{blok.title}</Heading
+				>
 			</div>
 		</div>
 		{#if blok.children.length}
-			<div class="lg:hidden col-span-10 col-start-2">
+			<div class="col-span-10 col-start-2 lg:pt-12 lg:col-start-2 lg:col-span-2">
 				{#each blok.children as b}
 					<StoryblokComponent blok={b} />
 				{/each}
 			</div>
 		{/if}
+		<div class="col-span-10 col-start-2 lg:col-span-6 lg:col-start-5">
+			<div
+				class="max-w-screen-xl text-xl leading-9 lg:pt-12 xl:text-2xl 4xl:text-4xl 4xl:leading-loose"
+			>
+				<TextTransition>{@html content}</TextTransition>
+			</div>
+		</div>
 	</div>
 </div>
 
 <style lang="scss">
 	@import '../../vars.scss';
+
+	.headline-title :global(h1) {
+		line-height: 0.85;
+	}
 
 	.grey-bg {
 		position: relative;
@@ -50,7 +49,6 @@
 		&:before {
 			position: absolute;
 			bottom: 100%;
-			height: var(--header-height);
 			right: 0;
 			left: 0;
 			background: #bec6c4;

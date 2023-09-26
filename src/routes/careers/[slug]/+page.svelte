@@ -16,7 +16,7 @@
 	onDestroy(() => {});
 </script>
 
-<section class="pt-[var(--header-height)] pb-32">
+<section class=" pb-32">
 	<div class="grid grid-cols-12 mt-24 mb-8">
 		<div class="col-start-2 lg:col-start-2 col-span-10 lg:col-span-4">
 			<span class="rotate-180 inline-block">

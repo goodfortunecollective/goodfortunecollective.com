@@ -20,6 +20,9 @@ export default {
 			fontSize: {
 				'10xl': '10rem'
 			},
+			lineHeight: {
+				'extra-tight': '0.85'
+			},
 			gridTemplateColumns: {
 				// Simple 24 column grid
 				24: 'repeat(24, minmax(0, 1fr))'

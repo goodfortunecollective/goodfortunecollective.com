@@ -3,25 +3,28 @@
 
 	export let blok: any;
 
-	export let titleClasses = ['md:col-start-5', 'md:col-start-11'];
-	export let imageClasses = ['md:col-start-1', 'md:col-start-14'];
-	export let textClasses = ['md:col-start-14', 'md:col-start-4'];
+	export let imageClasses = ['md:col-start-14', 'md:col-start-3'];
+	export let textClasses = ['md:col-start-3', 'md:col-start-14'];
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	<div class="flex flex-col list">
 		{#each blok.list as item, i}
-			<div class="flex px-8 py-16 md:px-0 md:grid md:grid-cols-24 md:gap-2 md:py-32 list-item">
-				<div class={'list-item-title-cont mb-8 flex flex-row md:col-span-8 ' + titleClasses[i % 2]}>
-					<div class="text-lg font-bold list-item-number">
-						{#if i <= 10}0{/if}{i + 1}
+			<div class="px-8 py-16 md:px-0 md:grid md:grid-cols-24 md:gap-2 md:py-32 list-item">
+				<div class={'list-item-text-cont flex-row md:col-span-9  ' + textClasses[i % 2]}>
+					<h2 class="mb-8 text-5xl lg:text-8xl list-item-title font-degular-display">
+						{item.title}
+					</h2>
+					<div class="mb-8 list-item-text md:mb-0">
+						<StoryblokComponent blok={item} />
 					</div>
-					<h2 class="text-4xl list-item-title">{item.title}</h2>
 				</div>
-				<div class={'list-item-text mb-8 md:mb-0 md:col-span-8 ' + textClasses[i % 2]}>
-					<StoryblokComponent blok={item} />
-				</div>
-				<figure class={'list-item-image md:col-span-12 ' + imageClasses[i % 2]}>
+				<figure
+					class={'list-item-image md:col-span-9 flex ' +
+						(item.image_position ? 'items-' + item.image_position : '') +
+						' ' +
+						imageClasses[i % 2]}
+				>
 					<img src={item.image.filename} alt={item.title} />
 				</figure>
 			</div>
@@ -38,17 +41,18 @@
 		}
 
 		@media (min-width: $media-md) {
-			&:nth-child(2n + 1) {
-				.list-item-text {
-					order: 3;
+			&:nth-child(2n + 0) {
+				.list-item-text-cont {
+					order: 2;
 				}
 
 				.list-item-image {
-					order: 2;
+					order: 1;
 				}
 			}
 		}
 	}
+<<<<<<< HEAD
 
 	.list-item-number {
 		position: relative;
@@ -79,4 +83,6 @@
 		@media (min-width: screen-sm-min) {
 		}
 	}
+=======
+>>>>>>> c4149dc4bd927ada4abf259b32ae2671d590ce53
 </style>
