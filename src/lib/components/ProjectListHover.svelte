@@ -48,7 +48,7 @@
 
 {#if !!list_hover}
 	<div class="fixed top-0 left-0 w-screen h-screen pointer-events-none z-50">
-		<section class="pt-[var(--header-height)]">
+		<section class="">
 			<div class="grid grid-cols-12 pt-16 pb-16">
 				<div class="col-start-2 col-span-8 lg:col-start-2 lg:col-span-6">
 					<div class="grid grid-cols-12 gap-8 lg:gap-0">
