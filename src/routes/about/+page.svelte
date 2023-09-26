@@ -14,7 +14,7 @@
 	});
 </script>
 
-<section class="about pt-[var(--header-height)] pb-32">
+<section class="about pb-32">
 	{#if data.story}
 		<StoryblokComponent blok={data.story.content} />
 	{/if}
@@ -26,7 +26,7 @@
 		</div>
 	</div>
 	<div class="col-span-10 col-start-2 lg:col-start-7 lg:col-span-4">
-		<Heading as="h2" size="h1" class="text-9xl">Join Us Subheadline</Heading>
+		<Heading as="h2" size="h2" class="text-9xl">Join Us Subheadline</Heading>
 		<div class="mt-8">
 			<Link href={base + '/careers/'} label="We're good people" class="mt-8" />
 		</div>

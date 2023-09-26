@@ -16,6 +16,7 @@
 	import Curtains from './Curtains.svelte';
 	import PageTransition from './PageTransition.svelte';
 	import PageTransitionAnim from './PageTransitionAnim.svelte';
+	import ProjectListHover from '$lib/components/ProjectListHover.svelte';
 
 	import '../app.css';
 
@@ -109,6 +110,8 @@
 			</PageTransition>
 		</div>
 	</div>
+
+	<ProjectListHover />
 </main>
 
 <Curtains />
