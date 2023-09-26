@@ -16,7 +16,7 @@
 	let container!: HTMLElement;
 	let background!: HTMLElement;
 
-	let videoPlaying = true;
+	let videoPlaying = blok.autoplay;
 	let btnHidden = true;
 
 	let constrain = 100;
@@ -246,9 +246,9 @@
 					on:mouseleave={videoOnLeave}
 					class="w-full aspect-video"
 					src={blok.video}
-					autoplay
-					muted
-					loop
+					autoplay={blok.autoplay}
+					loop={blok.loop}
+					muted={blok.muted}
 				>
 					<track kind="captions" />
 				</video>
@@ -258,7 +258,7 @@
 		<div
 			class="absolute top-0 left-0 flex items-start w-full h-full pointer-events-none title-cont"
 		>
-			<div class="flex flex-col justify-between h-full py-[10vh]">
+			<div class="flex flex-col justify-between h-full py-[15vh]">
 				<h1
 					data-gsap="split-text"
 					class="max-w-6xl text-6xl leading-[4rem] md:text-[11rem] md:leading-[8rem] 3xl:text-[12rem] 3xl:leading-[9rem] z-[8] text-black font-degular-display title tracking-wide"

@@ -116,7 +116,7 @@
 
 <svelte:window on:hashchange={hashchange} />
 
-<section class="pt-[var(--header-height)] pb-32">
+<section class="pt-20 3xl:pt-24 pb-32">
 	<div class="mt-16">
 		<div class="relative">
 			<MenuList class="absolute top-0 right-0 z-10 flex flex-col items-end gap-4">

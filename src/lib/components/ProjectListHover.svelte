@@ -15,34 +15,34 @@
 	});
 
 	beforeNavigate(() => {
-		project_list_hover.set(null)
+		project_list_hover.set(null);
 	});
 </script>
 
-
 {#key title}
 	{#if !!list_hover}
-		<div class="fixed top-0 left-0 w-screen h-screen pointer-events-none z-1 text-6xl md:text-7xl xl:text-8xl 4xl:text-10xl font-degular-display grid grid-cols-24 items-center">
+		<div
+			class="fixed top-0 left-0 w-screen h-screen pointer-events-none z-1 text-6xl md:text-7xl xl:text-8xl 4xl:text-10xl font-degular-display grid grid-cols-24 items-center"
+		>
+			<span
+				class="ProjectListHover-title relative block col-start-3 lg:col-start-2 col-span-20 lg:col-span-22 h-48"
+				style="--color: #dbd5bf;"
+			>
 				<span
-					class="ProjectListHover-title relative block col-start-3 lg:col-start-2 col-span-20 lg:col-span-22 h-48"
-					style="--color: #dbd5bf;"
+					in:slide|global={{
+						duration: 500,
+						direction: 'bottom',
+						easing: cubicOut
+					}}
+					out:slide|global={{ duration: 500, direction: 'top', easing: cubicOut }}
+					class="block absolute"
 				>
-						<span
-							in:slide|global={{
-								duration: 500,
-								direction: 'bottom',
-								easing: cubicOut
-							}}
-							out:slide|global={{ duration: 500, direction: 'top', easing: cubicOut }}
-							class="block absolute"
-						>
-							{title}
-						</span>
+					{title}
 				</span>
+			</span>
 		</div>
 	{/if}
 {/key}
-
 
 <style lang="scss">
 	.ProjectListHover {
