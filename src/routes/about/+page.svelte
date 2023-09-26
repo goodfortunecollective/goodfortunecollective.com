@@ -37,6 +37,9 @@
 	@import '../../vars.scss';
 
 	.about {
+		:global(.images-block) {
+			margin-top: 6rem;
+		}
 		:global(.image-block:after) {
 			position: absolute;
 			top: 0;
@@ -51,6 +54,17 @@
 		}
 
 		@media (min-width: $media-md) {
+			:global(.images-block) {
+				justify-content: flex-start;
+				margin-top: 8rem;
+			}
+			:global(.image-block) {
+				width: 83%;
+			}
+			:global(.image-block-img) {
+				width: 100%;
+				max-width: initial;
+			}
 			:global(.image-block:after) {
 				width: 180px;
 				height: 180px;
