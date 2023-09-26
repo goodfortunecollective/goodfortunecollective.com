@@ -19,7 +19,7 @@
 			</div>
 		</div>
 		{#if blok.children.length}
-			<div class="col-span-10 col-start-2 lg:pt-12 lg:col-span-2 lg:hidden">
+			<div class="col-span-10 col-start-2 lg:pt-12 lg:col-start-2 lg:col-span-2">
 				{#each blok.children as b}
 					<StoryblokComponent blok={b} />
 				{/each}
