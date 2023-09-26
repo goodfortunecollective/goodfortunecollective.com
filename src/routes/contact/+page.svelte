@@ -11,7 +11,7 @@
 	});
 </script>
 
-<section class="pt-[var(--header-height)] pb-32 h-1/2">
+<section class="pb-32 h-1/2">
 	{#if data.story}
 		<StoryblokComponent blok={data.story.content} />
 	{/if}

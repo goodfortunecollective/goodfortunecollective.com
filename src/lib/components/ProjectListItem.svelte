@@ -200,23 +200,24 @@
 			}
 		}
 
-		&--is-main {
-			flex-direction: row;
-			align-items: flex-end;
-			justify-content: space-between;
+		@media (min-width: 768px) {
+			&--is-main {
+				flex-direction: row;
+				align-items: flex-end;
+				justify-content: space-between;
 
-			.ProjectListItem-thumb {
-				width: 75%;
-			}
+				.ProjectListItem-thumb {
+					width: 75%;
+				}
+				.ProjectListItem-infos {
+					position: static;
+					transform: none;
+					width: calc(30% - 8.33vw);
 
-			.ProjectListItem-infos {
-				position: static;
-				transform: none;
-				width: calc(30% - 8.33vw);
-
-				&-inner {
-					padding: 2rem 0 0.5rem 0;
-					margin: 2rem 0 0.5rem 0;
+					&-inner {
+						padding: 2rem 0 0.5rem 0;
+						margin: 2rem 0 0.5rem 0;
+					}
 				}
 			}
 		}
