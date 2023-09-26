@@ -52,7 +52,6 @@
 			}
 		}
 	}
-<<<<<<< HEAD
 
 	.list-item-number {
 		position: relative;
@@ -83,6 +82,4 @@
 		@media (min-width: screen-sm-min) {
 		}
 	}
-=======
->>>>>>> c4149dc4bd927ada4abf259b32ae2671d590ce53
 </style>
