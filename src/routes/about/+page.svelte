@@ -19,14 +19,14 @@
 		<StoryblokComponent blok={data.story.content} />
 	{/if}
 </section>
-<section class="grid grid-cols-12 mb-2 gap-8 lg:gap-0">
-	<div class="col-start-2 lg:col-start-2 col-span-10 lg:col-span-4">
+<section class="grid grid-cols-12 gap-8 mb-2 lg:gap-0">
+	<div class="col-span-10 col-start-2 lg:col-start-2 lg:col-span-4">
 		<div class="pt-0 text-2xl 4xl:text-3xl lg:pt-24">
 			Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 		</div>
 	</div>
-	<div class="col-start-2 lg:col-start-7 col-span-10 lg:col-span-4">
-		<Heading as="h2" size="h1" class="text-9xl">Join Us Subheadline</Heading>
+	<div class="col-span-10 col-start-2 lg:col-start-7 lg:col-span-4">
+		<Heading as="h2" size="h2" class="text-9xl">Join Us Subheadline</Heading>
 		<div class="mt-8">
 			<Link href={base + '/careers/'} label="We're good people" class="mt-8" />
 		</div>
