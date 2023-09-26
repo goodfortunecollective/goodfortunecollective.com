@@ -48,7 +48,7 @@
 							<img src={item.content.thumbnail.filename} class="post-img" alt={item.name} />
 						</figure>
 					{/if}
-					<div class={cls(textClasses[[i % 6]], 'mt-16 post-text')}>
+					<div class={cls(textClasses[i % 6], 'mt-16 post-text')}>
 						{#if item.tag_list}
 							<span class="text-xs tracking-widest uppercase tag-list">
 								{#each item.tag_list as tag, i}
