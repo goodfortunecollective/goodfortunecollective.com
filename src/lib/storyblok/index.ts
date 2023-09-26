@@ -17,6 +17,7 @@ import ImagesList from './ImagesList.svelte';
 import ImageAndText from './ImageAndText.svelte';
 import ProjectsList from './ProjectsList.svelte';
 import JobList from './JobList.svelte';
+import CultureList from './CultureList.svelte';
 import Link from './Link.svelte';
 import Page from './Page.svelte';
 import RichText from './RichText.svelte';
@@ -47,6 +48,7 @@ export const components: any = {
 	'image-and-text': ImageAndText,
 	'images-list': ImagesList,
 	'job-list': JobList,
+	'culture-list': CultureList,
 	'projects-list': ProjectsList,
 	'link': Link,
 	'page': Page,
