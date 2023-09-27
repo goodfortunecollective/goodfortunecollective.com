@@ -17,77 +17,65 @@
 	let colorBackground: string = 'bg-white';
 
 	function ready() {
-		active = false;
 		dispatch('complete');
 		delay_anim_page.set(1.5);
+	}
+
+	const onVideoReady = () => {
+		console.log('video ready')
+		logo.addEventListener('ended', onVideoComplete, {
+			once: true,
+		})
+
+		logo.play()
+	}
+
+	const onVideoComplete = () => {
+		if (!skip) {
+			ready();
+		}
+	}
+
+	export const hideLoader = () => {
+		active = false;
 	}
 
 	onMount(async () => {
 		if (skip) {
 			requestAnimationFrame(ready);
+			hideLoader();
 			return;
 		}
 
-		const tl = gsap.timeline();
-
-		gsap.set(logo, {
-			opacity: 0
-		});
-
-		tl.fromTo(
-			background,
-			{
-				x: '-100vw'
-			},
-			{
-				x: 0,
-				duration: 2.5,
-				ease: 'expo.inOut',
-				onComplete: () => {
-					colorBackground = 'bg-transparent';
-					logo.play();
-				}
-			}
-		)
-			.to(logo, {
-				opacity: 1,
-				duration: 0.25
+		if (logo.readyState >= logo.HAVE_ENOUGH_DATA) {
+			onVideoReady()
+		} else {
+			logo.addEventListener('canplaythrough', onVideoReady, {
+				once: true,
 			})
-			.to(
-				logo,
-				{
-					opacity: 0
-				},
-				'+=4'
-			)
-			.to(background, {
-				x: '100vw',
-				duration: 2.5,
-				ease: 'expo.inOut'
-			})
-			.then(() => {
-				if (!skip) {
-					ready();
-				}
-			});
+		}
+
+		return () => {
+			logo.removeEventListener('canplaythrough', onVideoReady)
+			logo.removeEventListener('ended', onVideoComplete)
+		}
 	});
 </script>
 
 {#if active}
 	<div
-		class={cls('fixed top-0 left-0 z-50 w-screen h-screen overflow-hidden', colorBackground)}
+		class={cls('fixed top-0 left-0 z-40 w-screen h-screen overflow-hidden', colorBackground)}
 		id="loader"
 	>
 		<div class="flex items-center justify-center w-full h-full">
-			<div bind:this={background} class="absolute w-full h-full bg-gray-100" />
+			<div bind:this={background} class="absolute w-full h-full bg-white" />
 
 			<video
 				bind:this={logo}
 				class="absolute"
-				src={'/GFC_logo.mp4'}
+				src={'/GFC-intro.mp4'}
 				autoplay={false}
 				muted
-				loop
 				preload="auto"
 			/>
 		</div>

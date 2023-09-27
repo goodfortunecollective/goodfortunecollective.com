@@ -70,12 +70,9 @@
 		onResize();
 	});
 
-	beforeNavigate(async () => {
+	export const animateTransition = ({onLeavingDone = () => {}, onEnteringDone = () => {}} = {}) => {
 		// @ts-ignore
 		const scroll = ScrollSmoother.get();
-
-		isTransitioning.set(true);
-		isPageHidden.set(false);
 
 		if (scroll) scroll.paused(true);
 
@@ -99,6 +96,8 @@
 				if (curtains) {
 					curtains.updateScrollValues(0, 0);
 				}
+
+				onEnteringDone()
 			}
 		})
 			.to(
@@ -134,6 +133,8 @@
 						}
 					}
 				}
+
+				onLeavingDone()
 			});
 
 		// resize curtains to avoid misplaced plane after navigation because of fly transition
@@ -142,6 +143,13 @@
 		// 		curtains.resize();
 		// 	}
 		// }, null, 2.15); // add a small delay after effective DOM change
+	}
+
+	beforeNavigate(async () => {
+		isTransitioning.set(true);
+		isPageHidden.set(false);
+
+		animateTransition()
 	});
 </script>
 
