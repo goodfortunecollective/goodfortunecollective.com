@@ -3,7 +3,6 @@
 
 	import gsap from '$lib/gsap';
 	import { cls } from '$lib/styles';
-	import { delay_anim_page } from '$lib/stores';
 
 	// avoid to reload the loader animation each time we update the page
 	export let skip: boolean = false;
@@ -18,27 +17,26 @@
 
 	function ready() {
 		dispatch('complete');
-		delay_anim_page.set(1.5);
 	}
 
 	const onVideoReady = () => {
-		console.log('video ready')
+		console.log('video ready');
 		logo.addEventListener('ended', onVideoComplete, {
-			once: true,
-		})
+			once: true
+		});
 
-		logo.play()
-	}
+		logo.play();
+	};
 
 	const onVideoComplete = () => {
 		if (!skip) {
 			ready();
 		}
-	}
+	};
 
 	export const hideLoader = () => {
 		active = false;
-	}
+	};
 
 	onMount(async () => {
 		if (skip) {
@@ -48,17 +46,17 @@
 		}
 
 		if (logo.readyState >= logo.HAVE_ENOUGH_DATA) {
-			onVideoReady()
+			onVideoReady();
 		} else {
 			logo.addEventListener('canplaythrough', onVideoReady, {
-				once: true,
-			})
+				once: true
+			});
 		}
 
 		return () => {
-			logo.removeEventListener('canplaythrough', onVideoReady)
-			logo.removeEventListener('ended', onVideoComplete)
-		}
+			logo.removeEventListener('canplaythrough', onVideoReady);
+			logo.removeEventListener('ended', onVideoComplete);
+		};
 	});
 </script>
 
