@@ -88,10 +88,19 @@
 		};
 	});
 
+	let introComplete, hideLoader
+
 	function handleCompleteLoader() {
-		if (scroll) {
-			scroll.paused(false);
-		}
+		introComplete({
+			onEnteringDone: () => {
+				// TODO start page content entering animations
+				hideLoader()
+
+				if (scroll) {
+					scroll.paused(false);
+				}
+			}
+		})
 	}
 </script>
 
@@ -99,7 +108,6 @@
 	<StoryblokComponent blok={getComponentByName(data.settings.content, 'header')} />
 {/if}
 <main bind:this={ref}>
-	<PageTransitionAnim />
 	<div id="smooth-wrapper" class="z-10">
 		<div id="smooth-content" bind:this={smoothScrollContentEl}>
 			<PageTransition pathname={data.pathname}>
@@ -118,7 +126,9 @@
 
 <ScrollIndicator />
 
-<Loader on:complete={handleCompleteLoader} skip={dev || data.preview} />
+<Loader on:complete={handleCompleteLoader} bind:hideLoader={hideLoader} skip={data.preview} />
+
+<PageTransitionAnim bind:animateTransition={introComplete} />
 
 <style>
 </style>
