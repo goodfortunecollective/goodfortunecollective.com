@@ -6,6 +6,7 @@
 
 	import gsap, { SplitText } from '$lib/gsap';
 	import { delay_anim_page } from '$lib/stores';
+	import {useScrollTriggerReady} from "../utils/useScrollTriggerReady";
 
 	export let blok: any;
 
@@ -83,7 +84,7 @@
 			((mousePosition.x - videoBBox.x - videoBBox.width / 2) / constrain);
 	};
 
-	onMount(() => {
+	useScrollTriggerReady(() => {
 		window.addEventListener('smoothScrollUpdate', onScroll);
 		gsap.ticker.add(onRender);
 		onResize();
@@ -173,12 +174,10 @@
 			},
 			'start'
 		);
-
-		return () => {
-			window.removeEventListener('smoothScrollUpdate', onScroll);
-			gsap.ticker.remove(onRender);
-		};
-	});
+	}, () => {
+		window.removeEventListener('smoothScrollUpdate', onScroll);
+		gsap.ticker.remove(onRender);
+	})
 
 	function videoOnEnter() {
 		btnHidden = false;
