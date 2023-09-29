@@ -2,6 +2,7 @@
 	import { onMount, setContext } from 'svelte';
 	import { custom_event } from 'svelte/internal';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
+	import { isIntroDone } from '$lib/stores';
 
 	import { dev } from '$app/environment';
 	import { page } from '$app/stores';
@@ -88,10 +89,24 @@
 		};
 	});
 
+	let introComplete, hideLoader;
+
 	function handleCompleteLoader() {
-		if (scroll) {
-			scroll.paused(false);
-		}
+		introComplete({
+			onEnteringDone: () => {
+				// TODO start page content entering animations
+				hideLoader();
+
+				if (scroll) {
+					scroll.paused(false);
+				}
+
+				isIntroDone.set(true);
+			},
+			onLeavingDone: () => {
+				//isIntroDone.set(true)
+			}
+		});
 	}
 </script>
 
@@ -99,7 +114,6 @@
 	<StoryblokComponent blok={getComponentByName(data.settings.content, 'header')} />
 {/if}
 <main bind:this={ref}>
-	<PageTransitionAnim />
 	<div id="smooth-wrapper" class="z-10">
 		<div id="smooth-content" bind:this={smoothScrollContentEl}>
 			<PageTransition pathname={data.pathname}>
@@ -118,7 +132,9 @@
 
 <ScrollIndicator />
 
-<Loader on:complete={handleCompleteLoader} skip={dev || data.preview} />
+<Loader on:complete={handleCompleteLoader} bind:hideLoader skip={data.preview} />
+
+<PageTransitionAnim bind:animateTransition={introComplete} />
 
 <style>
 </style>
