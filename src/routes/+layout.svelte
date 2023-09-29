@@ -89,24 +89,24 @@
 		};
 	});
 
-	let introComplete, hideLoader
+	let introComplete, hideLoader;
 
 	function handleCompleteLoader() {
 		introComplete({
 			onEnteringDone: () => {
 				// TODO start page content entering animations
-				hideLoader()
+				hideLoader();
 
 				if (scroll) {
 					scroll.paused(false);
 				}
 
-				isIntroDone.set(true)
+				isIntroDone.set(true);
 			},
 			onLeavingDone: () => {
 				//isIntroDone.set(true)
 			}
-		})
+		});
 	}
 </script>
 
@@ -132,7 +132,7 @@
 
 <ScrollIndicator />
 
-<Loader on:complete={handleCompleteLoader} bind:hideLoader={hideLoader} skip={data.preview} />
+<Loader on:complete={handleCompleteLoader} bind:hideLoader skip={data.preview} />
 
 <PageTransitionAnim bind:animateTransition={introComplete} />
 

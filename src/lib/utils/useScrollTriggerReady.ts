@@ -1,4 +1,5 @@
 import { onMount } from 'svelte';
+
 import { isIntroDone } from '$lib/stores';
 
 export function useScrollTriggerReady(
@@ -25,4 +26,5 @@ export function useScrollTriggerReady(
 
 		return () => cleanUp();
 	});
+
 }
