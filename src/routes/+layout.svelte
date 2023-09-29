@@ -2,6 +2,7 @@
 	import { onMount, setContext } from 'svelte';
 	import { custom_event } from 'svelte/internal';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
+	import { isIntroDone } from '$lib/stores';
 
 	import { dev } from '$app/environment';
 	import { page } from '$app/stores';
@@ -88,19 +89,24 @@
 		};
 	});
 
-	let introComplete, hideLoader
+	let introComplete, hideLoader;
 
 	function handleCompleteLoader() {
 		introComplete({
 			onEnteringDone: () => {
 				// TODO start page content entering animations
-				hideLoader()
+				hideLoader();
 
 				if (scroll) {
 					scroll.paused(false);
 				}
+
+				isIntroDone.set(true);
+			},
+			onLeavingDone: () => {
+				//isIntroDone.set(true)
 			}
-		})
+		});
 	}
 </script>
 
@@ -126,7 +132,7 @@
 
 <ScrollIndicator />
 
-<Loader on:complete={handleCompleteLoader} bind:hideLoader={hideLoader} skip={data.preview} />
+<Loader on:complete={handleCompleteLoader} bind:hideLoader skip={data.preview} />
 
 <PageTransitionAnim bind:animateTransition={introComplete} />
 

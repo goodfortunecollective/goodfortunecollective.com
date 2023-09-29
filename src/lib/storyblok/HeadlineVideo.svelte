@@ -5,7 +5,7 @@
 	import { clamp } from '../utils/maths';
 
 	import gsap, { SplitText } from '$lib/gsap';
-	import { delay_anim_page } from '$lib/stores';
+	import { useScrollTriggerReady } from '../utils/useScrollTriggerReady';
 
 	export let blok: any;
 
@@ -83,102 +83,101 @@
 			((mousePosition.x - videoBBox.x - videoBBox.width / 2) / constrain);
 	};
 
-	onMount(() => {
-		window.addEventListener('smoothScrollUpdate', onScroll);
-		gsap.ticker.add(onRender);
-		onResize();
+	useScrollTriggerReady(
+		() => {
+			window.addEventListener('smoothScrollUpdate', onScroll);
+			gsap.ticker.add(onRender);
+			onResize();
 
-		tlBackground = gsap.timeline({
-			scrollTrigger: {
-				trigger: container,
-				start: '=+50%',
-				end: '=+100%',
-				onUpdate: (self) => {
-					bgOpacity = 1 - self.progress;
+			tlBackground = gsap.timeline({
+				scrollTrigger: {
+					trigger: container,
+					start: '=+50%',
+					end: '=+100%',
+					onUpdate: (self) => {
+						bgOpacity = 1 - self.progress;
+					}
 				}
-			}
-		});
-
-		tlContainer = gsap.timeline({
-			scrollTrigger: {
-				trigger: container,
-				start: 'center 50%',
-				end: '+=150% bottom',
-				scrub: true,
-				pin: true,
-				onUpdate: (self) => {
-					titleScale = 1 - self.progress * 0.35;
-				}
-			}
-		});
-
-		const splitText = gsap.utils.toArray('[data-gsap="split-text"]');
-
-		tlSplitText = gsap.timeline({
-			scrollTrigger: {
-				trigger: videoContainer,
-				start: 'center 55%',
-				end: 'center 30%',
-				toggleActions: 'play reverse play reverse' // onEnter onLeave onEnterBack onLeaveBack
-			},
-			onStart: () => {
-				// move video behind title
-				// if (videoContainer) videoContainer.style.zIndex = '9';
-			},
-			onReverseComplete: () => {
-				// move video on top of title
-				// if (videoContainer) videoContainer.style.zIndex = '11';
-			}
-		});
-		tlSplitText.addLabel('start');
-
-		splitText.forEach((content) => {
-			const text = new SplitText(content, {
-				type: 'lines,words,chars',
-				linesClass: 'split-line',
-				charClass: 'split-char'
 			});
 
-			tlSplitText.from(
-				text.chars,
+			tlContainer = gsap.timeline({
+				scrollTrigger: {
+					trigger: container,
+					start: 'center 50%',
+					end: '+=150% bottom',
+					scrub: true,
+					pin: true,
+					onUpdate: (self) => {
+						titleScale = 1 - self.progress * 0.35;
+					}
+				}
+			});
+
+			const splitText = gsap.utils.toArray('[data-gsap="split-text"]');
+
+			tlSplitText = gsap.timeline({
+				scrollTrigger: {
+					trigger: videoContainer,
+					start: 'center 55%',
+					end: 'center 30%',
+					toggleActions: 'play reverse play reverse' // onEnter onLeave onEnterBack onLeaveBack
+				},
+				onStart: () => {
+					// move video behind title
+					// if (videoContainer) videoContainer.style.zIndex = '9';
+				},
+				onReverseComplete: () => {
+					// move video on top of title
+					// if (videoContainer) videoContainer.style.zIndex = '11';
+				}
+			});
+			tlSplitText.addLabel('start');
+
+			splitText.forEach((content) => {
+				const text = new SplitText(content, {
+					type: 'lines,words,chars',
+					linesClass: 'split-line',
+					charClass: 'split-char'
+				});
+
+				tlSplitText.from(
+					text.chars,
+					{
+						duration: 0.2,
+						ease: 'circ.out',
+						yPercent: 100,
+						stagger: 0.01
+					},
+					'start'
+				);
+			});
+
+			tl = gsap.timeline({
+				scrollTrigger: {
+					trigger: videoContainer,
+					start: 'center 55%',
+					end: 'center 30%',
+					toggleActions: 'play reverse play reverse' // onEnter onLeave onEnterBack onLeaveBack
+				}
+			});
+			tl.addLabel('start');
+
+			tl.from(
+				line,
 				{
-					duration: 0.2,
-					ease: 'circ.out',
-					yPercent: 100,
-					stagger: 0.01,
-					delay: $delay_anim_page
+					duration: 0.8,
+					scaleX: 0,
+					transformOrigin: 'right center',
+					ease: 'back'
 				},
 				'start'
 			);
-		});
-
-		tl = gsap.timeline({
-			scrollTrigger: {
-				trigger: videoContainer,
-				start: 'center 55%',
-				end: 'center 30%',
-				toggleActions: 'play reverse play reverse' // onEnter onLeave onEnterBack onLeaveBack
-			}
-		});
-		tl.addLabel('start');
-
-		tl.from(
-			line,
-			{
-				duration: 0.8,
-				scaleX: 0,
-				transformOrigin: 'right center',
-				ease: 'back',
-				delay: $delay_anim_page
-			},
-			'start'
-		);
-
-		return () => {
+		},
+		() => {
 			window.removeEventListener('smoothScrollUpdate', onScroll);
 			gsap.ticker.remove(onRender);
-		};
-	});
+		}
+	);
 
 	function videoOnEnter() {
 		btnHidden = false;
@@ -244,7 +243,7 @@
 					on:click={playPauseVideo}
 					on:mouseenter={videoOnEnter}
 					on:mouseleave={videoOnLeave}
-					class="w-full aspect-video"
+					class="w-full aspect-video rounded-3xl"
 					src={blok.video}
 					autoplay={blok.autoplay}
 					loop={blok.loop}
