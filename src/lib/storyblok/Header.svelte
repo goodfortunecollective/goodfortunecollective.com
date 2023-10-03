@@ -12,7 +12,7 @@
 	const navigation = [
 		{ name: 'Work', path: 'work' },
 		{ name: 'About', path: 'about' },
-		{ name: 'Careers', path: 'careers' },
+		{ name: 'Culture', path: 'culture' },
 		{ name: 'Contact', path: 'contact' }
 	];
 

@@ -22,11 +22,11 @@
 <section id="jobs" use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	{#if blok.title}
 		<div class="grid grid-cols-12 gap-8 md:gap-0">
-			<Heading as="h2" size="h3" class="col-start-2 md:col-start-2 col-span-10 md:col-span-3"
+			<Heading as="h2" size="h3" class="col-span-10 col-start-2 md:col-start-2 md:col-span-3"
 				>{blok.title}</Heading
 			>
 			{#if jobs}
-				<ul class="col-start-2 md:col-start-6 col-span-10 md:col-span-6">
+				<ul class="col-span-10 col-start-2 md:col-start-6 md:col-span-6">
 					{#each jobs.data.stories as { name, slug }}
 						<LinkListItem {name} url="{base}/careers/{slug}" label="Apply Now" />
 					{/each}
