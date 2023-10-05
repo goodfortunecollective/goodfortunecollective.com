@@ -115,7 +115,6 @@
 					const projectHoverEl = document.querySelector('.ProjectListHover-title')
 					if(projectHoverEl) {
 						titleStyles = window.getComputedStyle(projectHoverEl) as CSSStyleDeclaration
-						console.log(titleStyles.fontSize, titleStyles.fontFamily)
 					}
 				}
 			},
