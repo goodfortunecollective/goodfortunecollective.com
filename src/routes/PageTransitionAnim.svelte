@@ -2,7 +2,7 @@
 	import { beforeNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 
-	import { isTransitioning, isPageHidden } from '$lib/stores';
+	import { isTransitioning, isPageHidden, project_list_hover } from '$lib/stores';
 	import gsap, { ScrollSmoother } from '$lib/gsap';
 	import { useCurtains } from '$lib/utils/useCurtains';
 	import type { CurtainsInstance } from '$lib/utils/useCurtains';
@@ -25,6 +25,13 @@
 	let ctx: CanvasRenderingContext2D | null = null;
 	const archStrength: number = 2;
 
+	let titleStyles;
+	let list_hover: string | null = null;
+
+	project_list_hover.subscribe((value) => {
+		list_hover = value;
+	});
+
 	const onResize = () => {
 		canvasDOMRect = canvasEl.getBoundingClientRect();
 		canvasEl.width = canvasDOMRect.width;
@@ -34,9 +41,9 @@
 	const drawCanvas = (enteringProgress = 0, leavingProgress = 0) => {
 		if (!ctx || !canvasDOMRect) return;
 
-		ctx.clearRect(0, 0, canvasDOMRect.width, canvasDOMRect.height);
+		ctx.save()
 
-		ctx.fillStyle = '#dbd5bf';
+		ctx.clearRect(0, 0, canvasDOMRect.width, canvasDOMRect.height);
 
 		ctx.beginPath();
 		ctx.moveTo(0, canvasDOMRect.height * (1 - enteringProgress));
@@ -62,7 +69,20 @@
 
 		ctx.lineTo(0, canvasDOMRect.height * (1 - enteringProgress));
 
-		ctx.fill();
+		ctx.clip();
+
+		ctx.fillStyle = '#dbd5bf';
+		ctx.fillRect(0, 0, canvasDOMRect.width, canvasDOMRect.height);
+
+		if(list_hover) {
+			ctx.fillStyle = "white";
+			ctx.font = titleStyles ? `${titleStyles.fontSize} ${titleStyles.fontFamily}` : "160px degular-display, cursive";
+			ctx.textAlign = "center";
+			ctx.textBaseline = "middle";
+			ctx.fillText(list_hover, canvasDOMRect.width * 0.5, canvasDOMRect.height * 0.5);
+		}
+
+		ctx.restore()
 	};
 
 	onMount(() => {
@@ -90,6 +110,15 @@
 			enteringProgress: 1,
 			duration: pageLeaveDuration / 1000,
 			ease: 'circ.inOut',
+			onStart: () => {
+				if(list_hover) {
+					const projectHoverEl = document.querySelector('.ProjectListHover-title')
+					if(projectHoverEl) {
+						titleStyles = window.getComputedStyle(projectHoverEl) as CSSStyleDeclaration
+						console.log(titleStyles.fontSize, titleStyles.fontFamily)
+					}
+				}
+			},
 			onUpdate: () => {
 				drawCanvas(canvasTransition.enteringProgress, canvasTransition.leavingProgress);
 			},
@@ -118,6 +147,9 @@
 			.then(() => {
 				isPageHidden.set(false);
 				isTransitioning.set(false);
+
+				// reset project hover
+				project_list_hover.set(null);
 
 				const hash = $page.url.hash.slice(1);
 
