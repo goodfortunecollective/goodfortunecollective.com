@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { StoryblokComponent, storyblokEditable } from '@storyblok/svelte';
-	import { onMount } from 'svelte';
 
 	import gsap from '$lib/gsap';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	export let blok: any;
 
-	onMount(() => {
+	useTransitionReady(() => {
 		gsap.utils.toArray<HTMLElement>('[data-gsap="tags-list"]').forEach((parent, index) => {
 			const container: HTMLElement | null = parent.querySelector('ul');
 

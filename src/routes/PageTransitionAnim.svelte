@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { beforeNavigate } from '$app/navigation';
+	import { afterNavigate, beforeNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 
-	import { isTransitioning, isPageHidden, project_list_hover } from '$lib/stores';
-	import gsap, { ScrollSmoother } from '$lib/gsap';
+	import { isTransitioning, isTransitionDone, isPageHidden, project_list_hover } from '$lib/stores';
+	import gsap, { ScrollSmoother, ScrollTrigger } from '$lib/gsap';
 	import { useCurtains } from '$lib/utils/useCurtains';
 	import type { CurtainsInstance } from '$lib/utils/useCurtains';
 	import { onMount } from 'svelte';
@@ -41,7 +41,7 @@
 	const drawCanvas = (enteringProgress = 0, leavingProgress = 0) => {
 		if (!ctx || !canvasDOMRect) return;
 
-		ctx.save()
+		ctx.save();
 
 		ctx.clearRect(0, 0, canvasDOMRect.width, canvasDOMRect.height);
 
@@ -74,15 +74,17 @@
 		ctx.fillStyle = '#dbd5bf';
 		ctx.fillRect(0, 0, canvasDOMRect.width, canvasDOMRect.height);
 
-		if(list_hover) {
-			ctx.fillStyle = "white";
-			ctx.font = titleStyles ? `${titleStyles.fontSize} ${titleStyles.fontFamily}` : "160px degular-display, cursive";
-			ctx.textAlign = "center";
-			ctx.textBaseline = "middle";
+		if (list_hover) {
+			ctx.fillStyle = 'white';
+			ctx.font = titleStyles
+				? `${titleStyles.fontSize} ${titleStyles.fontFamily}`
+				: '160px degular-display, cursive';
+			ctx.textAlign = 'center';
+			ctx.textBaseline = 'middle';
 			ctx.fillText(list_hover, canvasDOMRect.width * 0.5, canvasDOMRect.height * 0.5);
 		}
 
-		ctx.restore()
+		ctx.restore();
 	};
 
 	onMount(() => {
@@ -111,10 +113,10 @@
 			duration: pageLeaveDuration / 1000,
 			ease: 'circ.inOut',
 			onStart: () => {
-				if(list_hover) {
-					const projectHoverEl = document.querySelector('.ProjectListHover-title')
-					if(projectHoverEl) {
-						titleStyles = window.getComputedStyle(projectHoverEl) as CSSStyleDeclaration
+				if (list_hover) {
+					const projectHoverEl = document.querySelector('.ProjectListHover-title');
+					if (projectHoverEl) {
+						titleStyles = window.getComputedStyle(projectHoverEl) as CSSStyleDeclaration;
 					}
 				}
 			},
@@ -127,6 +129,8 @@
 				if (curtains) {
 					curtains.updateScrollValues(0, 0);
 				}
+
+				ScrollTrigger.refresh();
 
 				onEnteringDone();
 			}
@@ -146,6 +150,7 @@
 			.then(() => {
 				isPageHidden.set(false);
 				isTransitioning.set(false);
+				isTransitionDone.set(true);
 
 				// reset project hover
 				project_list_hover.set(null);
@@ -180,10 +185,15 @@
 	};
 
 	beforeNavigate(async () => {
+		isTransitionDone.set(false);
 		isTransitioning.set(true);
 		isPageHidden.set(false);
 
 		animateTransition();
+	});
+
+	afterNavigate(async () => {
+		console.log('afterNavigate');
 	});
 </script>
 

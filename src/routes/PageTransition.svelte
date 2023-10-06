@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
 	import { quartOut, cubicOut } from 'svelte/easing';
+
 	import { isPageHidden } from '$lib/stores';
-	import {pageLeaveDuration, pageEnterDuration} from "../lib/utils/page-transitions";
-	import {pageTransitionPauseDuration} from "../lib/utils/page-transitions.js";
+	import { pageLeaveDuration, pageEnterDuration } from '$lib/utils/page-transitions';
+	import { pageTransitionPauseDuration } from '$lib/utils/page-transitions.js';
 
 	export let pathname: string = '';
 
@@ -21,7 +22,11 @@
 
 {#key pathname}
 	<div
-		in:fade|global={{ easing: cubicOut, duration: pageEnterDuration * 0.5, delay: pageLeaveDuration + pageTransitionPauseDuration + pageEnterDuration * 0.5 }}
+		in:fade|global={{
+			easing: cubicOut,
+			duration: pageEnterDuration * 0.5,
+			delay: pageLeaveDuration + pageTransitionPauseDuration + pageEnterDuration * 0.5
+		}}
 		out:fade|global={{ easing: quartOut, duration: 100, delay: pageLeaveDuration * 0.5 - 100 }}
 		on:outrostart={onPageChange}
 		on:outroend={onOldContentRemoved}

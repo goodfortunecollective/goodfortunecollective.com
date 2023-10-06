@@ -9,6 +9,7 @@
 	import { ScrollTrigger } from '$lib/gsap';
 	import { project_list_hover } from '$lib/stores';
 	import { useCurtains } from '$lib/utils/useCurtains';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	import MenuList from './MenuList.svelte';
 	import MenuItem from './MenuItem.svelte';
@@ -94,19 +95,28 @@
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
-
-		// @ts-ignore
-		const scrollTrigger = ScrollTrigger.create({
-			trigger: containerEl,
-			start: 'top center',
-			end: 'bottom center',
-			onToggle: (self: any) => {
-				if (!self.isActive) {
-					$project_list_hover = '';
-				}
-			}
-		});
 	});
+
+	useTransitionReady(
+		() => {
+			// @ts-ignore
+			ScrollTrigger.create({
+				id: 'project-work',
+				trigger: containerEl,
+				start: 'top center',
+				end: 'bottom center',
+				onToggle: (self: any) => {
+					if (!self.isActive) {
+						$project_list_hover = '';
+					}
+				}
+			});
+		},
+		() => {
+			const scrollTrigger = ScrollTrigger.getById('project-work');
+			if (scrollTrigger) scrollTrigger.kill();
+		}
+	);
 
 	// update planes sizes and positions
 	async function hashchange() {

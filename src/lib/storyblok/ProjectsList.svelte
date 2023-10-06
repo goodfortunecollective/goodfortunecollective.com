@@ -2,10 +2,9 @@
 	import { storyblokEditable } from '@storyblok/svelte';
 
 	import { ProjectListItem } from '$lib/components';
-	import { project_list_hover } from '$lib/stores';
-	import { onMount } from 'svelte';
-
 	import { ScrollTrigger } from '$lib/gsap';
+	import { project_list_hover } from '$lib/stores';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	export let blok: any;
 
@@ -28,19 +27,26 @@
 		}
 	};
 
-	onMount(() => {
-		// @ts-ignore
-		const scrollTrigger = ScrollTrigger.create({
-			trigger: containerEl,
-			start: 'top center',
-			end: 'bottom center',
-			onToggle: (self: any) => {
-				if (!self.isActive) {
-					$project_list_hover = '';
+	useTransitionReady(
+		() => {
+			// @ts-ignore
+			ScrollTrigger.create({
+				id: 'project-list-hover',
+				trigger: containerEl,
+				start: 'top center',
+				end: 'bottom center',
+				onToggle: (self: any) => {
+					if (!self.isActive) {
+						$project_list_hover = '';
+					}
 				}
-			}
-		});
-	});
+			});
+		},
+		() => {
+			const scrollTrigger = ScrollTrigger.getById('project-list-hover');
+			if (scrollTrigger) scrollTrigger.kill();
+		}
+	);
 </script>
 
 <section use:storyblokEditable={blok} {...$$restProps} class={blok.class}>

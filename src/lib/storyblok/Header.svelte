@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition';
-	import { onMount } from 'svelte';
 	import { storyblokEditable } from '@storyblok/svelte';
 
 	import { base } from '$app/paths';
 	import gsap from '$lib/gsap';
 	import { Gfc } from '$lib/components';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import { onMount } from 'svelte';
 
 	export let blok: any;
 
@@ -16,6 +17,7 @@
 		{ name: 'Contact', path: 'contact' }
 	];
 
+	let ready = false;
 	let mobileMenuOpen = false;
 	const toggleMobileMenu = () => (mobileMenuOpen = !mobileMenuOpen);
 	const closeMobileMenu = () => (mobileMenuOpen = false);
@@ -37,6 +39,15 @@
 	$: offscreen = scrollDirection === 'down' && currentY > clientHeight * 4;
 
 	onMount(() => {
+		gsap.set(logo, { opacity: 0, y: -20 });
+		gsap.set('[data-gsap="nav-items"]', { opacity: 0, y: -20 });
+	});
+
+	useTransitionReady(() => {
+		if (ready) return;
+
+		ready = true;
+
 		const tl = gsap.timeline();
 
 		tl.fromTo(
@@ -49,7 +60,7 @@
 				opacity: 1,
 				y: 0,
 				duration: 1.8,
-				delay: 1,
+				delay: 0.4,
 				ease: 'power4.out'
 			}
 		);
@@ -65,7 +76,7 @@
 				y: 0,
 				duration: 1.8,
 				stagger: 0.1,
-				delay: 0.6,
+				delay: 0.2,
 				ease: 'power4.out'
 			},
 			'<'

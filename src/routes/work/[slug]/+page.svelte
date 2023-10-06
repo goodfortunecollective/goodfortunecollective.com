@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Body } from 'svelte-body';
-	import { onMount, onDestroy, getContext } from 'svelte';
+	import { onMount, getContext } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent, renderRichText } from '@storyblok/svelte';
 
 	import { base } from '$app/paths';
@@ -8,13 +8,17 @@
 
 	import { Heading, HoverPlane } from '$lib/components';
 	import gsap from '$lib/gsap';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady.js';
 
 	export let data;
 
-	let tl: any = null;
+	let ctx: any = null;
+
 	let scrollBottomContainerEl: HTMLElement;
 	let scrollBottomEl: HTMLElement;
 	let scrollProgressBottomEl: HTMLElement;
+	// title hover
+	let isTitleHovered = false as boolean;
 
 	$: description = renderRichText(data.story.content.description);
 
@@ -26,63 +30,59 @@
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
+	});
 
-		// debug
-		return;
+	useTransitionReady(
+		() => {
+			// avoid auto navigation animation on Storyblok preview
+			if (preview) return;
 
-		// avoid auto navigation animation on Storyblok preview
-		if (preview) return;
+			ctx = gsap.context(() => {
+				const tl = gsap.timeline();
 
-		tl = gsap.timeline();
-
-		tl.fromTo(
-			scrollBottomEl,
-			{ y: 0 },
-			{
-				y: '-=300',
-				scrollTrigger: {
-					trigger: scrollBottomContainerEl,
-					end: 'top center',
-					scrub: 0.5
-				},
-				onComplete: () => {
-					if (isExit) return;
-
-					gsap.to(scrollBottomEl, {
-						opacity: 0,
+				tl.fromTo(
+					scrollBottomEl,
+					{ y: 0 },
+					{
+						y: '-=300',
+						scrollTrigger: {
+							trigger: scrollBottomContainerEl,
+							end: 'top center',
+							scrub: 0.5
+						},
 						onComplete: () => {
-							goto(`${base}/work`);
+							if (isExit) return;
+
+							gsap.to(scrollBottomEl, {
+								opacity: 0,
+								onComplete: () => {
+									goto(`${base}/work`);
+								}
+							});
+
+							isExit = true;
 						}
-					});
+					}
+				);
 
-					isExit = true;
-				}
-			}
-		);
-
-		tl.fromTo(
-			scrollProgressBottomEl,
-			{ scaleY: 0 },
-			{
-				scaleY: 1,
-				scrollTrigger: {
-					trigger: scrollBottomEl,
-					end: 'center center',
-					scrub: 0.5
-				}
-			}
-		);
-	});
-
-	onDestroy(() => {
-		if (tl) {
-			tl.kill();
-			tl = null;
+				tl.fromTo(
+					scrollProgressBottomEl,
+					{ scaleY: 0 },
+					{
+						scaleY: 1,
+						scrollTrigger: {
+							trigger: scrollBottomEl,
+							end: 'center center',
+							scrub: 0.5
+						}
+					}
+				);
+			});
+		},
+		() => {
+			if (ctx) ctx.revert();
 		}
-	});
-
-	// title hover
-	let isTitleHovered = false as boolean;
+	);
 </script>
 
 <Body class="work-page" />
@@ -153,7 +153,7 @@
 				on:mouseenter={() => (isTitleHovered = true)}
 				on:mouseleave={() => (isTitleHovered = false)}
 			>
-				<Heading as="h1" size="h1" class="mt-6 md:text-center" animated={true}
+				<Heading as="h1" size="h1" class="mt-6 md:text-center" animated={false}
 					>{data.story.name}</Heading
 				>
 			</div>
