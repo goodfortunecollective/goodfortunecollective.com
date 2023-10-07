@@ -38,9 +38,7 @@
 			if (preview) return;
 
 			ctx = gsap.context(() => {
-				const tl = gsap.timeline();
-
-				tl.fromTo(
+				gsap.fromTo(
 					scrollBottomEl,
 					{ y: 0 },
 					{
@@ -56,7 +54,7 @@
 							gsap.to(scrollBottomEl, {
 								opacity: 0,
 								onComplete: () => {
-									goto(`${base}/work`);
+									requestAnimationFrame(() => goto(`${base}/work`));
 								}
 							});
 
@@ -65,7 +63,7 @@
 					}
 				);
 
-				tl.fromTo(
+				gsap.fromTo(
 					scrollProgressBottomEl,
 					{ scaleY: 0 },
 					{
