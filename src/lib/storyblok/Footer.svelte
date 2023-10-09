@@ -13,7 +13,7 @@
 	let backToTopBtn: HTMLElement;
 
 	const getTheme = (pathname: string) => {
-		return pathname === '/' ? 'dark' : 'light';
+		return pathname === '/' || pathname === '/culture' ? 'dark' : 'light';
 	};
 
 	let theme: 'light' | 'dark' = getTheme($page.url.pathname);
@@ -152,6 +152,10 @@
 				}
 			}
 		}
+	}
+
+	.bg-black {
+		background: #1a1a1a;
 	}
 
 	.back-to-top-btn {
