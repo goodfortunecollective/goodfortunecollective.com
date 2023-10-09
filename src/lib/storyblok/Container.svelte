@@ -17,16 +17,6 @@
 		defaultVariants: {
 			palette: 'transparent'
 		}
-		// variants: {
-		// 	backgroundColor: {
-		// 		transparent: '',
-		// 		black: 'bg-black text-white',
-		// 		grey: 'bg-zinc-200'
-		// 	}
-		// },
-		// defaultVariants: {
-		// 	backgroundColor: 'transparent'
-		// }
 	});
 </script>
 
@@ -38,7 +28,9 @@
 		blok.class + (blok.text_white ? ' text-white' : '')
 	)}
 	style={(blok.palette.value ? `background-color:${blok.palette.value};` : '') +
-		(blok.customBackgroundColor ? `background-color:${blok.customBackgroundColor.color};` : '')}
+		(blok.customBackgroundColor.color
+			? `background-color:${blok.customBackgroundColor.color};`
+			: '')}
 >
 	{#each blok.children as b}
 		<StoryblokComponent blok={b} />
