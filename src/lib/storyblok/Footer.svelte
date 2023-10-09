@@ -6,6 +6,7 @@
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { cls } from '$lib/styles';
+	import { Gfc } from '$lib/components';
 	import gsap, { ScrollToPlugin } from '$lib/gsap';
 
 	export let blok: any;
@@ -48,9 +49,9 @@
 	use:storyblokEditable={blok}
 	{...$$restProps}
 	id="footer"
-	class={cls('pt-1 -translate-y-1', variants({ theme }))}
+	class={cls('relative pt-8 md:pt-32', variants({ theme }))}
 >
-	<div class="relative w-full py-6">
+	<div class="relative w-full py-6 z-[1]">
 		<div class="grid grid-cols-12 py-2">
 			<div
 				class="col-span-10 col-start-2 pt-8 pb-2 md:col-span-5 lg:col-span-4 md:col-start-2 lg:col-start-2 footer-col"
@@ -88,10 +89,15 @@
 	<a
 		href="#"
 		bind:this={backToTopBtn}
-		class="absolute hidden md:block right-[20px] md:right-[60px] top-[-50px] back-to-top-btn w-[20px] h-[66px]"
+		class="absolute hidden md:block right-[20px] md:right-[60px] top-[-50px] back-to-top-btn w-[20px] h-[66px] z-1"
 	>
 		<div class="arrow" />
 	</a>
+	<Gfc
+		class={'absolute footer-logo z-0 bottom-0 w-[66%] max-width-[1000px] h-auto ' +
+			(theme == 'light' ? 'text-white' : 'text-black')}
+		alt=""
+	/>
 </footer>
 
 <style lang="scss">
@@ -219,5 +225,14 @@
 				transform-origin: bottom right;
 			}
 		}
+	}
+
+	#footer :global(.footer-logo) {
+		left: 50%;
+		transform: translate(-50%, 35%);
+	}
+
+	#footer :global(.footer-logo.text-white) {
+		color: $beige;
 	}
 </style>
