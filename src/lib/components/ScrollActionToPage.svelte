@@ -1,5 +1,6 @@
 <script lang="ts">
 	import {onMount} from 'svelte';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady.js';
 	import {ScrollTrigger} from '$lib/gsap';
 	import {base} from '$app/paths';
 	import {goto} from '$app/navigation';
@@ -13,36 +14,37 @@
 	$: parallaxEffect = 0 as number;
 	let scrollTrigger = null;
 
-	onMount(() => {
-		scrollTrigger = ScrollTrigger.create({
-			trigger: scrollEl,
-			//scrub: true,
-			start: "top bottom",
-			end: "+=150%",
-			//markers: true,
-			onUpdate: (self) => {
-				parallaxEffect = self.progress
-			},
-			onLeave: () => {
-				console.log('complete, GO TO', base + href)
-				//goto(base + href);
-				//parallaxEffect = 0
-			}
-		});
-
-		return () => {
-			scrollTrigger.kill()
+	useTransitionReady(
+		() => {
+			scrollTrigger = ScrollTrigger.create({
+				trigger: scrollEl,
+				//scrub: true,
+				start: "top bottom",
+				end: "+=150%",
+				//markers: true,
+				onUpdate: (self) => {
+					parallaxEffect = self.progress
+				},
+				onLeave: () => {
+					console.log('complete, GO TO', base + href)
+					//goto(base + href);
+					//parallaxEffect = 0
+				}
+			});
+		},
+		() => {
+			scrollTrigger?.kill()
 		}
-	})
+	);
 </script>
 
-<div className="ScrollActionToPage pb-[100vh]">
+<div class="ScrollActionToPage pb-[100vh]">
 	<div bind:this={scrollEl} style="--parallax-effect: {parallaxEffect}">
-		<div className="ScrollActionToPage-inner flex flex-col justify-center items-center text-center gap-8">
-			<p className="uppercase font-medium tracking-widest">Scroll</p>
-			<div className="ScrollActionToPage-bar relative h-32 w-px"/>
+		<div class="ScrollActionToPage-inner flex flex-col justify-center items-center text-center gap-8">
+			<p class="uppercase font-medium tracking-widest">Scroll</p>
+			<div class="ScrollActionToPage-bar relative h-32 w-px"/>
 			<span
-				className="ScrollActionToPage-label inline-flex h-[1em] font-degular-display leading-8 text-[10em]">{label}</span>
+				class="ScrollActionToPage-label inline-flex h-[1em] font-degular-display leading-8 text-[10em]">{label}</span>
 		</div>
 
 	</div>
@@ -52,7 +54,7 @@
 
 <style lang="scss">
 	.ScrollActionToPage {
-		margin - bottom: -5vh;
+		margin-bottom: -5vh;
 
 		&-inner {
 			transform: translate3d(0, calc(var(--parallax-effect) * 100vh), 0);

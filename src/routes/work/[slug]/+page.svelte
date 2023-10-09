@@ -6,7 +6,7 @@
 	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
 
-	import { Heading, HoverPlane } from '$lib/components';
+	import { Heading, HoverPlane, ScrollActionToPage } from '$lib/components';
 	import gsap from '$lib/gsap';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady.js';
 
@@ -32,6 +32,7 @@
 		}
 	});
 
+	/*
 	useTransitionReady(
 		() => {
 			// avoid auto navigation animation on Storyblok preview
@@ -80,7 +81,7 @@
 		() => {
 			if (ctx) ctx.revert();
 		}
-	);
+	);*/
 </script>
 
 <Body class="work-page" />
@@ -177,18 +178,8 @@
 	{#if data.story}
 		<StoryblokComponent blok={data.story.content} />
 	{/if}
-	<div bind:this={scrollBottomContainerEl} class=" mt-72 pb-[100vh]">
-		<div
-			bind:this={scrollBottomEl}
-			class="flex flex-col items-center justify-center gap-8 text-center"
-		>
-			<p class="font-medium tracking-widest uppercase">Scroll</p>
-			<div class="w-px h-48 bg-gray-100">
-				<div bind:this={scrollProgressBottomEl} class="h-full origin-top bg-black" />
-			</div>
-			<span class="font-degular-display leading-8 text-[10em]">All projects</span>
-		</div>
-	</div>
+
+	<ScrollActionToPage href={"/work"} label={"All projects"} />
 </section>
 
 <style lang="scss">
