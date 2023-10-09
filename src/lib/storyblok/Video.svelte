@@ -4,6 +4,7 @@
 
 	import { CustomCursor } from '$lib/components';
 	import gsap from '$lib/gsap';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	let tl: any = null;
 	export let blok: any;

@@ -1,13 +1,15 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import { storyblokEditable } from '@storyblok/svelte';
-	import CustomCursor from '../components/CustomCursor.svelte';
-	import { clamp } from '../utils/maths';
 
-	import gsap, { SplitText } from '$lib/gsap';
-	import { useScrollTriggerReady } from '../utils/useScrollTriggerReady';
+	import CustomCursor from '$lib/components/CustomCursor.svelte';
+	import gsap, { SplitText, ScrollTrigger } from '$lib/gsap';
+	import { clamp } from '$lib/utils/maths';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	export let blok: any;
+
+	let ctx: any = null;
 
 	let videoContainer!: HTMLElement;
 	let video!: HTMLElement;
@@ -20,11 +22,6 @@
 	let btnHidden = true;
 
 	let constrain = 100;
-
-	let tl: any = null;
-	let tlBackground: any = null;
-	let tlSplitText: any = null;
-	let tlContainer: any = null;
 
 	let bgOpacity: number = 1;
 	let titleScale: number = 1;
@@ -51,9 +48,12 @@
 	};
 
 	const onResize = () => {
+		console.log('>>> RESIZEEEE');
 		ww = window.innerHeight;
-		videoBBox = video.getBoundingClientRect();
 		scrollPosition = window.pageYOffset;
+		if (video) {
+			videoBBox = video.getBoundingClientRect();
+		}
 	};
 
 	const onScroll = (event: any) => {
@@ -83,95 +83,97 @@
 			((mousePosition.x - videoBBox.x - videoBBox.width / 2) / constrain);
 	};
 
-	useScrollTriggerReady(
+	useTransitionReady(
 		() => {
 			window.addEventListener('smoothScrollUpdate', onScroll);
 			gsap.ticker.add(onRender);
 			onResize();
 
-			tlBackground = gsap.timeline({
-				scrollTrigger: {
-					trigger: container,
-					start: '=+50%',
-					end: '=+100%',
-					onUpdate: (self) => {
-						bgOpacity = 1 - self.progress;
+			ctx = gsap.context(() => {
+				gsap.timeline({
+					scrollTrigger: {
+						trigger: container,
+						start: '=+50%',
+						end: '=+100%',
+						onUpdate: (self) => {
+							bgOpacity = 1 - self.progress;
+						}
 					}
-				}
-			});
-
-			tlContainer = gsap.timeline({
-				scrollTrigger: {
-					trigger: container,
-					start: 'center 50%',
-					end: '+=150% bottom',
-					scrub: true,
-					pin: true,
-					onUpdate: (self) => {
-						titleScale = 1 - self.progress * 0.35;
-					}
-				}
-			});
-
-			const splitText = gsap.utils.toArray('[data-gsap="split-text"]');
-
-			tlSplitText = gsap.timeline({
-				scrollTrigger: {
-					trigger: videoContainer,
-					start: 'center 55%',
-					end: 'center 30%',
-					toggleActions: 'play reverse play reverse' // onEnter onLeave onEnterBack onLeaveBack
-				},
-				onStart: () => {
-					// move video behind title
-					// if (videoContainer) videoContainer.style.zIndex = '9';
-				},
-				onReverseComplete: () => {
-					// move video on top of title
-					// if (videoContainer) videoContainer.style.zIndex = '11';
-				}
-			});
-			tlSplitText.addLabel('start');
-
-			splitText.forEach((content) => {
-				const text = new SplitText(content, {
-					type: 'lines,words,chars',
-					linesClass: 'split-line',
-					charClass: 'split-char'
 				});
 
-				tlSplitText.from(
-					text.chars,
+				gsap.timeline({
+					scrollTrigger: {
+						trigger: container,
+						start: 'center 50%',
+						end: '+=150% bottom',
+						scrub: true,
+						pin: true,
+						onUpdate: (self) => {
+							titleScale = 1 - self.progress * 0.35;
+						}
+					}
+				});
+
+				const splitText = gsap.utils.toArray('[data-gsap="split-text"]');
+
+				const tlSplitText = gsap.timeline({
+					scrollTrigger: {
+						trigger: videoContainer,
+						start: 'center 55%',
+						end: 'center 30%',
+						toggleActions: 'play reverse play reverse' // onEnter onLeave onEnterBack onLeaveBack
+					},
+					onStart: () => {
+						// move video behind title
+						// if (videoContainer) videoContainer.style.zIndex = '9';
+					},
+					onReverseComplete: () => {
+						// move video on top of title
+						// if (videoContainer) videoContainer.style.zIndex = '11';
+					}
+				});
+				tlSplitText.addLabel('start');
+
+				splitText.forEach((content) => {
+					const text = new SplitText(content, {
+						type: 'lines,words,chars',
+						linesClass: 'split-line',
+						charClass: 'split-char'
+					});
+
+					tlSplitText.from(
+						text.chars,
+						{
+							duration: 0.2,
+							ease: 'circ.out',
+							yPercent: 100,
+							stagger: 0.01
+						},
+						'start'
+					);
+				});
+
+				const tl = gsap.timeline({
+					scrollTrigger: {
+						trigger: videoContainer,
+						start: 'center 55%',
+						end: 'center 30%',
+						toggleActions: 'play reverse play reverse' // onEnter onLeave onEnterBack onLeaveBack
+					}
+				});
+				tl.addLabel('start');
+
+				tl.from(
+					line,
 					{
-						duration: 0.2,
-						ease: 'circ.out',
-						yPercent: 100,
-						stagger: 0.01
+						duration: 0.8,
+						scaleX: 0,
+						transformOrigin: 'right center',
+						ease: 'back'
 					},
 					'start'
 				);
 			});
-
-			tl = gsap.timeline({
-				scrollTrigger: {
-					trigger: videoContainer,
-					start: 'center 55%',
-					end: 'center 30%',
-					toggleActions: 'play reverse play reverse' // onEnter onLeave onEnterBack onLeaveBack
-				}
-			});
-			tl.addLabel('start');
-
-			tl.from(
-				line,
-				{
-					duration: 0.8,
-					scaleX: 0,
-					transformOrigin: 'right center',
-					ease: 'back'
-				},
-				'start'
-			);
 		},
 		() => {
 			window.removeEventListener('smoothScrollUpdate', onScroll);
@@ -196,24 +198,7 @@
 	}
 
 	onDestroy(() => {
-		if (tlSplitText) {
-			tlSplitText.kill();
-		}
-		if (tl) {
-			tl.kill();
-		}
-		if (tlContainer) {
-			tlContainer.kill();
-		}
-
-		if (tlBackground) {
-			tlBackground.kill();
-		}
-
-		tlBackground = null;
-		tlSplitText = null;
-		tl = null;
-		tlContainer = null;
+		if (ctx) ctx.revert();
 	});
 </script>
 

@@ -47,21 +47,6 @@
 		imagesClasses[i] = imageClass + ' image-block-' + i + ' ' + imagesCols[i];
 	}
 
-	function initDraggable() {
-		let minX = imagesWrapper.offsetWidth - window.innerWidth;
-		imagesDraggable = Draggable.create('.images-wrapper', {
-			type: 'x',
-			bounds: '.headline-images',
-			inertia: true,
-			onDrag: function () {
-				imagesDraggableRatio = 1 - (this.x - this.minX) / (this.maxX - this.minX);
-			},
-			onThrowUpdate: function () {
-				imagesDraggableRatio = 1 - (this.x - this.minX) / (this.maxX - this.minX);
-			}
-		});
-	}
-
 	$: getParallax = (index) => {
 		return imagesParallax[index] * imagesDraggableRatio;
 	};
@@ -77,7 +62,17 @@
 	};
 
 	onMount(() => {
-		initDraggable();
+		imagesDraggable = Draggable.create('.images-wrapper', {
+			type: 'x',
+			bounds: '.headline-images',
+			inertia: true,
+			onDrag: function () {
+				imagesDraggableRatio = 1 - (this.x - this.minX) / (this.maxX - this.minX);
+			},
+			onThrowUpdate: function () {
+				imagesDraggableRatio = 1 - (this.x - this.minX) / (this.maxX - this.minX);
+			}
+		});
 	});
 </script>
 

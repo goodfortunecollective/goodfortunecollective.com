@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { curtains } from '../lib/stores';
-	import gsap from '$lib/gsap';
-	import { Curtains } from '$lib/vendors/curtainsjs/core/Curtains';
 	import { onMount } from 'svelte';
+
+	import gsap from '$lib/gsap';
+	import { curtains } from '$lib/stores';
+	import { Curtains } from '$lib/vendors/curtainsjs/core/Curtains';
 
 	function scrollonUpdate(event: any) {
 		if ($curtains) {

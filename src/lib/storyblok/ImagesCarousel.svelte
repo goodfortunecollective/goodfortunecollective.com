@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { storyblokEditable } from '@storyblok/svelte';
 
 	import { Draggable } from '$lib/gsap';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	export let blok: any;
 
@@ -23,17 +23,12 @@
 		else if (i == blok.images.length - 1) imagesClasses[i] += ' mr-8';
 	}
 
-	function initDraggable() {
-		let minX = imagesWrapper.offsetWidth - window.innerWidth;
+	useTransitionReady(() => {
 		imagesDraggable = Draggable.create('.images-wrapper', {
 			type: 'x',
 			bounds: '.images-block',
 			inertia: true
 		});
-	}
-
-	onMount(() => {
-		initDraggable();
 	});
 </script>
 

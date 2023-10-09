@@ -2,10 +2,15 @@
 	import { useCurtains } from '$lib/utils/useCurtains';
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
 	import { Vec2 } from '$lib/vendors/curtainsjs/math/Vec2';
-	import type { Curtains, Plane as PlaneType, PlaneParams, Vec2 as Vec2Type } from '@types/curtainsjs';
+	import type {
+		Curtains,
+		Plane as PlaneType,
+		PlaneParams,
+		Vec2 as Vec2Type
+	} from '@types/curtainsjs';
 	import { isPageHidden, isTransitioning } from '$lib/stores';
 	import gsap from '$lib/gsap';
-	import {onDestroy} from "svelte";
+	import { onDestroy } from 'svelte';
 
 	export let content: any;
 	export let isTitleHovered: boolean = false;
@@ -13,14 +18,14 @@
 	const mousePosition = {
 		x: 0 as number,
 		y: 0 as number
-	}
+	};
 
 	const planeDeformation: Vec2Type = new Vec2();
 
 	const onMouseMove = (event) => {
-		mousePosition.x = event.clientX
-		mousePosition.y = event.clientY
-	}
+		mousePosition.x = event.clientX;
+		mousePosition.y = event.clientY;
+	};
 
 	let planeEl: HTMLElement;
 	let plane: undefined | PlaneType;
@@ -115,25 +120,25 @@
 			plane = new Plane(curtains, planeEl, params);
 
 			plane.onRender(() => {
-				const planeBBox = plane.getBoundingRect()
+				const planeBBox = plane.getBoundingRect();
 
 				const translation = {
 					x: mousePosition.x - (planeBBox.left + planeBBox.width * 0.5) / curtains.pixelRatio,
 					y: mousePosition.y - (planeBBox.top + planeBBox.height * 0.5) / curtains.pixelRatio
-				}
+				};
 
 				const lerpedTranslation = {
 					x: curtains.lerp(plane.relativeTranslation.x, translation.x, 0.1),
 					y: curtains.lerp(plane.relativeTranslation.y, translation.y, 0.1)
-				}
+				};
 
-				;(plane.uniforms.deformation.value as Vec2Type).set(
+				(plane.uniforms.deformation.value as Vec2Type).set(
 					lerpedTranslation.x - plane.relativeTranslation.x,
 					lerpedTranslation.y - plane.relativeTranslation.y
-				)
+				);
 
-				plane.relativeTranslation.x = lerpedTranslation.x
-				plane.relativeTranslation.y = lerpedTranslation.y
+				plane.relativeTranslation.x = lerpedTranslation.x;
+				plane.relativeTranslation.y = lerpedTranslation.y;
 			});
 		}
 	};
@@ -160,46 +165,43 @@
 		}
 	});
 
-
 	// hover
 	let hoverTween = null;
 
 	const onTitleHover = (isHovered = false) => {
-		if(!plane) return
+		if (!plane) return;
 
-		hoverTween?.kill()
+		hoverTween?.kill();
 
 		const hoverTransition = {
-			opacity: plane.uniforms.opacity.value,
-		}
+			opacity: plane.uniforms.opacity.value
+		};
 
-		if(isHovered) {
+		if (isHovered) {
 			hoverTween = gsap.to(hoverTransition, {
 				opacity: 1,
 				duration: 0.5,
 				onUpdate: () => {
 					plane.uniforms.opacity.value = hoverTransition.opacity;
 				}
-			})
-		}
-		else {
+			});
+		} else {
 			hoverTween = gsap.to(hoverTransition, {
 				opacity: 0,
 				duration: 0.5,
 				onUpdate: () => {
 					plane.uniforms.opacity.value = hoverTransition.opacity;
 				}
-			})
+			});
 		}
-	}
+	};
 
 	onDestroy(() => {
-		hoverTween?.kill()
-	})
+		hoverTween?.kill();
+	});
 
 	// now make it reactive
-	$: onTitleHover(isTitleHovered)
-
+	$: onTitleHover(isTitleHovered);
 
 	useCurtains(
 		(curtainsInstance) => {
@@ -239,7 +241,7 @@
 		display: flex;
 		overflow: hidden;
 		width: 100%;
-		height: 100%;
+		height: 33%;
 
 		img {
 			display: none;
