@@ -13,7 +13,6 @@
 	let backToTopBtn: HTMLElement;
 
 	const getTheme = (pathname: string) => {
-		console.log(pathname);
 		return pathname === '/' || pathname === '/culture' ? 'dark' : 'light';
 	};
 
