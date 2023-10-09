@@ -49,7 +49,7 @@
 	use:storyblokEditable={blok}
 	{...$$restProps}
 	id="footer"
-	class={cls('relative pt-8 md:pt-32', variants({ theme }))}
+	class={cls('relative pt-8 md:pt-32 xl:pt-48', variants({ theme }))}
 >
 	<div class="relative w-full py-6 z-[1]">
 		<div class="grid grid-cols-12 py-2">
@@ -94,7 +94,7 @@
 		<div class="arrow" />
 	</a>
 	<Gfc
-		class={'absolute footer-logo z-0 bottom-0 w-[66%] max-width-[1000px] h-auto ' +
+		class={'absolute footer-logo z-0 bottom-0 w-[66%] max-w-[900px] h-auto ' +
 			(theme == 'light' ? 'text-white' : 'text-black')}
 		alt=""
 	/>
