@@ -34,10 +34,10 @@
 	use:storyblokEditable={blok}
 	{...$$restProps}
 	class={cls(
-		variants({ palette: blok.palette.value }),
+		variants({ palette: blok.palette?.value }),
 		blok.class + (blok.text_white ? ' text-white' : '')
 	)}
-	style={(blok.palette.value ? `background-color:${blok.palette.value};` : '') +
+	style={(blok.palette?.value ? `background-color:${blok.palette?.value};` : '') +
 		(blok.customBackgroundColor ? `background-color:${blok.customBackgroundColor.color};` : '')}
 >
 	{#each blok.children as b}
