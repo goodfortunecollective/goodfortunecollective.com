@@ -22,6 +22,21 @@
 	.list {
 		position: relative;
 
+		&:before,
+		&:after {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 35%;
+			height: 1px;
+			background: currentColor;
+			content: '';
+		}
+
+		&:after {
+			left: 50%;
+		}
+
 		p {
 			margin-bottom: 1rem;
 		}

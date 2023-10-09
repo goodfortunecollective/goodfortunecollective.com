@@ -52,4 +52,34 @@
 			}
 		}
 	}
+
+	.list-item-number {
+		position: relative;
+		width: calc(2% / 10) * 100;
+		@media (min-width: $media-md) {
+			width: calc(3% / 8) * 100;
+		}
+
+		&:after {
+			position: absolute;
+			top: 14px;
+			right: 15px;
+			left: 30px;
+			height: 1px;
+			background: currentColor;
+			content: '';
+		}
+	}
+
+	.list-item-title {
+		width: calc(8% / 10) * 100;
+		@media (min-width: $media-md) {
+			width: calc(5% / 8) * 100;
+		}
+	}
+
+	.list-title {
+		@media (min-width: screen-sm-min) {
+		}
+	}
 </style>
