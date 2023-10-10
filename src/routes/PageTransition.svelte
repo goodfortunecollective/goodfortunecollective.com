@@ -22,12 +22,12 @@
 
 {#key pathname}
 	<div
-		in:fade|global={{
+		in:fade|local={{
 			easing: cubicOut,
 			duration: pageEnterDuration * 0.5,
 			delay: pageLeaveDuration + pageTransitionPauseDuration + pageEnterDuration * 0.5
 		}}
-		out:fade|global={{ easing: quartOut, duration: 100, delay: pageLeaveDuration * 0.5 - 100 }}
+		out:fade|local={{ easing: quartOut, duration: 100, delay: pageLeaveDuration * 0.5 - 100 }}
 		on:outrostart={onPageChange}
 		on:outroend={onOldContentRemoved}
 	>

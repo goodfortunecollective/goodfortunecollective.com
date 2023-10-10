@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 	import type { Curtains } from '@types/curtainsjs';
+	import { Body } from 'svelte-body';
 
 	import { base } from '$app/paths';
 	import { navigating, page } from '$app/stores';
@@ -24,6 +25,7 @@
 
 	let containerEl: HTMLElement;
 
+	//$: filter = $page.url.searchParams.get('filter');
 	$: filter = $page.url.hash.slice(1);
 
 	/**
@@ -82,15 +84,6 @@
 		}
 	};
 
-	// force removing all projects planes when navigating away
-	// works even if we have used the filters
-	$: useCurtainsPlanes = true as boolean;
-	$: if ($navigating) {
-		if (curtains && $navigating?.from?.route.id === '/work') {
-			useCurtainsPlanes = false;
-		}
-	}
-
 	onMount(() => {
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
@@ -104,7 +97,7 @@
 				id: 'project-work',
 				trigger: containerEl,
 				start: 'top center',
-				end: 'bottom center',
+				end: 'bottom center'
 				// onToggle: (self: any) => {
 				// 	if (!self.isActive) {
 				// 		$project_list_hover = '';
@@ -118,13 +111,9 @@
 		}
 	);
 
-	// update planes sizes and positions
-	async function hashchange() {
-		if (curtains) curtains.resize();
-	}
 </script>
 
-<svelte:window on:hashchange={hashchange} />
+<Body class="work bg-neutral-950" />
 
 <section class="pt-20 3xl:pt-24 pb-32">
 	<div class="mt-16">
@@ -151,16 +140,16 @@
 		</div>
 
 		<div class="mb-32" bind:this={containerEl}>
-			{#each projects as { name, slug, content }, index}
+			{#each projects as { name, slug, content }, index (name)}
 				<div class="grid grid-cols-12">
 					<ProjectListItem
+						theme="dark"
 						hover={$project_list_hover === name}
 						{name}
 						{slug}
 						{content}
 						isMainItem={index === 0}
 						layout={index % 2 === 0 ? 'left' : 'right'}
-						{useCurtainsPlanes}
 						class={getProjectGridItemClass(index)}
 					/>
 				</div>

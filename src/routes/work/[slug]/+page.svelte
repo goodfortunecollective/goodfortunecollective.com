@@ -116,7 +116,7 @@
 		<StoryblokComponent blok={data.story.content} />
 	{/if}
 
-	<ScrollActionToPage href={"/work"} label={"All projects"} />
+	<ScrollActionToPage href={'/work'} label={'All projects'} />
 </section>
 
 <style lang="scss">

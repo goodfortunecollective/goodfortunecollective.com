@@ -1,11 +1,21 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
-	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
+	import { useStoryblokBridge, renderRichText } from '@storyblok/svelte';
 
 	import { base } from '$app/paths';
 	import { Link, Heading } from '$lib/components';
+	import TextTransition from '$lib/components/TextTransition.svelte';
 
 	export let data;
+	let publishedAt = new Date(data.story.published_at);
+	let publishedAtFormatted =
+		publishedAt.toLocaleString('default', { month: 'short' }) +
+		' ' +
+		publishedAt.getDay() +
+		', ' +
+		publishedAt.getFullYear();
+
+	$: content = renderRichText(data.story.content.content);
 
 	onMount(() => {
 		if (data.story) {
@@ -29,26 +39,24 @@
 			<Heading as="h1" size="h2" class="col-span-10 col-start-2 mb-6 lg:col-start-2 lg:col-span-4"
 				>{data.story.content.title}</Heading
 			>
-			{#if data.story.tag_list}
-				<span
-					class="col-span-10 col-start-2 text-xs tracking-widest uppercase lg:col-start-2 lg:col-span-4 tag-list"
-				>
-					{#each data.story.tag_list as tag, i}
-						{#if i > 0}&nbsp;
-						{/if}
-						#{tag}
-					{/each}
-				</span>
-			{/if}
 			{#if data.story.content.thumbnail}
-				<figure class="col-span-10 col-start-2 my-16 lg:col-start-2 post-image">
+				<figure class="col-span-9 mb-16 col-start-0 post-image">
 					<img src={data.story.content.thumbnail.filename} class="post-img" alt={data.story.name} />
 				</figure>
 			{/if}
-			<div class="col-span-11 col-start-1">
-				{#each data.story.content.description as item}
-					<StoryblokComponent blok={item} />
-				{/each}
+
+			<Heading
+				as="h2"
+				size="h6"
+				class="w-full col-span-10 col-start-2 md:col-start-2 md:col-span-2 xl:w-[75%] title break-keep"
+				>{publishedAtFormatted}</Heading
+			>
+			<div
+				class="col-span-10 col-start-2 text-lg md:col-start-4 md:col-span-6 culture-single-content"
+			>
+				<div class="flex flex-col gap-4">
+					<TextTransition>{@html content}</TextTransition>
+				</div>
 			</div>
 		{/if}
 	</div>
@@ -57,5 +65,9 @@
 <style>
 	.post-img {
 		width: 100%;
+	}
+
+	.culture-single-content :global(p) {
+		margin-bottom: 1.5rem;
 	}
 </style>

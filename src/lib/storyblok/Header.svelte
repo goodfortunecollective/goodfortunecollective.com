@@ -14,6 +14,7 @@
 		{ name: 'Work', path: 'work' },
 		{ name: 'About', path: 'about' },
 		{ name: 'Culture', path: 'culture' },
+		{ name: 'Careers', path: 'careers' },
 		{ name: 'Contact', path: 'contact' }
 	];
 
@@ -93,8 +94,8 @@
 			<!-- Background backdrop, show/hide based on slide-over state. -->
 			<div class="fixed inset-0 z-20" />
 			<div
-				in:fade|global
-				out:fade|global={{ delay: 500 }}
+				in:fade|local
+				out:fade|local={{ delay: 500 }}
 				class="fixed inset-y-0 right-0 z-20 w-full px-6 py-6 overflow-y-auto bg-black sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
 			>
 				<div class="flow-root mt-24">

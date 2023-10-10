@@ -10,11 +10,16 @@
 
 	export let blok: any;
 
-	const getTheme = (pathname: string) => {
-		return pathname === '/' || pathname === '/culture' || pathname === '/about' ? 'dark' : 'light';
+	const getTheme = (pathname: string): 'light' | 'dark' => {
+		return pathname === '/' ||
+			pathname === '/culture' ||
+			pathname === '/about' ||
+			pathname === '/work'
+			? 'dark'
+			: 'light';
 	};
 
-	let theme: 'light' | 'dark' = getTheme($page.url.pathname);
+	let theme = getTheme($page.url.pathname);
 
 	const variants = cva('', {
 		variants: {
