@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { useTransitionReady } from '$lib/utils/useTransitionReady.js';
-	import {ScrollTrigger} from '$lib/gsap';
-	import {base} from '$app/paths';
+	import { ScrollTrigger } from '$lib/gsap';
+	import { base } from '$app/paths';
 	import gsap from '$lib/gsap';
-	import {goto} from '$app/navigation';
+	import { goto } from '$app/navigation';
 
 	export let label: string = '';
 	export let href: string = '/';
@@ -19,42 +19,40 @@
 			gsapCtx = gsap.context(() => {
 				scrollTrigger = ScrollTrigger.create({
 					trigger: scrollEl,
-					start: "top bottom",
-					end: "bottom bottom",
-					//markers: true,
+					start: 'top bottom',
+					end: 'bottom bottom',
 					onUpdate: (self) => {
-						parallaxEffect = self.progress
-						//console.log('>>> PARALLAX progress', parallaxEffect)
+						parallaxEffect = self.progress;
 					},
 					onLeave: () => {
-						//console.log('complete, GO TO', base + href)
-						goto(base + href);
+						requestAnimationFrame(() => goto(base + href));
 					}
 				});
 
 				return () => {
-					scrollTrigger?.kill()
-				}
-			})
+					scrollTrigger?.kill();
+				};
+			});
 		},
 		() => {
-			gsapCtx?.revert()
+			gsapCtx?.revert();
 		}
 	);
 </script>
 
 <div bind:this={scrollEl} class="ScrollActionToPage">
 	<div style="--parallax-effect: {parallaxEffect}">
-		<div class="ScrollActionToPage-inner flex flex-col justify-center items-center text-center gap-8">
+		<div
+			class="ScrollActionToPage-inner flex flex-col justify-center items-center text-center gap-8"
+		>
 			<p class="uppercase font-medium tracking-widest">Scroll</p>
-			<div class="ScrollActionToPage-bar relative h-32 w-px"/>
+			<div class="ScrollActionToPage-bar relative h-32 w-px" />
 			<span
-				class="ScrollActionToPage-label inline-flex h-[1em] font-degular-display leading-8 text-[10em]">{label}</span>
+				class="ScrollActionToPage-label inline-flex h-[1em] font-degular-display leading-8 text-[10em]"
+				>{label}</span
+			>
 		</div>
-
 	</div>
-
-
 </div>
 
 <style lang="scss">
@@ -69,7 +67,7 @@
 
 		&-bar {
 			&:before {
-				content: "";
+				content: '';
 				position: absolute;
 				top: 0;
 				right: 0;
@@ -79,7 +77,7 @@
 			}
 
 			&:after {
-				content: "";
+				content: '';
 				position: absolute;
 				top: 0;
 				right: 0;

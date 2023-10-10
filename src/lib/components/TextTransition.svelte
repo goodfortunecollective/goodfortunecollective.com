@@ -23,7 +23,7 @@
 						gsap.from(text.chars, {
 							scrollTrigger: {
 								trigger: element,
-								start: 'bottom 80%',
+								top: 'top center',
 								toggleActions: 'restart pause resume reverse'
 							},
 							duration: 0.2,
