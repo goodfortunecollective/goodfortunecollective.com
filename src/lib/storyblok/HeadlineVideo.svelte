@@ -48,7 +48,6 @@
 	};
 
 	const onResize = () => {
-		console.log('>>> RESIZEEEE');
 		ww = window.innerHeight;
 		scrollPosition = window.pageYOffset;
 		if (video) {
@@ -207,7 +206,7 @@
 <section use:storyblokEditable={blok} {...$$restProps} class="grid h-screen grid-cols-12">
 	<div
 		bind:this={background}
-		class="absolute w-screen h-[250vh] z-[-1] bg-black"
+		class="absolute w-screen h-[250vh] z-[-1] bg-neutral-950"
 		style="opacity:{bgOpacity}"
 	/>
 	<CustomCursor
@@ -245,7 +244,7 @@
 			<div class="flex flex-col justify-between h-full py-[15vh]">
 				<h1
 					data-gsap="split-text"
-					class="max-w-6xl text-6xl leading-[4rem] md:text-[11rem] md:leading-[8rem] 3xl:text-[12rem] 3xl:leading-[9rem] z-[8] text-black font-degular-display title tracking-wide"
+					class="max-w-6xl text-6xl leading-[4rem] md:text-[11rem] md:leading-[8rem] 3xl:text-[12rem] 3xl:leading-[9rem] z-[8] text-neutral-950 font-degular-display title tracking-wide"
 					style="transform:scale({titleScale})"
 				>
 					{blok.headline}
