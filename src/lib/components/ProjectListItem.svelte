@@ -4,7 +4,7 @@
 	import { ScrollPlane } from '$lib/components';
 	import { onMount } from 'svelte';
 
-	import { project_list_hover } from '$lib/stores';
+	import { project_list_hover, isTransitioning } from '$lib/stores';
 
 	export let name: string;
 	export let slug: string;
@@ -18,7 +18,10 @@
 	}
 
 	const onLeave = () => {
-		project_list_hover.set(null);
+		// reset hover title only if we're not transitioning
+		if(!$isTransitioning) {
+			project_list_hover.set(null);
+		}
 	};
 
 	// parallax
