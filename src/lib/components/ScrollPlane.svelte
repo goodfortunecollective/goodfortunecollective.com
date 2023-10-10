@@ -106,7 +106,8 @@
 	};
 
 	const createPlane = () => {
-		if (curtains && canCreatePlane) {
+		if (curtains && canCreatePlane && planeEl) {
+			console.log('create plane', name, planeEl)
 			params.renderOrder = curtains.planes.length;
 
 			plane = new Plane(curtains, planeEl, params);
@@ -135,12 +136,14 @@
 	isPageHidden.subscribe((value: boolean) => {
 		isHidden = value;
 		if (value && isTransition && !canCreatePlane) {
+			console.log('COMING FROM PAGE TRANSITION, CREATE PLANE')
 			// coming from a page transition
 			// wait a couple ticks for old planes to be removed first
 			canCreatePlane = true;
-			setTimeout(() => {
-				createPlane();
-			}, 32);
+			//createPlane();
+			// setTimeout(() => {
+			// 	createPlane();
+			// }, 32);
 		}
 	});
 
@@ -154,7 +157,7 @@
 			// TODO not triggered after using work page filters!!
 			// https://github.com/sveltejs/svelte/issues/5268 ?
 			if (plane) {
-				console.log('plane removed', plane.renderOrder, curtainsInstance);
+				console.log('plane removed', plane.index, name, curtainsInstance);
 				plane.remove();
 				plane = null;
 				curtainsInstance.resize();

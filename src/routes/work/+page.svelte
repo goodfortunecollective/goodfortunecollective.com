@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 	import type { Curtains } from '@types/curtainsjs';
 
@@ -87,7 +87,7 @@
 	$: useCurtainsPlanes = true as boolean;
 	$: if ($navigating) {
 		if (curtains && $navigating?.from?.route.id === '/work') {
-			useCurtainsPlanes = false;
+			//useCurtainsPlanes = false;
 		}
 	}
 
@@ -120,6 +120,7 @@
 
 	// update planes sizes and positions
 	async function hashchange() {
+		await tick();
 		if (curtains) curtains.resize();
 	}
 </script>
@@ -151,7 +152,7 @@
 		</div>
 
 		<div class="mb-32" bind:this={containerEl}>
-			{#each projects as { name, slug, content }, index (name + index)}
+			{#each projects as { name, slug, content }, index (name)}
 				<div class="grid grid-cols-12">
 					<ProjectListItem
 						hover={$project_list_hover === name}

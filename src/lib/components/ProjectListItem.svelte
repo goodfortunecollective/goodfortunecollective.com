@@ -66,79 +66,85 @@
 	};
 
 	onMount(() => {
-		onResize();
+		//onResize();
+		const resizeObserver = new ResizeObserver(() => onResize())
+		resizeObserver.observe(document.body)
+
 		window.addEventListener('smoothScrollUpdate', onScroll);
 
 		return () => {
+			resizeObserver.unobserve(document.body)
 			// this function is called when the component is destroyed
 			window.removeEventListener('smoothScrollUpdate', onScroll);
 		};
 	});
 </script>
 
-<svelte:window on:resize={onResize} />
-
-<a
-	href="{base}/work/{slug}"
-	class={cls(
+<div bind:this={projectEl} class={cls(
 		'ProjectListItem',
 		isMainItem && 'ProjectListItem--is-main',
 		`ProjectListItem--is-${layout}-layout`,
 		$$props.class
 	)}
-	data-id={slug}
-	bind:this={projectEl}
-	style="--parallax-effect: {parallaxEffect};"
->
-	<div
-		class="ProjectListItem-thumb will-change-transform"
-		on:mouseenter={onEnter}
-		on:mouseleave={onLeave}
+		 style="--parallax-effect: {parallaxEffect};">
+	<a
+		href="{base}/work/{slug}"
+		data-id={slug}
+
 	>
-		{#if useCurtainsPlanes}
-			<ScrollPlane {slug} {content} {name} />
-		{:else}
-			<div class="ProjectListItem-thumb-image">
-				<img
-					src={content.thumbnail
+		<div
+			class="ProjectListItem-thumb will-change-transform"
+			on:mouseenter={onEnter}
+			on:mouseleave={onLeave}
+		>
+			{#if useCurtainsPlanes}
+				<ScrollPlane {slug} {content} {name} />
+			{:else}
+				<div class="ProjectListItem-thumb-image">
+					<img
+						src={content.thumbnail
 						? content.thumbnail.filename.replace('//a-us.storyblok.com', '//a2-us.storyblok.com')
 						: 'https://source.unsplash.com/random/?Motion&1'}
-					crossorigin=""
-					data-sampler="planeTexture"
-					alt={name}
-				/>
-			</div>
-		{/if}
-	</div>
+						crossorigin=""
+						data-sampler="planeTexture"
+						alt={name}
+					/>
+				</div>
+			{/if}
+		</div>
 
-	<div class="ProjectListItem-infos">
-		<div class="text-sm uppercase ProjectListItem-category">
-			{content.category && content.category[0]}
+		<div class="ProjectListItem-infos">
+			<div class="text-sm uppercase ProjectListItem-category">
+				{content.category && content.category[0]}
+			</div>
+			<div class="ProjectListItem-infos-inner">
+				<h2 class={cls('ProjectListItem-title', isMainItem ? 'text-5xl' : 'text-3xl')}>
+					{name}
+				</h2>
+				<div class="ProjectListItem-summary">{content.summary}</div>
+			</div>
+			<div class="uppercase ProjectListItem-client">{content.client}</div>
 		</div>
-		<div class="ProjectListItem-infos-inner">
-			<h2 class={cls('ProjectListItem-title', isMainItem ? 'text-5xl' : 'text-3xl')}>
-				{name}
-			</h2>
-			<div class="ProjectListItem-summary">{content.summary}</div>
-		</div>
-		<div class="uppercase ProjectListItem-client">{content.client}</div>
-	</div>
-</a>
+	</a>
+</div>
+
 
 <style lang="scss">
 	@import '../../vars.scss';
 
 	.ProjectListItem {
-		display: flex;
-		flex-wrap: nowrap;
-		width: 100%;
-		flex-direction: column;
-		align-items: flex-end;
 		position: relative;
 		overflow: visible;
 		//margin: 200px 0;
 
-		transform: translate3d(0, calc(var(--parallax-effect) * 1px), 0);
+		a {
+			display: flex;
+			flex-wrap: nowrap;
+			width: 100%;
+			flex-direction: column;
+			align-items: flex-end;
+			transform: translate3d(0, calc(var(--parallax-effect) * 1px), 0);
+		}
 
 		&-thumb {
 			width: 100%;
@@ -205,9 +211,11 @@
 
 		@media (min-width: 768px) {
 			&--is-main {
-				flex-direction: row;
-				align-items: flex-end;
-				justify-content: space-between;
+				a {
+					flex-direction: row;
+					align-items: flex-end;
+					justify-content: space-between;
+				}
 
 				.ProjectListItem-thumb {
 					width: 75%;
