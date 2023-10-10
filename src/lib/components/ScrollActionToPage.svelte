@@ -14,7 +14,7 @@
 	let scrollTrigger = null;
 	let gsapCtx = null;
 
-	useTransitionReady(
+	o(
 		() => {
 			gsapCtx = gsap.context(() => {
 				scrollTrigger = ScrollTrigger.create({
@@ -25,7 +25,7 @@
 						parallaxEffect = self.progress;
 					},
 					onLeave: () => {
-						requestAnimationFrame(() => goto(base + href));
+						goto(base + href);
 					}
 				});
 
