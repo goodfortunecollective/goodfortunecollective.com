@@ -133,19 +133,18 @@
 		}
 	});
 
-	isPageHidden.subscribe((value: boolean) => {
-		isHidden = value;
-		if (value && isTransition && !canCreatePlane) {
-			console.log('COMING FROM PAGE TRANSITION, CREATE PLANE')
-			// coming from a page transition
-			// wait a couple ticks for old planes to be removed first
-			canCreatePlane = true;
-			//createPlane();
-			// setTimeout(() => {
-			// 	createPlane();
-			// }, 32);
-		}
-	});
+	// isPageHidden.subscribe((value: boolean) => {
+	// 	isHidden = value;
+	// 	if (value && isTransition && !canCreatePlane) {
+	// 		// coming from a page transition
+	// 		// wait a couple ticks for old planes to be removed first
+	// 		canCreatePlane = true;
+	// 		createPlane();
+	// 		setTimeout(() => {
+	// 			createPlane();
+	// 		}, 32);
+	// 	}
+	// });
 
 
 	useCurtains(
@@ -157,7 +156,7 @@
 			// TODO not triggered after using work page filters!!
 			// https://github.com/sveltejs/svelte/issues/5268 ?
 			if (plane) {
-				console.log('plane removed', plane.index, name, curtainsInstance);
+				console.log('plane removed', plane.index, name);
 				plane.remove();
 				plane = null;
 				curtainsInstance.resize();

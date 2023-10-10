@@ -86,8 +86,8 @@
 	// works even if we have used the filters
 	$: useCurtainsPlanes = true as boolean;
 	$: if ($navigating) {
-		if (curtains && $navigating?.from?.route.id === '/work') {
-			//useCurtainsPlanes = false;
+		if (curtains && $navigating?.from?.route.id === '/work' && filter !== '') {
+			useCurtainsPlanes = false;
 		}
 	}
 
