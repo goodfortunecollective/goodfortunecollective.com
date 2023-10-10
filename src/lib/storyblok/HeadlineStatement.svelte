@@ -42,6 +42,10 @@
 		line-height: 0.85;
 	}
 
+	.title-beige .headline-title {
+		color: #dbd5bf; //$beige;
+	}
+
 	.grey-bg {
 		position: relative;
 		background: #bec6c4;

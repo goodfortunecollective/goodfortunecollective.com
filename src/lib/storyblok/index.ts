@@ -27,6 +27,7 @@ import SocialLinks from './SocialLinks.svelte';
 import SubHeadline from './SubHeadline.svelte';
 import TagsList from './TagsList.svelte';
 import Text from './Text.svelte';
+import Process from './Process.svelte';
 import Video from './Video.svelte';
 
 export const components: any = {
@@ -61,6 +62,7 @@ export const components: any = {
 	'text': Text,
 	'tags-list': TagsList,
 	'video': Video,
+	'process': Process,
 };
 
 export const isPreview = (url: URL) => url.searchParams.has('_storyblok')
