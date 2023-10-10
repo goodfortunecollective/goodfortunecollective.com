@@ -47,4 +47,8 @@
 	.subheadline-title-cont :global(.size-h1) {
 		line-height: 0.85;
 	}
+
+	.text-beige {
+		color: #dbd5bf;
+	}
 </style>

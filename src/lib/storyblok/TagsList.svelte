@@ -33,13 +33,13 @@
 </script>
 
 <div use:storyblokEditable={blok} class={blok.class}>
-	<div class="flex flex-col gap-8">
+	<div class="flex flex-col gap-8 py-8">
 		{#each Array(4) as _, index (index)}
 			<div data-gsap="tags-list" class="border-b-2 border-b-gray-200 last-of-type:border-0">
-				<ul class="whitespace-nowrap">
+				<ul class=" whitespace-nowrap">
 					{#each blok.tags as b}
-						<li class="inline-block mr-24 mb-8">
-							<span class="text-7xl uppercase">
+						<li class="inline-block mb-8 mr-24">
+							<span class="uppercase text-7xl">
 								<StoryblokComponent blok={b} />
 							</span>
 						</li>
