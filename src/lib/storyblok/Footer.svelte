@@ -11,7 +11,7 @@
 	export let blok: any;
 
 	const getTheme = (pathname: string) => {
-		return pathname === '/' || pathname === '/culture' ? 'dark' : 'light';
+		return pathname === '/' || pathname === '/culture' || pathname === '/work' ? 'dark' : 'light';
 	};
 
 	let theme: 'light' | 'dark' = getTheme($page.url.pathname);

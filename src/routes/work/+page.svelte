@@ -2,6 +2,7 @@
 	import { onMount, tick } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 	import type { Curtains } from '@types/curtainsjs';
+	import { Body } from 'svelte-body';
 
 	import { base } from '$app/paths';
 	import { navigating, page } from '$app/stores';
@@ -112,6 +113,8 @@
 
 </script>
 
+<Body class="work bg-neutral-950" />
+
 <section class="pt-20 3xl:pt-24 pb-32">
 	<div class="mt-16">
 		<div class="relative">
@@ -140,6 +143,7 @@
 			{#each projects as { name, slug, content }, index (name)}
 				<div class="grid grid-cols-12">
 					<ProjectListItem
+						theme="dark"
 						hover={$project_list_hover === name}
 						{name}
 						{slug}

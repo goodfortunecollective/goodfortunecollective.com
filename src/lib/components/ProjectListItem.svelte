@@ -1,9 +1,10 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import { cva } from 'class-variance-authority';
+
 	import { base } from '$app/paths';
 	import { cls } from '$lib/styles';
 	import { ScrollPlane } from '$lib/components';
-	import { onMount } from 'svelte';
-
 	import { project_list_hover, isTransitioning } from '$lib/stores';
 
 	export let name: string;
@@ -11,6 +12,19 @@
 	export let content: any;
 	export let isMainItem: boolean;
 	export let layout: 'left' | 'right' = 'left';
+	export let theme: 'light' | 'dark' = 'light';
+
+	const variants = cva('', {
+		variants: {
+			theme: {
+				light: '',
+				dark: 'text-white'
+			}
+		},
+		defaultVariants: {
+			theme: 'light'
+		}
+	});
 
 	function onEnter() {
 		project_list_hover.set(name);
@@ -18,7 +32,7 @@
 
 	const onLeave = () => {
 		// reset hover title only if we're not transitioning
-		if(!$isTransitioning) {
+		if (!$isTransitioning) {
 			project_list_hover.set(null);
 		}
 	};
@@ -66,31 +80,30 @@
 
 	onMount(() => {
 		//onResize();
-		const resizeObserver = new ResizeObserver(() => onResize())
-		resizeObserver.observe(document.body)
+		const resizeObserver = new ResizeObserver(() => onResize());
+		resizeObserver.observe(document.body);
 
 		window.addEventListener('smoothScrollUpdate', onScroll);
 
 		return () => {
-			resizeObserver.disconnect()
+			resizeObserver.disconnect();
 			// this function is called when the component is destroyed
 			window.removeEventListener('smoothScrollUpdate', onScroll);
 		};
 	});
 </script>
 
-<div bind:this={projectEl} class={cls(
+<div
+	bind:this={projectEl}
+	class={cls(
 		'ProjectListItem',
 		isMainItem && 'ProjectListItem--is-main',
 		`ProjectListItem--is-${layout}-layout`,
 		$$props.class
 	)}
-		 style="--parallax-effect: {parallaxEffect};">
-	<a
-		href="{base}/work/{slug}"
-		data-id={slug}
-
-	>
+	style="--parallax-effect: {parallaxEffect};"
+>
+	<a href="{base}/work/{slug}" data-id={slug}>
 		<div
 			class="ProjectListItem-thumb will-change-transform"
 			on:mouseenter={onEnter}
@@ -104,16 +117,23 @@
 				{content.category && content.category[0]}
 			</div>
 			<div class="ProjectListItem-infos-inner">
-				<h2 class={cls('ProjectListItem-title', isMainItem ? 'text-5xl' : 'text-3xl')}>
+				<h2
+					class={cls(
+						'ProjectListItem-title',
+						isMainItem ? 'text-5xl' : 'text-3xl',
+						variants({ theme: theme })
+					)}
+				>
 					{name}
 				</h2>
-				<div class="ProjectListItem-summary">{content.summary}</div>
+				<div class={cls('ProjectListItem-summary', variants({ theme: theme }))}>
+					{content.summary}
+				</div>
 			</div>
 			<div class="uppercase ProjectListItem-client">{content.client}</div>
 		</div>
 	</a>
 </div>
-
 
 <style lang="scss">
 	@import '../../vars.scss';
