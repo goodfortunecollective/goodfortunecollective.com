@@ -14,6 +14,7 @@
 		{ name: 'Work', path: 'work' },
 		{ name: 'About', path: 'about' },
 		{ name: 'Culture', path: 'culture' },
+		{ name: 'Careers', path: 'careers' },
 		{ name: 'Contact', path: 'contact' }
 	];
 

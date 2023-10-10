@@ -7,12 +7,12 @@
 	export let animated: boolean = true;
 
 	const textSizes = {
-		h1: 'text-6xl md:text-8xl lg:text-9xl xl:text-10xl 4xl:text-10xl',
-		h2: 'text-5xl lg:text-8xl',
-		h3: 'text-4xl 3xl:text-5xl 4xl:text-6xl',
-		h4: 'text-3xl 3xl:text-4xl 4xl:text-5xl',
-		h5: 'text-2xl 3xl:text-3xl 4xl:text-4xl',
-		h6: 'text-xl md:text-sm lg:text-xl 3xl:text-2xl 4xl:text-3xl'
+		h1: 'size-h1 text-6xl md:text-8xl lg:text-9xl xl:text-10xl 4xl:text-10xl',
+		h2: 'size-h2 text-5xl lg:text-8xl',
+		h3: 'size-h3 text-4xl 3xl:text-5xl 4xl:text-6xl',
+		h4: 'size-h4 text-3xl 3xl:text-4xl 4xl:text-5xl',
+		h5: 'size-h5 text-2xl 3xl:text-3xl 4xl:text-4xl',
+		h6: 'size-h6 text-xl md:text-sm lg:text-xl 3xl:text-2xl 4xl:text-3xl'
 	};
 </script>
 
