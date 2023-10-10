@@ -1,45 +1,50 @@
 <script lang="ts">
-	import {onMount} from 'svelte';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady.js';
 	import {ScrollTrigger} from '$lib/gsap';
 	import {base} from '$app/paths';
+	import gsap from '$lib/gsap';
 	import {goto} from '$app/navigation';
 
 	export let label: string = '';
 	export let href: string = '/';
 
 	let scrollEl!: HTMLElement;
-	let scrollProgressEl!: HTMLElement;
 
 	$: parallaxEffect = 0 as number;
 	let scrollTrigger = null;
+	let gsapCtx = null;
 
 	useTransitionReady(
 		() => {
-			scrollTrigger = ScrollTrigger.create({
-				trigger: scrollEl,
-				//scrub: true,
-				start: "top bottom",
-				end: "+=150%",
-				//markers: true,
-				onUpdate: (self) => {
-					parallaxEffect = self.progress
-				},
-				onLeave: () => {
-					console.log('complete, GO TO', base + href)
-					//goto(base + href);
-					//parallaxEffect = 0
+			gsapCtx = gsap.context(() => {
+				scrollTrigger = ScrollTrigger.create({
+					trigger: scrollEl,
+					start: "top bottom",
+					end: "bottom bottom",
+					//markers: true,
+					onUpdate: (self) => {
+						parallaxEffect = self.progress
+						//console.log('>>> PARALLAX progress', parallaxEffect)
+					},
+					onLeave: () => {
+						//console.log('complete, GO TO', base + href)
+						goto(base + href);
+					}
+				});
+
+				return () => {
+					scrollTrigger?.kill()
 				}
-			});
+			})
 		},
 		() => {
-			scrollTrigger?.kill()
+			gsapCtx?.revert()
 		}
 	);
 </script>
 
-<div class="ScrollActionToPage pb-[100vh]">
-	<div bind:this={scrollEl} style="--parallax-effect: {parallaxEffect}">
+<div bind:this={scrollEl} class="ScrollActionToPage">
+	<div style="--parallax-effect: {parallaxEffect}">
 		<div class="ScrollActionToPage-inner flex flex-col justify-center items-center text-center gap-8">
 			<p class="uppercase font-medium tracking-widest">Scroll</p>
 			<div class="ScrollActionToPage-bar relative h-32 w-px"/>
@@ -54,10 +59,11 @@
 
 <style lang="scss">
 	.ScrollActionToPage {
-		margin-bottom: -5vh;
+		$scrollHeight: 150vh; // how much we need to scroll to go to next page
+		padding-bottom: $scrollHeight;
 
 		&-inner {
-			transform: translate3d(0, calc(var(--parallax-effect) * 100vh), 0);
+			transform: translate3d(0, calc(var(--parallax-effect) * #{$scrollHeight}), 0);
 			perspective: 1000px;
 		}
 
@@ -81,7 +87,7 @@
 				left: 0;
 				background: black;
 				transform-origin: 50% 0;
-				transform: scale3d(1, var(--parallax-effect), 0);
+				transform: scale3d(1, var(--parallax-effect), 1);
 			}
 		}
 
