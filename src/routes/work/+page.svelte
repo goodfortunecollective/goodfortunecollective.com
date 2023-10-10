@@ -24,7 +24,8 @@
 
 	let containerEl: HTMLElement;
 
-	$: filter = $page.url.searchParams.get('filter');
+	//$: filter = $page.url.searchParams.get('filter');
+	$: filter = $page.url.hash.slice(1);
 
 	/**
 	 * @param {any} projects
@@ -82,15 +83,6 @@
 		}
 	};
 
-	// force removing all projects planes when navigating away
-	// works even if we have used the filters
-	$: useCurtainsPlanes = true as boolean;
-	$: if ($navigating) {
-		if (curtains && $navigating?.from?.route.id === '/work' && filter !== '') {
-			useCurtainsPlanes = false;
-		}
-	}
-
 	onMount(() => {
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
@@ -118,13 +110,6 @@
 		}
 	);
 
-	// update planes sizes and positions
-	/**
-	async function hashchange() {
-		await tick();
-		if (curtains) curtains.resize();
-	}
-	*/
 </script>
 
 <section class="pt-20 3xl:pt-24 pb-32">
@@ -134,7 +119,7 @@
 				<MenuItem
 					name="All Projects"
 					sup={data.projects.length}
-					url={`${base}/work`}
+					url={`${base}/work#all`}
 					selected={!filter || filter === 'all'}
 				/>
 				{#each categories as category, i}
@@ -142,7 +127,7 @@
 						<MenuItem
 							name={category.name}
 							sup={category.count}
-							url={`${base}/work?filter=${category.value}`}
+							url={`${base}/work#${category.value}`}
 							delay={i * 50}
 							selected={filter === category.value}
 						/>
@@ -161,7 +146,6 @@
 						{content}
 						isMainItem={index === 0}
 						layout={index % 2 === 0 ? 'left' : 'right'}
-						{useCurtainsPlanes}
 						class={getProjectGridItemClass(index)}
 					/>
 				</div>

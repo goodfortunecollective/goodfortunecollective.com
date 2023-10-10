@@ -11,7 +11,6 @@
 	export let content: any;
 	export let isMainItem: boolean;
 	export let layout: 'left' | 'right' = 'left';
-	export let useCurtainsPlanes: boolean = true;
 
 	function onEnter() {
 		project_list_hover.set(name);
@@ -73,7 +72,7 @@
 		window.addEventListener('smoothScrollUpdate', onScroll);
 
 		return () => {
-			resizeObserver.unobserve(document.body)
+			resizeObserver.disconnect()
 			// this function is called when the component is destroyed
 			window.removeEventListener('smoothScrollUpdate', onScroll);
 		};
@@ -97,20 +96,7 @@
 			on:mouseenter={onEnter}
 			on:mouseleave={onLeave}
 		>
-			{#if useCurtainsPlanes}
-				<ScrollPlane {slug} {content} {name} />
-			{:else}
-				<div class="ProjectListItem-thumb-image">
-					<img
-						src={content.thumbnail
-						? content.thumbnail.filename.replace('//a-us.storyblok.com', '//a2-us.storyblok.com')
-						: 'https://source.unsplash.com/random/?Motion&1'}
-						crossorigin=""
-						data-sampler="planeTexture"
-						alt={name}
-					/>
-				</div>
-			{/if}
+			<ScrollPlane {slug} {content} {name} />
 		</div>
 
 		<div class="ProjectListItem-infos">

@@ -29,12 +29,12 @@
 				style="--color: #dbd5bf;"
 			>
 				<span
-					in:slide|global={{
+					in:slide|local={{
 						duration: 500,
 						direction: 'bottom',
 						easing: cubicOut
 					}}
-					out:slide|global={{ duration: 500, direction: 'top', easing: cubicOut }}
+					out:slide|local={{ duration: 500, direction: 'top', easing: cubicOut }}
 					class="block absolute w-full"
 				>
 					{title}

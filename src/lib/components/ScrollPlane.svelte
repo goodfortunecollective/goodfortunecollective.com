@@ -100,17 +100,29 @@
 			opacity: {
 				name: 'uOpacity',
 				type: '1f',
-				value: 1
+				value: 0
 			}
 		}
 	};
 
 	const createPlane = () => {
 		if (curtains && canCreatePlane && planeEl) {
-			console.log('create plane', name, planeEl)
 			params.renderOrder = curtains.planes.length;
 
 			plane = new Plane(curtains, planeEl, params);
+
+			const inTransition = {
+				opacity: plane.uniforms.opacity.value,
+			}
+
+			gsap.to(inTransition, {
+				opacity: 1,
+				duration: 0.5,
+				ease: 'power2.inOut',
+				onUpdate: () => {
+					plane.uniforms.opacity.value = inTransition.opacity
+				}
+			})
 
 			plane.onRender(() => {
 				const scroll = ScrollSmoother.get();
@@ -133,34 +145,27 @@
 		}
 	});
 
-	// isPageHidden.subscribe((value: boolean) => {
-	// 	isHidden = value;
-	// 	if (value && isTransition && !canCreatePlane) {
-	// 		// coming from a page transition
-	// 		// wait a couple ticks for old planes to be removed first
-	// 		canCreatePlane = true;
-	// 		createPlane();
-	// 		setTimeout(() => {
-	// 			createPlane();
-	// 		}, 32);
-	// 	}
-	// });
-
+	let resizeObserver: ResizeObserver | null;
 
 	useCurtains(
 		(curtainsInstance) => {
 			curtains = curtainsInstance;
 			createPlane();
+
+			resizeObserver = new ResizeObserver(() => {
+				if(plane) plane.resize()
+			})
+
+			resizeObserver.observe(document.body)
 		},
 		(curtainsInstance) => {
-			// TODO not triggered after using work page filters!!
-			// https://github.com/sveltejs/svelte/issues/5268 ?
 			if (plane) {
-				console.log('plane removed', plane.index, name);
+				//console.log('plane removed', plane.index, name);
 				plane.remove();
 				plane = null;
-				curtainsInstance.resize();
 			}
+
+			resizeObserver?.disconnect()
 		}
 	);
 
