@@ -117,7 +117,7 @@
 	<div id="smooth-wrapper" class="z-10">
 		<div id="smooth-content" bind:this={smoothScrollContentEl}>
 			<PageTransition pathname={data.pathname}>
-				<slot />
+				<slot key={data.pathname} />
 				{#if data.settings}
 					<StoryblokComponent blok={getComponentByName(data.settings.content, 'footer')} />
 				{/if}

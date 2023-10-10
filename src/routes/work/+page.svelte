@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 	import type { Curtains } from '@types/curtainsjs';
 	import { Body } from 'svelte-body';
@@ -25,7 +25,8 @@
 
 	let containerEl: HTMLElement;
 
-	$: filter = $page.url.searchParams.get('filter');
+	//$: filter = $page.url.searchParams.get('filter');
+	$: filter = $page.url.hash.slice(1);
 
 	/**
 	 * @param {any} projects
@@ -83,15 +84,6 @@
 		}
 	};
 
-	// force removing all projects planes when navigating away
-	// works even if we have used the filters
-	$: useCurtainsPlanes = true as boolean;
-	$: if ($navigating) {
-		if (curtains && $navigating?.from?.route.id === '/work') {
-			useCurtainsPlanes = false;
-		}
-	}
-
 	onMount(() => {
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
@@ -119,12 +111,6 @@
 		}
 	);
 
-	// update planes sizes and positions
-	/**
-	async function hashchange() {
-		if (curtains) curtains.resize();
-	}
-	*/
 </script>
 
 <Body class="work bg-neutral-950" />
@@ -136,7 +122,7 @@
 				<MenuItem
 					name="All Projects"
 					sup={data.projects.length}
-					url={`${base}/work`}
+					url={`${base}/work#all`}
 					selected={!filter || filter === 'all'}
 				/>
 				{#each categories as category, i}
@@ -144,7 +130,7 @@
 						<MenuItem
 							name={category.name}
 							sup={category.count}
-							url={`${base}/work?filter=${category.value}`}
+							url={`${base}/work#${category.value}`}
 							delay={i * 50}
 							selected={filter === category.value}
 						/>
@@ -154,7 +140,7 @@
 		</div>
 
 		<div class="mb-32" bind:this={containerEl}>
-			{#each projects as { name, slug, content }, index}
+			{#each projects as { name, slug, content }, index (name)}
 				<div class="grid grid-cols-12">
 					<ProjectListItem
 						theme="dark"
@@ -164,7 +150,6 @@
 						{content}
 						isMainItem={index === 0}
 						layout={index % 2 === 0 ? 'left' : 'right'}
-						{useCurtainsPlanes}
 						class={getProjectGridItemClass(index)}
 					/>
 				</div>

@@ -12,8 +12,8 @@
 </script>
 
 <li
-	in:fade|global={{ delay }}
-	out:fade|global
+	in:fade|local={{ delay }}
+	out:fade|local
 	class={cls(
 		'mb-2 text-xs font-bold tracking-wider text-right uppercase menu-item whitespace-nowrap' +
 			(selected ? ' active' : '')
