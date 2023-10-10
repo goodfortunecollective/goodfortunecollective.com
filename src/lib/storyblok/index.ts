@@ -1,6 +1,8 @@
 import Container from './Container.svelte';
 import Figure from './Figure.svelte';
 import Figures from './Figures.svelte';
+import Member from './Member.svelte';
+import Members from './Members.svelte';
 import Footer from './Footer.svelte';
 import Header from './Header.svelte';
 import Heading from './Heading.svelte';
@@ -35,6 +37,8 @@ export const components: any = {
 	'container': Container,
 	'figure': Figure,
 	'figures': Figures,
+	'member': Member,
+	'members': Members,
 	'footer': Footer,
 	'header': Header,
 	'heading': Heading,
