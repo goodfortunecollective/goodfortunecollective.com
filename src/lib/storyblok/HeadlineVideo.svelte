@@ -244,14 +244,14 @@
 			<div class="flex flex-col justify-between h-full py-[15vh]">
 				<h1
 					data-gsap="split-text"
-					class="max-w-6xl text-6xl leading-[4rem] md:text-[11rem] md:leading-[8rem] 3xl:text-[12rem] 3xl:leading-[9rem] z-[8] text-neutral-950 font-degular-display title tracking-wide"
+					class="max-w-7xl text-6xl leading-[4rem] md:text-[11rem] md:leading-[8rem] 3xl:text-[12rem] 3xl:leading-[9rem] z-[8] text-neutral-950 font-degular-display title tracking-wide"
 					style="transform:scale({titleScale})"
 				>
 					{blok.headline}
 				</h1>
 				<h2
 					data-gsap="split-text"
-					class="z-10 max-w-md mb-[5vh] text-5xl md:text-7xl text-white lg:max-w-2xl font-degular-display"
+					class="z-10 max-w-2xl mb-[5vh] text-5xl md:text-7xl text-white lg:max-w-4xl font-degular-display"
 				>
 					{blok.subheadline}
 				</h2>
