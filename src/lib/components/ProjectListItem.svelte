@@ -1,9 +1,10 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import { cva } from 'class-variance-authority';
+
 	import { base } from '$app/paths';
 	import { cls } from '$lib/styles';
 	import { ScrollPlane } from '$lib/components';
-	import { onMount } from 'svelte';
-
 	import { project_list_hover, isTransitioning } from '$lib/stores';
 
 	export let name: string;
@@ -12,6 +13,19 @@
 	export let isMainItem: boolean;
 	export let layout: 'left' | 'right' = 'left';
 	export let useCurtainsPlanes: boolean = true;
+	export let theme: 'light' | 'dark' = 'light';
+
+	const variants = cva('', {
+		variants: {
+			theme: {
+				light: '',
+				dark: 'text-white'
+			}
+		},
+		defaultVariants: {
+			theme: 'light'
+		}
+	});
 
 	function onEnter() {
 		project_list_hover.set(name);
@@ -19,7 +33,7 @@
 
 	const onLeave = () => {
 		// reset hover title only if we're not transitioning
-		if(!$isTransitioning) {
+		if (!$isTransitioning) {
 			project_list_hover.set(null);
 		}
 	};
@@ -116,10 +130,18 @@
 			{content.category && content.category[0]}
 		</div>
 		<div class="ProjectListItem-infos-inner">
-			<h2 class={cls('ProjectListItem-title', isMainItem ? 'text-5xl' : 'text-3xl')}>
+			<h2
+				class={cls(
+					'ProjectListItem-title',
+					isMainItem ? 'text-5xl' : 'text-3xl',
+					variants({ theme: theme })
+				)}
+			>
 				{name}
 			</h2>
-			<div class="ProjectListItem-summary">{content.summary}</div>
+			<div class={cls('ProjectListItem-summary', variants({ theme: theme }))}>
+				{content.summary}
+			</div>
 		</div>
 		<div class="uppercase ProjectListItem-client">{content.client}</div>
 	</div>

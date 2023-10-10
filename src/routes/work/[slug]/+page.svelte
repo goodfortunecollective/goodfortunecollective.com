@@ -23,7 +23,7 @@
 
 <Body class="work-page" />
 
-<section class="project-header pt-20 3xl:pt-24 relative text-white">
+<section class="project-header pt-20 3xl:pt-24 relative text-white bg-neutral-950">
 	<div class="grid h-full grid-cols-12 py-16">
 		<div class="flex flex-col justify-between col-span-10 col-start-2 md:flex-col">
 			<div class="flex flex-row md:flex-col">
@@ -116,7 +116,7 @@
 		<StoryblokComponent blok={data.story.content} />
 	{/if}
 
-	<ScrollActionToPage href={"/work"} label={"All projects"} />
+	<ScrollActionToPage href={'/work'} label={'All projects'} />
 </section>
 
 <style lang="scss">
