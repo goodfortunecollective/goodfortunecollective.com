@@ -3,20 +3,10 @@
 	import { onMount, getContext } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent, renderRichText } from '@storyblok/svelte';
 
-	import { base } from '$app/paths';
-	import { goto } from '$app/navigation';
-
-	import { Heading, HoverPlane } from '$lib/components';
-	import gsap from '$lib/gsap';
-	import { useTransitionReady } from '$lib/utils/useTransitionReady.js';
+	import { Heading, HoverPlane, ScrollActionToPage } from '$lib/components';
 
 	export let data;
 
-	let ctx: any = null;
-
-	let scrollBottomContainerEl: HTMLElement;
-	let scrollBottomEl: HTMLElement;
-	let scrollProgressBottomEl: HTMLElement;
 	// title hover
 	let isTitleHovered = false as boolean;
 
@@ -24,63 +14,11 @@
 
 	const preview = getContext('storyblok-preview');
 
-	let isExit = false;
-
 	onMount(() => {
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
 	});
-
-	useTransitionReady(
-		() => {
-			// avoid auto navigation animation on Storyblok preview
-			if (preview) return;
-
-			ctx = gsap.context(() => {
-				gsap.fromTo(
-					scrollBottomEl,
-					{ y: 0 },
-					{
-						y: '-=300',
-						scrollTrigger: {
-							trigger: scrollBottomContainerEl,
-							end: 'top center',
-							scrub: 0.5
-						},
-						onComplete: () => {
-							if (isExit) return;
-
-							gsap.to(scrollBottomEl, {
-								opacity: 0,
-								onComplete: () => {
-									requestAnimationFrame(() => goto(`${base}/work`));
-								}
-							});
-
-							isExit = true;
-						}
-					}
-				);
-
-				gsap.fromTo(
-					scrollProgressBottomEl,
-					{ scaleY: 0 },
-					{
-						scaleY: 1,
-						scrollTrigger: {
-							trigger: scrollBottomEl,
-							end: 'center center',
-							scrub: 0.5
-						}
-					}
-				);
-			});
-		},
-		() => {
-			if (ctx) ctx.revert();
-		}
-	);
 </script>
 
 <Body class="work-page" />
@@ -177,18 +115,8 @@
 	{#if data.story}
 		<StoryblokComponent blok={data.story.content} />
 	{/if}
-	<div bind:this={scrollBottomContainerEl} class=" mt-72 pb-[100vh]">
-		<div
-			bind:this={scrollBottomEl}
-			class="flex flex-col items-center justify-center gap-8 text-center"
-		>
-			<p class="font-medium tracking-widest uppercase">Scroll</p>
-			<div class="w-px h-48 bg-gray-100">
-				<div bind:this={scrollProgressBottomEl} class="h-full origin-top bg-black" />
-			</div>
-			<span class="font-degular-display leading-8 text-[10em]">All projects</span>
-		</div>
-	</div>
+
+	<ScrollActionToPage href={"/work"} label={"All projects"} />
 </section>
 
 <style lang="scss">

@@ -178,9 +178,7 @@
 
 		if(value === name) {
 			hoverTween = gsap.to(hoverTransition, {
-				planeScale: 0.9,
 				textureScale: 1.15,
-				effect: 1,
 				duration: 0.5,
 				ease: 'power2.inOut',
 				onUpdate: () => {
@@ -191,9 +189,7 @@
 		}
 		else if(texture && texture.scale.x) {
 			hoverTween = gsap.to(hoverTransition, {
-				planeScale: 1,
 				textureScale: 1,
-				effect: 0,
 				duration: 0.5,
 				ease: 'power2.inOut',
 				onUpdate: () => {

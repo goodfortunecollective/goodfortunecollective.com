@@ -8,3 +8,4 @@ export { default as ScrollPlane } from './ScrollPlane.svelte';
 export { default as HoverPlane } from './HoverPlane.svelte';
 export { default as ProjectListItem } from './ProjectListItem.svelte';
 export { default as TextTransition } from './TextTransition.svelte';
+export { default as ScrollActionToPage } from './ScrollActionToPage.svelte';
