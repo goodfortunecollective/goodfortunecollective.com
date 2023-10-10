@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { afterNavigate, beforeNavigate } from '$app/navigation';
+	import { beforeNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 
 	import { cls } from '$lib/styles';
@@ -191,10 +191,6 @@
 		isPageHidden.set(false);
 
 		animateTransition();
-	});
-
-	afterNavigate(async () => {
-		console.log('afterNavigate');
 	});
 </script>
 

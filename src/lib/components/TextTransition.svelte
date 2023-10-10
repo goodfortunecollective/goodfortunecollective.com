@@ -1,26 +1,36 @@
 <script lang="ts">
 	import gsap, { SplitText, ScrollTrigger } from '$lib/gsap';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import { onMount } from 'svelte';
 
 	let element: HTMLSpanElement;
 
 	let ctx: any = null;
+	let text: any = null;
 
 	export let enabled: boolean = true;
 	export let type: 'heading' | 'p' = 'p';
+
+	onMount(() => {
+		if (enabled) {
+			text = new SplitText(element, {
+				type: 'lines,words,chars',
+				linesClass: 'split-line',
+				charClass: 'split-char'
+			});
+
+			if (type === 'heading') {
+				gsap.set(text.chars, { yPercent: 100 });
+			}
+		}
+	});
 
 	useTransitionReady(
 		() => {
 			if (enabled) {
 				ctx = gsap.context(() => {
-					const text: any = new SplitText(element, {
-						type: 'lines,words,chars',
-						linesClass: 'split-line',
-						charClass: 'split-char'
-					});
-
 					if (type === 'heading') {
-						gsap.from(text.chars, {
+						gsap.to(text.chars, {
 							scrollTrigger: {
 								trigger: element,
 								top: 'top center',
@@ -28,7 +38,7 @@
 							},
 							duration: 0.2,
 							ease: 'circ.out',
-							yPercent: 100,
+							yPercent: 0,
 							stagger: 0.01
 						});
 					}
@@ -47,7 +57,7 @@
 							stagger: 0.2
 						});
 					}
-				});
+				}, element);
 			}
 		},
 		() => {

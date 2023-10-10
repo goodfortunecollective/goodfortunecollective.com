@@ -16,7 +16,6 @@
 	let videoPlayer!: HTMLElement;
 	let line!: HTMLElement;
 	let container!: HTMLElement;
-	let background!: HTMLElement;
 
 	let videoPlaying = blok.autoplay;
 	let btnHidden = true;
@@ -172,7 +171,7 @@
 					},
 					'start'
 				);
-			});
+			}, container);
 		},
 		() => {
 			window.removeEventListener('smoothScrollUpdate', onScroll);
@@ -204,11 +203,7 @@
 <svelte:window on:mousemove={onMouseMove} on:resize={onResize} />
 
 <section use:storyblokEditable={blok} {...$$restProps} class="grid h-screen grid-cols-12">
-	<div
-		bind:this={background}
-		class="absolute w-screen h-[250vh] z-[-1] bg-neutral-950"
-		style="opacity:{bgOpacity}"
-	/>
+	<div class="absolute w-screen h-[250vh] z-[-1] bg-neutral-950" style="opacity:{bgOpacity}" />
 	<CustomCursor
 		isHidden={btnHidden}
 		cursorType={videoPlaying ? 'pause' : 'play'}

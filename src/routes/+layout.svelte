@@ -26,6 +26,8 @@
 	let scroll: ScrollSmoother | null = null;
 
 	let ref: any;
+	let wrapperEl: any;
+	let ctx: any = null;
 
 	let smoothScrollContentEl: HTMLElement;
 	let resizeObserver: ResizeObserver | undefined;
@@ -53,19 +55,22 @@
 		resizeObserver.observe(smoothScrollContentEl);
 
 		// @ts-ignore
-		scroll = ScrollSmoother.create({
-			wrapper: '#smooth-wrapper',
-			content: '#smooth-content',
-			smooth: 1.5,
-			effects: true,
-			normalizeScroll: true,
-			smoothTouch: 0.1,
-			onUpdate: (event: any) => {
-				ref.dispatchEvent(
-					custom_event('smoothScrollUpdate', { offsetY: event.scrollTop() }, { bubbles: true })
-				);
-			}
-		});
+		ctx = gsap.context(() => {
+			scroll = ScrollSmoother.create({
+				wrapper: '#smooth-wrapper',
+				content: '#smooth-content',
+				smooth: 1.5,
+				effects: true,
+				normalizeScroll: true,
+				smoothTouch: 0.1,
+				onUpdate: (event: any) => {
+					ref.dispatchEvent(
+						custom_event('smoothScrollUpdate', { offsetY: event.scrollTop() }, { bubbles: true })
+					);
+				}
+			});
+		}, wrapperEl); // <- Scope!
+
 		if (scroll) {
 			const hash = $page.url.hash.slice(1);
 
@@ -86,6 +91,7 @@
 
 		return () => {
 			if (resizeObserver) resizeObserver.disconnect();
+			ctx.revert();
 		};
 	});
 
@@ -114,7 +120,7 @@
 	<StoryblokComponent blok={getComponentByName(data.settings.content, 'header')} />
 {/if}
 <main bind:this={ref}>
-	<div id="smooth-wrapper" class="z-10">
+	<div id="smooth-wrapper" class="z-10" bind:this={wrapperEl}>
 		<div id="smooth-content" bind:this={smoothScrollContentEl}>
 			<PageTransition pathname={data.pathname}>
 				<slot key={data.pathname} />

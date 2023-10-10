@@ -11,17 +11,17 @@
 	let scrollEl!: HTMLElement;
 
 	$: parallaxEffect = 0 as number;
-	let scrollTrigger = null;
-	let gsapCtx = null;
+	let scrollTrigger: any = null;
+	let ctx: any = null;
 
 	useTransitionReady(
 		() => {
-			gsapCtx = gsap.context(() => {
+			ctx = gsap.context(() => {
 				scrollTrigger = ScrollTrigger.create({
 					trigger: scrollEl,
 					start: 'top bottom',
 					end: 'bottom bottom',
-					onUpdate: (self) => {
+					onUpdate: (self: any) => {
 						parallaxEffect = self.progress;
 					},
 					onLeave: () => {
@@ -32,10 +32,10 @@
 				return () => {
 					scrollTrigger?.kill();
 				};
-			});
+			}, scrollEl);
 		},
 		() => {
-			gsapCtx?.revert();
+			ctx?.revert();
 		}
 	);
 </script>
