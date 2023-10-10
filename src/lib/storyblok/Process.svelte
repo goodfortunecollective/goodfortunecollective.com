@@ -11,7 +11,8 @@
 
 	let blockClasses = 'process-block flex py-12 overflow-hidden';
 	let wrapperClasses = 'process-wrapper draggable flex md:flex-row flex-nowrap gap-4 md:gap-16';
-	let listItemClass = 'flex flex-col list-item-block px-10 pt-10 pb-16 justify-between';
+	let listItemClass =
+		'flex flex-col list-item-block px-3 pt-3 pb-5 md:px-10 md:pt-10 md:pb-16 justify-between';
 	let listItemClasses = [];
 	let listItemDraggable = null;
 	let listItemWrapper!: HTMLElement;
@@ -19,7 +20,7 @@
 	for (let i = 0; i < blok.list.length; i++) {
 		listItemClasses[i] = listItemClass;
 
-		if (i == 0) listItemClasses[i] += ' ml-8 md:ml-24';
+		if (i == 0) listItemClasses[i] += ' ml-8 md:ml-36';
 		else if (i == blok.list.length - 1) listItemClasses[i] += ' mr-8';
 	}
 
@@ -33,8 +34,8 @@
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	<div class="grid grid-cols-24 process-title">
-		<div class="col-start-2 col-span-20">
+	<div class="grid grid-cols-12 process-title">
+		<div class="col-span-10 col-start-2">
 			<Heading as="h2" size="h2" class="">{blok.title}</Heading>
 		</div>
 	</div>
@@ -54,7 +55,7 @@
 			{/each}
 		</div>
 	</div>
-	<div class="grid grid-cols-12 pt-32 process-text pb-36">
+	<div class="grid grid-cols-12 pt-10 pb-12 md:pt-32 process-text md:pb-36">
 		<div class="col-span-10 col-start-2 md:col-span-6 md:col-start-4">
 			<TextTransition>{@html content}</TextTransition>
 		</div>
@@ -83,7 +84,11 @@
 		background: #dbd5bf; //$beige;
 		border-radius: 15px;
 		color: #fff;
-		width: 29vw;
+		width: 50vw;
+
+		@media (min-width: $media-md) {
+			width: 29vw;
+		}
 	}
 
 	.caption-number {

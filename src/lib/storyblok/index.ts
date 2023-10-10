@@ -29,6 +29,7 @@ import TagsList from './TagsList.svelte';
 import Text from './Text.svelte';
 import Process from './Process.svelte';
 import Video from './Video.svelte';
+import TwoCols from './TwoCols.svelte';
 
 export const components: any = {
 	'container': Container,
@@ -63,6 +64,7 @@ export const components: any = {
 	'tags-list': TagsList,
 	'video': Video,
 	'process': Process,
+	'two-cols': TwoCols,
 };
 
 export const isPreview = (url: URL) => url.searchParams.has('_storyblok')
