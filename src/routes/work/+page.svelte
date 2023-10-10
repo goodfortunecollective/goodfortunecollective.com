@@ -151,7 +151,7 @@
 		</div>
 
 		<div class="mb-32" bind:this={containerEl}>
-			{#each projects as { name, slug, content }, index}
+			{#each projects as { name, slug, content }, index (name + index)}
 				<div class="grid grid-cols-12">
 					<ProjectListItem
 						hover={$project_list_hover === name}
