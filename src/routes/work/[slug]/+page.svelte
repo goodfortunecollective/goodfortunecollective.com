@@ -3,20 +3,10 @@
 	import { onMount, getContext } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent, renderRichText } from '@storyblok/svelte';
 
-	import { base } from '$app/paths';
-	import { goto } from '$app/navigation';
-
 	import { Heading, HoverPlane, ScrollActionToPage } from '$lib/components';
-	import gsap from '$lib/gsap';
-	import { useTransitionReady } from '$lib/utils/useTransitionReady.js';
 
 	export let data;
 
-	let ctx: any = null;
-
-	let scrollBottomContainerEl: HTMLElement;
-	let scrollBottomEl: HTMLElement;
-	let scrollProgressBottomEl: HTMLElement;
 	// title hover
 	let isTitleHovered = false as boolean;
 
@@ -24,64 +14,11 @@
 
 	const preview = getContext('storyblok-preview');
 
-	let isExit = false;
-
 	onMount(() => {
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
 	});
-
-	/*
-	useTransitionReady(
-		() => {
-			// avoid auto navigation animation on Storyblok preview
-			if (preview) return;
-
-			ctx = gsap.context(() => {
-				gsap.fromTo(
-					scrollBottomEl,
-					{ y: 0 },
-					{
-						y: '-=300',
-						scrollTrigger: {
-							trigger: scrollBottomContainerEl,
-							end: 'top center',
-							scrub: 0.5
-						},
-						onComplete: () => {
-							if (isExit) return;
-
-							gsap.to(scrollBottomEl, {
-								opacity: 0,
-								onComplete: () => {
-									requestAnimationFrame(() => goto(`${base}/work`));
-								}
-							});
-
-							isExit = true;
-						}
-					}
-				);
-
-				gsap.fromTo(
-					scrollProgressBottomEl,
-					{ scaleY: 0 },
-					{
-						scaleY: 1,
-						scrollTrigger: {
-							trigger: scrollBottomEl,
-							end: 'center center',
-							scrub: 0.5
-						}
-					}
-				);
-			});
-		},
-		() => {
-			if (ctx) ctx.revert();
-		}
-	);*/
 </script>
 
 <Body class="work-page" />
