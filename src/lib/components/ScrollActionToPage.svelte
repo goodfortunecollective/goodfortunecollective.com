@@ -14,7 +14,7 @@
 	let scrollTrigger = null;
 	let gsapCtx = null;
 
-	o(
+	useTransitionReady(
 		() => {
 			gsapCtx = gsap.context(() => {
 				scrollTrigger = ScrollTrigger.create({
