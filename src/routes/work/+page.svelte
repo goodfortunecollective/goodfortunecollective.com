@@ -24,7 +24,7 @@
 
 	let containerEl: HTMLElement;
 
-	$: filter = $page.url.hash.slice(1);
+	$: filter = $page.url.searchParams.get('filter');
 
 	/**
 	 * @param {any} projects
@@ -104,7 +104,7 @@
 				id: 'project-work',
 				trigger: containerEl,
 				start: 'top center',
-				end: 'bottom center',
+				end: 'bottom center'
 				// onToggle: (self: any) => {
 				// 	if (!self.isActive) {
 				// 		$project_list_hover = '';
@@ -119,12 +119,12 @@
 	);
 
 	// update planes sizes and positions
+	/**
 	async function hashchange() {
 		if (curtains) curtains.resize();
 	}
+	*/
 </script>
-
-<svelte:window on:hashchange={hashchange} />
 
 <section class="pt-20 3xl:pt-24 pb-32">
 	<div class="mt-16">
@@ -133,7 +133,7 @@
 				<MenuItem
 					name="All Projects"
 					sup={data.projects.length}
-					url={`${base}/work#all`}
+					url={`${base}/work`}
 					selected={!filter || filter === 'all'}
 				/>
 				{#each categories as category, i}
@@ -141,7 +141,7 @@
 						<MenuItem
 							name={category.name}
 							sup={category.count}
-							url={`${base}/work#${category.value}`}
+							url={`${base}/work?filter=${category.value}`}
 							delay={i * 50}
 							selected={filter === category.value}
 						/>
