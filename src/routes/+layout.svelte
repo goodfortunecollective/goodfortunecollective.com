@@ -7,7 +7,7 @@
 	import { dev } from '$app/environment';
 	import { page } from '$app/stores';
 	import gsap, { ScrollTrigger } from '$lib/gsap';
-	import Lenis  from '@studio-freight/lenis'
+	import Lenis from '@studio-freight/lenis';
 	import { lenis } from '$lib/stores';
 
 	import { getComponentByName } from '$lib/storyblok';
@@ -41,25 +41,29 @@
 
 		console.log('data.settings', data.settings.content.content[0]);
 
-		lenisScroll = new Lenis()
+		lenisScroll = new Lenis();
 
-		lenis.set(lenisScroll)
+		lenis.set(lenisScroll);
 
 		lenisScroll.on('scroll', (e) => {
-			ScrollTrigger.update()
+			ScrollTrigger.update();
 			ref.dispatchEvent(
-				custom_event('onLenisUpdate', { scrollTop: e.scroll, velocity: e.velocity }, { bubbles: true })
-			)
-		})
+				custom_event(
+					'onLenisUpdate',
+					{ scrollTop: e.scroll, velocity: e.velocity },
+					{ bubbles: true }
+				)
+			);
+		});
 
 		const onRaf = (time) => {
-			lenisScroll.raf(time * 1000) // ms
-		}
+			lenisScroll.raf(time * 1000); // ms
+		};
 
-		gsap.ticker.add(onRaf)
-		gsap.ticker.lagSmoothing(0)
+		gsap.ticker.add(onRaf);
+		gsap.ticker.lagSmoothing(0);
 
-		if(lenisScroll) {
+		if (lenisScroll) {
 			const hash = $page.url.hash.slice(1);
 
 			if (hash) {
@@ -67,9 +71,9 @@
 
 				if (scrollElem) {
 					lenisScroll.scrollTo(scrollElem, {
-						duration: 1,
+						duration: 1
 						//delay: 0.5
-					})
+					});
 				} else {
 					lenisScroll.stop();
 				}
@@ -77,9 +81,9 @@
 		}
 
 		return () => {
-			gsap.ticker.remove(onRaf)
-			lenisScroll.destroy()
-			lenis.set(null)
+			gsap.ticker.remove(onRaf);
+			lenisScroll.destroy();
+			lenis.set(null);
 		};
 	});
 
@@ -107,7 +111,7 @@
 {#if data.settings}
 	<StoryblokComponent blok={getComponentByName(data.settings.content, 'header')} />
 {/if}
-<main bind:this={ref}>
+<main bind:this={ref} class="overflow-hidden">
 	<PageTransition pathname={data.pathname}>
 		<slot key={data.pathname} />
 		{#if data.settings}
