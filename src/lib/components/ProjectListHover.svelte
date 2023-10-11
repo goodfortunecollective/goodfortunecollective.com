@@ -26,12 +26,12 @@
 		>
 			<span class="ProjectListHover-title relative block col-span-10 col-start-2 h-48 text-center">
 				<span
-					in:slide|local={{
+					in:slide|global={{
 						duration: 500,
 						direction: 'bottom',
 						easing: cubicOut
 					}}
-					out:slide|local={{ duration: 500, direction: 'top', easing: cubicOut }}
+					out:slide|global={{ duration: 500, direction: 'top', easing: cubicOut }}
 					class="block absolute w-full"
 				>
 					{title}

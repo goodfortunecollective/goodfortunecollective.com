@@ -18,9 +18,9 @@
 		position: absolute;
 		top: 0;
 		right: 0;
-		height: 200vh;
+		height: 100vh;
 		left: 0;
-		background: #1a1a1a;
+		background: rgb(26, 26, 26);
 		z-index: 0;
 	}
 
@@ -57,5 +57,27 @@
 		overflow: clip;
 		margin-top: -8px;
 		padding: 8px 0;
+	}
+
+	/** LENIS **/
+
+	html.lenis {
+		height: auto;
+	}
+
+	.lenis.lenis-smooth {
+		scroll-behavior: auto;
+	}
+
+	.lenis.lenis-smooth [data-lenis-prevent] {
+		overscroll-behavior: contain;
+	}
+
+	.lenis.lenis-stopped {
+		overflow: hidden;
+	}
+
+	.lenis.lenis-scrolling iframe {
+		pointer-events: none;
 	}
 }

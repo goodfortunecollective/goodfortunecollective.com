@@ -6,7 +6,9 @@
 
 	import { dev } from '$app/environment';
 	import { page } from '$app/stores';
-	import gsap, { ScrollSmoother, ScrollTrigger } from '$lib/gsap';
+	import gsap, { ScrollTrigger } from '$lib/gsap';
+	import Lenis from '@studio-freight/lenis';
+	import { lenis } from '$lib/stores';
 
 	import { getComponentByName } from '$lib/storyblok';
 
@@ -23,12 +25,9 @@
 
 	export let data: LayoutData;
 
-	let scroll: ScrollSmoother | null = null;
+	let lenisScroll: Lenis | null = null;
 
 	let ref: any;
-
-	let smoothScrollContentEl: HTMLElement;
-	let resizeObserver: ResizeObserver | undefined;
 
 	setContext('storyblok-preview', data.preview);
 
@@ -42,50 +41,49 @@
 
 		console.log('data.settings', data.settings.content.content[0]);
 
-		// @ts-ignore
-		ScrollTrigger.normalizeScroll(true);
+		lenisScroll = new Lenis();
 
-		// each time our smooth scroll content div size change, refresh scroll trigger
-		resizeObserver = new ResizeObserver(() => {
-			// @ts-ignore
-			ScrollTrigger.refresh();
-		});
-		resizeObserver.observe(smoothScrollContentEl);
+		lenis.set(lenisScroll);
 
-		// @ts-ignore
-		scroll = ScrollSmoother.create({
-			wrapper: '#smooth-wrapper',
-			content: '#smooth-content',
-			smooth: 1.5,
-			effects: true,
-			normalizeScroll: true,
-			smoothTouch: 0.1,
-			onUpdate: (event: any) => {
-				ref.dispatchEvent(
-					custom_event('smoothScrollUpdate', { offsetY: event.scrollTop() }, { bubbles: true })
-				);
-			}
+		lenisScroll.on('scroll', (e) => {
+			ScrollTrigger.update();
+			ref.dispatchEvent(
+				custom_event(
+					'onLenisUpdate',
+					{ scrollTop: e.scroll, velocity: e.velocity },
+					{ bubbles: true }
+				)
+			);
 		});
-		if (scroll) {
+
+		const onRaf = (time) => {
+			lenisScroll.raf(time * 1000); // ms
+		};
+
+		gsap.ticker.add(onRaf);
+		gsap.ticker.lagSmoothing(0);
+
+		if (lenisScroll) {
 			const hash = $page.url.hash.slice(1);
 
 			if (hash) {
 				const scrollElem = document.getElementById(hash);
 
 				if (scrollElem) {
-					gsap.to(scroll, {
-						scrollTop: scroll.offset(scrollElem, 'top top'),
-						duration: 1,
-						delay: 0.5
+					lenisScroll.scrollTo(scrollElem, {
+						duration: 1
+						//delay: 0.5
 					});
 				} else {
-					scroll.paused(true);
+					lenisScroll.stop();
 				}
 			}
 		}
 
 		return () => {
-			if (resizeObserver) resizeObserver.disconnect();
+			gsap.ticker.remove(onRaf);
+			lenisScroll.destroy();
+			lenis.set(null);
 		};
 	});
 
@@ -97,8 +95,8 @@
 				// TODO start page content entering animations
 				hideLoader();
 
-				if (scroll) {
-					scroll.paused(false);
+				if (lenisScroll) {
+					lenisScroll.start();
 				}
 
 				isIntroDone.set(true);
@@ -113,22 +111,18 @@
 {#if data.settings}
 	<StoryblokComponent blok={getComponentByName(data.settings.content, 'header')} />
 {/if}
-<main bind:this={ref}>
-	<div id="smooth-wrapper" class="z-10">
-		<div id="smooth-content" bind:this={smoothScrollContentEl}>
-			<PageTransition pathname={data.pathname}>
-				<slot />
-				{#if data.settings}
-					<StoryblokComponent blok={getComponentByName(data.settings.content, 'footer')} />
-				{/if}
-			</PageTransition>
-		</div>
-	</div>
+<main bind:this={ref} class="overflow-hidden">
+	<PageTransition pathname={data.pathname}>
+		<slot key={data.pathname} />
+		{#if data.settings}
+			<StoryblokComponent blok={getComponentByName(data.settings.content, 'footer')} />
+		{/if}
+	</PageTransition>
 
 	<ProjectListHover />
-</main>
 
-<Curtains />
+	<Curtains />
+</main>
 
 <ScrollIndicator />
 

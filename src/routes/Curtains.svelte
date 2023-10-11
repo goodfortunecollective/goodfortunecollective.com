@@ -7,7 +7,7 @@
 
 	function scrollonUpdate(event: any) {
 		if ($curtains) {
-			$curtains.updateScrollValues(0, event.detail.offsetY);
+			$curtains.updateScrollValues(0, event.detail.scrollTop);
 			// $curtains.needRender();
 		}
 	}
@@ -56,11 +56,11 @@
 		gsap.ticker.fps(60);
 		gsap.ticker.add(onRender);
 
-		window.addEventListener('smoothScrollUpdate', scrollonUpdate);
+		window.addEventListener('onLenisUpdate', scrollonUpdate);
 
 		return () => {
 			// this function is called when the component is destroyed
-			window.removeEventListener('smoothScrollUpdate', scrollonUpdate);
+			window.removeEventListener('onLenisUpdate', scrollonUpdate);
 
 			if ($curtains) {
 				gsap.ticker.remove(onRender);

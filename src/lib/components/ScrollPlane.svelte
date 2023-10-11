@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { clamp } from '../utils/maths';
-	import { ScrollSmoother } from '$lib/gsap';
 	import { useCurtains } from '$lib/utils/useCurtains';
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
 	import gsap from '$lib/gsap';
 	import { onDestroy } from 'svelte';
 
-	import { isPageHidden, isTransitioning, project_list_hover } from '$lib/stores';
+	import { isPageHidden, isTransitioning, project_list_hover, lenis } from '$lib/stores';
 
 	import type { Curtains, Plane as PlaneType, PlaneParams } from '@types/curtainsjs';
 
@@ -120,13 +119,14 @@
 				duration: 0.5,
 				ease: 'power2.inOut',
 				onUpdate: () => {
-					plane.uniforms.opacity.value = inTransition.opacity
+					if(plane) {
+						plane.uniforms.opacity.value = inTransition.opacity
+					}
 				}
 			})
 
 			plane.onRender(() => {
-				const scroll = ScrollSmoother.get();
-				const velocity = clamp(scroll.getVelocity() * 0.01, -60, 60);
+				const velocity = clamp($lenis ? $lenis.velocity : 0, -60, 60);
 				plane.uniforms.scrollVelocity.value = velocity;
 
 				// not super optimized but since we're translating its parent container it's mandatory
@@ -150,6 +150,7 @@
 	useCurtains(
 		(curtainsInstance) => {
 			curtains = curtainsInstance;
+
 			createPlane();
 
 			resizeObserver = new ResizeObserver(() => {

@@ -1,7 +1,8 @@
 <script lang="ts">
-	import gsap, { ScrollSmoother } from '$lib/gsap';
+	import gsap from '$lib/gsap';
 	import { lerp } from '../utils/maths';
 	import { onMount } from 'svelte';
+	import { lenis } from '$lib/stores';
 
 	export let cursorType: string | undefined;
 	export let isHidden: boolean = true;
@@ -22,9 +23,8 @@
 	const onPointerMove = (e) => {
 		if (touchCapability === 1) return;
 
-		const scroll = ScrollSmoother.get();
 		currentPosition.x = e.clientX;
-		currentPosition.y = e.clientY + scroll.scrollTop();
+		currentPosition.y = e.clientY + ($lenis ? $lenis.animatedScroll : 0);
 	};
 
 	const onRender = () => {

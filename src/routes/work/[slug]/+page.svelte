@@ -101,7 +101,7 @@
 			{/if}
 		</div>
 		<figure
-			class="absolute w-1/4 h-auto col-span-3 col-start-10 lg:col-start-9 lg:col-span-4 pb-[50%] hidden md:block"
+			class="absolute left-[50%] -translate-x-1/2 pointer-events-none w-1/4 h-auto col-span-3 col-start-10 lg:col-start-9 lg:col-span-4 pb-[50%] hidden md:block"
 		>
 			{#if data.story.content.thumbnail}
 				<div class="absolute w-full h-full">

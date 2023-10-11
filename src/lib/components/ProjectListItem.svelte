@@ -74,21 +74,20 @@
 	};
 
 	const onScroll = (event: any) => {
-		currentScroll = event.detail.offsetY;
+		currentScroll = event.detail.scrollTop;
 		applyParallax();
 	};
 
 	onMount(() => {
-		//onResize();
 		const resizeObserver = new ResizeObserver(() => onResize());
 		resizeObserver.observe(document.body);
 
-		window.addEventListener('smoothScrollUpdate', onScroll);
+		window.addEventListener('onLenisUpdate', onScroll);
 
 		return () => {
 			resizeObserver.disconnect();
 			// this function is called when the component is destroyed
-			window.removeEventListener('smoothScrollUpdate', onScroll);
+			window.removeEventListener('onLenisUpdate', onScroll);
 		};
 	});
 </script>
@@ -142,6 +141,7 @@
 		position: relative;
 		overflow: visible;
 		//margin: 200px 0;
+		pointer-events: none;
 
 		a {
 			display: flex;
@@ -150,6 +150,7 @@
 			flex-direction: column;
 			align-items: flex-end;
 			transform: translate3d(0, calc(var(--parallax-effect) * 1px), 0);
+			pointer-events: auto;
 		}
 
 		&-thumb {
