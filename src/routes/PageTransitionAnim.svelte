@@ -2,8 +2,8 @@
 	import { afterNavigate, beforeNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 
-	import { isTransitioning, isTransitionDone, isPageHidden, project_list_hover } from '$lib/stores';
-	import gsap, { ScrollSmoother, ScrollTrigger } from '$lib/gsap';
+	import { isTransitioning, isTransitionDone, isPageHidden, project_list_hover, lenis } from '$lib/stores';
+	import gsap, { ScrollTrigger } from '$lib/gsap';
 	import { useCurtains } from '$lib/utils/useCurtains';
 	import type { CurtainsInstance } from '$lib/utils/useCurtains';
 	import { onMount } from 'svelte';
@@ -97,9 +97,7 @@
 		onEnteringDone = () => {}
 	} = {}) => {
 		// @ts-ignore
-		const scroll = ScrollSmoother.get();
-
-		if (scroll) scroll.paused(true);
+		if ($lenis) $lenis.stop();
 
 		const canvasTransition = {
 			enteringProgress: 0,
@@ -124,7 +122,9 @@
 				drawCanvas(canvasTransition.enteringProgress, canvasTransition.leavingProgress);
 			},
 			onComplete: () => {
-				if (scroll) scroll.scrollTo(0, 0);
+				if ($lenis) $lenis.scrollTo(0, {
+					immediate: true
+				});
 
 				if (curtains) {
 					curtains.updateScrollValues(0, 0);
@@ -157,31 +157,23 @@
 
 				const hash = $page.url.hash.slice(1);
 
-				if (scroll) {
-					scroll.paused(false);
+				if ($lenis) {
+					$lenis.start();
 
 					if (hash) {
 						const scrollElem = document.getElementById(hash);
 
 						if (scrollElem) {
-							gsap.to(scroll, {
-								scrollTop: scroll.offset(scrollElem, 'top top'),
+							$lenis.scrollTo(scrollElem, {
 								duration: 1,
-								delay: 0.5
-							});
+								//delay: 0.5
+							})
 						}
 					}
 				}
 
 				onLeavingDone();
 			});
-
-		// resize curtains to avoid misplaced plane after navigation because of fly transition
-		// tl.call(() => {
-		// 	if (curtains) {
-		// 		curtains.resize();
-		// 	}
-		// }, null, 2.15); // add a small delay after effective DOM change
 	};
 
 	beforeNavigate(async () => {

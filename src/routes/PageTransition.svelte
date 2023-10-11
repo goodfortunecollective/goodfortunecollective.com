@@ -30,6 +30,7 @@
 		out:fade|local={{ easing: quartOut, duration: 100, delay: pageLeaveDuration * 0.5 - 100 }}
 		on:outrostart={onPageChange}
 		on:outroend={onOldContentRemoved}
+		class="relative z-10"
 	>
 		<slot />
 	</div>

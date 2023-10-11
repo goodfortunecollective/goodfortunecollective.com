@@ -1,9 +1,12 @@
 import { dev } from '$app/environment';
 import { writable } from 'svelte/store';
 import type { CurtainsInstance } from './utils/useCurtains';
+import Lenis from "@studio-freight/lenis";
 
 export const delay_anim_page = writable(dev ? 1.5 : 6.5);
 export const curtains = writable(null as CurtainsInstance);
+
+export const lenis = writable(null | Lenis)
 
 export const isIntroDone = writable(false as boolean);
 export const isTransitionDone = writable(false as boolean);

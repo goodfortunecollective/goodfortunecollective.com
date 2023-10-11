@@ -56,7 +56,7 @@
 	};
 
 	const onScroll = (event: any) => {
-		scrollPosition = event.detail.offsetY;
+		scrollPosition = event.detail.scrollTop;
 	};
 
 	const onMouseMove = (event: MouseEvent) => {
@@ -84,7 +84,7 @@
 
 	useTransitionReady(
 		() => {
-			window.addEventListener('smoothScrollUpdate', onScroll);
+			window.addEventListener('onLenisUpdate', onScroll);
 			gsap.ticker.add(onRender);
 			onResize();
 
@@ -175,7 +175,7 @@
 			});
 		},
 		() => {
-			window.removeEventListener('smoothScrollUpdate', onScroll);
+			window.removeEventListener('onLenisUpdate', onScroll);
 			gsap.ticker.remove(onRender);
 		}
 	);
