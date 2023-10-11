@@ -1,12 +1,15 @@
 <script lang="ts">
-	import { afterNavigate, beforeNavigate } from '$app/navigation';
+	import { onMount } from 'svelte';
+	import { beforeNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 
-	import { isTransitioning, isTransitionDone, isPageHidden, project_list_hover, lenis } from '$lib/stores';
 	import gsap, { ScrollTrigger } from '$lib/gsap';
+
+	import { cls } from '$lib/styles';
+	import { isTransitioning, isTransitionDone, isPageHidden, project_list_hover, lenis } from '$lib/stores';
+
 	import { useCurtains } from '$lib/utils/useCurtains';
 	import type { CurtainsInstance } from '$lib/utils/useCurtains';
-	import { onMount } from 'svelte';
 	import {
 		pageLeaveDuration,
 		pageEnterDuration,
@@ -183,15 +186,13 @@
 
 		animateTransition();
 	});
-
-	afterNavigate(async () => {
-		console.log('afterNavigate');
-	});
 </script>
 
 <svelte:window on:resize={onResize} />
 
-<div class="h-full w-full fixed z-40 top-0 left-0 pointer-events-none">
+<div
+	class={cls('h-full w-full fixed z-40 top-0 left-0', !$isTransitioning && 'pointer-events-none')}
+>
 	<canvas bind:this={canvasEl} class="absolute h-full w-full" />
 </div>
 

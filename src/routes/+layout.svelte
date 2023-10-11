@@ -51,7 +51,7 @@
 				custom_event('onLenisUpdate', { scrollTop: e.scroll, velocity: e.velocity }, { bubbles: true })
 			)
 		})
-		
+
 		const onRaf = (time) => {
 			lenisScroll.raf(time * 1000) // ms
 		}
