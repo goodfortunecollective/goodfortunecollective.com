@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { storyblokEditable } from '@storyblok/svelte';
 
 	import CustomCursor from '$lib/components/CustomCursor.svelte';
@@ -30,6 +30,8 @@
 	let scrollPosition: number = 0;
 	let videoBBox: DOMRect | undefined;
 	$: videoTransformEffect = 0;
+
+	let splitTexts: any[] = [];
 
 	interface DOMPosition {
 		x: number;
@@ -81,6 +83,24 @@
 			((mousePosition.x - videoBBox.x - videoBBox.width / 2) / constrain);
 	};
 
+	onMount(() => {
+		const splitText = gsap.utils.toArray('[data-gsap="split-text"]');
+
+		splitText.forEach((content) => {
+			const text = new SplitText(content, {
+				type: 'lines,words,chars',
+				linesClass: 'split-line',
+				charClass: 'split-char'
+			});
+
+			splitTexts.push(text);
+		});
+
+		splitTexts.forEach((text) => {
+			gsap.set(text.chars, { yPercent: 100 });
+		});
+	});
+
 	useTransitionReady(
 		() => {
 			window.addEventListener('smoothScrollUpdate', onScroll);
@@ -112,8 +132,6 @@
 					}
 				});
 
-				const splitText = gsap.utils.toArray('[data-gsap="split-text"]');
-
 				const tlSplitText = gsap.timeline({
 					scrollTrigger: {
 						trigger: videoContainer,
@@ -132,19 +150,14 @@
 				});
 				tlSplitText.addLabel('start');
 
-				splitText.forEach((content) => {
-					const text = new SplitText(content, {
-						type: 'lines,words,chars',
-						linesClass: 'split-line',
-						charClass: 'split-char'
-					});
-
-					tlSplitText.from(
+				splitTexts.forEach((text) => {
+					tlSplitText.to(
 						text.chars,
 						{
 							duration: 0.2,
 							ease: 'circ.out',
-							yPercent: 100,
+							yPercent: 0,
+							delay: 0.5,
 							stagger: 0.01
 						},
 						'start'
