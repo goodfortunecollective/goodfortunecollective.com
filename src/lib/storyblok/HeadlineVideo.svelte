@@ -2,8 +2,8 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { storyblokEditable } from '@storyblok/svelte';
 
-	import CustomCursor from '$lib/components/CustomCursor.svelte';
-	import gsap, { SplitText, ScrollTrigger } from '$lib/gsap';
+	import { BackgroundTheme, CustomCursor } from '$lib/components';
+	import gsap, { SplitText } from '$lib/gsap';
 	import { clamp } from '$lib/utils/maths';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
@@ -216,7 +216,7 @@
 <svelte:window on:mousemove={onMouseMove} on:resize={onResize} />
 
 <section use:storyblokEditable={blok} {...$$restProps} class="grid h-screen grid-cols-12">
-	<div class="absolute w-screen h-[250vh] z-[-1] bg-neutral-950" style="opacity:{bgOpacity}" />
+	<div class="absolute w-screen h-[250vh] z-[-1]" style="opacity:{bgOpacity}" />
 	<CustomCursor
 		isHidden={btnHidden}
 		cursorType={videoPlaying ? 'pause' : 'play'}
@@ -280,7 +280,9 @@
 		</div>
 	</div>
 </section>
-<div class="h-[150vh]" />
+<div class="h-[100vh]" />
+<BackgroundTheme startColor="#1a1a1a" endColor="#fff" startTheme="dark" endTheme="light" />
+<div class="h-[50vh]" />
 
 <style lang="scss">
 	.HeadlineVideo {

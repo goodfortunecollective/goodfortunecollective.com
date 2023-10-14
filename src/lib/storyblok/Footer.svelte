@@ -2,24 +2,12 @@
 	import { cva } from 'class-variance-authority';
 	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 
-	import { afterNavigate } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { backgroundTheme } from '$lib/stores';
 	import { cls } from '$lib/styles';
 	import { Gfc } from '$lib/components';
-	import gsap, { ScrollToPlugin } from '$lib/gsap';
+	import gsap from '$lib/gsap';
 
 	export let blok: any;
-
-	const getTheme = (pathname: string): 'light' | 'dark' => {
-		return pathname === '/' ||
-			pathname === '/culture' ||
-			pathname === '/about' ||
-			pathname === '/work'
-			? 'dark'
-			: 'light';
-	};
-
-	let theme = getTheme($page.url.pathname);
 
 	const variants = cva('', {
 		variants: {
@@ -43,10 +31,6 @@
 		}
 	});
 
-	afterNavigate(async ({ to }) => {
-		theme = getTheme(to?.url.pathname!);
-	});
-
 	const backToTop = (event: any) => {
 		gsap.to(window, { scrollTo: { y: 0 }, duration: 0.8 });
 		event.preventDefault();
@@ -57,33 +41,37 @@
 	use:storyblokEditable={blok}
 	{...$$restProps}
 	id="footer"
-	class={cls('relative pt-8 md:pt-32 xl:pt-48', variants({ background: theme }))}
+	class={cls('relative pt-8 md:pt-32 xl:pt-48', variants({ background: $backgroundTheme }))}
 >
 	<div class="relative w-full py-6 z-[1]">
 		<div class="grid grid-cols-12 py-2">
 			<div
 				class={cls(
 					'col-span-10 col-start-2 pt-8 pb-2 md:col-span-5 lg:col-span-4 md:col-start-2 lg:col-start-2 footer-col',
-					variants({ line: theme })
+					variants({ line: $backgroundTheme })
 				)}
 			>
 				<p
 					class="flex flex-col gap-4 text-xs leading-5 tracking-wider text-gray-500 uppercase md:flex-row 3xl:text-sm"
 				>
 					Let’s work together
-					<a class={variants({ hightlight: theme })} href={`mailto:${blok.email}`}>{blok.email}</a>
+					<a class={variants({ hightlight: $backgroundTheme })} href={`mailto:${blok.email}`}
+						>{blok.email}</a
+					>
 				</p>
 			</div>
 			<div
 				class={cls(
 					'col-span-10 col-start-2 pt-8 pb-2 md:col-span-4 md:col-start-8 footer-col',
-					variants({ line: theme })
+					variants({ line: $backgroundTheme })
 				)}
 			>
 				<p
 					class="flex flex-col gap-4 text-xs leading-5 tracking-wider text-gray-500 uppercase md:flex-row 3xl:text-sm"
 				>
-					Find us in<span class={cls(variants({ hightlight: theme }))}>Vancouver, Canada</span>
+					Find us in<span class={cls(variants({ hightlight: $backgroundTheme }))}
+						>Vancouver, Canada</span
+					>
 				</p>
 			</div>
 		</div>
@@ -111,7 +99,7 @@
 	<Gfc
 		class={cls(
 			'absolute z-0 bottom-0 w-[66%] max-w-[700px] h-auto left-2/4 -translate-x-2/4 translate-y-[35%]',
-			theme == 'light' ? 'text-[#faf9f5]' : 'text-black'
+			$backgroundTheme == 'light' ? 'text-[#faf9f5]' : 'text-black'
 		)}
 		alt=""
 	/>

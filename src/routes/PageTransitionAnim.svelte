@@ -6,7 +6,13 @@
 	import gsap, { ScrollTrigger } from '$lib/gsap';
 
 	import { cls } from '$lib/styles';
-	import { isTransitioning, isTransitionDone, isPageHidden, project_list_hover, lenis } from '$lib/stores';
+	import {
+		isTransitioning,
+		isTransitionDone,
+		isPageHidden,
+		project_list_hover,
+		lenis
+	} from '$lib/stores';
 
 	import { useCurtains } from '$lib/utils/useCurtains';
 	import type { CurtainsInstance } from '$lib/utils/useCurtains';
@@ -125,9 +131,10 @@
 				drawCanvas(canvasTransition.enteringProgress, canvasTransition.leavingProgress);
 			},
 			onComplete: () => {
-				if ($lenis) $lenis.scrollTo(0, {
-					immediate: true
-				});
+				if ($lenis)
+					$lenis.scrollTo(0, {
+						immediate: true
+					});
 
 				if (curtains) {
 					curtains.updateScrollValues(0, 0);
@@ -168,9 +175,9 @@
 
 						if (scrollElem) {
 							$lenis.scrollTo(scrollElem, {
-								duration: 1,
+								duration: 1
 								//delay: 0.5
-							})
+							});
 						}
 					}
 				}

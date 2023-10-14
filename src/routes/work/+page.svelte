@@ -2,7 +2,6 @@
 	import { onMount, tick } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 	import type { Curtains } from '@types/curtainsjs';
-	import { Body } from 'svelte-body';
 
 	import { base } from '$app/paths';
 	import { navigating, page } from '$app/stores';
@@ -110,10 +109,7 @@
 			if (scrollTrigger) scrollTrigger.kill();
 		}
 	);
-
 </script>
-
-<Body class="work bg-neutral-950" />
 
 <section class="pt-20 3xl:pt-24 pb-32">
 	<div class="mt-16">

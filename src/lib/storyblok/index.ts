@@ -1,3 +1,4 @@
+import BackgroundTheme from './BackgroundTheme.svelte';
 import Container from './Container.svelte';
 import Figure from './Figure.svelte';
 import Figures from './Figures.svelte';
@@ -34,6 +35,7 @@ import Video from './Video.svelte';
 import TwoCols from './TwoCols.svelte';
 
 export const components: any = {
+	'background-theme': BackgroundTheme,
 	'container': Container,
 	'figure': Figure,
 	'figures': Figures,

@@ -10,7 +10,11 @@
 
 	html,
 	body {
-		background-color: #fff;
+		background-color:  var(--theme-color);
+	}
+
+	body {
+		transition: background-color 1s ease;
 	}
 
 	body.work-page::after {

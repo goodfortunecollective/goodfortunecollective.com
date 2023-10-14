@@ -1,15 +1,14 @@
 <script lang="ts">
+	import Lenis from '@studio-freight/lenis';
 	import { onMount, setContext } from 'svelte';
 	import { custom_event } from 'svelte/internal';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
-	import { isIntroDone } from '$lib/stores';
+	import { Body } from 'svelte-body';
 
-	import { dev } from '$app/environment';
+	import { isIntroDone, backgroundColor } from '$lib/stores';
 	import { page } from '$app/stores';
 	import gsap, { ScrollTrigger } from '$lib/gsap';
-	import Lenis from '@studio-freight/lenis';
 	import { lenis } from '$lib/stores';
-
 	import { getComponentByName } from '$lib/storyblok';
 
 	import type { LayoutData } from './$types';
@@ -107,6 +106,8 @@
 		});
 	}
 </script>
+
+<Body style="--theme-color: {$backgroundColor}" />
 
 {#if data.settings}
 	<StoryblokComponent blok={getComponentByName(data.settings.content, 'header')} />
