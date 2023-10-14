@@ -3,6 +3,7 @@
 	import { cva } from 'class-variance-authority';
 
 	import { cls } from '$lib/styles';
+	import { backgroundTheme } from '$lib/stores';
 	import { Heading } from '$lib/components';
 
 	export let blok: any;
@@ -24,10 +25,15 @@
 				'1': 'col-start-2 lg:col-start-' + indexStart[1] + ' col-span-10 lg:col-span-5',
 				'2': 'col-start-2 lg:col-start-' + indexStart[2] + ' col-span-10 lg:col-span-5',
 				'3': 'col-start-2 lg:col-start-' + indexStart[3] + ' col-span-10 lg:col-span-5'
+			},
+			text: {
+				light: '',
+				dark: 'text-white'
 			}
 		},
 		defaultVariants: {
-			layoutDirection: 'left'
+			layoutDirection: 'left',
+			text: 'light'
 		}
 	});
 
@@ -53,7 +59,13 @@
 	>
 		{#each blok.list as b, index}
 			<div class={cls('mt-16', variants({ columnIndex: getColumnIndex(index) }))}>
-				<div class={cls('flex justify-start', variants({ layoutDirection: blok.layoutDirection }))}>
+				<div
+					class={cls(
+						'flex justify-start',
+						variants({ layoutDirection: blok.layoutDirection }),
+						variants({ text: $backgroundTheme })
+					)}
+				>
 					<StoryblokComponent blok={b} {index} />
 				</div>
 			</div>

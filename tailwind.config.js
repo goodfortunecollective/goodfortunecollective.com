@@ -7,6 +7,9 @@ export default {
 				neutral: {
 				  950: '#1a1a1a',
 				},
+				yellow: {
+					50: '#dbd5bf',
+				  },
 			},
 			screens: {
 				'3xl': '1920px',

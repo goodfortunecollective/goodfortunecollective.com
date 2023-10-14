@@ -1,20 +1,49 @@
 <script lang="ts">
 	import { renderRichText, storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+	import { cva } from 'class-variance-authority';
 
 	import { Heading } from '$lib/components';
+	import { cls } from '$lib/styles';
+	import { backgroundTheme } from '$lib/stores';
 	import TextTransition from '$lib/components/TextTransition.svelte';
 
 	export let blok: any;
 
+	const variants = cva('', {
+		variants: {
+			heading: {
+				light: '',
+				dark: 'text-yellow-50'
+			},
+			text: {
+				light: '',
+				dark: 'text-white'
+			}
+		},
+		defaultVariants: {
+			heading: 'light',
+			text: 'light'
+		}
+	});
+
 	$: content = renderRichText(blok.content);
 </script>
 
-<div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
+<div
+	use:storyblokEditable={blok}
+	{...$$restProps}
+	class={cls(blok.class, variants({ text: $backgroundTheme }))}
+>
 	<div class="pt-8 grid grid-cols-12 lg:pt-[8.33vw] gap-8 lg:gap-0">
 		<div class="col-span-10 col-start-2 headline-title lg:col-span-8 lg:col-start-2">
 			<div class="flex flex-col h-full">
-				<Heading as="h1" size="h1" class="flex-1 max-w-screen-md leading-extra-tight"
-					>{blok.title}</Heading
+				<Heading
+					as="h1"
+					size="h1"
+					class={cls(
+						'flex-1 max-w-screen-md leading-extra-tight',
+						variants({ heading: $backgroundTheme })
+					)}>{blok.title}</Heading
 				>
 			</div>
 		</div>

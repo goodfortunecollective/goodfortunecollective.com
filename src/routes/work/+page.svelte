@@ -111,6 +111,10 @@
 	);
 </script>
 
+{#if data.story}
+	<StoryblokComponent blok={data.story.content} />
+{/if}
+
 <section class="pt-20 3xl:pt-24 pb-32">
 	<div class="mt-16">
 		<div class="relative">
@@ -153,10 +157,6 @@
 		</div>
 	</div>
 </section>
-
-{#if data.story}
-	<StoryblokComponent blok={data.story.content} />
-{/if}
 
 <style lang="scss">
 </style>
