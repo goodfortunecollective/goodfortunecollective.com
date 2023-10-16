@@ -1,9 +1,29 @@
 <script lang="ts">
 	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+	import { cva } from 'class-variance-authority';
 
 	import { Heading } from '$lib/components';
+	import { cls } from '$lib/styles';
+	import { backgroundTheme } from '$lib/stores';
 
 	export let blok: any;
+
+	const variants = cva('', {
+		variants: {
+			heading: {
+				light: '',
+				dark: 'text-yellow-50'
+			},
+			text: {
+				light: '',
+				dark: 'text-white'
+			}
+		},
+		defaultVariants: {
+			heading: 'light',
+			text: 'light'
+		}
+	});
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
@@ -11,11 +31,13 @@
 		<Heading
 			as="h2"
 			size="h6"
-			class="w-full col-span-10 col-start-2 font-bold tracking-widest uppercase md:col-start-3 md:col-span-3 xl:w-[75%] title break-keep"
-			>{blok.heading}</Heading
+			class={cls(
+				'w-full col-span-10 col-start-2 font-bold tracking-widest uppercase md:col-start-3 md:col-span-3 xl:w-[75%] title break-keep',
+				variants({ heading: $backgroundTheme })
+			)}>{blok.heading}</Heading
 		>
 		<div class="col-span-10 col-start-2 text-lg md:col-start-7 md:col-span-5">
-			<div class="flex flex-col gap-{blok.gap}">
+			<div class={cls('flex flex-col gap-{blok.gap}', variants({ text: $backgroundTheme }))}>
 				{#each blok.content as b}
 					<StoryblokComponent blok={b} />
 				{/each}
