@@ -1,12 +1,31 @@
 <script lang="ts">
+	import { cva } from 'class-variance-authority';
+	import { backgroundTheme } from '$lib/stores';
+
+	import { Heading } from '$lib/components';
+
 	export let name: string;
 	export let url: string;
 	export let label: string;
+
+	const variants = cva('', {
+		variants: {
+			text: {
+				light: '',
+				dark: 'text-white'
+			}
+		},
+		defaultVariants: {
+			text: 'light'
+		}
+	});
 </script>
 
 <li>
 	<a class="flex items-center w-full py-4 list-item-link" href={url}>
-		<span class="list-item-name">{name}</span>
+		<Heading as="h3" size="h3" class={variants({ text: $backgroundTheme })}>
+			{name}
+		</Heading>
 		<span class="text-xs font-bold tracking-widest uppercase list-item-action">{label}</span>
 		<span class="arrow arrow-default" /><span
 			class="flex items-center justify-center list-item-circle"

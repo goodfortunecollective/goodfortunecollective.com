@@ -4,7 +4,7 @@
 
 	import { base } from '$app/paths';
 	import { dev } from '$app/environment';
-	import { Heading, LinkListItem } from '$lib/components';
+	import { LinkListItem } from '$lib/components';
 
 	export let blok: any;
 
@@ -20,28 +20,13 @@
 </script>
 
 <section id="jobs" use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	{#if blok.title}
-		<div class="grid grid-cols-12 gap-8 md:gap-0">
-			<Heading as="h2" size="h3" class="col-span-10 col-start-2 md:col-start-2 md:col-span-3"
-				>{blok.title}</Heading
-			>
-			{#if jobs}
-				<ul class="col-span-10 col-start-2 md:col-start-6 md:col-span-6">
-					{#each jobs.data.stories as { name, slug }}
-						<LinkListItem {name} url="{base}/careers/{slug}" label="Apply Now" />
-					{/each}
-				</ul>
-			{/if}
-		</div>
-	{:else}
-		<div>
-			{#if jobs}
-				<ul>
-					{#each jobs?.data.stories as { name, slug }}
-						<LinkListItem {name} url="{base}/careers/{slug}" label="Apply Now" />
-					{/each}
-				</ul>
-			{/if}
-		</div>
-	{/if}
+	<div class="pt-8 grid grid-cols-12 lg:pt-[8.33vw] gap-8 lg:gap-0">
+		{#if jobs}
+			<ul class="col-span-10 col-start-2 lg:col-span-6 lg:col-start-5">
+				{#each jobs?.data.stories as { name, slug }}
+					<LinkListItem {name} url="{base}/careers/{slug}" label="Apply Now" />
+				{/each}
+			</ul>
+		{/if}
+	</div>
 </section>
