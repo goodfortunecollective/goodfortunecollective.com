@@ -3,6 +3,7 @@
 	import { StoryblokComponent, storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
 
+	import { Heading } from '$lib/components';
 	import gsap from '$lib/gsap';
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
@@ -14,7 +15,7 @@
 		variants: {
 			text: {
 				light: '',
-				dark: 'text-white'
+				dark: 'text-red-100'
 			}
 		},
 		defaultVariants: {
@@ -63,9 +64,12 @@
 			<div data-gsap="tags-list" class="border-b-2 border-b-gray-200 last-of-type:border-0">
 				<ul class=" whitespace-nowrap">
 					{#each blok.tags as b}
-						<li class="inline-block mb-8 mr-24">
-							<span class={cls('uppercase text-7xl', variants({ text: $backgroundTheme }))}>
-								<StoryblokComponent blok={b} />
+						<li class={cls('inline-block mb-8', variants({ text: $backgroundTheme }))}>
+							<span class="flex mx-8 items-baseline">
+								<Heading class="uppercase mr-16">
+									<StoryblokComponent blok={b} />
+								</Heading>
+								<span class="text-8xl 3xl:text-9xl 4xl:text-10x inline-block">*</span>
 							</span>
 						</li>
 					{/each}

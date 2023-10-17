@@ -1,15 +1,20 @@
 <script lang="ts">
-	import gsap, { SplitText, ScrollTrigger } from '$lib/gsap';
-	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 	import { onMount } from 'svelte';
+
+	import { cls } from '$lib/styles';
+	import gsap, { SplitText } from '$lib/gsap';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+
+	let clazz: string = '';
+	export { clazz as class };
+	export let style: string = '';
+	export let enabled: boolean = true;
+	export let type: 'heading' | 'p' = 'p';
 
 	let element: HTMLSpanElement;
 
 	let ctx: any = null;
 	let text: any = null;
-
-	export let enabled: boolean = true;
-	export let type: 'heading' | 'p' = 'p';
 
 	onMount(() => {
 		if (enabled) {
@@ -66,6 +71,6 @@
 	);
 </script>
 
-<span bind:this={element} class="inline-block break-words">
+<span bind:this={element} class={cls('inline-block break-words', clazz)} {style}>
 	<span class="wrap" /><slot />
 </span>
