@@ -3,6 +3,7 @@
 
 	import { NumberedListItem } from '$lib/components';
 	import TextTransition from '$lib/components/TextTransition.svelte';
+	import Heading from '$lib/components/Heading.svelte';
 
 	export let blok: any;
 
@@ -14,10 +15,13 @@
 		<dt class="flex gap-4 mb-4 heading-list-item">
 			<NumberedListItem index={$$restProps.index} />
 			<span class="font-bold uppercase 3xl:text-2xl 4xl:text-3xl"
-				><TextTransition type="heading">{blok.heading}</TextTransition></span
+				><TextTransition type="heading">{blok.label}</TextTransition></span
 			>
 		</dt>
-		<dd class="text-xl leading-7 4xl:text-3xl"><TextTransition>{@html content}</TextTransition></dd>
+		<dd class="text-xl leading-7 4xl:text-3xl">
+			<Heading as="h3" size="h2">{blok.heading}</Heading>
+			<TextTransition>{@html content}</TextTransition>
+		</dd>
 	{:else}
 		<div class="flex flex-wrap items-start gap-4 md:flex-nowrap">
 			<NumberedListItem index={$$restProps.index} />

@@ -25,7 +25,7 @@
 			{/if}
 		</div>
 		<div class="col-span-10 col-start-2 lg:col-span-5 md:col-start-6 lg:col-start-6">
-			<div class="flex flex-col gap-8 lg:pl-48">
+			<div class="flex flex-col gap-8 text-3xl leading-10">
 				{#each blok.content as b}
 					<StoryblokComponent blok={b} />
 				{/each}
@@ -43,11 +43,6 @@
 
 <style lang="scss">
 	@import '../../vars.scss';
-
-	.subheadline-title-cont :global(.size-h1) {
-		line-height: 0.85;
-	}
-
 	.text-beige {
 		color: #dbd5bf;
 	}

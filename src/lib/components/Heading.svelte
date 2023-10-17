@@ -7,7 +7,7 @@
 	export let animated: boolean = true;
 
 	const textSizes = {
-		h1: 'size-h1 text-6xl md:text-8xl lg:text-9xl xl:text-10xl 4xl:text-10xl',
+		h1: 'size-h1 text-6xl md:text-8xl lg:text-9xl xl:text-10xl 4xl:text-10xl leading-10	',
 		h2: 'size-h2 text-5xl lg:text-8xl',
 		h3: 'size-h3 text-4xl 3xl:text-5xl 4xl:text-6xl',
 		h4: 'size-h4 text-3xl 3xl:text-4xl 4xl:text-5xl',
