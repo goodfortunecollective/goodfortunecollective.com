@@ -34,7 +34,7 @@
 				id: 'project-list-hover',
 				trigger: containerEl,
 				start: 'top center',
-				end: 'bottom center',
+				end: 'bottom center'
 				// onToggle: (self: any) => {
 				// 	if (!self.isActive) {
 				// 		$project_list_hover = '';

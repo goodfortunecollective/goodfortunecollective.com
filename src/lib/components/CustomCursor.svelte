@@ -80,7 +80,10 @@
 		overflow: visible;
 		z-index: 999;
 		pointer-events: none;
-		transition: 0.5s opacity ease-out, 0s visibility 0.5s, 0s z-index 0.5s;
+		transition:
+			0.5s opacity ease-out,
+			0s visibility 0.5s,
+			0s z-index 0.5s;
 
 		&-inner {
 			position: absolute;

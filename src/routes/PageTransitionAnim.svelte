@@ -198,7 +198,7 @@
 <svelte:window on:resize={onResize} />
 
 <div
-	class={cls('h-full w-full fixed z-40 top-0 left-0', !$isTransitioning && 'pointer-events-none')}
+	class={cls('fixed left-0 top-0 z-40 h-full w-full', !$isTransitioning && 'pointer-events-none')}
 >
 	<canvas bind:this={canvasEl} class="absolute h-full w-full" />
 </div>

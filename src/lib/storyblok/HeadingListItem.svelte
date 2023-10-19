@@ -12,7 +12,7 @@
 
 <div use:storyblokEditable={blok} {...$$restProps}>
 	{#if blok.heading}
-		<dt class="flex gap-4 mb-4 heading-list-item">
+		<dt class="heading-list-item mb-4 flex gap-4">
 			<NumberedListItem index={$$restProps.index} />
 			<span class="font-bold uppercase 3xl:text-2xl 4xl:text-3xl"
 				><TextTransition type="heading">{blok.label}</TextTransition></span

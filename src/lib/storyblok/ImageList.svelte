@@ -10,7 +10,7 @@
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	{@html content}
 	<div
-		class="grid grid-cols-2 pt-4 mt-4 text-sm tracking-wide uppercase gap-y-4 md:pt-8 md:mt-12 list"
+		class="list mt-4 grid grid-cols-2 gap-y-4 pt-4 text-sm uppercase tracking-wide md:mt-12 md:pt-8"
 	>
 		{@html list}
 	</div>

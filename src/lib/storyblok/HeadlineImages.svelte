@@ -90,12 +90,12 @@
 						/>
 						{#if item.name && blok.show_title}
 							<figcaption
-								class="my-4 text-sm font-bold tracking-widest uppercase image-block-caption"
+								class="image-block-caption my-4 text-sm font-bold uppercase tracking-widest"
 							>
 								<span class="caption-number"
 									>{#if i <= 10}0{/if}{i + 1}</span
 								>
-								<span class="opacity-50 caption-text">{item.name}</span>
+								<span class="caption-text opacity-50">{item.name}</span>
 							</figcaption>
 						{/if}
 					</figure>

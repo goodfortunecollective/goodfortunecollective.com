@@ -9,14 +9,14 @@
 	{href}
 	target={isExternal ? '_blank' : undefined}
 	rel={isExternal ? 'noopener' : undefined}
-	class="flex flex-row items-stretch h-10 text-xs 3xl:text-md 4xl:text-lg font-bold tracking-widest uppercase link"
+	class="3xl:text-md link flex h-10 flex-row items-stretch text-xs font-bold uppercase tracking-widest 4xl:text-lg"
 >
 	{#if label}
 		<span class="flex items-center pr-4">{label}</span>{/if}
 	<span
-		class="relative flex items-center justify-center ml-[50px] text-4xl 3xl:text-5xl 4xl:text-6xl"
+		class="relative ml-[50px] flex items-center justify-center text-4xl 3xl:text-5xl 4xl:text-6xl"
 	>
-		<span class="arrow arrow-default" /><span class="flex items-center justify-center link-circle">
+		<span class="arrow arrow-default" /><span class="link-circle flex items-center justify-center">
 			<span class="arrow arrow-hover" />
 		</span>
 	</span></a
@@ -69,7 +69,9 @@
 			background: $black;
 			z-index: 9;
 			content: '';
-			transition: 0.5s transform $ease-out-expo, 0.5s opacity $ease-out-expo;
+			transition:
+				0.5s transform $ease-out-expo,
+				0.5s opacity $ease-out-expo;
 		}
 	}
 
@@ -77,7 +79,9 @@
 		position: absolute;
 		width: 50%;
 		height: 1px;
-		transition: 0.5s transform $ease-out-expo, 0.5s opacity $ease-out-expo;
+		transition:
+			0.5s transform $ease-out-expo,
+			0.5s opacity $ease-out-expo;
 
 		&:before,
 		&:after {
@@ -117,7 +121,9 @@
 			background: $white;
 			transform: translate3d(-200%, 0, 0);
 			z-index: 10;
-			transition: 0.5s 0.1s transform $ease-out-expo, 0.5s opacity $ease-out-expo;
+			transition:
+				0.5s 0.1s transform $ease-out-expo,
+				0.5s opacity $ease-out-expo;
 
 			&:before,
 			&:after {

@@ -26,9 +26,9 @@
 	onDestroy(() => {});
 </script>
 
-<section class="pt-[var(--header-height)] pb-32">
-	<div class="grid grid-cols-12 mt-24 mb-8">
-		<div class="col-span-10 col-start-2 lg:col-start-2 lg:col-span-4">
+<section class="pb-32 pt-[var(--header-height)]">
+	<div class="mb-8 mt-24 grid grid-cols-12">
+		<div class="col-span-10 col-start-2 lg:col-span-4 lg:col-start-2">
 			<span class="inline-block rotate-180">
 				<Link href="{base}/culture/">&#10229;</Link>
 			</span>
@@ -36,11 +36,11 @@
 	</div>
 	<div class="grid grid-cols-12">
 		{#if data.story}
-			<Heading as="h1" size="h2" class="col-span-10 col-start-2 mb-6 lg:col-start-2 lg:col-span-4"
+			<Heading as="h1" size="h2" class="col-span-10 col-start-2 mb-6 lg:col-span-4 lg:col-start-2"
 				>{data.story.content.title}</Heading
 			>
 			{#if data.story.content.thumbnail}
-				<figure class="col-span-9 mb-16 col-start-0 post-image">
+				<figure class="col-start-0 post-image col-span-9 mb-16">
 					<img src={data.story.content.thumbnail.filename} class="post-img" alt={data.story.name} />
 				</figure>
 			{/if}
@@ -48,11 +48,11 @@
 			<Heading
 				as="h2"
 				size="h6"
-				class="w-full col-span-10 col-start-2 md:col-start-2 md:col-span-2 xl:w-[75%] title break-keep"
+				class="title col-span-10 col-start-2 w-full break-keep md:col-span-2 md:col-start-2 xl:w-[75%]"
 				>{publishedAtFormatted}</Heading
 			>
 			<div
-				class="col-span-10 col-start-2 text-lg md:col-start-4 md:col-span-6 culture-single-content"
+				class="culture-single-content col-span-10 col-start-2 text-lg md:col-span-6 md:col-start-4"
 			>
 				<div class="flex flex-col gap-4">
 					<TextTransition>{@html content}</TextTransition>

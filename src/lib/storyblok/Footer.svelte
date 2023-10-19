@@ -57,16 +57,16 @@
 	id="footer"
 	class={backgroundStyle({ theme: $backgroundTheme })}
 >
-	<div class="relative w-full py-6 z-[1]">
+	<div class="relative z-[1] w-full py-6">
 		<div class="grid grid-cols-12 py-2">
 			<div
 				class={cls(
-					'col-span-10 col-start-2 pt-8 pb-2 md:col-span-5 lg:col-span-4 md:col-start-2 lg:col-start-2 footer-col',
+					'footer-col col-span-10 col-start-2 pb-2 pt-8 md:col-span-5 md:col-start-2 lg:col-span-4 lg:col-start-2',
 					lineStyle({ theme: $backgroundTheme })
 				)}
 			>
 				<p
-					class="flex flex-col gap-4 text-xs leading-5 tracking-wider text-gray-500 uppercase md:flex-row 3xl:text-sm"
+					class="flex flex-col gap-4 text-xs uppercase leading-5 tracking-wider text-gray-500 md:flex-row 3xl:text-sm"
 				>
 					Let’s work together
 					<a class={hightlightStyle({ theme: $backgroundTheme })} href={`mailto:${blok.email}`}
@@ -76,12 +76,12 @@
 			</div>
 			<div
 				class={cls(
-					'col-span-10 col-start-2 pt-8 pb-2 md:col-span-4 md:col-start-8 footer-col',
+					'footer-col col-span-10 col-start-2 pb-2 pt-8 md:col-span-4 md:col-start-8',
 					lineStyle({ theme: $backgroundTheme })
 				)}
 			>
 				<p
-					class="flex flex-col gap-4 text-xs leading-5 tracking-wider text-gray-500 uppercase md:flex-row 3xl:text-sm"
+					class="flex flex-col gap-4 text-xs uppercase leading-5 tracking-wider text-gray-500 md:flex-row 3xl:text-sm"
 				>
 					Find us in<span class={hightlightStyle({ theme: $backgroundTheme })}
 						>Vancouver, Canada</span
@@ -91,14 +91,14 @@
 		</div>
 		<div class="grid grid-cols-12 py-2">
 			<div
-				class="col-span-10 col-start-2 pt-2 pb-4 text-sm text-gray-400 md:col-span-4 md:col-start-2 md:pb-0"
+				class="col-span-10 col-start-2 pb-4 pt-2 text-sm text-gray-400 md:col-span-4 md:col-start-2 md:pb-0"
 			>
 				<StoryblokComponent blok={blok.social_links[0]} />
 			</div>
 			<div
-				class="col-span-10 col-start-2 md:col-span-4 lg:col-span-4 md:col-start-8 lg:col-start-8"
+				class="col-span-10 col-start-2 md:col-span-4 md:col-start-8 lg:col-span-4 lg:col-start-8"
 			>
-				<p class="text-xs leading-5 tracking-wider text-gray-500 uppercase 3xl:text-sm">
+				<p class="text-xs uppercase leading-5 tracking-wider text-gray-500 3xl:text-sm">
 					&copy; {new Date().getFullYear().toString()} Good Fortune Collective. All rights reserved.
 				</p>
 			</div>
@@ -106,13 +106,13 @@
 	</div>
 	<a
 		on:click={backToTop}
-		class="absolute hidden md:block right-[20px] md:right-[60px] top-[-50px] back-to-top-btn w-[20px] h-[66px] z-1"
+		class="back-to-top-btn z-1 absolute right-[20px] top-[-50px] hidden h-[66px] w-[20px] md:right-[60px] md:block"
 	>
 		<div class="arrow" />
 	</a>
 	<Gfc
 		class={cls(
-			'absolute z-0 bottom-0 w-[66%] max-w-[700px] h-auto left-2/4 -translate-x-2/4 translate-y-[35%]',
+			'absolute bottom-0 left-2/4 z-0 h-auto w-[66%] max-w-[700px] -translate-x-2/4 translate-y-[35%]',
 			$backgroundTheme == 'light' ? 'text-[#faf9f5]' : 'text-black'
 		)}
 		alt=""
@@ -165,7 +165,9 @@
 					transform: translate(-200%, 0);
 					content: '';
 					/** background-color: purple; **/
-					transition: 0.4s width ease-out, 0.4s transform ease-out;
+					transition:
+						0.4s width ease-out,
+						0.4s transform ease-out;
 				}
 
 				&:hover {

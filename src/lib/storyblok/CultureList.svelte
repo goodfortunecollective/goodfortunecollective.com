@@ -67,11 +67,11 @@
 </script>
 
 <section id="culture-posts" use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	<div class="grid py-16 grid-cols-24">
+	<div class="grid grid-cols-24 py-16">
 		{#if posts}
 			{#each posts.data.stories as post, i}
 				<a class={cls(postsClasses[i % 6], 'mb-16 lg:mb-32')} href="{base}/culture/{post.slug}">
-					<div class={cls(textClasses[i % 6], 'mt-16 post-text')}>
+					<div class={cls(textClasses[i % 6], 'post-text mt-16')}>
 						{#if post.tag_list}
 							<span class={textStyle({ theme: $backgroundTheme })}>
 								{#each post.tag_list as tag, i}

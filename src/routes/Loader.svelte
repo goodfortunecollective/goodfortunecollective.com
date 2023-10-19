@@ -62,11 +62,11 @@
 
 {#if active}
 	<div
-		class={cls('fixed top-0 left-0 z-40 w-screen h-screen overflow-hidden', colorBackground)}
+		class={cls('fixed left-0 top-0 z-40 h-screen w-screen overflow-hidden', colorBackground)}
 		id="loader"
 	>
-		<div class="flex items-center justify-center w-full h-full">
-			<div bind:this={background} class="absolute w-full h-full bg-white" />
+		<div class="flex h-full w-full items-center justify-center">
+			<div bind:this={background} class="absolute h-full w-full bg-white" />
 
 			<video
 				bind:this={logo}

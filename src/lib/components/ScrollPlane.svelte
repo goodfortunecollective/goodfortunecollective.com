@@ -111,26 +111,26 @@
 			plane = new Plane(curtains, planeEl, params);
 
 			const inTransition = {
-				opacity: plane.uniforms.opacity.value,
-			}
+				opacity: plane.uniforms.opacity.value
+			};
 
 			gsap.to(inTransition, {
 				opacity: 1,
 				duration: 0.5,
 				ease: 'power2.inOut',
 				onUpdate: () => {
-					if(plane) {
-						plane.uniforms.opacity.value = inTransition.opacity
+					if (plane) {
+						plane.uniforms.opacity.value = inTransition.opacity;
 					}
 				}
-			})
+			});
 
 			plane.onRender(() => {
 				const velocity = clamp($lenis ? $lenis.velocity : 0, -60, 60);
 				plane.uniforms.scrollVelocity.value = velocity;
 
 				// not super optimized but since we're translating its parent container it's mandatory
-				plane.updatePosition()
+				plane.updatePosition();
 			});
 		}
 	};
@@ -154,10 +154,10 @@
 			createPlane();
 
 			resizeObserver = new ResizeObserver(() => {
-				if(plane) plane.resize()
-			})
+				if (plane) plane.resize();
+			});
 
-			resizeObserver.observe(document.body)
+			resizeObserver.observe(document.body);
 		},
 		(curtainsInstance) => {
 			if (plane) {
@@ -166,25 +166,24 @@
 				plane = null;
 			}
 
-			resizeObserver?.disconnect()
+			resizeObserver?.disconnect();
 		}
 	);
 
-
 	// hover
 	let hoverTween = null;
-	project_list_hover.subscribe(value => {
-		if(!plane) return
+	project_list_hover.subscribe((value) => {
+		if (!plane) return;
 
-		hoverTween?.kill()
+		hoverTween?.kill();
 
-		const texture = plane.textures[0]
+		const texture = plane.textures[0];
 
 		const hoverTransition = {
-			textureScale: texture?.scale.x,
-		}
+			textureScale: texture?.scale.x
+		};
 
-		if(value === name) {
+		if (value === name) {
 			hoverTween = gsap.to(hoverTransition, {
 				textureScale: 1.15,
 				duration: 0.5,
@@ -193,9 +192,8 @@
 					texture.scale.x = hoverTransition.textureScale;
 					texture.scale.y = hoverTransition.textureScale;
 				}
-			})
-		}
-		else if(texture && texture.scale.x) {
+			});
+		} else if (texture && texture.scale.x) {
 			hoverTween = gsap.to(hoverTransition, {
 				textureScale: 1,
 				duration: 0.5,
@@ -204,13 +202,13 @@
 					texture.scale.x = hoverTransition.textureScale;
 					texture.scale.y = hoverTransition.textureScale;
 				}
-			})
+			});
 		}
-	})
+	});
 
 	onDestroy(() => {
-		hoverTween?.kill()
-	})
+		hoverTween?.kill();
+	});
 </script>
 
 <div class="ScrollPlane" bind:this={planeEl}>

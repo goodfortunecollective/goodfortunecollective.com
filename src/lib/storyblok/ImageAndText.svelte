@@ -24,7 +24,7 @@
 				<img src={blok.image.filename} alt={blok.id} />
 			</figure>
 		</div>
-		<div class="flex flex-col md:w-1/2 md:justify-center px-6 xl:px-0">
+		<div class="flex flex-col px-6 md:w-1/2 md:justify-center xl:px-0">
 			{#each blok.content as b}
 				<StoryblokComponent blok={b} />
 			{/each}

@@ -15,13 +15,13 @@
 	in:fade|local={{ delay }}
 	out:fade|local
 	class={cls(
-		'mb-2 text-xs font-bold tracking-wider text-right uppercase menu-item whitespace-nowrap' +
+		'menu-item mb-2 whitespace-nowrap text-right text-xs font-bold uppercase tracking-wider' +
 			(selected ? ' active' : '')
 	)}
 >
 	<a href={url}>
 		<span class={cls(selected && 'font-bold')}>{name}</span>
-		<sup class="font-normal number font-features sups">{zeroPad(sup)}</sup>
+		<sup class="number font-features sups font-normal">{zeroPad(sup)}</sup>
 	</a>
 </li>
 
@@ -31,7 +31,9 @@
 	.menu-item {
 		position: relative;
 		color: #a7a89a;
-		transition: 0.4s color ease-out, 0.4s transform ease-out;
+		transition:
+			0.4s color ease-out,
+			0.4s transform ease-out;
 		&:after {
 			position: absolute;
 			right: -40px;
@@ -43,7 +45,9 @@
 			background: $black;
 			opacity: 0;
 			content: '';
-			transition: 0.4s opacity ease-out 0s, 0.4s transform ease-out 0s;
+			transition:
+				0.4s opacity ease-out 0s,
+				0.4s transform ease-out 0s;
 		}
 		&.active {
 			color: #596669;
@@ -59,7 +63,9 @@
 				transform: translate(-40px, 0);
 				&:after {
 					opacity: 1;
-					transition: 0.4s opacity ease-out 0.2s, 0.4s transform ease-out 0.2s;
+					transition:
+						0.4s opacity ease-out 0.2s,
+						0.4s transform ease-out 0.2s;
 				}
 			}
 		}

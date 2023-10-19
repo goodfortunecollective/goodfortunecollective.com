@@ -8,19 +8,19 @@
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	<div class="flex flex-col list">
+	<div class="list flex flex-col">
 		{#each blok.list as item, i}
-			<div class="px-8 py-16 md:px-0 md:grid md:grid-cols-24 md:gap-2 md:py-32 list-item">
+			<div class="list-item px-8 py-16 md:grid md:grid-cols-24 md:gap-2 md:px-0 md:py-32">
 				<div class={'list-item-text-cont flex-row md:col-span-9  ' + textClasses[i % 2]}>
-					<h2 class="mb-8 text-5xl lg:text-8xl list-item-title font-degular-display">
+					<h2 class="list-item-title mb-8 font-degular-display text-5xl lg:text-8xl">
 						{item.title}
 					</h2>
-					<div class="mb-8 list-item-text md:mb-0">
+					<div class="list-item-text mb-8 md:mb-0">
 						<StoryblokComponent blok={item} />
 					</div>
 				</div>
 				<figure
-					class={'list-item-image md:col-span-9 flex ' +
+					class={'list-item-image flex md:col-span-9 ' +
 						(item.image_position ? 'items-' + item.image_position : '') +
 						' ' +
 						imageClasses[i % 2]}

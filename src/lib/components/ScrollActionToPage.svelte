@@ -43,12 +43,12 @@
 <div bind:this={scrollEl} class="ScrollActionToPage">
 	<div style="--parallax-effect: {parallaxEffect}">
 		<div
-			class="ScrollActionToPage-inner flex flex-col justify-center items-center text-center gap-8"
+			class="ScrollActionToPage-inner flex flex-col items-center justify-center gap-8 text-center"
 		>
-			<p class="uppercase font-medium tracking-widest">Scroll</p>
+			<p class="font-medium uppercase tracking-widest">Scroll</p>
 			<div class="ScrollActionToPage-bar relative h-32 w-px" />
 			<span
-				class="ScrollActionToPage-label inline-flex h-[1em] font-degular-display leading-8 text-[10em]"
+				class="ScrollActionToPage-label inline-flex h-[1em] font-degular-display text-[10em] leading-8"
 				>{label}</span
 			>
 		</div>

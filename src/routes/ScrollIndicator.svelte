@@ -30,10 +30,10 @@
 </script>
 
 <div
-	class="fixed hidden md:block bottom-[20px] right-[20px] md:bottom-[60px] md:right-[60px] z-40 w-[20px] h-[20px] mix-blend-difference"
+	class="fixed bottom-[20px] right-[20px] z-40 hidden h-[20px] w-[20px] mix-blend-difference md:bottom-[60px] md:right-[60px] md:block"
 	id="scroll-indicator"
 >
-	<div class="absolute w-full h-full border-2 border-white rounded-full opacity-20" />
+	<div class="absolute h-full w-full rounded-full border-2 border-white opacity-20" />
 
 	<svg width="20" height="20" style="transform:rotate(-90deg)">
 		<circle

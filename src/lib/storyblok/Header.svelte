@@ -96,14 +96,14 @@
 			<div
 				in:fade|local
 				out:fade|local={{ delay: 500 }}
-				class="fixed inset-y-0 right-0 z-20 w-full px-6 py-6 overflow-y-auto bg-black sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+				class="fixed inset-y-0 right-0 z-20 w-full overflow-y-auto bg-black px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
 			>
-				<div class="flow-root mt-24">
+				<div class="mt-24 flow-root">
 					<div class="-my-6 divide-y divide-gray-500/10">
-						<div class="py-6 space-y-2">
+						<div class="space-y-2 py-6">
 							{#each navigation as { name, path }, i}<a
 									href="{base}/{path}"
-									class="block px-3 py-2 -mx-3 text-xl font-semibold leading-7 text-white"
+									class="-mx-3 block px-3 py-2 text-xl font-semibold leading-7 text-white"
 									in:fly|global={{ x: -48, duration: 500, delay: 300 + 50 * i }}
 									out:fly|global={{ x: -48, duration: 500, delay: 300 - 50 * i }}
 									on:click={closeMobileMenu}>{name}</a
@@ -117,18 +117,18 @@
 	{/if}
 
 	<header
-		class="grid grid-cols-24 fixed w-full top-0 h-20 3xl:h-24 z-30 transition-transform ease-in mix-blend-difference"
+		class="fixed top-0 z-30 grid h-20 w-full grid-cols-24 mix-blend-difference transition-transform ease-in 3xl:h-24"
 		class:motion-safe:-translate-y-full={offscreen}
 		bind:clientHeight
 	>
 		<nav
-			class="col-start-3 py-6 lg:py-9 3xl:py-12 lg:col-start-2 col-span-20 lg:col-span-22"
+			class="col-span-20 col-start-3 py-6 lg:col-span-22 lg:col-start-2 lg:py-9 3xl:py-12"
 			aria-label="Global"
 		>
 			<div class="flex items-center justify-between">
 				<a href="{base}/" class="-m-1.5 p-1.5" bind:this={logo}>
 					<span class="sr-only">Good Fortune Collective</span>
-					<Gfc class="w-auto h-8 text-white 3xl:h-10" alt="" />
+					<Gfc class="h-8 w-auto text-white 3xl:h-10" alt="" />
 				</a>
 				<div class="flex sm:hidden">
 					<button
@@ -139,7 +139,7 @@
 						<span class="sr-only">{mobileMenuOpen ? 'Close' : 'Open'} main menu</span>
 						{#if mobileMenuOpen}
 							<svg
-								class="w-6 h-6"
+								class="h-6 w-6"
 								fill="none"
 								viewBox="0 0 24 24"
 								stroke-width="1.5"
@@ -150,7 +150,7 @@
 							</svg>
 						{:else}
 							<svg
-								class="w-6 h-6"
+								class="h-6 w-6"
 								fill="none"
 								viewBox="0 0 24 24"
 								stroke-width="1.5"

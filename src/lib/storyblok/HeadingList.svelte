@@ -44,7 +44,7 @@
 	{...$$restProps}
 	class={cls('px-6 lg:px-0', containerStyle({ layoutDirection: blok.layoutDirection }), blok.class)}
 >
-	<div class={'relative grid grid-cols-12 mb-32' + (blok.titleFullWidth ? '' : 'lg:absolute')}>
+	<div class={'relative mb-32 grid grid-cols-12' + (blok.titleFullWidth ? '' : 'lg:absolute')}>
 		<Heading
 			as="h3"
 			size="h1"
@@ -57,7 +57,7 @@
 		class={'grid grid-cols-12 gap-0 lg:gap-24' + (blok.titleFullWidth ? ' title-full-width' : '')}
 	>
 		{#each blok.list as b, index}
-			<div class={cls('col-start-2 lg:col-start-3 col-span-7 lg:col-span-4, mt-16')}>
+			<div class={cls('lg:col-span-4, col-span-7 col-start-2 mt-16 lg:col-start-3')}>
 				<div
 					class={cls(
 						'flex justify-start',

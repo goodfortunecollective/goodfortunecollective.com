@@ -17,8 +17,8 @@
 </script>
 
 <section class=" pb-32">
-	<div class="grid grid-cols-12 mt-24 mb-8">
-		<div class="col-span-10 col-start-2 lg:col-start-2 lg:col-span-4">
+	<div class="mb-8 mt-24 grid grid-cols-12">
+		<div class="col-span-10 col-start-2 lg:col-span-4 lg:col-start-2">
 			<span class="inline-block rotate-180">
 				<Link href="{base}/careers/">&#10229;</Link>
 			</span>
@@ -26,7 +26,7 @@
 	</div>
 	<div class="grid grid-cols-12">
 		{#if data.story}
-			<Heading as="h1" size="h2" class="col-span-10 col-start-2 lg:col-start-2 lg:col-span-4"
+			<Heading as="h1" size="h2" class="col-span-10 col-start-2 lg:col-span-4 lg:col-start-2"
 				>{data.story.content.title}</Heading
 			>
 			<div class="col-span-11 col-start-1">

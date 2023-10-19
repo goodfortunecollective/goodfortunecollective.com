@@ -41,14 +41,14 @@
 	class={cls(blok.class, textStyle({ theme: $backgroundTheme }))}
 >
 	<div class="grid grid-cols-12 py-10">
-		<div class="col-span-10 col-start-2 mb-8 md:col-span-8 md:col-start-3 title">
+		<div class="title col-span-10 col-start-2 mb-8 md:col-span-8 md:col-start-3">
 			<Heading as="h2" size="h1" class={headingStyle({ theme: $backgroundTheme })}
 				>{blok.title}</Heading
 			>
 		</div>
-		<div class="col-span-10 col-start-2 mb-8 md:col-span-8 md:col-start-3 list">
+		<div class="list col-span-10 col-start-2 mb-8 md:col-span-8 md:col-start-3">
 			<div class="mb-8 text-center">{@html content}</div>
-			<div class="flex-col mt-16 md:flex">
+			<div class="mt-16 flex-col md:flex">
 				{#each blok.children as b, i}
 					<StoryblokComponent blok={b} index={i} length={blok.children.length} />
 				{/each}

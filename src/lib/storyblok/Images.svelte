@@ -49,11 +49,11 @@
 					alt={item.name ? item.name : 'Image ' + i}
 				/>
 				{#if item.name && blok.show_title}
-					<figcaption class="mt-4 font-bold tracking-widest uppercase image-block-caption">
+					<figcaption class="image-block-caption mt-4 font-bold uppercase tracking-widest">
 						<span class="caption-number"
 							>{#if i <= 10}0{/if}{i + 1}</span
 						>
-						<span class="opacity-50 caption-text">{item.name}</span>
+						<span class="caption-text opacity-50">{item.name}</span>
 					</figcaption>
 				{/if}
 			</figure>

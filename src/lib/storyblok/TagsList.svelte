@@ -64,12 +64,12 @@
 			<div data-gsap="tags-list" class="border-b-2 border-b-gray-200 last-of-type:border-0">
 				<ul class=" whitespace-nowrap">
 					{#each blok.tags as b}
-						<li class={cls('inline-block mb-8', textStyle({ theme: $backgroundTheme }))}>
-							<span class="flex mx-8 items-baseline">
-								<Heading class="uppercase mr-16">
+						<li class={cls('mb-8 inline-block', textStyle({ theme: $backgroundTheme }))}>
+							<span class="mx-8 flex items-baseline">
+								<Heading class="mr-16 uppercase">
 									<StoryblokComponent blok={b} />
 								</Heading>
-								<span class="text-8xl 3xl:text-9xl 4xl:text-10x inline-block">*</span>
+								<span class="4xl:text-10x inline-block text-8xl 3xl:text-9xl">*</span>
 							</span>
 						</li>
 					{/each}

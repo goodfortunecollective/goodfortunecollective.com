@@ -97,7 +97,7 @@
 	</div>
 	<div
 		bind:this={videoContainer}
-		class="flex items-center justify-center cursor-pointer video-block"
+		class="video-block flex cursor-pointer items-center justify-center"
 		on:mouseenter={contOnEnter}
 		on:mouseleave={contOnLeave}
 		data-id={blok.id}
@@ -158,7 +158,10 @@
 		height: 100%;
 		z-index: 11;
 		cursor: pointer;
-		transition: 0.5s opacity ease-out, 0s visibility 0.5s, 0s z-index 0.5s;
+		transition:
+			0.5s opacity ease-out,
+			0s visibility 0.5s,
+			0s z-index 0.5s;
 
 		&.inactive {
 			visibility: hidden;

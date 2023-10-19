@@ -34,7 +34,7 @@
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	<div class="grid grid-cols-12 process-title">
+	<div class="process-title grid grid-cols-12">
 		<div class="col-span-10 col-start-2">
 			<Heading as="h2" size="h2" class="">{blok.title}</Heading>
 		</div>
@@ -43,7 +43,7 @@
 		<div class={wrapperClasses} bind:this={listItemWrapper}>
 			{#each blok.list as item, i}
 				<div class={listItemClasses[i]}>
-					<span class="text-sm font-bold tracking-widest uppercase caption-number"
+					<span class="caption-number text-sm font-bold uppercase tracking-widest"
 						>{#if i <= 10}0{/if}{i + 1}</span
 					>
 					<div class="text">
@@ -55,7 +55,7 @@
 			{/each}
 		</div>
 	</div>
-	<div class="grid grid-cols-12 pt-10 pb-12 md:pt-32 process-text md:pb-36">
+	<div class="process-text grid grid-cols-12 pb-12 pt-10 md:pb-36 md:pt-32">
 		<div class="col-span-10 col-start-2 md:col-span-6 md:col-start-4">
 			<TextTransition>{@html content}</TextTransition>
 		</div>

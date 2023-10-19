@@ -216,18 +216,18 @@
 <svelte:window on:mousemove={onMouseMove} on:resize={onResize} />
 
 <section use:storyblokEditable={blok} {...$$restProps} class="grid h-screen grid-cols-12">
-	<div class="absolute w-screen h-[250vh] z-[-1]" style="opacity:{bgOpacity}" />
+	<div class="absolute z-[-1] h-[250vh] w-screen" style="opacity:{bgOpacity}" />
 	<CustomCursor
 		isHidden={btnHidden}
 		cursorType={videoPlaying ? 'pause' : 'play'}
 		bgColor="#dbfa45"
 	/>
 
-	<div class="relative w-full h-full col-span-10 col-start-2" bind:this={container}>
-		<div class="relative w-full h-full z-[9] video-cont perspective-800" bind:this={videoContainer}>
+	<div class="relative col-span-10 col-start-2 h-full w-full" bind:this={container}>
+		<div class="video-cont perspective-800 relative z-[9] h-full w-full" bind:this={videoContainer}>
 			<div
 				bind:this={video}
-				class="absolute w-full h-full cursor-pointer HeadlineVideo-container transform-gpu preserve-3d mt-[10vh]"
+				class="HeadlineVideo-container preserve-3d absolute mt-[10vh] h-full w-full transform-gpu cursor-pointer"
 				style="--video-effect: {videoTransformEffect}; --rotation-x: {videoRotation.x}deg; --rotation-y: {videoRotation.y}deg"
 			>
 				<video
@@ -235,7 +235,7 @@
 					on:click={playPauseVideo}
 					on:mouseenter={videoOnEnter}
 					on:mouseleave={videoOnLeave}
-					class="w-full aspect-video rounded-3xl"
+					class="aspect-video w-full rounded-3xl"
 					src={blok.video}
 					autoplay={blok.autoplay}
 					loop={blok.loop}
@@ -247,19 +247,19 @@
 		</div>
 
 		<div
-			class="absolute top-0 left-0 flex items-start w-full h-full pointer-events-none title-cont"
+			class="title-cont pointer-events-none absolute left-0 top-0 flex h-full w-full items-start"
 		>
-			<div class="flex flex-col justify-between h-full py-[15vh]">
+			<div class="flex h-full flex-col justify-between py-[15vh]">
 				<h1
 					data-gsap="split-text"
-					class="max-w-7xl text-6xl leading-[4rem] md:text-[11rem] md:leading-[8rem] 3xl:text-[12rem] 3xl:leading-[9rem] z-[8] text-neutral-950 font-degular-display title tracking-wide"
+					class="title z-[8] max-w-7xl font-degular-display text-6xl leading-[4rem] tracking-wide text-neutral-950 md:text-[11rem] md:leading-[8rem] 3xl:text-[12rem] 3xl:leading-[9rem]"
 					style="transform:scale({titleScale})"
 				>
 					{blok.headline}
 				</h1>
 				<h2
 					data-gsap="split-text"
-					class="z-10 max-w-2xl mb-[5vh] text-5xl md:text-7xl text-white lg:max-w-4xl font-degular-display"
+					class="z-10 mb-[5vh] max-w-2xl font-degular-display text-5xl text-white md:text-7xl lg:max-w-4xl"
 				>
 					{blok.subheadline}
 				</h2>
@@ -267,12 +267,12 @@
 		</div>
 
 		<div
-			class="absolute top-0 left-0 z-10 flex items-center justify-end w-full h-full pointer-events-none"
+			class="pointer-events-none absolute left-0 top-0 z-10 flex h-full w-full items-center justify-end"
 		>
-			<div class="relative w-full max-w-xs mr-24">
-				<div class="absolute inline-flex items-center justify-center w-full gap-4">
-					<hr bind:this={line} class="w-32 h-px" />
-					<div class="w-[10rem] text-xs text-white uppercase" data-gsap="split-text">
+			<div class="relative mr-24 w-full max-w-xs">
+				<div class="absolute inline-flex w-full items-center justify-center gap-4">
+					<hr bind:this={line} class="h-px w-32" />
+					<div class="w-[10rem] text-xs uppercase text-white" data-gsap="split-text">
 						<h3 class="leading-3"><strong data-gsap="split-text">{blok.description}</strong></h3>
 					</div>
 				</div>

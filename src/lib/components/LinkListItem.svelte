@@ -22,13 +22,13 @@
 </script>
 
 <li>
-	<a class="flex items-center w-full py-4 list-item-link" href={url}>
+	<a class="list-item-link flex w-full items-center py-4" href={url}>
 		<Heading as="h3" size="h3" class={variants({ theme: $backgroundTheme })}>
 			{name}
 		</Heading>
-		<span class="text-xs font-bold tracking-widest uppercase list-item-action">{label}</span>
+		<span class="list-item-action text-xs font-bold uppercase tracking-widest">{label}</span>
 		<span class="arrow arrow-default" /><span
-			class="flex items-center justify-center list-item-circle"
+			class="list-item-circle flex items-center justify-center"
 		>
 			<span class="arrow arrow-hover" />
 		</span>
@@ -60,7 +60,9 @@
 			width: 100%;
 			transform: translate(-100%, 0);
 			background: $black;
-			transition: 0.6s width ease-out, 0.6s transform ease-out;
+			transition:
+				0.6s width ease-out,
+				0.6s transform ease-out;
 		}
 
 		&:hover {
@@ -107,7 +109,9 @@
 		right: 70px;
 		transform: translate(-20%, 0);
 		opacity: 0;
-		transition: 0.4s transform ease-out, 0.4s opacity ease-out;
+		transition:
+			0.4s transform ease-out,
+			0.4s opacity ease-out;
 	}
 
 	.list-item-circle {
@@ -132,7 +136,9 @@
 			background: $black;
 			z-index: 9;
 			content: '';
-			transition: 0.4s transform ease-out, 0.4s opacity ease-out;
+			transition:
+				0.4s transform ease-out,
+				0.4s opacity ease-out;
 		}
 	}
 
@@ -140,7 +146,9 @@
 		position: absolute;
 		width: 50%;
 		height: 1px;
-		transition: 0.4s transform ease-out, 0.4s opacity ease-out;
+		transition:
+			0.4s transform ease-out,
+			0.4s opacity ease-out;
 
 		&:before,
 		&:after {

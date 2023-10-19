@@ -11,7 +11,7 @@
 	});
 </script>
 
-<section class="pb-32 h-1/2">
+<section class="h-1/2 pb-32">
 	{#if data.story}
 		<StoryblokComponent blok={data.story.content} />
 	{/if}

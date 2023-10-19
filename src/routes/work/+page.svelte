@@ -115,10 +115,10 @@
 	<StoryblokComponent blok={data.story.content} />
 {/if}
 
-<section class="pt-20 3xl:pt-24 pb-32">
+<section class="pb-32 pt-20 3xl:pt-24">
 	<div class="mt-16">
 		<div class="relative">
-			<MenuList class="absolute top-0 right-0 z-10 flex flex-col items-end gap-4">
+			<MenuList class="absolute right-0 top-0 z-10 flex flex-col items-end gap-4">
 				<MenuItem
 					name="All Projects"
 					sup={data.projects.length}

@@ -48,19 +48,19 @@
 	{...$$restProps}
 	class={cls(blok.class, textStyle({ theme: $backgroundTheme }))}
 >
-	<div class="pt-8 grid grid-cols-12 lg:pt-[8.33vw] gap-8 lg:gap-0">
+	<div class="grid grid-cols-12 gap-8 pt-8 lg:gap-0 lg:pt-[8.33vw]">
 		<div class="col-span-10 col-start-2">
-			<div class="flex flex-col h-full">
+			<div class="flex h-full flex-col">
 				<Heading
 					as="h1"
 					size="h1"
 					class={headingStyle({ theme: $backgroundTheme, maxWidth: blok.maxWidth })}
-					>{blok.title}</Heading
-				>
+					>{blok.title}
+				</Heading>
 			</div>
 		</div>
 		{#if blok.children.length}
-			<div class="col-span-10 col-start-2 lg:pt-12 lg:col-start-2 lg:col-span-2">
+			<div class="col-span-10 col-start-2 lg:col-span-2 lg:col-start-2 lg:pt-12">
 				{#each blok.children as b}
 					<StoryblokComponent blok={b} />
 				{/each}
@@ -76,42 +76,3 @@
 		</div>
 	</div>
 </div>
-
-<style lang="scss">
-	@import '../../vars.scss';
-
-	.headline-title :global(h1) {
-		line-height: 0.85;
-	}
-
-	.title-beige .headline-title {
-		color: #dbd5bf; //$beige;
-	}
-
-	.grey-bg {
-		position: relative;
-		background: #bec6c4;
-
-		&:before {
-			position: absolute;
-			bottom: 100%;
-			right: 0;
-			left: 0;
-			background: #bec6c4;
-			content: '';
-		}
-	}
-
-	.black-bg {
-		background: #1c1c1c;
-		color: $white;
-
-		.text {
-			color: $white;
-		}
-	}
-
-	.text {
-		color: #2c3436;
-	}
-</style>

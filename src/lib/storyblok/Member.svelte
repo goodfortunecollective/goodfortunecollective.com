@@ -8,17 +8,17 @@
 
 <div use:storyblokEditable={blok} {...$$restProps}>
 	<div
-		class={'flex flex-row py-4 text-left align-center member' +
+		class={'align-center member flex flex-row py-4 text-left' +
 			(index == length - 1 ? ' last' : '')}
 	>
-		<div class="w-2/3 text-xl member-title">
+		<div class="member-title w-2/3 text-xl">
 			{blok.title}
 		</div>
-		<div class="w-1/3 text-sm font-bold tracking-widest uppercase member-position">
+		<div class="member-position w-1/3 text-sm font-bold uppercase tracking-widest">
 			{blok.position}
 		</div>
 		{#if blok.thumbnail.filename}
-			<figure class="absolute hidden w-auto md:block member-image">
+			<figure class="member-image absolute hidden w-auto md:block">
 				<img class="member-img" src={blok.thumbnail.filename} alt={blok.title} />
 			</figure>
 		{/if}

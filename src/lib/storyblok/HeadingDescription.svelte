@@ -34,17 +34,17 @@
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	<div class="grid grid-cols-12 gap-8 pt-24 md:pt-32 md:gap-0">
+	<div class="grid grid-cols-12 gap-8 pt-24 md:gap-0 md:pt-32">
 		<Heading
 			as="h2"
 			size="h6"
 			class={cls(
-				'w-full col-span-10 col-start-2 font-bold tracking-widest uppercase md:col-start-3 md:col-span-3 xl:w-[75%] title break-keep',
+				'title col-span-10 col-start-2 w-full break-keep font-bold uppercase tracking-widest md:col-span-3 md:col-start-3 xl:w-[75%]',
 				headingStyle({ theme: $backgroundTheme })
 			)}>{blok.heading}</Heading
 		>
-		<div class="col-span-10 col-start-2 text-lg md:col-start-7 md:col-span-5">
-			<div class={cls('flex flex-col gap-{blok.gap}', textStyle({ theme: $backgroundTheme }))}>
+		<div class="col-span-10 col-start-2 text-lg md:col-span-5 md:col-start-7">
+			<div class={cls('gap-{blok.gap} flex flex-col', textStyle({ theme: $backgroundTheme }))}>
 				{#each blok.content as b}
 					<StoryblokComponent blok={b} />
 				{/each}

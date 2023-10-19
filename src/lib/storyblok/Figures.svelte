@@ -10,11 +10,11 @@
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={cls('text-center ', blok.class)}>
-	<div class="mb-8 text">
+	<div class="text mb-8">
 		<Heading as="h3" size="h3">{blok.title}</Heading>
 	</div>
 	<div class="mb-8 text-center">{@html content}</div>
-	<div class="grid grid-cols-2 md:flex justify-around flex-wrap mt-16">
+	<div class="mt-16 grid grid-cols-2 flex-wrap justify-around md:flex">
 		{#each blok.children as b}
 			<StoryblokComponent blok={b} />
 		{/each}

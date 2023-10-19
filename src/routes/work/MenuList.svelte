@@ -19,10 +19,10 @@
 </script>
 
 <div class={clazz + (isOpen ? ' opened' : '')} id="menu-list">
-	<button class="w-12 h-12 px-4 py-2 text-white bg-black rounded-full" on:click={toggleDropdown}>
+	<button class="h-12 w-12 rounded-full bg-black px-4 py-2 text-white" on:click={toggleDropdown}>
 		<span class="text-2xl">{isOpen ? '-' : '+'}</span>
 	</button>
-	<div class="pr-6 mr-6 list">
+	<div class="list mr-6 pr-6">
 		{#if isOpen}
 			<ul><slot /></ul>
 		{/if}

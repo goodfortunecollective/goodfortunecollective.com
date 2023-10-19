@@ -112,7 +112,7 @@
 		</div>
 
 		<div class="ProjectListItem-infos">
-			<div class="text-sm uppercase ProjectListItem-category">
+			<div class="ProjectListItem-category text-sm uppercase">
 				{content.category && content.category[0]}
 			</div>
 			<div class="ProjectListItem-infos-inner">
@@ -129,7 +129,7 @@
 					{content.summary}
 				</div>
 			</div>
-			<div class="uppercase ProjectListItem-client">{content.client}</div>
+			<div class="ProjectListItem-client uppercase">{content.client}</div>
 		</div>
 	</a>
 </div>
@@ -195,7 +195,9 @@
 		}
 
 		&-title {
-			transition: transform 0.3s ease-out, opacity 0.3s linear;
+			transition:
+				transform 0.3s ease-out,
+				opacity 0.3s linear;
 		}
 
 		&-category,
@@ -206,7 +208,9 @@
 		&-summary {
 			opacity: 0;
 			transform: translate3d(0, 100%, 0);
-			transition: transform 0.3s ease-out, opacity 0.3s linear;
+			transition:
+				transform 0.3s ease-out,
+				opacity 0.3s linear;
 
 			@media (min-width: $media-md) {
 				position: absolute;
