@@ -9,25 +9,39 @@
 
 	export let blok: any;
 
-	const variants = cva('', {
+	const backgroundStyle = cva('relative pt-8 md:pt-32 xl:pt-48', {
 		variants: {
-			background: {
+			theme: {
 				light: '',
 				dark: 'bg-neutral-950'
-			},
-			hightlight: {
+			}
+		},
+		defaultVariants: {
+			theme: 'light'
+		}
+	});
+
+	const hightlightStyle = cva('', {
+		variants: {
+			theme: {
 				light: 'text-black before:bg-gray-600',
 				dark: 'text-gray-300 before:bg-gray-300'
-			},
-			line: {
+			}
+		},
+		defaultVariants: {
+			theme: 'light'
+		}
+	});
+
+	const lineStyle = cva('', {
+		variants: {
+			theme: {
 				light: 'before:bg-gray-300 ',
 				dark: 'before:bg-gray-500'
 			}
 		},
 		defaultVariants: {
-			background: 'light',
-			hightlight: 'light',
-			line: 'light'
+			theme: 'light'
 		}
 	});
 
@@ -41,21 +55,21 @@
 	use:storyblokEditable={blok}
 	{...$$restProps}
 	id="footer"
-	class={cls('relative pt-8 md:pt-32 xl:pt-48', variants({ background: $backgroundTheme }))}
+	class={backgroundStyle({ theme: $backgroundTheme })}
 >
 	<div class="relative w-full py-6 z-[1]">
 		<div class="grid grid-cols-12 py-2">
 			<div
 				class={cls(
 					'col-span-10 col-start-2 pt-8 pb-2 md:col-span-5 lg:col-span-4 md:col-start-2 lg:col-start-2 footer-col',
-					variants({ line: $backgroundTheme })
+					lineStyle({ theme: $backgroundTheme })
 				)}
 			>
 				<p
 					class="flex flex-col gap-4 text-xs leading-5 tracking-wider text-gray-500 uppercase md:flex-row 3xl:text-sm"
 				>
 					Let’s work together
-					<a class={variants({ hightlight: $backgroundTheme })} href={`mailto:${blok.email}`}
+					<a class={hightlightStyle({ theme: $backgroundTheme })} href={`mailto:${blok.email}`}
 						>{blok.email}</a
 					>
 				</p>
@@ -63,13 +77,13 @@
 			<div
 				class={cls(
 					'col-span-10 col-start-2 pt-8 pb-2 md:col-span-4 md:col-start-8 footer-col',
-					variants({ line: $backgroundTheme })
+					lineStyle({ theme: $backgroundTheme })
 				)}
 			>
 				<p
 					class="flex flex-col gap-4 text-xs leading-5 tracking-wider text-gray-500 uppercase md:flex-row 3xl:text-sm"
 				>
-					Find us in<span class={cls(variants({ hightlight: $backgroundTheme }))}
+					Find us in<span class={hightlightStyle({ theme: $backgroundTheme })}
 						>Vancouver, Canada</span
 					>
 				</p>

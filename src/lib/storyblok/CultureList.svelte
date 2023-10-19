@@ -1,15 +1,41 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { storyblokEditable, getStoryblokApi } from '@storyblok/svelte';
+	import { cva } from 'class-variance-authority';
 
 	import { cls } from '$lib/styles';
 	import { base } from '$app/paths';
 	import { dev } from '$app/environment';
 	import { Heading } from '$lib/components';
+	import { backgroundTheme } from '$lib/stores';
 
 	export let blok: any;
 
 	let posts: any;
+
+	const headingStyle = cva('', {
+		variants: {
+			theme: {
+				light: '',
+				dark: 'text-yellow-50'
+			}
+		},
+		defaultVariants: {
+			theme: 'light'
+		}
+	});
+
+	const textStyle = cva('text-xs tracking-widest uppercase tag-list', {
+		variants: {
+			theme: {
+				light: '',
+				dark: 'text-white'
+			}
+		},
+		defaultVariants: {
+			theme: 'light'
+		}
+	});
 
 	onMount(async () => {
 		const storyblokApi = getStoryblokApi();
@@ -17,6 +43,8 @@
 			version: dev ? 'draft' : 'published',
 			starts_with: 'articles'
 		});
+
+		console.log('posts.data.stories ', posts.data.stories);
 	});
 
 	const postsClasses = [
@@ -41,24 +69,21 @@
 <section id="culture-posts" use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	<div class="grid py-16 grid-cols-24">
 		{#if posts}
-			{#each posts.data.stories as item, i}
-				<a class={cls(postsClasses[i % 6], 'mb-16 lg:mb-32')} href="{base}/culture/{item.slug}">
-					{#if item.content.thumbnail}
-						<figure class={cls(imageClasses[i % 6], 'post-image')}>
-							<img src={item.content.thumbnail.filename} class="post-img" alt={item.name} />
-						</figure>
-					{/if}
+			{#each posts.data.stories as post, i}
+				<a class={cls(postsClasses[i % 6], 'mb-16 lg:mb-32')} href="{base}/culture/{post.slug}">
 					<div class={cls(textClasses[i % 6], 'mt-16 post-text')}>
-						{#if item.tag_list}
-							<span class="text-xs tracking-widest uppercase tag-list">
-								{#each item.tag_list as tag, i}
+						{#if post.tag_list}
+							<span class={textStyle({ theme: $backgroundTheme })}>
+								{#each post.tag_list as tag, i}
 									{#if i > 0}&nbsp;
 									{/if}
 									#{tag}
 								{/each}
 							</span>
 						{/if}
-						<Heading as="h2" size="h3" class="">{item.name}</Heading>
+						<Heading as="h2" size="h2" class={headingStyle({ theme: $backgroundTheme })}
+							>{post.name}</Heading
+						>
 					</div>
 				</a>
 			{/each}

@@ -10,20 +10,20 @@
 
 	const variants = cva('', {
 		variants: {
-			text: {
+			theme: {
 				light: '',
 				dark: 'text-white'
 			}
 		},
 		defaultVariants: {
-			text: 'light'
+			theme: 'light'
 		}
 	});
 </script>
 
 <li>
 	<a class="flex items-center w-full py-4 list-item-link" href={url}>
-		<Heading as="h3" size="h3" class={variants({ text: $backgroundTheme })}>
+		<Heading as="h3" size="h3" class={variants({ theme: $backgroundTheme })}>
 			{name}
 		</Heading>
 		<span class="text-xs font-bold tracking-widest uppercase list-item-action">{label}</span>

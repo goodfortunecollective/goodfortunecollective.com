@@ -9,20 +9,34 @@
 
 	export let blok: any;
 
-	const variants = cva('', {
+	const headingStyle = cva('flex-1 lg:leading-none leading-none', {
 		variants: {
-			heading: {
+			theme: {
 				light: '',
 				dark: 'text-yellow-50'
 			},
-			text: {
-				light: '',
-				dark: 'text-white'
+			maxWidth: {
+				md: 'max-w-screen-md',
+				lg: 'max-w-screen-lg',
+				xl: 'max-w-screen-xl',
+				'2xl': 'max-w-screen-2xl'
 			}
 		},
 		defaultVariants: {
-			heading: 'light',
-			text: 'light'
+			theme: 'light',
+			maxWidth: 'md'
+		}
+	});
+
+	const textStyle = cva('', {
+		variants: {
+			theme: {
+				light: '',
+				dark: 'text-yellow-50'
+			}
+		},
+		defaultVariants: {
+			theme: 'light'
 		}
 	});
 
@@ -32,18 +46,16 @@
 <div
 	use:storyblokEditable={blok}
 	{...$$restProps}
-	class={cls(blok.class, variants({ text: $backgroundTheme }))}
+	class={cls(blok.class, textStyle({ theme: $backgroundTheme }))}
 >
 	<div class="pt-8 grid grid-cols-12 lg:pt-[8.33vw] gap-8 lg:gap-0">
-		<div class="col-span-10 col-start-2 headline-title lg:col-span-8 lg:col-start-2">
+		<div class="col-span-10 col-start-2">
 			<div class="flex flex-col h-full">
 				<Heading
 					as="h1"
 					size="h1"
-					class={cls(
-						'flex-1 max-w-screen-md leading-extra-tight',
-						variants({ heading: $backgroundTheme })
-					)}>{blok.title}</Heading
+					class={headingStyle({ theme: $backgroundTheme, maxWidth: blok.maxWidth })}
+					>{blok.title}</Heading
 				>
 			</div>
 		</div>
@@ -57,6 +69,7 @@
 		<div class="col-span-10 col-start-2 lg:col-span-6 lg:col-start-5">
 			<div
 				class="max-w-screen-xl text-xl leading-9 lg:pt-12 xl:text-2xl 4xl:text-4xl 4xl:leading-loose"
+				{...$$restProps}
 			>
 				<TextTransition>{@html content}</TextTransition>
 			</div>

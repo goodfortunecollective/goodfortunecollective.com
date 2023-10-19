@@ -10,20 +10,27 @@
 
 	$: content = renderRichText(blok.content);
 
-	const variants = cva('', {
+	const headingStyle = cva('', {
 		variants: {
-			heading: {
+			theme: {
 				light: '',
 				dark: 'text-yellow-50'
-			},
-			text: {
+			}
+		},
+		defaultVariants: {
+			theme: 'light'
+		}
+	});
+
+	const textStyle = cva('', {
+		variants: {
+			theme: {
 				light: '',
 				dark: 'text-white'
 			}
 		},
 		defaultVariants: {
-			heading: 'light',
-			text: 'light'
+			theme: 'light'
 		}
 	});
 </script>
@@ -31,11 +38,11 @@
 <div
 	use:storyblokEditable={blok}
 	{...$$restProps}
-	class={cls(blok.class, variants({ text: $backgroundTheme }))}
+	class={cls(blok.class, textStyle({ theme: $backgroundTheme }))}
 >
 	<div class="grid grid-cols-12 py-10">
 		<div class="col-span-10 col-start-2 mb-8 md:col-span-8 md:col-start-3 title">
-			<Heading as="h2" size="h1" class={variants({ heading: $backgroundTheme })}
+			<Heading as="h2" size="h1" class={headingStyle({ theme: $backgroundTheme })}
 				>{blok.title}</Heading
 			>
 		</div>

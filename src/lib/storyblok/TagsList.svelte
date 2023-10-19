@@ -11,15 +11,15 @@
 
 	export let blok: any;
 
-	const variants = cva('', {
+	const textStyle = cva('', {
 		variants: {
-			text: {
+			theme: {
 				light: '',
 				dark: 'text-red-100'
 			}
 		},
 		defaultVariants: {
-			text: 'light'
+			theme: 'light'
 		}
 	});
 
@@ -64,7 +64,7 @@
 			<div data-gsap="tags-list" class="border-b-2 border-b-gray-200 last-of-type:border-0">
 				<ul class=" whitespace-nowrap">
 					{#each blok.tags as b}
-						<li class={cls('inline-block mb-8', variants({ text: $backgroundTheme }))}>
+						<li class={cls('inline-block mb-8', textStyle({ theme: $backgroundTheme }))}>
 							<span class="flex mx-8 items-baseline">
 								<Heading class="uppercase mr-16">
 									<StoryblokComponent blok={b} />

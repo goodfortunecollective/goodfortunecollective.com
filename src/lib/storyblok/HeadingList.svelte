@@ -14,30 +14,35 @@
 		indexStart = [3, 5, 4, 5];
 	}
 
-	const variants = cva('relative', {
+	const containerStyle = cva('relative', {
 		variants: {
 			layoutDirection: {
 				left: 'flex-row',
 				right: 'flex-row-reverse'
-			},
-			text: {
+			}
+		},
+		defaultVariants: {
+			layoutDirection: 'left'
+		}
+	});
+
+	const textStyle = cva('relative', {
+		variants: {
+			theme: {
 				light: '',
 				dark: 'text-white'
 			}
 		},
 		defaultVariants: {
-			layoutDirection: 'left',
-			text: 'light'
+			theme: 'light'
 		}
 	});
-
-	const getColumnIndex = (index: number) => (index % 4).toString() as '0' | '1' | '2' | '3';
 </script>
 
 <div
 	use:storyblokEditable={blok}
 	{...$$restProps}
-	class={cls('px-6 lg:px-0', variants({ layoutDirection: blok.layoutDirection }), blok.class)}
+	class={cls('px-6 lg:px-0', containerStyle({ layoutDirection: blok.layoutDirection }), blok.class)}
 >
 	<div class={'relative grid grid-cols-12 mb-32' + (blok.titleFullWidth ? '' : 'lg:absolute')}>
 		<Heading
@@ -56,8 +61,8 @@
 				<div
 					class={cls(
 						'flex justify-start',
-						variants({ layoutDirection: blok.layoutDirection }),
-						variants({ text: $backgroundTheme })
+						containerStyle({ layoutDirection: blok.layoutDirection }),
+						textStyle({ theme: $backgroundTheme })
 					)}
 				>
 					<StoryblokComponent blok={b} {index} />

@@ -8,20 +8,27 @@
 
 	export let blok: any;
 
-	const variants = cva('', {
+	const headingStyle = cva('', {
 		variants: {
-			heading: {
+			theme: {
 				light: '',
 				dark: 'text-yellow-50'
-			},
-			text: {
+			}
+		},
+		defaultVariants: {
+			theme: 'light'
+		}
+	});
+
+	const textStyle = cva('', {
+		variants: {
+			theme: {
 				light: '',
 				dark: 'text-white'
 			}
 		},
 		defaultVariants: {
-			heading: 'light',
-			text: 'light'
+			theme: 'light'
 		}
 	});
 </script>
@@ -33,11 +40,11 @@
 			size="h6"
 			class={cls(
 				'w-full col-span-10 col-start-2 font-bold tracking-widest uppercase md:col-start-3 md:col-span-3 xl:w-[75%] title break-keep',
-				variants({ heading: $backgroundTheme })
+				headingStyle({ theme: $backgroundTheme })
 			)}>{blok.heading}</Heading
 		>
 		<div class="col-span-10 col-start-2 text-lg md:col-start-7 md:col-span-5">
-			<div class={cls('flex flex-col gap-{blok.gap}', variants({ text: $backgroundTheme }))}>
+			<div class={cls('flex flex-col gap-{blok.gap}', textStyle({ theme: $backgroundTheme }))}>
 				{#each blok.content as b}
 					<StoryblokComponent blok={b} />
 				{/each}
