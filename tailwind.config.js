@@ -5,11 +5,14 @@ export default {
 		extend: {
 			colors: {
 				neutral: {
-				  950: '#1a1a1a',
+					950: '#1a1a1a',
 				},
 				yellow: {
 					50: '#dbd5bf',
-				  },
+				},
+				rose: {
+					50: "#e9bdb2"
+				}
 			},
 			screens: {
 				'3xl': '1920px',
