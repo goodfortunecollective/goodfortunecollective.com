@@ -29,7 +29,7 @@ export default {
 				'10xl': '10rem'
 			},
 			lineHeight: {
-				'extra-tight': '0.95'
+				'extra-tight': '0.5'
 			},
 			gridTemplateColumns: {
 				// Simple 24 column grid

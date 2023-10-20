@@ -31,15 +31,3 @@
 		</div>
 	{/if}
 </div>
-
-<style lang="scss">
-	@import '../../vars.scss';
-
-	.heading-list-item :global(.uppercase .split-line) {
-		padding: 0;
-	}
-
-	.heading-list-item :global(h3) {
-		font-weight: bold;
-	}
-</style>

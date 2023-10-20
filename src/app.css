@@ -58,9 +58,11 @@
 	}
 
 	.split-line {
-		overflow: clip;
-		margin-top: -8px;
-		padding: 8px 0;
+		overflow: hidden;
+	}
+
+	.split-line > * {
+		vertical-align: text-top;
 	}
 
 	/** LENIS **/

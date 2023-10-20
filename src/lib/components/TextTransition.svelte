@@ -25,7 +25,7 @@
 			});
 
 			if (type === 'heading') {
-				gsap.set(text.chars, { yPercent: 100 });
+				gsap.set(text.chars, { yPercent: 200, opacity: 0 });
 			}
 		}
 	});
@@ -35,6 +35,7 @@
 			if (enabled) {
 				ctx = gsap.context(() => {
 					if (type === 'heading') {
+						gsap.set(text.chars, { opacity: 1 });
 						gsap.to(text.chars, {
 							scrollTrigger: {
 								trigger: element,

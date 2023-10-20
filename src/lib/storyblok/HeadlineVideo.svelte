@@ -97,7 +97,7 @@
 		});
 
 		splitTexts.forEach((text) => {
-			gsap.set(text.chars, { yPercent: 100 });
+			gsap.set(text.chars, { yPercent: 200, opacity: 0 });
 		});
 	});
 
@@ -151,6 +151,7 @@
 				tlSplitText.addLabel('start');
 
 				splitTexts.forEach((text) => {
+					gsap.set(text.chars, { opacity: 1 });
 					tlSplitText.to(
 						text.chars,
 						{

@@ -9,7 +9,7 @@
 
 	export let blok: any;
 
-	const headingStyle = cva('flex-1 lg:leading-none leading-none', {
+	const headingStyle = cva('flex-1 lg:leading-extra-tight leading-extra-tight', {
 		variants: {
 			theme: {
 				light: '',
