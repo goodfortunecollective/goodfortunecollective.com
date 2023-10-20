@@ -19,8 +19,8 @@
 				dark: 'text-white'
 			},
 			kind: {
-				primary: 'text-rose-50',
-				secondary: '',
+				primary: 'text-rose-50 lg:leading-extra-tight leading-extra-tight',
+				secondary: 'lg:leading-extra-tight leading-extra-tight',
 				tertiary: ''
 			}
 		},
@@ -54,7 +54,7 @@
 		<a class="mb-16 lg:mb-32" href="{base}/culture/{blok.article.slug}">
 			<div class="mt-16">
 				{#if blok.article.tag_list}
-					<span class={cls('flex flex-row gap-2', textStyle({ theme: $backgroundTheme }))}>
+					<span class={cls('flex flex-row gap-2 pb-4', textStyle({ theme: $backgroundTheme }))}>
 						{#each blok.article.tag_list as tag}
 							<span>#{tag}</span>
 						{/each}
