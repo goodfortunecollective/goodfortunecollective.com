@@ -10,6 +10,7 @@
 	export let style: string = '';
 	export let enabled: boolean = true;
 	export let type: 'heading' | 'p' = 'p';
+	export let underline: boolean = false;
 
 	let element: HTMLSpanElement;
 
@@ -20,7 +21,7 @@
 		if (enabled) {
 			text = new SplitText(element, {
 				type: 'lines,words,chars',
-				linesClass: 'split-line',
+				linesClass: underline ? 'split-line split-line__underline' : 'split-line',
 				charClass: 'split-char'
 			});
 

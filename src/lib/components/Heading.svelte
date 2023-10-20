@@ -7,6 +7,7 @@
 	export let as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1';
 	export let size: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1';
 	export let animated: boolean = true;
+	export let underline: boolean = false;
 
 	const variants = cva('w-full font-degular-display', {
 		variants: {
@@ -26,7 +27,7 @@
 </script>
 
 <svelte:element this={as} {...$$restProps} class={cls(variants({ size }), $$props.class)}>
-	<TextTransition type="heading" enabled={animated}>
+	<TextTransition type="heading" enabled={animated} {underline}>
 		<slot />
 	</TextTransition>
 </svelte:element>

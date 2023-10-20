@@ -12,7 +12,7 @@
 
 	console.log('blok ', blok);
 
-	const headingStyle = cva('underline underline-offset-4', {
+	const headingStyle = cva('no-underline', {
 		variants: {
 			theme: {
 				light: '',
@@ -30,7 +30,7 @@
 		}
 	});
 
-	const textStyle = cva('text-xs tracking-widest uppercase tag-list', {
+	const textStyle = cva('text-xs tracking-widest uppercase', {
 		variants: {
 			theme: {
 				light: '',
@@ -52,7 +52,7 @@
 <div use:storyblokEditable={blok} {...$$restProps}>
 	{#if blok.article}
 		<a class="mb-16 lg:mb-32" href="{base}/culture/{blok.article.slug}">
-			<div class="mt-16">
+			<span class="mt-16 inline-block">
 				{#if blok.article.tag_list}
 					<span class={cls('flex flex-row gap-2 pb-4', textStyle({ theme: $backgroundTheme }))}>
 						{#each blok.article.tag_list as tag}
@@ -63,10 +63,11 @@
 				<Heading
 					as="h2"
 					size={headingSize[blok.kind]}
-					class={headingStyle({ theme: $backgroundTheme, kind: blok.kind })}
-					>{blok.article.content.title}</Heading
-				>
-			</div>
+					underline
+					class={cls(headingStyle({ theme: $backgroundTheme, kind: blok.kind }), 'cool-link')}
+					>{blok.article.content.title}
+				</Heading>
+			</span>
 		</a>
 	{/if}
 </div>
