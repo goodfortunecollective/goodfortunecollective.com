@@ -48,7 +48,7 @@
 	{...$$restProps}
 	class={cls(blok.class, textStyle({ theme: $backgroundTheme }))}
 >
-	<div class="grid grid-cols-12 gap-8 pt-8 lg:gap-0 lg:pt-[8.33vw]">
+	<div class="pt-18 grid grid-cols-12 gap-8 pt-32 lg:gap-0 lg:pt-[25vh]">
 		<div class="col-span-10 col-start-2">
 			<div class="flex h-full flex-col">
 				<Heading
