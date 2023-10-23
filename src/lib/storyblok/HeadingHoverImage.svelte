@@ -32,7 +32,7 @@
 	let image_src = '';
 
 	const unsubscribe = heading_hover_media.subscribe((value: any) => {
-		if (value) image_src = value.filename;
+		if (value) image_src = value;
 	});
 
 	onDestroy(unsubscribe);

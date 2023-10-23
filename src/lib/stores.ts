@@ -24,6 +24,6 @@ export const backgroundTheme = writable('light' as 'light' | 'dark');
 // work items hover state
 export const project_list_hover = writable(null as string | null);
 
-//
+// image heading hover state
 export const heading_hover_media = writable(null as string | null);
 

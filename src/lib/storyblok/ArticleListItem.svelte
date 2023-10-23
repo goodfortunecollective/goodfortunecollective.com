@@ -46,7 +46,7 @@
 	};
 
 	function handleMouseEnter() {
-		heading_hover_media.set(blok.article.content.thumbnail);
+		heading_hover_media.set(blok.article.content.thumbnail.filename);
 	}
 
 	function handleMouseLeave() {
