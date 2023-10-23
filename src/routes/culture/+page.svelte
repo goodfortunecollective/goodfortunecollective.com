@@ -13,7 +13,7 @@
 </script>
 
 <section class="pt-[var(--header-height)]">
-	<HeadingHoverImage />
+	<HeadingHoverImage size="xl" />
 	{#if data.story}
 		<StoryblokComponent blok={data.story.content} />
 	{/if}
