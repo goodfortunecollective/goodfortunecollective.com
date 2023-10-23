@@ -9,18 +9,6 @@
 
 	export let blok: any;
 
-	const backgroundStyle = cva('relative pt-8 md:pt-32 xl:pt-48', {
-		variants: {
-			theme: {
-				light: '',
-				dark: 'bg-neutral-950'
-			}
-		},
-		defaultVariants: {
-			theme: 'light'
-		}
-	});
-
 	const hightlightStyle = cva('', {
 		variants: {
 			theme: {
@@ -55,7 +43,7 @@
 	use:storyblokEditable={blok}
 	{...$$restProps}
 	id="footer"
-	class={backgroundStyle({ theme: $backgroundTheme })}
+	class="relative pt-8 md:pt-32 xl:pt-48"
 >
 	<div class="relative z-[1] w-full py-6">
 		<div class="grid grid-cols-12 py-2">

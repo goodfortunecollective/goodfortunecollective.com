@@ -11,7 +11,7 @@
 	});
 </script>
 
-<section class="about">
+<section>
 	{#if data.story}
 		<StoryblokComponent blok={data.story.content} />
 	{/if}

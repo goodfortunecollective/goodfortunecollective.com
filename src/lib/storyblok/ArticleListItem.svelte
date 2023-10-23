@@ -4,13 +4,10 @@
 
 	import { cls } from '$lib/styles';
 	import { base } from '$app/paths';
-	import { dev } from '$app/environment';
 	import { Heading } from '$lib/components';
 	import { backgroundTheme, heading_hover_media } from '$lib/stores';
 
 	export let blok: any;
-
-	console.log('blok ', blok);
 
 	const headingStyle = cva('no-underline', {
 		variants: {

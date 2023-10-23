@@ -10,6 +10,7 @@
 	import gsap, { ScrollTrigger } from '$lib/gsap';
 	import { lenis } from '$lib/stores';
 	import { getComponentByName } from '$lib/storyblok';
+	import { ProjectListHover } from '$lib/components';
 
 	import type { LayoutData } from './$types';
 
@@ -18,7 +19,6 @@
 	import Curtains from './Curtains.svelte';
 	import PageTransition from './PageTransition.svelte';
 	import PageTransitionAnim from './PageTransitionAnim.svelte';
-	import ProjectListHover from '$lib/components/ProjectListHover.svelte';
 
 	import '../app.css';
 
@@ -112,6 +112,7 @@
 {#if data.settings}
 	<StoryblokComponent blok={getComponentByName(data.settings.content, 'header')} />
 {/if}
+
 <main bind:this={ref} class="overflow-hidden">
 	<PageTransition pathname={data.pathname}>
 		<slot key={data.pathname} />

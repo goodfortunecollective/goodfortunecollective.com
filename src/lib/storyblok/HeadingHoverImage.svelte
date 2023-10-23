@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { storyblokEditable } from '@storyblok/svelte';
 	import { spring } from 'svelte/motion';
 	import { onDestroy } from 'svelte';
 	import { cva } from 'class-variance-authority';
@@ -6,7 +7,7 @@
 	import { cls } from '$lib/styles';
 	import { heading_hover_media } from '$lib/stores';
 
-	export let size: 'sm' | 'md' | 'lg' | 'xl' = 'lg';
+	export let blok: any;
 
 	const variants = cva('w-full font-degular-display', {
 		variants: {
@@ -39,9 +40,13 @@
 
 <svelte:window on:mousemove={onMouseMove} />
 
-<div class="fixed bottom-0 left-0 right-0 top-0 flex items-center justify-center">
+<div
+	use:storyblokEditable={blok}
+	{...$$restProps}
+	class="fixed bottom-0 left-0 right-0 top-0 flex items-center justify-center"
+>
 	<div
-		class={cls('cursor absolute left-0 top-0 overflow-hidden', variants({ size }))}
+		class={cls('cursor absolute left-0 top-0 overflow-hidden', variants({ size: blok.size }))}
 		style:--x={`${$mouseCoords.x}px`}
 		style:--y={`${$mouseCoords.y}px`}
 	>

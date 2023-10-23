@@ -8,6 +8,7 @@ import Footer from './Footer.svelte';
 import Header from './Header.svelte';
 import Heading from './Heading.svelte';
 import HeadingDescription from './HeadingDescription.svelte';
+import HeadingHoverImage from './HeadingHoverImage.svelte';
 import HeadingList from './HeadingList.svelte';
 import HeadingListItem from './HeadingListItem.svelte';
 import HeadlineImages from './HeadlineImages.svelte';
@@ -20,8 +21,8 @@ import ImagesList from './ImagesList.svelte';
 import ImageAndText from './ImageAndText.svelte';
 import JobList from './JobList.svelte';
 import Link from './Link.svelte';
-import Member from './Member.svelte';
-import Members from './Members.svelte';
+import MemberItem from './MemberItem.svelte';
+import MemberList from './MemberList.svelte';
 import Process from './Process.svelte';
 import ProjectsList from './ProjectsList.svelte';
 import Page from './Page.svelte';
@@ -46,6 +47,7 @@ export const components: any = {
 	'header': Header,
 	'heading': Heading,
 	'heading-description': HeadingDescription,
+	'heading-hover-image': HeadingHoverImage,
 	'heading-list': HeadingList,
 	'heading-list-item': HeadingListItem,
 	'headline-images': HeadlineImages,
@@ -58,8 +60,8 @@ export const components: any = {
 	'images-list': ImagesList,
 	'job-list': JobList,
 	'link': Link,
-	'member': Member,
-	'members': Members,
+	'member-item': MemberItem,
+	'member-list': MemberList,
 	'projects-list': ProjectsList,
 	'page': Page,
 	'process': Process,
