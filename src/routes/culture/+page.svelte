@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
+	import { HeadingHoverImage } from '$lib/components/';
 
 	export let data;
 
@@ -12,6 +13,7 @@
 </script>
 
 <section class="pt-[var(--header-height)]">
+	<HeadingHoverImage />
 	{#if data.story}
 		<StoryblokComponent blok={data.story.content} />
 	{/if}

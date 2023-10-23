@@ -6,7 +6,7 @@
 	import { base } from '$app/paths';
 	import { dev } from '$app/environment';
 	import { Heading } from '$lib/components';
-	import { backgroundTheme } from '$lib/stores';
+	import { backgroundTheme, heading_hover_media } from '$lib/stores';
 
 	export let blok: any;
 
@@ -47,11 +47,24 @@
 		secondary: 'h2',
 		tertiary: 'h3'
 	};
+
+	function handleMouseEnter() {
+		heading_hover_media.set(blok.article.content.thumbnail);
+	}
+
+	function handleMouseLeave() {
+		heading_hover_media.set(null);
+	}
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps}>
 	{#if blok.article}
-		<a class="mb-16 lg:mb-32" href="{base}/culture/{blok.article.slug}">
+		<a
+			class="mb-16 lg:mb-32"
+			href="{base}/culture/{blok.article.slug}"
+			on:mouseenter={handleMouseEnter}
+			on:mouseleave={handleMouseLeave}
+		>
 			<span class="mt-16 inline-block">
 				{#if blok.article.tag_list}
 					<span class={cls('flex flex-row gap-2 pb-4', textStyle({ theme: $backgroundTheme }))}>
