@@ -20,7 +20,7 @@
 	{...$$restProps}
 	on:mouseenter={handleMouseEnter}
 	on:mouseleave={handleMouseLeave}
-	class="h-20 w-full border-b border-gray-500 last:border-0 hover:bg-red-500"
+	class="h-20 w-full border-b border-gray-500 last:border-0"
 >
 	<span class="align-center flex flex-row py-4 text-left">
 		<Heading size="h3" as="h3" class="w-2/3">

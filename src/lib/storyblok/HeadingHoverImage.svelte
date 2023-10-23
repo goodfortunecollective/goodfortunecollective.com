@@ -53,9 +53,9 @@
 		{#if image_src}
 			<img
 				src={image_src}
-				class="img inline h-full w-auto origin-center rounded-full object-cover"
+				class="img inline h-full w-auto origin-center rounded-full object-cover transition-all duration-500 ease-out"
 				width="auto"
-				height="500px"
+				height="100%"
 				alt=""
 				style:--scale={$heading_hover_media != null ? '100%' : '0%'}
 			/>
@@ -69,7 +69,6 @@
 	}
 
 	.img {
-		transform: scale(var(--scale, --scale));
-		transition: transform 0.4s;
+		clip-path: circle(var(--scale) at 50% 50%);
 	}
 </style>
