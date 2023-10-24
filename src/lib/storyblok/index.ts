@@ -1,5 +1,7 @@
 import ArticleList from './ArticleList.svelte';
+import ArticleHeadline from './ArticleHeadline.svelte';
 import ArticleListItem from './ArticleListItem.svelte';
+import ArticleText from './ArticleText.svelte';
 import BackgroundTheme from './BackgroundTheme.svelte';
 import Container from './Container.svelte';
 import Figure from './Figure.svelte';
@@ -37,8 +39,10 @@ import TwoCols from './TwoCols.svelte';
 import Video from './Video.svelte';
 
 export const components: any = {
+	'article-headline': ArticleHeadline,
 	'article-list': ArticleList,
 	'article-list-item': ArticleListItem,
+	'article-text': ArticleText,
 	'background-theme': BackgroundTheme,
 	'container': Container,
 	'figure': Figure,

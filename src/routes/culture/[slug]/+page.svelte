@@ -1,32 +1,20 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
-	import { useStoryblokBridge, renderRichText } from '@storyblok/svelte';
+	import { onMount } from 'svelte';
+	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 
 	import { base } from '$app/paths';
 	import { Link, Heading } from '$lib/components';
-	import TextTransition from '$lib/components/TextTransition.svelte';
 
 	export let data;
-	let publishedAt = new Date(data.story.published_at);
-	let publishedAtFormatted =
-		publishedAt.toLocaleString('default', { month: 'short' }) +
-		' ' +
-		publishedAt.getDay() +
-		', ' +
-		publishedAt.getFullYear();
-
-	$: content = renderRichText(data.story.content.content);
 
 	onMount(() => {
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
 	});
-
-	onDestroy(() => {});
 </script>
 
-<section class="pb-32 pt-[var(--header-height)]">
+<section class="pt-[var(--header-height)]">
 	<div class="mb-8 mt-24 grid grid-cols-12">
 		<div class="col-span-10 col-start-2 lg:col-span-4 lg:col-start-2">
 			<span class="inline-block rotate-180">
@@ -36,38 +24,24 @@
 	</div>
 	<div class="grid grid-cols-12">
 		{#if data.story}
-			<Heading as="h1" size="h2" class="col-span-10 col-start-2 mb-6 lg:col-span-4 lg:col-start-2"
+			<Heading as="h1" size="h2" class="col-span-10 col-start-2 mb-6 lg:col-span-8 lg:col-start-2"
 				>{data.story.content.title}</Heading
 			>
 			{#if data.story.content.thumbnail}
-				<figure class="col-start-0 post-image col-span-9 mb-16">
-					<img src={data.story.content.thumbnail.filename} class="post-img" alt={data.story.name} />
+				<figure class="col-start-0 col-span-12 mb-32 lg:col-span-9">
+					<img src={data.story.content.thumbnail.filename} class="w-full" alt={data.story.name} />
 				</figure>
 			{/if}
 
 			<Heading
-				as="h2"
+				as="h4"
 				size="h6"
-				class="title col-span-10 col-start-2 w-full break-keep md:col-span-2 md:col-start-2 xl:w-[75%]"
-				>{publishedAtFormatted}</Heading
+				class="col-span-10 col-start-2 w-full  break-keep uppercase md:col-span-2 md:col-start-2 xl:w-[75%]"
+				><strong class="tracking-widest">2 min read</strong></Heading
 			>
-			<div
-				class="culture-single-content col-span-10 col-start-2 text-lg md:col-span-6 md:col-start-4"
-			>
-				<div class="flex flex-col gap-4">
-					<TextTransition>{@html content}</TextTransition>
-				</div>
-			</div>
+			{#each data.story.content.content as b}
+				<StoryblokComponent blok={b} />
+			{/each}
 		{/if}
 	</div>
 </section>
-
-<style>
-	.post-img {
-		width: 100%;
-	}
-
-	.culture-single-content :global(p) {
-		margin-bottom: 1.5rem;
-	}
-</style>

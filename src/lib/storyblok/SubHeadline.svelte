@@ -4,9 +4,6 @@
 	import { Heading } from '$lib/components';
 
 	export let blok: any;
-
-	let titleSize = 'h3';
-	if (blok.titleSize) titleSize = blok.titleSize;
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
@@ -15,7 +12,7 @@
 			class={'subheadline-title-cont col-span-10 col-start-2 lg:col-start-2 ' +
 				(blok.titleFullWidth ? 'lg:col-span-8' : 'lg:col-span-4')}
 		>
-			<Heading as="h2" size={titleSize} class="leading-extra-tight">{blok.title}</Heading>
+			<Heading as="h2" size={blok.titleSize} class="leading-extra-tight">{blok.title}</Heading>
 			{#if blok.links.length}
 				<div class="mt-8 hidden lg:block">
 					{#each blok.links as b}
@@ -40,10 +37,3 @@
 		{/if}
 	</div>
 </div>
-
-<style lang="scss">
-	@import '../../vars.scss';
-	.text-beige {
-		color: #dbd5bf;
-	}
-</style>
