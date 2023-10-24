@@ -3,7 +3,7 @@
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 
 	import { base } from '$app/paths';
-	import { Link, Heading } from '$lib/components';
+	import { Link, Heading, Image } from '$lib/components';
 
 	export let data;
 
@@ -47,15 +47,15 @@
 				>{data.story.content.title}</Heading
 			>
 			{#if data.story.content.thumbnail}
-				<figure class="col-start-0 col-span-12 mb-32 lg:col-span-9">
-					<img src={data.story.content.thumbnail.filename} class="w-full" alt={data.story.name} />
+				<figure class="col-start-0 col-span-12 mb-16 mt-8 lg:col-span-9">
+					<Image src={data.story.content.thumbnail.filename} class="w-full" alt={data.story.name} />
 				</figure>
 			{/if}
 
 			<Heading
 				as="h4"
 				size="h6"
-				class="col-span-10 col-start-2 w-full  break-keep uppercase md:col-span-2 md:col-start-2 xl:w-[75%]"
+				class="col-span-10 col-start-2 w-full  break-keep uppercase md:col-span-2 md:col-start-2 lg:translate-y-4 xl:w-[75%]"
 				><strong class="tracking-widest">{getStoryReadTime()} min read</strong></Heading
 			>
 			{#each data.story.content.content as b}
