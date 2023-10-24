@@ -43,7 +43,7 @@
 <div
 	use:storyblokEditable={blok}
 	{...$$restProps}
-	class="fixed bottom-0 left-0 right-0 top-0 flex items-center justify-center"
+	class="fixed bottom-0 left-0 right-0 top-0 -z-1 flex items-center justify-center"
 >
 	<div
 		class={cls('cursor absolute left-0 top-0 overflow-hidden', variants({ size: blok.size }))}

@@ -64,6 +64,9 @@ export default {
 				wide: '.025em',
 				wider: '.05em',
 				widest: '.15em'
+			},
+			zIndex: {
+				'1': '1',
 			}
 		}
 	},

@@ -19,8 +19,8 @@
 		<span class="arrow arrow-default" /><span class="link-circle flex items-center justify-center">
 			<span class="arrow arrow-hover" />
 		</span>
-	</span></a
->
+	</span>
+</a>
 
 <style lang="scss">
 	@import '../../vars.scss';
