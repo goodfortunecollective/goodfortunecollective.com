@@ -25,7 +25,7 @@
 	{...$$restProps}
 	class={cls(blok.class, variants({ theme: $backgroundTheme }))}
 >
-	<ul class="m-auto mt-16 max-w-screen-xl flex-col items-center">
+	<ul class="m-auto mt-16 flex-col items-center">
 		{#each blok.children as b}
 			<StoryblokComponent blok={b} />
 		{/each}

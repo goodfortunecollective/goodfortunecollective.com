@@ -20,16 +20,16 @@
 	{...$$restProps}
 	on:mouseenter={handleMouseEnter}
 	on:mouseleave={handleMouseLeave}
-	class="h-20 w-full border-b border-gray-500 last:border-0"
+	class="h-auto w-full border-b border-gray-500 last:border-0 lg:h-20"
 >
-	<span class="align-center flex flex-row py-4 text-left">
-		<Heading size="h3" as="h3" class="w-2/3">
+	<span class="align-center block py-4 text-left lg:flex lg:flex-row">
+		<Heading size="h3" as="h3" class="w-full lg:w-2/3">
 			{blok.name}
 		</Heading>
 		<Heading
 			size="h6"
 			as="h3"
-			class="flex w-1/3 items-center font-bold uppercase tracking-widest text-white"
+			class="flex w-full items-center font-bold uppercase tracking-widest text-white lg:w-1/3"
 		>
 			<small>{blok.role}</small>
 		</Heading>

@@ -40,6 +40,18 @@
 		}
 	});
 
+	const childrenStyle = cva('col-span-10 col-start-2  ', {
+		variants: {
+			align: {
+				left: 'lg:col-span-2 lg:col-start-2 lg:pt-12',
+				right: 'flex lg:justify-end lg:-translate-y-16'
+			}
+		},
+		defaultVariants: {
+			align: 'left'
+		}
+	});
+
 	$: content = renderRichText(blok.content);
 </script>
 
@@ -60,19 +72,21 @@
 			</div>
 		</div>
 		{#if blok.children.length}
-			<div class="col-span-10 col-start-2 lg:col-span-2 lg:col-start-2 lg:pt-12">
+			<div class={childrenStyle({ align: blok.align })}>
 				{#each blok.children as b}
 					<StoryblokComponent blok={b} />
 				{/each}
 			</div>
 		{/if}
-		<div class="col-span-10 col-start-2 lg:col-span-6 lg:col-start-5">
-			<div
-				class="max-w-screen-xl text-xl leading-9 lg:pt-12 xl:text-2xl 4xl:text-4xl 4xl:leading-loose"
-				{...$$restProps}
-			>
-				<TextTransition>{@html content}</TextTransition>
+		{#if content}
+			<div class="col-span-10 col-start-2 lg:col-span-6 lg:col-start-5">
+				<div
+					class="max-w-screen-xl text-xl leading-9 lg:pt-12 xl:text-2xl 4xl:text-4xl 4xl:leading-loose"
+					{...$$restProps}
+				>
+					<TextTransition>{@html content}</TextTransition>
+				</div>
 			</div>
-		</div>
+		{/if}
 	</div>
 </div>
