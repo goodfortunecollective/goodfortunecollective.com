@@ -31,7 +31,7 @@
 			as="h3"
 			class="flex w-1/3 items-center font-bold uppercase tracking-widest text-white"
 		>
-			{blok.role}
+			<small>{blok.role}</small>
 		</Heading>
 	</span>
 </li>
