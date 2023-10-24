@@ -1,14 +1,13 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { ScrollTrigger } from '$lib/gsap';
-	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	let el!: HTMLElement;
 	let scrollTrigger!: ScrollTrigger;
 
 	$: parallaxEffect = 0 as number;
 
-	useTransitionReady(() => {
+	onMount(() => {
 		scrollTrigger = ScrollTrigger.create({
 			trigger: el,
 			start: 'top bottom',
