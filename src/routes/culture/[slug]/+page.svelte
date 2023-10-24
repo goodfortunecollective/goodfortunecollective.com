@@ -7,6 +7,25 @@
 
 	export let data;
 
+	function getStoryReadTime(): number {
+		let paragraphs: string[] = [];
+		data.story.content.content.forEach((b: any) => {
+			if (b.component === 'article-text') {
+				b.content.content.forEach((c: any) => {
+					if (c.type === 'paragraph' && c.content) {
+						c.content.forEach((t: any) => {
+							paragraphs.push(t.text);
+						});
+					}
+				});
+			}
+		});
+
+		const words = paragraphs.join(' ').split(' ').length;
+
+		return Math.ceil(words / 200);
+	}
+
 	onMount(() => {
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
@@ -37,7 +56,7 @@
 				as="h4"
 				size="h6"
 				class="col-span-10 col-start-2 w-full  break-keep uppercase md:col-span-2 md:col-start-2 xl:w-[75%]"
-				><strong class="tracking-widest">2 min read</strong></Heading
+				><strong class="tracking-widest">{getStoryReadTime()} min read</strong></Heading
 			>
 			{#each data.story.content.content as b}
 				<StoryblokComponent blok={b} />

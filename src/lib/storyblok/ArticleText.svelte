@@ -13,5 +13,5 @@
 	{...$$restProps}
 	class="col-span-10 col-start-2 text-xl lg:col-span-6 lg:col-start-4"
 >
-	<TextTransition>{@html content}</TextTransition>
+	<span class="[&>p]:my-4">{@html content}</span>
 </div>

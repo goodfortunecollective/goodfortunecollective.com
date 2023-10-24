@@ -6,6 +6,6 @@
 	export let blok: any;
 </script>
 
-<div use:storyblokEditable={blok} {...$$restProps} class="col-span-10 col-start-2 my-16">
+<div use:storyblokEditable={blok} {...$$restProps} class="col-span-10 col-start-2 my-8">
 	<Heading size="h2" as="h2">{blok.content}</Heading>
 </div>
