@@ -65,7 +65,7 @@
 				<ul class=" whitespace-nowrap">
 					{#each blok.tags as b}
 						<li class={cls('mb-8 inline-block', textStyle({ theme: $backgroundTheme }))}>
-							<span class="mx-8 flex items-baseline">
+							<span class="mx-8 flex items-center">
 								<Heading class="mr-16 uppercase">
 									<StoryblokComponent blok={b} />
 								</Heading>
