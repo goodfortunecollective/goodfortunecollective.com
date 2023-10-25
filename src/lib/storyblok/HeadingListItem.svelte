@@ -8,24 +8,21 @@
 	$: content = renderRichText(blok.content);
 </script>
 
-<div use:storyblokEditable={blok} {...$$restProps}>
-	{#if blok.heading}
-		<dt class="mb-4 flex gap-4">
-			<NumberedListItem index={$$restProps.index} />
-			<span class="font-bold uppercase 3xl:text-2xl 4xl:text-3xl">
-				<TextTransition>{blok.label}</TextTransition>
-			</span>
-		</dt>
-		<dd class="text-xl leading-7 4xl:text-3xl">
-			<Heading as="h3" size="h2">{blok.heading}</Heading>
-			<RichtextTransition>{@html content}</RichtextTransition>
-		</dd>
-	{:else}
-		<div class="flex flex-wrap items-start gap-4 md:flex-nowrap">
-			<NumberedListItem index={$$restProps.index} />
-			<dd class="text-xl leading-7 4xl:text-3xl">
-				<RichtextTransition>{@html content}</RichtextTransition>
-			</dd>
-		</div>
-	{/if}
+<div use:storyblokEditable={blok} {...$$restProps} class="grid grid-cols-12">
+	<div class="col-span-2 col-start-2 lg:col-span-1 lg:col-start-3">
+		<NumberedListItem index={$$restProps.index} />
+	</div>
+	<dt class="col-span-6 col-start-4 lg:col-span-6 lg:col-start-4">
+		<span class="font-bold uppercase 3xl:text-2xl 4xl:text-3xl">
+			<TextTransition>{blok.label}</TextTransition>
+		</span>
+	</dt>
+	<dd
+		class="col-span-7 col-start-2 mt-8 flex flex-col gap-4 text-xl leading-7 lg:col-span-6 lg:col-start-4 4xl:text-3xl"
+	>
+		<Heading as="h3" size="h2" class="w-full leading-tightest lg:leading-tightest"
+			>{blok.heading}</Heading
+		>
+		<RichtextTransition class="w-full">{@html content}</RichtextTransition>
+	</dd>
 </div>

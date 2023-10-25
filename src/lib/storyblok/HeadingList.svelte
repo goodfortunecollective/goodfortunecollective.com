@@ -4,29 +4,10 @@
 
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
-	import { Heading } from '$lib/components';
 
 	export let blok: any;
 
-	let indexStart = [6, 2, 5, 2];
-
-	if (blok.titleFullWidth) {
-		indexStart = [3, 5, 4, 5];
-	}
-
-	const containerStyle = cva('relative', {
-		variants: {
-			layoutDirection: {
-				left: 'flex-row',
-				right: 'flex-row-reverse'
-			}
-		},
-		defaultVariants: {
-			layoutDirection: 'left'
-		}
-	});
-
-	const textStyle = cva('relative', {
+	const variants = cva('', {
 		variants: {
 			theme: {
 				light: '',
@@ -42,42 +23,11 @@
 <div
 	use:storyblokEditable={blok}
 	{...$$restProps}
-	class={cls('px-6 lg:px-0', containerStyle({ layoutDirection: blok.layoutDirection }), blok.class)}
+	class={cls(variants({ theme: $backgroundTheme }), blok.class)}
 >
-	<div class={'relative mb-32 grid grid-cols-12' + (blok.titleFullWidth ? '' : 'lg:absolute')}>
-		<Heading
-			as="h3"
-			size="h1"
-			class={'col-span-10 col-start-2 lg:col-start-2 ' +
-				(blok.titleFullWidth ? 'lg:col-span-8' : 'lg:col-span-4')}>{blok.heading}</Heading
-		>
-	</div>
-
-	<dl
-		class={'grid grid-cols-12 gap-0 lg:gap-24' + (blok.titleFullWidth ? ' title-full-width' : '')}
-	>
+	<dl class="flex flex-col gap-24 lg:gap-32">
 		{#each blok.list as b, index}
-			<div class={cls('lg:col-span-4, col-span-7 col-start-2 mt-16 lg:col-start-3')}>
-				<div
-					class={cls(
-						'flex justify-start',
-						containerStyle({ layoutDirection: blok.layoutDirection }),
-						textStyle({ theme: $backgroundTheme })
-					)}
-				>
-					<StoryblokComponent blok={b} {index} />
-				</div>
-			</div>
+			<StoryblokComponent blok={b} {index} />
 		{/each}
 	</dl>
 </div>
-
-<style lang="scss">
-	@import '../../vars.scss';
-
-	.title-full-width :global(.text-xl) {
-		@media (min-width: $media-md) {
-			padding-left: 115px;
-		}
-	}
-</style>
