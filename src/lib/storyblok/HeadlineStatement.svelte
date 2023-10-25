@@ -2,10 +2,9 @@
 	import { renderRichText, storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
 
-	import { Heading } from '$lib/components';
+	import { Heading, RichtextTransition } from '$lib/components';
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
-	import TextTransition from '$lib/components/TextTransition.svelte';
 
 	export let blok: any;
 
@@ -84,7 +83,7 @@
 					class="max-w-screen-xl text-xl leading-9 lg:pt-12 xl:text-2xl 4xl:text-4xl 4xl:leading-loose"
 					{...$$restProps}
 				>
-					<TextTransition>{@html content}</TextTransition>
+					<RichtextTransition>{@html content}</RichtextTransition>
 				</div>
 			</div>
 		{/if}

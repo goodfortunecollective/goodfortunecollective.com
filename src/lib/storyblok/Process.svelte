@@ -2,9 +2,8 @@
 	import { renderRichText, storyblokEditable } from '@storyblok/svelte';
 
 	import { Draggable } from '$lib/gsap';
-	import { Heading } from '$lib/components';
+	import { Heading, RichtextTransition } from '$lib/components';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
-	import TextTransition from '$lib/components/TextTransition.svelte';
 
 	export let blok: any;
 	$: content = renderRichText(blok.content);
@@ -57,7 +56,7 @@
 	</div>
 	<div class="process-text grid grid-cols-12 pb-12 pt-10 md:pb-36 md:pt-32">
 		<div class="col-span-10 col-start-2 md:col-span-6 md:col-start-4">
-			<TextTransition>{@html content}</TextTransition>
+			<RichtextTransition>{@html content}</RichtextTransition>
 		</div>
 	</div>
 </div>

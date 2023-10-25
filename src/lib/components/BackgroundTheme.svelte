@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
+
 	import { ScrollTrigger } from '$lib/gsap';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
-
 	import { backgroundColor, backgroundTheme } from '$lib/stores';
 
 	export let startColor: string = '#fff';

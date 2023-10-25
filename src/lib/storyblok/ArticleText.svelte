@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { renderRichText, storyblokEditable } from '@storyblok/svelte';
 
-	import { TextTransition } from '$lib/components';
+	import { RichtextTransition } from '$lib/components';
 
 	export let blok: any;
 
@@ -13,5 +13,5 @@
 	{...$$restProps}
 	class="col-span-10 col-start-2 text-xl lg:col-span-6 lg:col-start-4"
 >
-	<span class="[&>p]:my-4">{@html content}</span>
+	<RichtextTransition class="[&_p]:my-4 [&_p]:leading-8">{@html content}</RichtextTransition>
 </div>

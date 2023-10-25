@@ -27,7 +27,7 @@
 </script>
 
 <svelte:element this={as} {...$$restProps} class={cls(variants({ size }), $$props.class)}>
-	<TextTransition type="heading" enabled={animated} {underline}>
+	<TextTransition enabled={animated} {underline}>
 		<slot />
 	</TextTransition>
 </svelte:element>

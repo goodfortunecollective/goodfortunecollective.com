@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
+
 	import { ScrollTrigger } from '$lib/gsap';
 
 	let el!: HTMLElement;
@@ -32,14 +33,14 @@
 			{...$$restProps}
 			src={$$props.src}
 			alt={$$props.alt}
-			class="image absolute bottom-0 left-0 right-0 top-0 h-full w-full object-cover"
+			class="c-image absolute bottom-0 left-0 right-0 top-0 h-full w-full object-cover"
 			style="--parallax-effect: {parallaxEffect}"
 		/>
 	</div>
 </div>
 
 <style lang="scss">
-	.image {
+	.c-image {
 		transform: translateY(calc(100px * var(--parallax-effect)))
 			scale(calc(1.05 + 0.2 * var(--parallax-effect)));
 	}

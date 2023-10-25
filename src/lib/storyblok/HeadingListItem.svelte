@@ -1,9 +1,7 @@
 <script lang="ts">
 	import { renderRichText, storyblokEditable } from '@storyblok/svelte';
 
-	import { NumberedListItem } from '$lib/components';
-	import TextTransition from '$lib/components/TextTransition.svelte';
-	import Heading from '$lib/components/Heading.svelte';
+	import { NumberedListItem, RichtextTransition, TextTransition, Heading } from '$lib/components';
 
 	export let blok: any;
 
@@ -12,21 +10,21 @@
 
 <div use:storyblokEditable={blok} {...$$restProps}>
 	{#if blok.heading}
-		<dt class="heading-list-item mb-4 flex gap-4">
+		<dt class="mb-4 flex gap-4">
 			<NumberedListItem index={$$restProps.index} />
-			<span class="font-bold uppercase 3xl:text-2xl 4xl:text-3xl"
-				><TextTransition type="heading">{blok.label}</TextTransition></span
-			>
+			<span class="font-bold uppercase 3xl:text-2xl 4xl:text-3xl">
+				<TextTransition>{blok.label}</TextTransition>
+			</span>
 		</dt>
 		<dd class="text-xl leading-7 4xl:text-3xl">
 			<Heading as="h3" size="h2">{blok.heading}</Heading>
-			<TextTransition>{@html content}</TextTransition>
+			<RichtextTransition>{@html content}</RichtextTransition>
 		</dd>
 	{:else}
 		<div class="flex flex-wrap items-start gap-4 md:flex-nowrap">
 			<NumberedListItem index={$$restProps.index} />
 			<dd class="text-xl leading-7 4xl:text-3xl">
-				<TextTransition>{@html content}</TextTransition>
+				<RichtextTransition>{@html content}</RichtextTransition>
 			</dd>
 		</div>
 	{/if}

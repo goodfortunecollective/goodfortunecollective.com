@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { storyblokEditable, renderRichText, StoryblokComponent } from '@storyblok/svelte';
+	import { storyblokEditable, renderRichText } from '@storyblok/svelte';
 
-	import { Heading } from '$lib/components';
-	import TextTransition from '$lib/components/TextTransition.svelte';
+	import { Heading, RichtextTransition } from '$lib/components';
 
 	export let blok: any;
 	$: left_col = renderRichText(blok.left_col);
@@ -16,11 +15,11 @@
 		</div>
 		<div class="col-span-10 col-start-2 mb-12 md:col-span-4 md:col-start-2 md:mb-0">
 			<Heading as="h4" size="h6" class="mb-4 uppercase">{blok.left_col_title}</Heading>
-			<TextTransition>{@html left_col}</TextTransition>
+			<RichtextTransition>{@html left_col}</RichtextTransition>
 		</div>
 		<div class="col-span-10 col-start-2 md:col-span-4 md:col-start-7">
 			<Heading as="h4" size="h6" class="mb-4 uppercase">{blok.right_col_title}</Heading>
-			<TextTransition>{@html right_col}</TextTransition>
+			<RichtextTransition>{@html right_col}</RichtextTransition>
 		</div>
 	</div>
 </div>

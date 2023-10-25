@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { onDestroy } from 'svelte';
+
 	import { useCurtains } from '$lib/utils/useCurtains';
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
 	import { Vec2 } from '$lib/vendors/curtainsjs/math/Vec2';
@@ -10,7 +12,6 @@
 	} from '@types/curtainsjs';
 	import { isPageHidden, isTransitioning } from '$lib/stores';
 	import gsap from '$lib/gsap';
-	import { onDestroy } from 'svelte';
 
 	export let content: any;
 	export let isTitleHovered: boolean = false;

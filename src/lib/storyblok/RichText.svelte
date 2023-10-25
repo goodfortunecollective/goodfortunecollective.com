@@ -7,7 +7,7 @@
 	} from '@storyblok/svelte';
 
 	import { components } from './';
-	import { TextTransition } from '$lib/components';
+	import { RichtextTransition } from '$lib/components';
 
 	export let blok: RichTextProps;
 
@@ -47,7 +47,7 @@
 <div use:storyblokEditable={blok}>
 	{#each contentSegments as contentSegment}
 		{#if contentSegment.html}
-			<TextTransition>{@html contentSegment.html}</TextTransition>
+			<RichtextTransition>{@html contentSegment.html}</RichtextTransition>
 		{:else}
 			<svelte:component this={contentSegment.component} blok={contentSegment.blok} />
 		{/if}

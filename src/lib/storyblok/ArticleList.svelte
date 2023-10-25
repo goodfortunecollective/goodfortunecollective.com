@@ -18,8 +18,6 @@
 			columns: 1
 		}
 	});
-
-	console.log('blok.content', blok.content);
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class="grid grid-cols-24 py-16">

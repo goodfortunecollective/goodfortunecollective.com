@@ -1,7 +1,8 @@
 <script lang="ts">
-	import TextTransition from '$lib/components/TextTransition.svelte';
 	import { renderRichText, storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
+
+	import { RichtextTransition } from '$lib/components';
 
 	export let blok: any;
 
@@ -21,11 +22,11 @@
 </script>
 
 <span use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	<TextTransition
+	<RichtextTransition
 		enabled={blok.animated}
 		class={variants({ intent: blok.strokeColor ? 'stroke' : 'default' })}
 		style={blok.strokeColor ? `-webkit-text-stroke: 1px ${blok.strokeColor.color};` : ''}
 	>
 		{@html content}
-	</TextTransition>
+	</RichtextTransition>
 </span>
