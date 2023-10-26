@@ -1,44 +1,34 @@
 <script lang="ts">
 	import { renderRichText, storyblokEditable } from '@storyblok/svelte';
+	import { cva } from 'class-variance-authority';
+
+	import { cls } from '$lib/styles';
+	import { backgroundTheme } from '$lib/stores';
+	import { Heading } from '$lib/components';
 
 	export let blok: any;
 
-	$: content = renderRichText(blok.content);
 	$: list = renderRichText(blok.list);
+
+	const headingStyle = cva('max-w-xl lg:leading-tightest leading-tightest', {
+		variants: {
+			theme: {
+				light: '',
+				dark: 'text-yellow-50'
+			}
+		},
+		defaultVariants: {
+			theme: 'light'
+		}
+	});
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	{@html content}
-	<div
-		class="list mt-4 grid grid-cols-2 gap-y-4 pt-4 text-sm uppercase tracking-wide md:mt-12 md:pt-8"
-	>
+	{blok.category}
+	<Heading size="h2" as="h2" class={headingStyle({ theme: $backgroundTheme })}>
+		{blok.title}
+	</Heading>
+	<div>
 		{@html list}
 	</div>
 </div>
-
-<style lang="scss">
-	@import '../../vars.scss';
-
-	.list {
-		position: relative;
-
-		// &:before,
-		// &:after {
-		// 	position: absolute;
-		// 	top: 0;
-		// 	left: 0;
-		// 	width: 35%;
-		// 	height: 1px;
-		// 	background: currentColor;
-		// 	content: '';
-		// }
-
-		// &:after {
-		// 	left: 50%;
-		// }
-
-		p {
-			margin-bottom: 1rem;
-		}
-	}
-</style>
