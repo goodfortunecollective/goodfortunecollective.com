@@ -10,6 +10,12 @@
 	let scrollEl!: HTMLElement;
 	let ctx: any = null;
 
+	$: innerWidth = 0;
+
+	function getScrollAmount() {
+		return -(scrollEl.scrollWidth - innerWidth);
+	}
+
 	useTransitionReady(
 		() => {
 			ctx = gsap.context(() => {
@@ -19,7 +25,7 @@
 					scrollTrigger: {
 						trigger: scrollEl,
 						start: 'center center',
-						end: () => '+=' + scrollEl.offsetWidth,
+						end: () => `+=${getScrollAmount() * -1}`,
 						pin: el,
 						scrub: true,
 						invalidateOnRefresh: true
@@ -32,6 +38,8 @@
 		}
 	);
 </script>
+
+<svelte:window bind:innerWidth />
 
 <div use:storyblokEditable={blok} {...$$restProps} bind:this={el}>
 	<div class="overflow">
