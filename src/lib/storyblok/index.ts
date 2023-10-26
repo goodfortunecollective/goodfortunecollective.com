@@ -25,7 +25,7 @@ import JobList from './JobList.svelte';
 import Link from './Link.svelte';
 import MemberItem from './MemberItem.svelte';
 import MemberList from './MemberList.svelte';
-import Process from './Process.svelte';
+import Paragraph from './Paragraph.svelte';
 import ProjectsList from './ProjectsList.svelte';
 import Page from './Page.svelte';
 import RichText from './RichText.svelte';
@@ -68,7 +68,7 @@ export const components: any = {
 	'member-list': MemberList,
 	'projects-list': ProjectsList,
 	'page': Page,
-	'process': Process,
+	'paragraph': Paragraph,
 	'project': Page,
 	'rich-text': RichText,
 	'seo': SEO,
