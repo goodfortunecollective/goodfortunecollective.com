@@ -72,5 +72,5 @@ export default {
 		}
 	},
 	plugins: [require('@tailwindcss/typography')],
-	safelist: ['bg-gray-200']
+	safelist: ['mt-8', 'mt-16','mt-24','mt-32', 'mb-8', 'mb-16','mb-24','mb-32']
 };
