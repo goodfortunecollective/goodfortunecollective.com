@@ -3,6 +3,7 @@ import ArticleHeadline from './ArticleHeadline.svelte';
 import ArticleListItem from './ArticleListItem.svelte';
 import ArticleText from './ArticleText.svelte';
 import BackgroundTheme from './BackgroundTheme.svelte';
+import CardsImage from './CardsImage.svelte';
 import CardsItem from './CardsItem.svelte';
 import CardsScroller from './CardsScroller.svelte';
 import Container from './Container.svelte';
@@ -46,6 +47,7 @@ export const components: any = {
 	'article-list-item': ArticleListItem,
 	'article-text': ArticleText,
 	'background-theme': BackgroundTheme,
+	'cards-image': CardsImage,
 	'cards-item': CardsItem,
 	'cards-scroller': CardsScroller,
 	'container': Container,

@@ -41,7 +41,7 @@
 
 <svelte:window bind:innerWidth />
 
-<div use:storyblokEditable={blok} {...$$restProps} bind:this={el}>
+<div use:storyblokEditable={blok} {...$$restProps} bind:this={el} class={blok.class}>
 	<div class="overflow">
 		<div class="grid grid-cols-12" bind:this={scrollEl}>
 			<div class="col-span-9 col-start-2 flex gap-8">
