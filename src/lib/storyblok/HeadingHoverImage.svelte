@@ -10,8 +10,8 @@
 
 	export let blok: any;
 
-	let ctx: any = null;
 	let imageEl!: HTMLElement;
+	let image_src = '';
 
 	const variants = cva('w-full font-degular-display', {
 		variants: {
@@ -33,38 +33,31 @@
 		$mouseCoords = { x: event.x, y: event.y };
 	};
 
-	let image_src = '';
-
 	const unsubscribe = heading_hover_media.subscribe((value: any) => {
-		ctx = gsap.context(() => {
-			if (value) {
-				image_src = value;
+		if (!imageEl) return;
 
-				gsap.set(imageEl, { opacity: 0.2, clipPath: 'circle(0%)' });
+		if (value) {
+			image_src = value;
 
-				gsap.to(imageEl, {
-					clipPath: 'circle(100%)',
-					opacity: 1,
-					duration: 0.3,
-					ease: 'css-ease.out',
-					overwrite: true
-				});
-			} else {
-				gsap.to(imageEl, {
-					clipPath: 'circle(0%)',
-					duration: 0.3,
-					opacity: 0.2,
-					ease: 'css-ease.in',
-					overwrite: true
-				});
-			}
-		}, imageEl);
+			gsap.to(imageEl, {
+				clipPath: 'circle(100%)',
+				opacity: 1,
+				duration: 0.3,
+				ease: 'css-ease.out',
+				overwrite: true
+			});
+		} else {
+			gsap.to(imageEl, {
+				clipPath: 'circle(0%)',
+				duration: 0.3,
+				opacity: 0.2,
+				ease: 'css-ease.in',
+				overwrite: true
+			});
+		}
 	});
 
-	onMount(() => {});
-
 	onDestroy(() => {
-		if (ctx) ctx.revert();
 		unsubscribe();
 	});
 </script>
@@ -81,16 +74,14 @@
 		style:--x={`${$mouseCoords.x}px`}
 		style:--y={`${$mouseCoords.y}px`}
 	>
-		{#if image_src}
-			<img
-				bind:this={imageEl}
-				src={image_src}
-				class="inline h-full w-auto origin-center rounded-full object-cover"
-				width="auto"
-				height="100%"
-				alt=""
-			/>
-		{/if}
+		<img
+			bind:this={imageEl}
+			src={image_src}
+			class="inline h-full w-auto origin-center rounded-full object-cover"
+			width="auto"
+			height="100%"
+			alt=""
+		/>
 	</div>
 </div>
 
