@@ -47,13 +47,13 @@
 <BackgroundTheme startColor="#1a1a1a" endColor="#1a1a1a" startTheme="dark" endTheme="dark" />
 
 <section class={cls(variants({ theme: data.story.content.theme_brand }))}>
-	<div
-		class="absolute inset-0 flex h-full w-full items-center pt-16 text-center"
-		on:mouseenter={() => (isTitleHovered = true)}
-		on:mouseleave={() => (isTitleHovered = false)}
-	>
+	<div class="absolute inset-0 flex h-full w-full items-center pt-16 text-center">
 		<div class="mx-auto grid grid-cols-12">
-			<div class="col-span-10 col-start-2">
+			<div
+				class="col-span-10 col-start-2"
+				on:mouseenter={() => (isTitleHovered = true)}
+				on:mouseleave={() => (isTitleHovered = false)}
+			>
 				<Heading as="h1" size="h1" class=" leading-tightest lg:leading-tightest">
 					{data.story.name}
 				</Heading>
