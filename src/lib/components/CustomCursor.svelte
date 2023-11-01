@@ -1,9 +1,9 @@
 <script lang="ts">
-	import gsap from '$lib/gsap';
 	import { onMount } from 'svelte';
 
 	import { lenis } from '$lib/stores';
 	import { lerp } from '$lib/utils/maths';
+	import gsap from '$lib/gsap';
 
 	export let cursorType: string | undefined;
 	export let isHidden: boolean = true;

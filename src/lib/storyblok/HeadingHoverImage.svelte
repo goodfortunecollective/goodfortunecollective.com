@@ -1,13 +1,17 @@
 <script lang="ts">
 	import { storyblokEditable } from '@storyblok/svelte';
 	import { spring } from 'svelte/motion';
-	import { onDestroy } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { cva } from 'class-variance-authority';
 
+	import gsap from '$lib/gsap';
 	import { cls } from '$lib/styles';
 	import { heading_hover_media } from '$lib/stores';
 
 	export let blok: any;
+
+	let ctx: any = null;
+	let imageEl!: HTMLElement;
 
 	const variants = cva('w-full font-degular-display', {
 		variants: {
@@ -23,7 +27,7 @@
 		}
 	});
 
-	const mouseCoords = spring({ x: 0, y: 0 }, { damping: 0.2, stiffness: 0.01 });
+	const mouseCoords = spring({ x: 0, y: 0 }, { damping: 0.1, stiffness: 0.01 });
 
 	const onMouseMove = (event: any) => {
 		$mouseCoords = { x: event.x, y: event.y };
@@ -32,10 +36,37 @@
 	let image_src = '';
 
 	const unsubscribe = heading_hover_media.subscribe((value: any) => {
-		if (value) image_src = value;
+		ctx = gsap.context(() => {
+			if (value) {
+				image_src = value;
+
+				gsap.set(imageEl, { opacity: 0.2, clipPath: 'circle(0%)' });
+
+				gsap.to(imageEl, {
+					clipPath: 'circle(100%)',
+					opacity: 1,
+					duration: 0.3,
+					ease: 'css-ease.out',
+					overwrite: true
+				});
+			} else {
+				gsap.to(imageEl, {
+					clipPath: 'circle(0%)',
+					duration: 0.3,
+					opacity: 0.2,
+					ease: 'css-ease.in',
+					overwrite: true
+				});
+			}
+		}, imageEl);
 	});
 
-	onDestroy(unsubscribe);
+	onMount(() => {});
+
+	onDestroy(() => {
+		if (ctx) ctx.revert();
+		unsubscribe();
+	});
 </script>
 
 <svelte:window on:mousemove={onMouseMove} />
@@ -52,12 +83,12 @@
 	>
 		{#if image_src}
 			<img
+				bind:this={imageEl}
 				src={image_src}
-				class="img inline h-full w-auto origin-center rounded-full object-cover transition-all duration-500 ease-out"
+				class="inline h-full w-auto origin-center rounded-full object-cover"
 				width="auto"
 				height="100%"
 				alt=""
-				style:--scale={$heading_hover_media != null ? '100%' : '0%'}
 			/>
 		{/if}
 	</div>
@@ -66,9 +97,5 @@
 <style lang="scss">
 	.cursor {
 		transform: translate(-50%, -50%) translate(var(--x, 0px), var(--y, 0px));
-	}
-
-	.img {
-		clip-path: circle(var(--scale) at 50% 50%);
 	}
 </style>
