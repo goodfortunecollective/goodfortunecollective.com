@@ -44,7 +44,13 @@
 	});
 </script>
 
-<BackgroundTheme startColor="#1a1a1a" endColor="#1a1a1a" startTheme="dark" endTheme="dark" />
+<BackgroundTheme
+	preload={true}
+	startColor="#1a1a1a"
+	endColor="#1a1a1a"
+	startTheme="dark"
+	endTheme="dark"
+/>
 
 <section class={cls(variants({ theme: data.story.content.theme_brand }))}>
 	<div class="absolute inset-0 flex h-full w-full items-center pt-16 text-center">

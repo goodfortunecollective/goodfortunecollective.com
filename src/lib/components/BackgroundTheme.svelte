@@ -1,9 +1,11 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 
 	import { ScrollTrigger } from '$lib/gsap';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 	import { backgroundColor, backgroundTheme } from '$lib/stores';
+
+	export let preload: boolean = false;
 
 	export let startColor: string = '#fff';
 	export let endColor: string = '#fff';
@@ -13,6 +15,15 @@
 
 	let el!: HTMLElement;
 	let scrollTrigger!: ScrollTrigger;
+
+	onMount(() => {
+		if (preload) {
+			setTimeout(() => {
+				backgroundTheme.set(endTheme);
+				backgroundColor.set(endColor);
+			}, 500);
+		}
+	});
 
 	useTransitionReady(() => {
 		scrollTrigger = ScrollTrigger.create({

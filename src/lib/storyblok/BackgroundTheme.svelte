@@ -9,6 +9,7 @@
 <div use:storyblokEditable={blok}>
 	<BackgroundTheme
 		{...$$restProps}
+		preload={blok.preload}
 		startColor={blok.startColor}
 		endColor={blok.endColor}
 		startTheme={blok.startTheme}
