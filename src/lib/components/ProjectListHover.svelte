@@ -1,9 +1,7 @@
 <script lang="ts">
-	import { cubicIn, cubicOut } from 'svelte/easing';
+	import { cubicOut } from 'svelte/easing';
 
-	//import { beforeNavigate, afterNavigate } from '$app/navigation';
 	import { project_list_hover } from '$lib/stores';
-
 	import { slide } from '$lib/transitions';
 
 	let list_hover: string | null = null;
@@ -13,16 +11,12 @@
 	project_list_hover.subscribe((value) => {
 		list_hover = value;
 	});
-
-	// afterNavigate(() => {
-	// 	project_list_hover.set(null);
-	// });
 </script>
 
 {#key title}
 	{#if !!list_hover}
 		<div
-			class="z-1 pointer-events-none fixed left-0 top-0 grid h-screen w-screen grid-cols-12 items-center font-degular-display text-6xl md:text-8xl lg:text-9xl xl:text-10xl 4xl:text-10xl"
+			class="pointer-events-none fixed left-0 top-0 z-1 grid h-screen w-screen grid-cols-12 items-center font-degular-display text-6xl md:text-8xl lg:text-9xl xl:text-10xl 4xl:text-10xl"
 		>
 			<span class="ProjectListHover-title relative col-span-10 col-start-2 block h-48 text-center">
 				<span

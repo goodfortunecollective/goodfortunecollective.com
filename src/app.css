@@ -17,17 +17,6 @@
 		transition: background-color 1s ease;
 	}
 
-	body.work-page::after {
-		content: "";
-		position: absolute;
-		top: 0;
-		right: 0;
-		height: 100vh;
-		left: 0;
-		background: rgb(26, 26, 26);
-		z-index: 0;
-	}
-
 	.preserve-3d {
 		transform-style: preserve-3d;
 	}

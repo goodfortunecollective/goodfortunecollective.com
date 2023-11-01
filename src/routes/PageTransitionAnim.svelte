@@ -131,10 +131,8 @@
 				drawCanvas(canvasTransition.enteringProgress, canvasTransition.leavingProgress);
 			},
 			onComplete: () => {
-				if ($lenis)
-					$lenis.scrollTo(0, {
-						immediate: true
-					});
+				if ($lenis) {
+				}
 
 				if (curtains) {
 					curtains.updateScrollValues(0, 0);
