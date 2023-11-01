@@ -36,6 +36,7 @@
 		},
 		() => {
 			ctx?.revert();
+			scrollTrigger?.kill();
 		}
 	);
 </script>

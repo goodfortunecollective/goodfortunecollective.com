@@ -14,6 +14,8 @@
 		lenis
 	} from '$lib/stores';
 
+	import { Heading } from '$lib/components';
+
 	import { useCurtains } from '$lib/utils/useCurtains';
 	import type { CurtainsInstance } from '$lib/utils/useCurtains';
 	import {
@@ -34,7 +36,8 @@
 	let ctx: CanvasRenderingContext2D | null = null;
 	const archStrength: number = 2;
 
-	let titleStyles;
+	let showTitle = false;
+
 	let list_hover: string | null = null;
 
 	project_list_hover.subscribe((value) => {
@@ -83,16 +86,6 @@
 		ctx.fillStyle = '#dbd5bf';
 		ctx.fillRect(0, 0, canvasDOMRect.width, canvasDOMRect.height);
 
-		if (list_hover) {
-			ctx.fillStyle = 'white';
-			ctx.font = titleStyles
-				? `${titleStyles.fontSize} ${titleStyles.fontFamily}`
-				: '160px degular-display, cursive';
-			ctx.textAlign = 'center';
-			ctx.textBaseline = 'middle';
-			ctx.fillText(list_hover, canvasDOMRect.width * 0.5, canvasDOMRect.height * 0.5);
-		}
-
 		ctx.restore();
 	};
 
@@ -120,12 +113,7 @@
 			duration: pageLeaveDuration / 1000,
 			ease: 'circ.inOut',
 			onStart: () => {
-				if (list_hover) {
-					const projectHoverEl = document.querySelector('.ProjectListHover-title');
-					if (projectHoverEl) {
-						titleStyles = window.getComputedStyle(projectHoverEl) as CSSStyleDeclaration;
-					}
-				}
+				if (list_hover) showTitle = true;
 			},
 			onUpdate: () => {
 				drawCanvas(canvasTransition.enteringProgress, canvasTransition.leavingProgress);
@@ -162,6 +150,7 @@
 
 				// reset project hover
 				project_list_hover.set(null);
+				showTitle = false;
 
 				const hash = $page.url.hash.slice(1);
 
@@ -199,6 +188,20 @@
 	class={cls('fixed left-0 top-0 z-40 h-full w-full', !$isTransitioning && 'pointer-events-none')}
 >
 	<canvas bind:this={canvasEl} class="absolute h-full w-full" />
+	{#if list_hover && showTitle}
+		<div class="absolute inset-0 mx-auto grid h-full w-full grid-cols-12 items-center text-center">
+			<div class="col-span-10 col-start-2">
+				<Heading
+					as="h1"
+					size="h1"
+					class="leading-extra-tight text-white lg:leading-extra-tight"
+					animated={false}
+				>
+					{list_hover}
+				</Heading>
+			</div>
+		</div>
+	{/if}
 </div>
 
 <style></style>

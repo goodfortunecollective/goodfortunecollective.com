@@ -54,7 +54,12 @@
 				on:mouseenter={() => (isTitleHovered = true)}
 				on:mouseleave={() => (isTitleHovered = false)}
 			>
-				<Heading as="h1" size="h1" class=" leading-tightest lg:leading-tightest">
+				<Heading
+					as="h1"
+					size="h1"
+					class="leading-extra-tight lg:leading-extra-tight"
+					animated={false}
+				>
 					{data.story.name}
 				</Heading>
 			</div>
@@ -154,5 +159,4 @@
 	{#if data.story}
 		<StoryblokComponent blok={data.story.content} />
 	{/if}
-	<ScrollActionToPage href={'/work'} label={'All projects'} />
 </section>

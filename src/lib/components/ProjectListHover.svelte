@@ -3,6 +3,7 @@
 
 	import { project_list_hover } from '$lib/stores';
 	import { slide } from '$lib/transitions';
+	import { Heading } from '$lib/components';
 
 	let list_hover: string | null = null;
 
@@ -16,21 +17,18 @@
 {#key title}
 	{#if !!list_hover}
 		<div
-			class="pointer-events-none fixed left-0 top-0 z-1 grid h-screen w-screen grid-cols-12 items-center font-degular-display text-6xl md:text-8xl lg:text-9xl xl:text-10xl 4xl:text-10xl"
+			class="pointer-events-none fixed left-0 top-0 z-1 grid h-screen w-screen grid-cols-12 items-center text-center"
 		>
-			<span class="ProjectListHover-title relative col-span-10 col-start-2 block h-48 text-center">
-				<span
-					in:slide|global={{
-						duration: 500,
-						direction: 'bottom',
-						easing: cubicOut
-					}}
-					out:slide|global={{ duration: 500, direction: 'top', easing: cubicOut }}
-					class="absolute block w-full"
+			<div class=" col-span-10 col-start-2">
+				<Heading
+					as="h1"
+					size="h1"
+					class="leading-extra-tight lg:leading-extra-tight"
+					animated={false}
 				>
 					{title}
-				</span>
-			</span>
+				</Heading>
+			</div>
 		</div>
 	{/if}
 {/key}

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { cva } from 'class-variance-authority';
+	import { renderRichText } from '@storyblok/svelte';
 
 	import { base } from '$app/paths';
 	import { cls } from '$lib/styles';
@@ -13,6 +14,8 @@
 	export let isMainItem: boolean;
 	export let layout: 'left' | 'right' = 'left';
 	export let theme: 'light' | 'dark' = 'light';
+
+	$: description = renderRichText(content.description);
 
 	const variants = cva('', {
 		variants: {
@@ -126,10 +129,10 @@
 					{name}
 				</h2>
 				<div class={cls('ProjectListItem-summary', variants({ theme: theme }))}>
-					{content.summary}
+					{@html description}
 				</div>
 			</div>
-			<div class="ProjectListItem-client uppercase">{content.client}</div>
+			<div class="ProjectListItem-client uppercase">{content.brand}</div>
 		</div>
 	</a>
 </div>
