@@ -3,7 +3,6 @@
 
 	import { ProjectListItem } from '$lib/components';
 	import { ScrollTrigger } from '$lib/gsap';
-	import { project_list_hover } from '$lib/stores';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	export let blok: any;
@@ -35,11 +34,6 @@
 				trigger: containerEl,
 				start: 'top center',
 				end: 'bottom center'
-				// onToggle: (self: any) => {
-				// 	if (!self.isActive) {
-				// 		$project_list_hover = '';
-				// 	}
-				// }
 			});
 		},
 		() => {

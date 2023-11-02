@@ -3,13 +3,7 @@
 	import { onMount, getContext } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent, renderRichText } from '@storyblok/svelte';
 
-	import {
-		Heading,
-		HoverPlane,
-		ScrollActionToPage,
-		BackgroundTheme,
-		RichtextTransition
-	} from '$lib/components';
+	import { Heading, HoverPlane, Video, BackgroundTheme, RichtextTransition } from '$lib/components';
 	import { cls } from '$lib/styles';
 
 	export let data;
@@ -125,7 +119,20 @@
 <section class={cls(variants({ theme: data.story.content.theme_brand }))}>
 	<div class="grid -translate-y-16 grid-cols-12 pb-16">
 		<div class="col-span-10 col-start-2">
-			<div class="aspect-video w-full bg-red-50"></div>
+			<div class="aspect-video w-full bg-red-50">
+				<Video
+					name={data.story.content.video_id}
+					videoID={data.story.content.video_id}
+					videoUrl={data.story.content.video_url}
+					posterUrl={data.story.content.video_poster?.filename
+						? data.story.content.video_poster.filename
+						: `https://vumbnail.com/${data.story.content.video_id}.jpg`}
+					autoplay={data.story.content.video_autoplay}
+					muted={data.story.content.video_autoplay}
+					loop={data.story.content.video_autoplay}
+					animated={false}
+				/>
+			</div>
 			<div class="py-16">
 				<Heading as="h2" size="h2">{data.story.content.statement}</Heading>
 			</div>
