@@ -2,7 +2,7 @@
 	import { fade } from 'svelte/transition';
 	import { quartOut, cubicOut } from 'svelte/easing';
 
-	import { isPageHidden, backgroundColor, backgroundTheme } from '$lib/stores';
+	import { isPageHidden } from '$lib/stores';
 	import { pageLeaveDuration, pageEnterDuration } from '$lib/utils/page-transitions';
 	import { pageTransitionPauseDuration } from '$lib/utils/page-transitions.js';
 
@@ -14,12 +14,9 @@
 	}
 
 	function onOldContentRemoved(e): void {
-		// old content has been removed, page is hidden
+		// old content has been removed, pa ge is hidden
 		// we can add curtains planes
 		isPageHidden.set(true);
-
-		backgroundColor.set('#fff');
-		backgroundTheme.set('light');
 	}
 </script>
 

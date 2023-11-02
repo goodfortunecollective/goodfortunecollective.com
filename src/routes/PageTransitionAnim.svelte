@@ -7,6 +7,8 @@
 
 	import { cls } from '$lib/styles';
 	import {
+		backgroundColor,
+		backgroundTheme,
 		isTransitioning,
 		isTransitionDone,
 		isPageHidden,
@@ -114,14 +116,16 @@
 			ease: 'circ.inOut',
 			onStart: () => {
 				if (list_hover) showTitle = true;
+
+				setTimeout(() => {
+					backgroundColor.set('#fff');
+					backgroundTheme.set('light');
+				}, 500);
 			},
 			onUpdate: () => {
 				drawCanvas(canvasTransition.enteringProgress, canvasTransition.leavingProgress);
 			},
 			onComplete: () => {
-				if ($lenis) {
-				}
-
 				if (curtains) {
 					curtains.updateScrollValues(0, 0);
 				}
@@ -185,25 +189,28 @@
 <svelte:window on:resize={onResize} />
 
 <div
-	class={cls('fixed left-0 top-0 z-40 h-full w-full', !$isTransitioning && 'pointer-events-none')}
+	class={cls(
+		'fixed inset-0 z-40  h-full w-full items-center overflow-hidden text-center',
+		!$isTransitioning && 'pointer-events-none'
+	)}
 >
-	<canvas bind:this={canvasEl} class="absolute h-full w-full" />
 	{#if list_hover && showTitle}
-		<div
-			class="absolute inset-0 mx-auto grid h-full w-full grid-cols-12 items-center pt-16 text-center"
-		>
-			<div class="col-span-10 col-start-2">
-				<Heading
-					as="h1"
-					size="h1"
-					class="leading-extra-tight text-white lg:leading-extra-tight"
-					animated={false}
-				>
-					{list_hover}
-				</Heading>
+		<div class="relative z-1 flex h-full w-full items-center text-center">
+			<div class="mx-auto grid grid-cols-12 pt-16">
+				<div class="col-span-10 col-start-2">
+					<Heading
+						as="h1"
+						size="h1"
+						class="leading-extra-tight text-white lg:leading-extra-tight"
+						animated={false}
+					>
+						{list_hover}
+					</Heading>
+				</div>
 			</div>
 		</div>
 	{/if}
+	<canvas bind:this={canvasEl} class="absolute inset-0 h-full w-full" />
 </div>
 
 <style></style>

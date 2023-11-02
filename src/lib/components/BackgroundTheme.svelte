@@ -21,7 +21,7 @@
 			setTimeout(() => {
 				backgroundTheme.set(endTheme);
 				backgroundColor.set(endColor);
-			}, 500);
+			}, 750);
 		}
 	});
 

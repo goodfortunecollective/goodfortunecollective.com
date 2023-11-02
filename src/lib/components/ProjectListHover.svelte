@@ -16,18 +16,18 @@
 
 {#key title}
 	{#if !!list_hover}
-		<div
-			class="pointer-events-none fixed left-0 top-0 z-1 grid h-screen w-screen grid-cols-12 items-center pt-16 text-center"
-		>
-			<div class="col-span-10 col-start-2">
-				<Heading
-					as="h1"
-					size="h1"
-					class="leading-extra-tight lg:leading-extra-tight"
-					animated={false}
-				>
-					{title}
-				</Heading>
+		<div class="pointer-events-none fixed inset-0 z-1 flex h-full w-full items-center text-center">
+			<div class="mx-auto grid grid-cols-12 pt-16">
+				<div class="col-span-10 col-start-2">
+					<Heading
+						as="h1"
+						size="h1"
+						class="leading-extra-tight lg:leading-extra-tight"
+						animated={false}
+					>
+						{title}
+					</Heading>
+				</div>
 			</div>
 		</div>
 	{/if}

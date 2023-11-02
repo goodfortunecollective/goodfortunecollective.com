@@ -7,7 +7,7 @@
 
 	import { isIntroDone, backgroundColor } from '$lib/stores';
 	import { page } from '$app/stores';
-	import gsap, { ScrollTrigger } from '$lib/gsap';
+	import gsap, { ScrollTrigger, CustomEase } from '$lib/gsap';
 	import { lenis } from '$lib/stores';
 	import { getComponentByName } from '$lib/storyblok';
 	import { ProjectListHover } from '$lib/components';
@@ -31,6 +31,11 @@
 	setContext('storyblok-preview', data.preview);
 
 	onMount(() => {
+		CustomEase.create('css-ease', 'M0,0 C0.25,0.1 0.25,1 1,1');
+		CustomEase.create('css-ease.in', 'M0,0 C0.42,0 1,1 1,1');
+		CustomEase.create('css-ease.out', 'M0,0 C0,0 0.58,1 1,1');
+		CustomEase.create('css-ease.in-out', 'M0,0 C0.42,0 0.58,1 1,1');
+
 		if (data.settings) {
 			useStoryblokBridge(
 				data.settings.id,
