@@ -217,7 +217,7 @@
 <svelte:window on:mousemove={onMouseMove} on:resize={onResize} />
 
 <section use:storyblokEditable={blok} {...$$restProps} class="grid h-screen grid-cols-12">
-	<div class="absolute z-[-1] h-[250vh] w-screen" style="opacity:{bgOpacity}" />
+	<div class="absolute z-[-1] h-[250vh] w-full" style="opacity:{bgOpacity}" />
 	<CustomCursor
 		isHidden={btnHidden}
 		cursorType={videoPlaying ? 'pause' : 'play'}

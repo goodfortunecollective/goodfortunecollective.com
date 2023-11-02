@@ -20,18 +20,19 @@
 	}
 </script>
 
-{#key pathname}
-	<div
-		in:fade|local={{
-			easing: cubicOut,
-			duration: pageEnterDuration * 0.5,
-			delay: pageLeaveDuration + pageTransitionPauseDuration + pageEnterDuration * 0.5
-		}}
-		out:fade|local={{ easing: quartOut, duration: 100, delay: pageLeaveDuration * 0.5 - 100 }}
-		on:outrostart={onPageChange}
-		on:outroend={onOldContentRemoved}
-		class="relative z-10"
-	>
-		<slot />
-	</div>
-{/key}
+<div class="relative z-10">
+	{#key pathname}
+		<div
+			in:fade|local={{
+				easing: cubicOut,
+				duration: pageEnterDuration * 0.5,
+				delay: pageLeaveDuration + pageTransitionPauseDuration + pageEnterDuration * 0.5
+			}}
+			out:fade|local={{ easing: quartOut, duration: 100, delay: pageLeaveDuration * 0.5 - 100 }}
+			on:outrostart={onPageChange}
+			on:outroend={onOldContentRemoved}
+		>
+			<slot />
+		</div>
+	{/key}
+</div>
