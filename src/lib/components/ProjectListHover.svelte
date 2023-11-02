@@ -17,9 +17,9 @@
 {#key title}
 	{#if !!list_hover}
 		<div
-			class="pointer-events-none fixed left-0 top-0 z-1 grid h-screen w-screen grid-cols-12 items-center text-center"
+			class="pointer-events-none fixed left-0 top-0 z-1 grid h-screen w-screen grid-cols-12 items-center pt-16 text-center"
 		>
-			<div class=" col-span-10 col-start-2">
+			<div class="col-span-10 col-start-2">
 				<Heading
 					as="h1"
 					size="h1"

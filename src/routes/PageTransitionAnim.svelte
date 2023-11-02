@@ -189,7 +189,9 @@
 >
 	<canvas bind:this={canvasEl} class="absolute h-full w-full" />
 	{#if list_hover && showTitle}
-		<div class="absolute inset-0 mx-auto grid h-full w-full grid-cols-12 items-center text-center">
+		<div
+			class="absolute inset-0 mx-auto grid h-full w-full grid-cols-12 items-center pt-16 text-center"
+		>
 			<div class="col-span-10 col-start-2">
 				<Heading
 					as="h1"

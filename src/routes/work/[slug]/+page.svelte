@@ -53,8 +53,8 @@
 />
 
 <section class={cls(variants({ theme: data.story.content.theme_brand }))}>
-	<div class="absolute inset-0 flex h-full w-full items-center pt-16 text-center">
-		<div class="mx-auto grid grid-cols-12">
+	<div class="absolute inset-0 flex h-full w-full items-center text-center">
+		<div class="mx-auto grid grid-cols-12 pt-16">
 			<div
 				class="col-span-10 col-start-2"
 				on:mouseenter={() => (isTitleHovered = true)}
