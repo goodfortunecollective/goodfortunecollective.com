@@ -5,7 +5,7 @@
 @layer base {
 	html {
 		-webkit-font-smoothing: antialiased;
-		font-family: 'Roboto', sans-serif;
+		font-family: 'tenon', sans-serif;
 	}
 
 	html,

@@ -26,7 +26,8 @@ export default {
 				'12xl': '120rem'
 			},
 			fontFamily: {
-				'degular-display': ['degular-display', 'cursive']
+				'degular-display': ['degular-display', 'cursive'],
+				'tenon': ['tenon', 'cursive']
 			},
 			fontSize: {
 				'10xl': '10rem'
