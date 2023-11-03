@@ -2,10 +2,11 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { storyblokEditable } from '@storyblok/svelte';
 
-	import { BackgroundTheme, CustomCursor } from '$lib/components';
+	import { BackgroundTheme } from '$lib/components';
 	import gsap, { SplitText } from '$lib/gsap';
 	import { clamp } from '$lib/utils/maths';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import { cursorType } from '$lib/stores';
 
 	export let blok: any;
 
@@ -18,7 +19,6 @@
 	let container!: HTMLElement;
 
 	let videoPlaying = blok.autoplay;
-	let btnHidden = true;
 
 	let constrain = 100;
 
@@ -194,17 +194,21 @@
 	);
 
 	function videoOnEnter() {
-		btnHidden = false;
+		cursorType.set(videoPlaying ? 'pause' : 'play');
 	}
 
 	function videoOnLeave() {
-		btnHidden = true;
+		cursorType.set('none');
 	}
 
 	function playPauseVideo() {
 		if (videoPlayer.paused) {
 			videoPlayer.play();
-		} else videoPlayer.pause();
+			cursorType.set('pause');
+		} else {
+			videoPlayer.pause();
+			cursorType.set('play');
+		}
 
 		videoPlaying = !videoPlaying;
 	}
@@ -218,12 +222,6 @@
 
 <section use:storyblokEditable={blok} {...$$restProps} class="grid h-screen grid-cols-12">
 	<div class="absolute z-[-1] h-[250vh] w-full" style="opacity:{bgOpacity}" />
-	<CustomCursor
-		isHidden={btnHidden}
-		cursorType={videoPlaying ? 'pause' : 'play'}
-		bgColor="#dbfa45"
-	/>
-
 	<div class="relative col-span-10 col-start-2 h-full w-full" bind:this={container}>
 		<div class="video-cont perspective-800 relative z-[9] h-full w-full" bind:this={videoContainer}>
 			<div

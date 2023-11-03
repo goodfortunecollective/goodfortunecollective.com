@@ -19,6 +19,7 @@
 	import Curtains from './Curtains.svelte';
 	import PageTransition from './PageTransition.svelte';
 	import PageTransitionAnim from './PageTransitionAnim.svelte';
+	import Cursor from './Cursor.svelte';
 
 	import '../app.css';
 
@@ -136,6 +137,8 @@
 <Loader on:complete={handleCompleteLoader} bind:hideLoader skip={data.preview} />
 
 <PageTransitionAnim bind:animateTransition={introComplete} />
+
+<Cursor />
 
 <style>
 </style>

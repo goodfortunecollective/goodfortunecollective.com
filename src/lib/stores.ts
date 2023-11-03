@@ -10,6 +10,8 @@ export const curtains = writable(null as CurtainsInstance);
 
 export const lenis = writable(null as null | Lenis)
 
+export const cursorType = writable('none' as 'none' | 'play' | 'pause');
+
 export const isIntroDone = writable(false as boolean);
 export const isTransitionDone = writable(false as boolean);
 

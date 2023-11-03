@@ -1,5 +1,4 @@
 export { default as BackgroundTheme } from './BackgroundTheme.svelte';
-export { default as CustomCursor } from './CustomCursor.svelte';
 export { default as Gfc } from './Gfc.svelte';
 export { default as Heading } from './Heading.svelte';
 export { default as HoverPlane } from './HoverPlane.svelte';

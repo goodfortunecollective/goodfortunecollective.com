@@ -4,7 +4,8 @@
 
 	import { cls } from '$lib/styles';
 	import gsap from '$lib/gsap';
-	import { CustomCursor, Image } from '$lib/components';
+	import { Image } from '$lib/components';
+	import { cursorType } from '$lib/stores';
 
 	let clazz: string = '';
 	export { clazz as class };
@@ -24,8 +25,6 @@
 	let videoContainer!: HTMLElement;
 	let video!: HTMLVideoElement;
 
-	let active: boolean = false;
-
 	$: innerWidth = 0;
 	$: offsetWidth = 0;
 
@@ -42,17 +41,20 @@
 	});
 
 	function activate() {
-		active = true;
+		cursorType.set(videoPlaying ? 'pause' : 'play');
 	}
 
 	function deactivate() {
-		active = false;
+		cursorType.set('none');
 	}
 
 	function showVideo() {
 		if (!videoVisible) {
 			videoVisible = true;
-			if (video) video.play();
+			if (video) {
+				video.play();
+				cursorType.set('pause');
+			}
 			videoPlaying = true;
 		} else {
 			playPauseVideo();
@@ -62,7 +64,11 @@
 	function playPauseVideo() {
 		if (video.paused) {
 			video.play();
-		} else video.pause();
+			cursorType.set('pause');
+		} else {
+			video.pause();
+			cursorType.set('play');
+		}
 
 		videoPlaying = !videoPlaying;
 	}
@@ -144,7 +150,6 @@
 			<Image class="relative h-auto w-full" src={posterUrl} alt={name} />
 		</figure>
 	</div>
-	<CustomCursor isHidden={!activate} cursorType={videoPlaying ? 'pause' : 'play'} />
 </div>
 
 <style lang="scss">

@@ -16,7 +16,6 @@ import HeadingDescription from './HeadingDescription.svelte';
 import HeadingHoverImage from './HeadingHoverImage.svelte';
 import HeadingList from './HeadingList.svelte';
 import HeadingListItem from './HeadingListItem.svelte';
-import HeadlineImages from './HeadlineImages.svelte';
 import HeadlineStatement from './HeadlineStatement.svelte';
 import HeadlineVideo from './HeadlineVideo.svelte';
 import ImageList from './ImageList.svelte';
@@ -60,7 +59,6 @@ export const components: any = {
 	'heading-hover-image': HeadingHoverImage,
 	'heading-list': HeadingList,
 	'heading-list-item': HeadingListItem,
-	'headline-images': HeadlineImages,
 	'headline-statement': HeadlineStatement,
 	'headline-video': HeadlineVideo,
 	'image-list': ImageList,
