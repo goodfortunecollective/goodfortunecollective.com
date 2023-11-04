@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { storyblokEditable } from '@storyblok/svelte';
 
+	import { Heading } from '$lib/components';
+
 	export let blok: any;
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps}>
-	<div class="mb-4 text-7xl md:mb-8 md:text-9xl">
+	<Heading as="h3" size="h1" class="leading-tightest lg:leading-tightest">
 		{blok.title}
-	</div>
-	<div class="text-zinc-500">{blok.content}</div>
+	</Heading>
+	<Heading as="h4" size="h6" class="uppercase">{blok.content}</Heading>
 </div>
