@@ -27,7 +27,7 @@
 		}
 	});
 
-	const textStyle = cva('text-xs tracking-widest uppercase', {
+	const textStyle = cva('flex flex-row gap-2 pb-4 text-xs tracking-widest uppercase', {
 		variants: {
 			theme: {
 				light: '',
@@ -64,7 +64,7 @@
 		>
 			<span class="mt-16 inline-block">
 				{#if blok.article.tag_list}
-					<span class={cls('flex flex-row gap-2 pb-4', textStyle({ theme: $backgroundTheme }))}>
+					<span class={textStyle({ theme: $backgroundTheme })}>
 						{#each blok.article.tag_list as tag}
 							<span>#{tag}</span>
 						{/each}
@@ -74,7 +74,7 @@
 					as="h2"
 					size={headingSize[blok.kind]}
 					underline
-					class={cls(headingStyle({ theme: $backgroundTheme, kind: blok.kind }), 'cool-link')}
+					class={headingStyle({ theme: $backgroundTheme, kind: blok.kind })}
 					>{blok.article.content.title}
 				</Heading>
 			</span>
