@@ -67,6 +67,9 @@ export default {
 				wider: '.05em',
 				widest: '.15em'
 			},
+			height: {
+				'128': '32rem',
+			},
 			zIndex: {
 				'1': '1',
 			}

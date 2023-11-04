@@ -7,7 +7,7 @@
 
 	export let blok: any;
 
-	const variants = cva('w-80 transition-colors duration-1000 ease-out', {
+	const variants = cva('h-full w-full transition-colors duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: '',
@@ -18,6 +18,19 @@
 			theme: 'light'
 		}
 	});
+
+	const imageStyle = cva('relative h-full w-full', {
+		variants: {
+			aspect: {
+				square: 'aspect-square',
+				video: 'aspect-video',
+				half: 'aspect-[1/2]'
+			}
+		},
+		defaultVariants: {
+			aspect: 'video'
+		}
+	});
 </script>
 
 <div
@@ -25,8 +38,8 @@
 	{...$$restProps}
 	class={cls(variants({ theme: $backgroundTheme }), blok.class)}
 >
-	<div class="flex flex-col">
-		<div class="relative aspect-square w-full">
+	<div class="flex h-full w-full flex-col">
+		<div class={imageStyle({ aspect: blok.aspect })}>
 			<div class="absolute inset-0">
 				<img src={blok.asset.filename} alt="" class="h-full w-full object-cover" />
 			</div>

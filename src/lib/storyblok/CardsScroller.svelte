@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
-	import gsap from '$lib/gsap';
+	import { cva } from 'class-variance-authority';
 
+	import gsap from '$lib/gsap';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady.js';
 
 	export let blok: any;
@@ -11,6 +12,19 @@
 	let ctx: any = null;
 
 	$: innerWidth = 0;
+
+	const variants = cva('w-full', {
+		variants: {
+			size: {
+				small: 'h-64',
+				medium: 'h-96',
+				large: 'h-128'
+			}
+		},
+		defaultVariants: {
+			size: 'medium'
+		}
+	});
 
 	function getScrollAmount() {
 		return -(scrollEl.scrollWidth - innerWidth);
@@ -46,7 +60,7 @@
 		<div class="grid grid-cols-12" bind:this={scrollEl}>
 			<div class="col-span-9 col-start-2 flex gap-8">
 				{#each blok.content as b, index}
-					<div class="w-96">
+					<div class={variants({ size: blok.size })}>
 						<StoryblokComponent blok={b} {index} />
 					</div>
 				{/each}
