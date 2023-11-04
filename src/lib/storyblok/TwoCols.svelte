@@ -11,7 +11,7 @@
 	$: left_col = renderRichText(blok.left_col);
 	$: right_col = renderRichText(blok.right_col);
 
-	const variants = cva('', {
+	const variants = cva('transition-colors duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: '',

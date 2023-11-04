@@ -9,7 +9,7 @@
 
 	export let blok: any;
 
-	const hightlightStyle = cva('', {
+	const hightlightStyle = cva('transition-colors duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: 'text-black before:bg-gray-600',
@@ -21,7 +21,7 @@
 		}
 	});
 
-	const lineStyle = cva('', {
+	const lineStyle = cva('transition-colors duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: 'before:bg-gray-300 ',
@@ -94,7 +94,7 @@
 	</div>
 	<a
 		on:click={backToTop}
-		class="back-to-top-btn z-1 absolute right-[20px] top-[-50px] hidden h-[66px] w-[20px] md:right-[60px] md:block"
+		class="back-to-top-btn absolute right-[20px] top-[-50px] z-1 hidden h-[66px] w-[20px] md:right-[60px] md:block"
 	>
 		<div class="arrow" />
 	</a>

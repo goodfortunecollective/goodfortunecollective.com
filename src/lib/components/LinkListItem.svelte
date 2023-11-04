@@ -8,7 +8,7 @@
 	export let url: string;
 	export let label: string;
 
-	const variants = cva('', {
+	const variants = cva('transition-colors duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: '',

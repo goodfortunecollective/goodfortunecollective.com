@@ -16,7 +16,7 @@
 
 	let scrollTrigger!: ScrollTrigger;
 
-	const textStyle = cva('flex flex-col', {
+	const textStyle = cva('flex flex-col transition-colors duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: '',

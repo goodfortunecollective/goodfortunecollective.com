@@ -7,22 +7,25 @@
 
 	export let blok: any;
 
-	const variants = cva('col-span-10 col-start-2 flex flex-col gap-16 lg:gap-32', {
-		variants: {
-			layoutDirection: {
-				left: 'md:flex-row',
-				right: 'md:flex-row-reverse'
+	const variants = cva(
+		'col-span-10 col-start-2 flex flex-col gap-16 lg:gap-32 transition-colors duration-1000 ease-out',
+		{
+			variants: {
+				layoutDirection: {
+					left: 'md:flex-row',
+					right: 'md:flex-row-reverse'
+				},
+				theme: {
+					light: '',
+					dark: 'text-white'
+				}
 			},
-			theme: {
-				light: '',
-				dark: 'text-white'
+			defaultVariants: {
+				layoutDirection: 'left',
+				theme: 'light'
 			}
-		},
-		defaultVariants: {
-			layoutDirection: 'left',
-			theme: 'light'
 		}
-	});
+	);
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={cls('grid grid-cols-12', blok.class)}>

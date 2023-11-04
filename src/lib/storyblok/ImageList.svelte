@@ -9,17 +9,20 @@
 
 	$: list = renderRichText(blok.list);
 
-	const headingStyle = cva('max-w-xl lg:leading-tightest leading-tightest', {
-		variants: {
-			theme: {
-				light: '',
-				dark: 'text-yellow-50'
+	const headingStyle = cva(
+		'max-w-xl lg:leading-tightest leading-tightest transition-colors duration-1000 ease-out',
+		{
+			variants: {
+				theme: {
+					light: '',
+					dark: 'text-yellow-50'
+				}
+			},
+			defaultVariants: {
+				theme: 'light'
 			}
-		},
-		defaultVariants: {
-			theme: 'light'
 		}
-	});
+	);
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>

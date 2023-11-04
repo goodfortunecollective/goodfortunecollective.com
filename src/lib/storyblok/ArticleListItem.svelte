@@ -2,14 +2,13 @@
 	import { storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
 
-	import { cls } from '$lib/styles';
 	import { base } from '$app/paths';
 	import { Heading } from '$lib/components';
 	import { backgroundTheme, heading_hover_media } from '$lib/stores';
 
 	export let blok: any;
 
-	const headingStyle = cva('no-underline', {
+	const headingStyle = cva('transition-colors duration-1000 ease-out no-underline', {
 		variants: {
 			theme: {
 				light: '',
@@ -27,17 +26,20 @@
 		}
 	});
 
-	const textStyle = cva('flex flex-row gap-2 pb-4 text-xs tracking-widest uppercase', {
-		variants: {
-			theme: {
-				light: '',
-				dark: 'text-white'
+	const textStyle = cva(
+		'flex flex-row gap-2 pb-4 text-xs tracking-widest uppercase transition-colors duration-1000 ease-out',
+		{
+			variants: {
+				theme: {
+					light: '',
+					dark: 'text-white'
+				}
+			},
+			defaultVariants: {
+				theme: 'light'
 			}
-		},
-		defaultVariants: {
-			theme: 'light'
 		}
-	});
+	);
 
 	const headingSize: any = {
 		primary: 'h1',

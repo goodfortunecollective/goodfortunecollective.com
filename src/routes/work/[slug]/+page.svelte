@@ -5,6 +5,7 @@
 
 	import { Heading, HoverPlane, Video, BackgroundTheme, RichtextTransition } from '$lib/components';
 	import { cls } from '$lib/styles';
+	import { backgroundTheme } from '$lib/stores';
 
 	export let data;
 
@@ -18,7 +19,7 @@
 
 	const preview = getContext('storyblok-preview');
 
-	const variants = cva('relative', {
+	const variants = cva('relative transition-colors duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: '',
@@ -40,13 +41,13 @@
 
 <BackgroundTheme
 	preload={true}
-	startColor="#1a1a1a"
-	endColor="#1a1a1a"
-	startTheme="dark"
-	endTheme="dark"
+	startColor={data.story.content.color_brand}
+	endColor={data.story.content.color_brand}
+	startTheme={data.story.content.theme_brand}
+	endTheme={data.story.content.theme_brand}
 />
 
-<section class={cls(variants({ theme: data.story.content.theme_brand }))}>
+<section class={variants({ theme: $backgroundTheme })}>
 	<div class="absolute inset-0 flex h-full w-full items-center text-center">
 		<div class="mx-auto grid grid-cols-12 pt-16">
 			<div
@@ -166,7 +167,12 @@
 	</div>
 </section>
 
-<BackgroundTheme startColor="#1a1a1a" endColor="#fff" startTheme="dark" endTheme="light" />
+<BackgroundTheme
+	startColor={data.story.content.color_brand}
+	endColor="#fff"
+	startTheme={data.story.content.theme_brand}
+	endTheme="light"
+/>
 
 <section>
 	{#if data.story}
