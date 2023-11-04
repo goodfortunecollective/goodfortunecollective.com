@@ -3,6 +3,7 @@
 	import { cva } from 'class-variance-authority';
 
 	import { cls } from '$lib/styles';
+	import { backgroundTheme } from '$lib/stores';
 
 	export let blok: any;
 
@@ -11,16 +12,21 @@
 			layoutDirection: {
 				left: 'md:flex-row',
 				right: 'md:flex-row-reverse'
+			},
+			theme: {
+				light: '',
+				dark: 'text-white'
 			}
 		},
 		defaultVariants: {
-			layoutDirection: 'left'
+			layoutDirection: 'left',
+			theme: 'light'
 		}
 	});
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={cls('grid grid-cols-12', blok.class)}>
-	<div class={variants({ layoutDirection: blok.layoutDirection })}>
+	<div class={variants({ layoutDirection: blok.layoutDirection, theme: $backgroundTheme })}>
 		<div class="flex md:w-1/2">
 			<figure>
 				<img src={blok.image.filename} alt={blok.id} />
