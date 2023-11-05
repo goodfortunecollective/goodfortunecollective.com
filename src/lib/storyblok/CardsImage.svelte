@@ -19,7 +19,7 @@
 		}
 	});
 
-	const imageStyle = cva('relative h-full w-full', {
+	const containerStyle = cva('relative h-full w-full', {
 		variants: {
 			aspect: {
 				square: 'aspect-square',
@@ -31,6 +31,20 @@
 			aspect: 'video'
 		}
 	});
+
+	const imageStyle = cva('h-full w-full', {
+		variants: {
+			objectFit: {
+				none: 'object-none',
+				fill: 'object-fill',
+				contain: 'object-contain',
+				cover: 'object-cover'
+			}
+		},
+		defaultVariants: {
+			objectFit: 'cover'
+		}
+	});
 </script>
 
 <div
@@ -39,9 +53,9 @@
 	class={cls(variants({ theme: $backgroundTheme }), blok.class)}
 >
 	<div class="flex h-full w-full flex-col">
-		<div class={imageStyle({ aspect: blok.aspect })}>
+		<div class={containerStyle({ aspect: blok.aspect })}>
 			<div class="absolute inset-0">
-				<img src={blok.asset.filename} alt="" class="h-full w-full object-cover" />
+				<img src={blok.asset.filename} alt="" class={imageStyle({ objectFit: blok.objectFit })} />
 			</div>
 		</div>
 	</div>

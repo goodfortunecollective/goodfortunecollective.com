@@ -20,7 +20,6 @@ import HeadlineStatement from './HeadlineStatement.svelte';
 import HeadlineVideo from './HeadlineVideo.svelte';
 import ImageList from './ImageList.svelte';
 import Images from './Images.svelte';
-import ImagesCarousel from './ImagesCarousel.svelte';
 import ImagesList from './ImagesList.svelte';
 import ImageAndText from './ImageAndText.svelte';
 import JobList from './JobList.svelte';
@@ -63,7 +62,6 @@ export const components: any = {
 	'headline-video': HeadlineVideo,
 	'image-list': ImageList,
 	'images': Images,
-	'images-carousel': ImagesCarousel,
 	'image-and-text': ImageAndText,
 	'images-list': ImagesList,
 	'job-list': JobList,
