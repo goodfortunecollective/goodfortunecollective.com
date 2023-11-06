@@ -18,10 +18,12 @@ import HeadingList from './HeadingList.svelte';
 import HeadingListItem from './HeadingListItem.svelte';
 import HeadlineStatement from './HeadlineStatement.svelte';
 import HeadlineVideo from './HeadlineVideo.svelte';
+import ImageAndText from './ImageAndText.svelte';
 import ImageList from './ImageList.svelte';
 import Images from './Images.svelte';
+import ImagesParallax from './ImagesParallax.svelte';
+import ImagesParallaxItem from './ImagesParallaxItem.svelte';
 import ImagesList from './ImagesList.svelte';
-import ImageAndText from './ImageAndText.svelte';
 import JobList from './JobList.svelte';
 import Link from './Link.svelte';
 import MemberItem from './MemberItem.svelte';
@@ -60,10 +62,12 @@ export const components: any = {
 	'heading-list-item': HeadingListItem,
 	'headline-statement': HeadlineStatement,
 	'headline-video': HeadlineVideo,
+	'image-and-text': ImageAndText,
 	'image-list': ImageList,
 	'images': Images,
-	'image-and-text': ImageAndText,
 	'images-list': ImagesList,
+	'images-parallax': ImagesParallax,
+	'images-parallax-item': ImagesParallaxItem,
 	'job-list': JobList,
 	'link': Link,
 	'member-item': MemberItem,
