@@ -18,8 +18,7 @@
 					scrollTrigger: {
 						trigger: element,
 						start: 'top center',
-						scrub: true,
-						markers: true
+						scrub: true
 					}
 				});
 			}, element);
