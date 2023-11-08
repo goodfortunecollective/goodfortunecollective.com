@@ -3,7 +3,14 @@
 	import { onMount, getContext } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent, renderRichText } from '@storyblok/svelte';
 
-	import { Heading, HoverPlane, Video, BackgroundTheme, RichtextTransition } from '$lib/components';
+	import {
+		Heading,
+		HoverPlane,
+		Video,
+		BackgroundTheme,
+		RichtextTransition,
+		ScrollActionToPage
+	} from '$lib/components';
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
 
@@ -179,3 +186,5 @@
 		<StoryblokComponent blok={data.story.content} />
 	{/if}
 </section>
+
+<ScrollActionToPage href={'/work'} label={'All projects'} />
