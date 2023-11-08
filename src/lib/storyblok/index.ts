@@ -18,7 +18,6 @@ import HeadingList from './HeadingList.svelte';
 import HeadingListItem from './HeadingListItem.svelte';
 import HeadlineStatement from './HeadlineStatement.svelte';
 import HeadlineVideo from './HeadlineVideo.svelte';
-import ImageAndText from './ImageAndText.svelte';
 import ImageList from './ImageList.svelte';
 import Images from './Images.svelte';
 import ImagesParallax from './ImagesParallax.svelte';
@@ -26,6 +25,7 @@ import ImagesParallaxItem from './ImagesParallaxItem.svelte';
 import ImagesList from './ImagesList.svelte';
 import JobList from './JobList.svelte';
 import Link from './Link.svelte';
+import MediaAndText from './MediaAndText.svelte';
 import MemberItem from './MemberItem.svelte';
 import MemberList from './MemberList.svelte';
 import Paragraph from './Paragraph.svelte';
@@ -62,7 +62,6 @@ export const components: any = {
 	'heading-list-item': HeadingListItem,
 	'headline-statement': HeadlineStatement,
 	'headline-video': HeadlineVideo,
-	'image-and-text': ImageAndText,
 	'image-list': ImageList,
 	'images': Images,
 	'images-list': ImagesList,
@@ -70,6 +69,7 @@ export const components: any = {
 	'images-parallax-item': ImagesParallaxItem,
 	'job-list': JobList,
 	'link': Link,
+	'media-and-text': MediaAndText,
 	'member-item': MemberItem,
 	'member-list': MemberList,
 	'projects-list': ProjectsList,
