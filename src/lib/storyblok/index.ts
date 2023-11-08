@@ -23,6 +23,7 @@ import ImageList from './ImageList.svelte';
 import Images from './Images.svelte';
 import ImagesParallax from './ImagesParallax.svelte';
 import ImagesParallaxItem from './ImagesParallaxItem.svelte';
+import ImagesParallaxItemVideo from './ImagesParallaxItemVideo.svelte';
 import ImagesList from './ImagesList.svelte';
 import JobList from './JobList.svelte';
 import Link from './Link.svelte';
@@ -69,6 +70,7 @@ export const components: any = {
 	'images-list': ImagesList,
 	'images-parallax': ImagesParallax,
 	'images-parallax-item': ImagesParallaxItem,
+	'images-parallax-item-video': ImagesParallaxItemVideo,
 	'job-list': JobList,
 	'link': Link,
 	'media-and-text': MediaAndText,
