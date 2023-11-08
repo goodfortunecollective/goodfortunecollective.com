@@ -4,6 +4,7 @@
 
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
+	import { Video } from '$lib/components';
 
 	export let blok: any;
 
@@ -31,9 +32,14 @@
 <div use:storyblokEditable={blok} {...$$restProps} class={cls('grid grid-cols-12', blok.class)}>
 	<div class={variants({ layoutDirection: blok.layoutDirection, theme: $backgroundTheme })}>
 		<div class="flex md:w-1/2">
-			<figure>
-				<img src={blok.image.filename} alt={blok.id} />
-			</figure>
+			{#if blok.image && !blok.video}
+				<figure>
+					<img src={blok.image.filename} alt={blok.id} />
+				</figure>
+			{/if}
+			{#if blok.video}
+				<Video videoUrl={blok.video} autoplay muted loop animated={false} />
+			{/if}
 		</div>
 		<div class="flex flex-col text-xl md:w-1/2 md:justify-center [&_p]:my-4 [&_p]:leading-8">
 			{#each blok.content as b}
