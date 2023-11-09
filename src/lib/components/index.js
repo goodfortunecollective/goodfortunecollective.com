@@ -11,5 +11,6 @@ export { default as ProjectListItem } from './ProjectListItem.svelte';
 export { default as RichtextTransition } from './RichtextTransition.svelte';
 export { default as ScrollActionToPage } from './ScrollActionToPage.svelte';
 export { default as ScrollPlane } from './ScrollPlane.svelte';
+export { default as Spacer } from './Spacer.svelte';
 export { default as TextTransition } from './TextTransition.svelte';
 export { default as Video } from './Video.svelte';

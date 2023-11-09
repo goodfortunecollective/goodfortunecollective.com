@@ -37,6 +37,7 @@ import RichText from './RichText.svelte';
 import SEO from './SEO.svelte';
 import SocialLink from './SocialLink.svelte';
 import SocialLinks from './SocialLinks.svelte';
+import Spacer from './Spacer.svelte';
 import SubHeadline from './SubHeadline.svelte';
 import TagsList from './TagsList.svelte';
 import Text from './Text.svelte';
@@ -84,6 +85,7 @@ export const components: any = {
 	'seo': SEO,
 	'social-link': SocialLink,
 	'social-links': SocialLinks,
+	'spacer': Spacer,
 	'subheadline': SubHeadline,
 	'text': Text,
 	'tags-list': TagsList,
