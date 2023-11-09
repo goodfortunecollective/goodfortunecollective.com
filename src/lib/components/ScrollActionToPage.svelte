@@ -1,9 +1,12 @@
 <script lang="ts">
+	import { cva } from 'class-variance-authority';
+
 	import { useTransitionReady } from '$lib/utils/useTransitionReady.js';
-	import { ScrollTrigger } from '$lib/gsap';
 	import { base } from '$app/paths';
-	import gsap from '$lib/gsap';
+	import gsap, { ScrollTrigger } from '$lib/gsap';
 	import { goto } from '$app/navigation';
+	import { cls } from '$lib/styles';
+	import { backgroundTheme } from '$lib/stores';
 
 	export let label: string = '';
 	export let href: string = '/';
@@ -13,6 +16,18 @@
 	$: parallaxEffect = 0 as number;
 	let scrollTrigger: any = null;
 	let ctx: any = null;
+
+	const variants = cva('', {
+		variants: {
+			theme: {
+				light: '',
+				dark: 'text-white'
+			}
+		},
+		defaultVariants: {
+			theme: 'light'
+		}
+	});
 
 	useTransitionReady(
 		() => {
@@ -41,7 +56,7 @@
 	);
 </script>
 
-<div bind:this={scrollEl} class="ScrollActionToPage">
+<div bind:this={scrollEl} class={cls('ScrollActionToPage', variants({ theme: $backgroundTheme }))}>
 	<div style="--parallax-effect: {parallaxEffect}">
 		<div
 			class="ScrollActionToPage-inner flex flex-col items-center justify-center gap-8 text-center"
