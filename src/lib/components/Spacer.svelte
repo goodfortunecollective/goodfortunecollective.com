@@ -12,7 +12,7 @@
 			}
 		},
 		defaultVariants: {
-			gap: 'medium'
+			gap: 'large'
 		}
 	});
 </script>
