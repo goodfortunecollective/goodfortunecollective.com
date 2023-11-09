@@ -124,7 +124,7 @@
 	</div>
 </section>
 
-<section class={cls(variants({ theme: data.story.content.theme_brand }))}>
+<section class={cls(variants({ theme: $backgroundTheme }))}>
 	<div class="grid -translate-y-16 grid-cols-12 pb-16">
 		<div class="col-span-10 col-start-2">
 			<div class="aspect-video w-full bg-red-50">
