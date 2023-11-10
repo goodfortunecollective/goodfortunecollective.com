@@ -10,6 +10,7 @@
 
 	export let label: string = '';
 	export let href: string = '/';
+	export let disabled: boolean = false;
 
 	let scrollEl!: HTMLElement;
 
@@ -40,6 +41,8 @@
 						parallaxEffect = self.progress;
 					},
 					onLeave: () => {
+						if (disabled) return;
+
 						goto(base + href);
 					}
 				});

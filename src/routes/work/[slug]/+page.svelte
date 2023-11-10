@@ -187,4 +187,4 @@
 	{/if}
 </section>
 
-<ScrollActionToPage href={'/work'} label={'All projects'} />
+<ScrollActionToPage href={'/work'} label={'All projects'} disabled={preview} />
