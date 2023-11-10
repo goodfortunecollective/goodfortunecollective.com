@@ -1,12 +1,29 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
+	import { cva } from 'class-variance-authority';
 
+	import { cls } from '$lib/styles';
 	import { ScrollTrigger } from '$lib/gsap';
+
+	export let aspect: 'square' | 'video' | 'portrait' = 'video';
 
 	let el!: HTMLElement;
 	let scrollTrigger!: ScrollTrigger;
 
 	$: parallaxEffect = 0 as number;
+
+	const containerStyle = cva('relative h-full w-full overflow-hidden', {
+		variants: {
+			aspect: {
+				square: 'aspect-square',
+				video: 'aspect-video',
+				portrait: 'aspect-9/16'
+			}
+		},
+		defaultVariants: {
+			aspect: 'video'
+		}
+	});
 
 	onMount(() => {
 		scrollTrigger = ScrollTrigger.create({
@@ -28,7 +45,7 @@
 </script>
 
 <div bind:this={el} class={$$props.class}>
-	<div class="relative aspect-video h-full w-full overflow-hidden">
+	<div class={cls(containerStyle({ aspect }))}>
 		<img
 			{...$$restProps}
 			src={$$props.src}

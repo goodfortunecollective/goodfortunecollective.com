@@ -3,6 +3,9 @@ export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
 		extend: {
+			aspectRatio: {
+				'9/16': '9/16',
+			  },
 			colors: {
 				neutral: {
 					950: '#1a1a1a',

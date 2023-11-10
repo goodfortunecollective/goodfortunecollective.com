@@ -12,7 +12,7 @@
 	{...$$restProps}
 	class={cls('relative overflow-hidden', blok.class)}
 >
-	<Image src={blok.background.filename} alt="" />
+	<Image src={blok.background.filename} aspect={blok.aspect} alt="" />
 	{#each blok.content as b}
 		<StoryblokComponent blok={b} />
 	{/each}
