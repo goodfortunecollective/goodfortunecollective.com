@@ -134,7 +134,7 @@
 			/>
 		{:else if videoUrl}
 			<video
-				class="absolute z-10 h-auto w-full"
+				class={cls(!autoplay && posterUrl && 'absolute z-10', 'h-auto w-full')}
 				src={videoUrl}
 				bind:this={video}
 				poster=""
