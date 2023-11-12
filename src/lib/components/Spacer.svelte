@@ -6,9 +6,10 @@
 	const variants = cva('', {
 		variants: {
 			gap: {
-				small: 'h-2',
-				medium: 'h-8',
-				large: 'h-16'
+				small: 'h-2' /* 8px */,
+				medium: 'h-8' /* 32px */,
+				base: 'h-12' /* 48px */,
+				large: 'h-16' /* 64px */
 			}
 		},
 		defaultVariants: {
