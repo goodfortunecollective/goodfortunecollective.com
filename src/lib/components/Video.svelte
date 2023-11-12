@@ -41,10 +41,14 @@
 	});
 
 	function activate() {
+		if (autoplay) return;
+
 		cursorType.set(videoPlaying ? 'pause' : 'play');
 	}
 
 	function deactivate() {
+		if (autoplay) return;
+
 		cursorType.set('none');
 	}
 
@@ -117,7 +121,7 @@
 	</div>
 	<div
 		bind:this={videoContainer}
-		class="relative flex cursor-pointer items-center justify-center"
+		class={cls('relative flex  items-center justify-center', !autoplay && 'cursor-pointer')}
 		on:mouseenter={activate}
 		on:mouseleave={deactivate}
 		role="presentation"
