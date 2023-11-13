@@ -10,7 +10,7 @@
 	$: list = renderRichText(blok.list);
 
 	const headingStyle = cva(
-		'max-w-xl lg:leading-tightest leading-tightest transition-colors duration-1000 ease-out',
+		'max-w-xl lg:leading-tightest leading-tightest transition-c duration-1000 ease-out',
 		{
 			variants: {
 				theme: {

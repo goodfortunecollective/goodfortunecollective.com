@@ -11,7 +11,7 @@
 
 	export let blok: any;
 
-	const textStyle = cva('transition-colors duration-1000 ease-out', {
+	const textStyle = cva('transition-c duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: '',

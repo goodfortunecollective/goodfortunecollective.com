@@ -9,7 +9,7 @@
 	export let blok: any;
 
 	const headingStyle = cva(
-		'flex-1 lg:leading-extra-tight leading-extra-tight transition-colors duration-1000 ease-out',
+		'flex-1 lg:leading-extra-tight leading-extra-tight transition-c duration-1000 ease-out',
 		{
 			variants: {
 				theme: {
@@ -36,7 +36,7 @@
 		}
 	);
 
-	const textStyle = cva('transition-colors duration-1000 ease-out', {
+	const textStyle = cva('transition-c duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: '',

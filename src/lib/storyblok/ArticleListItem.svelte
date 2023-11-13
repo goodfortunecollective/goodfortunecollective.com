@@ -8,7 +8,7 @@
 
 	export let blok: any;
 
-	const headingStyle = cva('transition-colors duration-1000 ease-out no-underline', {
+	const headingStyle = cva('transition-c duration-1000 ease-out no-underline', {
 		variants: {
 			theme: {
 				light: '',
@@ -27,7 +27,7 @@
 	});
 
 	const textStyle = cva(
-		'flex flex-row gap-2 pb-4 text-xs tracking-widest uppercase transition-colors duration-1000 ease-out',
+		'flex flex-row gap-2 pb-4 text-xs tracking-widest uppercase transition-c duration-1000 ease-out',
 		{
 			variants: {
 				theme: {

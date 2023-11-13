@@ -9,7 +9,7 @@
 	export let blok: any;
 
 	const variants = cva(
-		'col-span-10 col-start-2 flex flex-col gap-16 lg:gap-32 transition-colors duration-1000 ease-out',
+		'col-span-10 col-start-2 flex flex-col gap-16 lg:gap-32 transition-c duration-1000 ease-out',
 		{
 			variants: {
 				layoutDirection: {

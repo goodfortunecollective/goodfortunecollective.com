@@ -8,7 +8,7 @@
 
 	export let blok: any;
 
-	const variants = cva('h-full w-full transition-colors duration-1000 ease-out', {
+	const variants = cva('h-full w-full transition-c duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: '',

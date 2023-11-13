@@ -10,7 +10,7 @@
 	$: content = renderRichText(blok.content);
 
 	const variants = cva(
-		'flex text-xl leading-9 w-full  xl:text-2xl 4xl:text-4xl 4xl:leading-loose transition-colors duration-1000 ease-out',
+		'flex text-xl leading-9 w-full  xl:text-2xl 4xl:text-4xl 4xl:leading-loose transition-c duration-1000 ease-out',
 		{
 			variants: {
 				theme: {
