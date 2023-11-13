@@ -16,9 +16,9 @@
 	const variants = cva('w-full', {
 		variants: {
 			size: {
-				small: 'h-64',
-				medium: 'h-96',
-				large: 'h-128'
+				small: 'h-64' /* 256px */,
+				medium: 'h-96' /* 384px */,
+				large: 'h-128' /* 512px */
 			}
 		},
 		defaultVariants: {
