@@ -5,11 +5,9 @@
 		storyblokEditable,
 		type SbBlokData
 	} from '@storyblok/svelte';
-	import { cva } from 'class-variance-authority';
 
 	import { components } from './';
 	import { RichtextTransition } from '$lib/components';
-	import { cls } from '$lib/styles';
 
 	export let blok: RichTextProps;
 
@@ -44,26 +42,12 @@
 			html: x
 		};
 	});
-
-	const variants = cva('', {
-		variants: {
-			wrapped: {
-				true: 'max-w-lg [&_p]:my-4 [&_p]:leading-8 text-xl',
-				false: ''
-			}
-		},
-		defaultVariants: {
-			wrapped: false
-		}
-	});
 </script>
 
 <div use:storyblokEditable={blok}>
 	{#each contentSegments as contentSegment}
 		{#if contentSegment.html}
-			<RichtextTransition class={cls(variants({ wrapped: !!blok.wrapped }))}
-				>{@html contentSegment.html}</RichtextTransition
-			>
+			<RichtextTransition>{@html contentSegment.html}</RichtextTransition>
 		{:else}
 			<svelte:component this={contentSegment.component} blok={contentSegment.blok} />
 		{/if}
