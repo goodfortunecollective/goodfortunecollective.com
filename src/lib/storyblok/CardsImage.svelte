@@ -23,6 +23,7 @@
 		variants: {
 			aspect: {
 				square: 'aspect-square',
+				portrait: 'aspect-[2/3]',
 				video: 'aspect-video',
 				half: 'aspect-[1/2]'
 			}
