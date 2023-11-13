@@ -17,7 +17,7 @@
 			aspect: {
 				square: 'aspect-square',
 				video: 'aspect-video',
-				portrait: 'aspect-9/16'
+				portrait: 'aspect-[2/3]'
 			}
 		},
 		defaultVariants: {
