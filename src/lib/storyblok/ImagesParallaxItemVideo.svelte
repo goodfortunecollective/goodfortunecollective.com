@@ -33,7 +33,7 @@
 <div use:storyblokEditable={blok} {...$$restProps} class={cls('absolute inset-0', blok.class)}>
 	<div
 		bind:this={element}
-		class={cls('flex h-full w-full', 'blok-images-parallax-item-video origin-center	')}
+		class={cls('flex h-full w-full origin-center', 'blok-images-parallax-item-video')}
 		style="--parallax-scale: {blok.scale || 1}; --parallax-positionX: {blok.positionX ||
 			0}; --parallax-positionY: {blok.positionY || 0};"
 	>

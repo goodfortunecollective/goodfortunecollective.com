@@ -9,7 +9,7 @@
 
 	export let blok: any;
 
-	const hightlightStyle = cva('transition-c duration-1000 ease-out', {
+	const hightlightStyle = cva('transition-colors duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: 'text-black before:bg-gray-600',
@@ -21,7 +21,7 @@
 		}
 	});
 
-	const lineStyle = cva('transition-c duration-1000 ease-out', {
+	const lineStyle = cva('transition-colors duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: 'before:bg-gray-300 ',
