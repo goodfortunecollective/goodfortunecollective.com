@@ -7,9 +7,9 @@
 		variants: {
 			gap: {
 				small: 'h-2' /* 8px */,
-				medium: 'h-8' /* 32px */,
-				base: 'h-12' /* 48px */,
-				large: 'h-16' /* 64px */
+				medium: 'h-4 lg:h-8' /* 32px */,
+				base: 'h-6 lg:h-12' /* 48px */,
+				large: 'h-8 lg:h-16' /* 64px */
 			}
 		},
 		defaultVariants: {
