@@ -9,7 +9,7 @@
 	}
 
 	export let imagesLength = blok.images.length;
-	export let blockClasses = 'flex py-12 images-block'; // flex-col
+	export let blockClasses = 'flex images-block'; // flex-col
 	export let imageClass = 'image-block';
 	export let imagesCols = ['', '', ''];
 	export let imagesClasses = ['', '', ''];
