@@ -75,7 +75,7 @@
 	</div>
 	<div class="grid h-screen w-full grid-cols-12 pt-24 lg:pt-32">
 		<div
-			class="col-span-10 col-start-2 mx-auto flex flex-row space-x-8 lg:col-span-6 lg:col-start-4 lg:space-x-32"
+			class="col-span-10 col-start-2 mx-auto flex flex-row space-x-8 lg:col-span-6 lg:col-start-4 lg:space-x-24"
 		>
 			{#if data.story.content.brand}
 				<div>
@@ -85,20 +85,10 @@
 			{/if}
 			{#if data.story.content.ask}
 				<div>
-					<h5 class="mb-2 text-sm font-bold uppercase tracking-wide">Ask</h5>
-					<ul class="leading-tighest">
+					<h5 class="text-m mb-2 font-bold uppercase tracking-wide">Ask</h5>
+					<ul class="">
 						{#each data.story.content.ask as item}
-							<li>{item}</li>
-						{/each}
-					</ul>
-				</div>
-			{/if}
-			{#if data.story.content.output}
-				<div>
-					<h5 class="mb-2 text-sm font-bold uppercase tracking-wide">Output</h5>
-					<ul class="leading-tighest">
-						{#each data.story.content.output as item}
-							<li>{item}</li>
+							<li class="mr-8 inline-block">{item}</li>
 						{/each}
 					</ul>
 				</div>
@@ -169,6 +159,13 @@
 				<RichtextTransition class="text-xl [&_p]:my-8 [&_p]:leading-8">
 					{@html solution_text}
 				</RichtextTransition>
+				{#if data.story.content.output}
+					<ul class="mt-8 flex gap-8 text-gray-500">
+						{#each data.story.content.output as item}
+							<li>{item}</li>
+						{/each}
+					</ul>
+				{/if}
 			</div>
 		{/if}
 	</div>
