@@ -79,13 +79,13 @@
 		>
 			{#if data.story.content.brand}
 				<div>
-					<h5 class="mb-2 text-sm font-bold uppercase tracking-wide">Brand</h5>
+					<h5 class="mb-2 text-sm font-bold uppercase tracking-wide text-rose-50">Brand</h5>
 					{data.story.content.brand}
 				</div>
 			{/if}
 			{#if data.story.content.ask}
 				<div>
-					<h5 class="mb-2 text-sm font-bold uppercase tracking-wide">Ask</h5>
+					<h5 class="mb-2 text-sm font-bold uppercase tracking-wide text-rose-50">Ask</h5>
 					<ul>
 						{#each data.story.content.ask as item}
 							<li class="mr-8 inline-block">{item}</li>
