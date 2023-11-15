@@ -7,9 +7,9 @@ import CardsImage from './CardsImage.svelte';
 import CardsVideo from './CardsVideo.svelte';
 import CardsItem from './CardsItem.svelte';
 import CardsScroller from './CardsScroller.svelte';
+import CenterHeadline from './CenterHeadline.svelte';
 import Container from './Container.svelte';
 import Figure from './Figure.svelte';
-import Figures from './Figures.svelte';
 import Footer from './Footer.svelte';
 import Header from './Header.svelte';
 import Heading from './Heading.svelte';
@@ -55,9 +55,9 @@ export const components: any = {
 	'cards-video': CardsVideo,
 	'cards-item': CardsItem,
 	'cards-scroller': CardsScroller,
+	'center-headline': CenterHeadline,
 	'container': Container,
 	'figure': Figure,
-	'figures': Figures,
 	'footer': Footer,
 	'header': Header,
 	'heading': Heading,

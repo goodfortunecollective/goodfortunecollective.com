@@ -28,8 +28,10 @@
 >
 	<div class="grid grid-cols-12 gap-8 pb-8 pt-16 lg:gap-0">
 		<div
-			class={'subheadline-title-cont col-span-10 col-start-2 lg:col-start-2 ' +
-				(blok.titleFullWidth ? 'lg:col-span-8' : 'lg:col-span-4')}
+			class={cls(
+				'col-span-10 col-start-2 lg:col-start-2 ',
+				blok.titleFullWidth ? 'lg:col-span-8' : 'lg:col-span-4'
+			)}
 		>
 			<Heading
 				as="h2"
