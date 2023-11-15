@@ -19,6 +19,7 @@ import HeadingList from './HeadingList.svelte';
 import HeadingListItem from './HeadingListItem.svelte';
 import HeadlineStatement from './HeadlineStatement.svelte';
 import HeadlineVideo from './HeadlineVideo.svelte';
+import Image from './Image.svelte';
 import ImageList from './ImageList.svelte';
 import Images from './Images.svelte';
 import ImagesParallax from './ImagesParallax.svelte';
@@ -66,6 +67,7 @@ export const components: any = {
 	'heading-list-item': HeadingListItem,
 	'headline-statement': HeadlineStatement,
 	'headline-video': HeadlineVideo,
+	'image': Image,
 	'image-list': ImageList,
 	'images': Images,
 	'images-list': ImagesList,
