@@ -86,9 +86,11 @@
 			{#if data.story.content.ask}
 				<div>
 					<h5 class="mb-2 text-sm font-bold uppercase tracking-wide text-rose-50">Ask</h5>
-					<ul>
+					<ul
+						class="[&>*:not(:first-child)]:before:mr-4 [&>*:not(:first-child)]:before:content-['•']"
+					>
 						{#each data.story.content.ask as item}
-							<li class="mr-8 inline-block">{item}</li>
+							<li class="mr-4 inline-block">{item}</li>
 						{/each}
 					</ul>
 				</div>
@@ -160,7 +162,9 @@
 					{@html solution_text}
 				</RichtextTransition>
 				{#if data.story.content.output}
-					<ul class="mt-8 flex gap-8 text-gray-500">
+					<ul
+						class="mt-8 flex gap-4 text-gray-500 [&>*:not(:first-child)]:before:mr-4 [&>*:not(:first-child)]:before:content-['•']"
+					>
 						{#each data.story.content.output as item}
 							<li>{item}</li>
 						{/each}
@@ -184,4 +188,4 @@
 	{/if}
 </section>
 
-<ScrollActionToPage href={'/work'} label={'All projects'} disabled={preview} />
+<ScrollActionToPage href={'/work'} label={'All projects'} disabled={!!preview} />
