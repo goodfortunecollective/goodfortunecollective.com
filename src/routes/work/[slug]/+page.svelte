@@ -85,8 +85,8 @@
 			{/if}
 			{#if data.story.content.ask}
 				<div>
-					<h5 class="text-m mb-2 font-bold uppercase tracking-wide">Ask</h5>
-					<ul class="">
+					<h5 class="mb-2 text-sm font-bold uppercase tracking-wide">Ask</h5>
+					<ul>
 						{#each data.story.content.ask as item}
 							<li class="mr-8 inline-block">{item}</li>
 						{/each}
