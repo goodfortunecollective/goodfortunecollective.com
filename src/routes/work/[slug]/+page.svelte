@@ -74,29 +74,6 @@
 		</div>
 	</div>
 	<div class="grid h-screen w-full grid-cols-12 pt-24 lg:pt-32">
-		<div
-			class="col-span-10 col-start-2 mx-auto flex flex-row space-x-8 lg:col-span-6 lg:col-start-4 lg:space-x-24"
-		>
-			{#if data.story.content.brand}
-				<div>
-					<h5 class="mb-2 text-sm font-bold uppercase tracking-wide text-rose-50">Brand</h5>
-					{data.story.content.brand}
-				</div>
-			{/if}
-			{#if data.story.content.ask}
-				<div>
-					<h5 class="mb-2 text-sm font-bold uppercase tracking-wide text-rose-50">Ask</h5>
-					<ul
-						class="[&>*:not(:first-child)]:before:mr-4 [&>*:not(:first-child)]:before:content-['•']"
-					>
-						{#each data.story.content.ask as item}
-							<li class="mr-4 inline-block">{item}</li>
-						{/each}
-					</ul>
-				</div>
-			{/if}
-		</div>
-
 		<figure
 			class="left-[50%]hidden pointer-events-none absolute h-auto w-1/4 -translate-x-1/2 pb-[50%] md:block lg:col-span-4 lg:col-start-9"
 		>
@@ -107,10 +84,27 @@
 			{/if}
 		</figure>
 		<div class="absolute bottom-0 left-0 col-span-12 col-start-1 grid w-full grid-cols-12 pb-32">
-			<div class="col-span-10 col-start-2 text-center lg:col-span-6 lg:col-start-4">
-				<RichtextTransition class="text-xl">
-					{@html description}
-				</RichtextTransition>
+			<div
+				class="col-span-10 col-start-2 mx-auto flex flex-row space-x-8 lg:col-span-6 lg:col-start-4 lg:space-x-24"
+			>
+				{#if data.story.content.brand}
+					<div>
+						<h5 class="mb-2 text-sm font-bold uppercase tracking-wide text-rose-50">Brand</h5>
+						{data.story.content.brand}
+					</div>
+				{/if}
+				{#if data.story.content.ask}
+					<div>
+						<h5 class="mb-2 text-sm font-bold uppercase tracking-wide text-rose-50">Ask</h5>
+						<ul
+							class="[&>*:not(:first-child)]:before:mr-4 [&>*:not(:first-child)]:before:content-['•']"
+						>
+							{#each data.story.content.ask as item}
+								<li class="mr-4 inline-block">{item}</li>
+							{/each}
+						</ul>
+					</div>
+				{/if}
 			</div>
 		</div>
 	</div>
@@ -133,8 +127,8 @@
 					animated={false}
 				/>
 			</div>
-			<div class="py-16">
-				<Heading as="h2" size="h2">{data.story.content.statement}</Heading>
+			<div class=" max-w-4xl py-16">
+				<Heading as="h2" size="h2">{@html description}</Heading>
 			</div>
 		</div>
 		{#if data.story.content.ask_text}
