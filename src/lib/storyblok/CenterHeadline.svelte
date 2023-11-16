@@ -31,7 +31,7 @@
 	{...$$restProps}
 	class={cls(variants({ theme: $backgroundTheme }), blok.class)}
 >
-	<div class="mb-8m col-span-10 col-start-2 lg:col-span-6 lg:col-start-4">
+	<div class="col-span-10 col-start-2 lg:col-span-6 lg:col-start-4">
 		<Heading as="h3" size="h2" cl>{blok.title}</Heading>
 	</div>
 	<div class="col-span-10 col-start-2 my-8 text-center text-xl lg:col-span-6 lg:col-start-4">
