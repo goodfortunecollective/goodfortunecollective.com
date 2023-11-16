@@ -17,7 +17,7 @@
 {#key title}
 	{#if !!list_hover}
 		<div class="pointer-events-none fixed inset-0 z-1 flex h-full w-full items-center text-center">
-			<div class="mx-auto grid grid-cols-12 pt-16">
+			<div class="mx-auto grid -translate-y-1/2 grid-cols-12 pt-16 lg:-translate-y-1/4">
 				<div class="col-span-10 col-start-2">
 					<Heading
 						as="h1"
