@@ -21,7 +21,6 @@ import HeadlineStatement from './HeadlineStatement.svelte';
 import HeadlineVideo from './HeadlineVideo.svelte';
 import Image from './Image.svelte';
 import ImageList from './ImageList.svelte';
-import Images from './Images.svelte';
 import ImagesParallax from './ImagesParallax.svelte';
 import ImagesParallaxItem from './ImagesParallaxItem.svelte';
 import ImagesParallaxItemVideo from './ImagesParallaxItemVideo.svelte';
@@ -69,7 +68,6 @@ export const components: any = {
 	'headline-video': HeadlineVideo,
 	'image': Image,
 	'image-list': ImageList,
-	'images': Images,
 	'images-list': ImagesList,
 	'images-parallax': ImagesParallax,
 	'images-parallax-item': ImagesParallaxItem,
