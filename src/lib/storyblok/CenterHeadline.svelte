@@ -10,20 +10,17 @@
 
 	$: content = renderRichText(blok.content);
 
-	const variants = cva(
-		'mt-32 grid grid-cols-12 text-center transition-colors duration-1000 ease-out',
-		{
-			variants: {
-				theme: {
-					light: '',
-					dark: 'text-white'
-				}
-			},
-			defaultVariants: {
-				theme: 'light'
+	const variants = cva('grid grid-cols-12 text-center transition-colors duration-1000 ease-out', {
+		variants: {
+			theme: {
+				light: '',
+				dark: 'text-white'
 			}
+		},
+		defaultVariants: {
+			theme: 'light'
 		}
-	);
+	});
 </script>
 
 <div
