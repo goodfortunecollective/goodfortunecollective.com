@@ -21,13 +21,13 @@ import HeadlineStatement from './HeadlineStatement.svelte';
 import HeadlineVideo from './HeadlineVideo.svelte';
 import Image from './Image.svelte';
 import ImageList from './ImageList.svelte';
-import ImagesParallax from './ImagesParallax.svelte';
-import ImagesParallaxItem from './ImagesParallaxItem.svelte';
-import ImagesParallaxItemVideo from './ImagesParallaxItemVideo.svelte';
 import ImagesList from './ImagesList.svelte';
 import JobList from './JobList.svelte';
 import Link from './Link.svelte';
 import MediaAndText from './MediaAndText.svelte';
+import MediaParallax from './MediaParallax.svelte';
+import MediaParallaxImage from './MediaParallaxImage.svelte';
+import MediaParallaxVideo from './MediaParallaxVideo.svelte';
 import MemberItem from './MemberItem.svelte';
 import MemberList from './MemberList.svelte';
 import Paragraph from './Paragraph.svelte';
@@ -69,12 +69,12 @@ export const components: any = {
 	'image': Image,
 	'image-list': ImageList,
 	'images-list': ImagesList,
-	'images-parallax': ImagesParallax,
-	'images-parallax-item': ImagesParallaxItem,
-	'images-parallax-item-video': ImagesParallaxItemVideo,
 	'job-list': JobList,
 	'link': Link,
 	'media-and-text': MediaAndText,
+	'media-parallax': MediaParallax,
+	'media-parallax-image':  MediaParallaxImage,
+	'media-parallax-video':  MediaParallaxVideo,
 	'member-item': MemberItem,
 	'member-list': MemberList,
 	'projects-list': ProjectsList,
