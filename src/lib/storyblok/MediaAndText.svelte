@@ -5,6 +5,7 @@
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
 	import { Video } from '$lib/components';
+	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
 
 	export let blok: any;
 
@@ -34,7 +35,13 @@
 		<div class="flex md:w-1/2">
 			{#if blok.image && !blok.video}
 				<figure>
-					<img src={blok.image.filename} alt={blok.id} />
+					<img
+						src={`${blok.image.filename}/m/`}
+						width={getImageDimensionsFromUrl(blok.image.filename).width}
+						height={getImageDimensionsFromUrl(blok.image.filename).height}
+						alt={blok.image.name}
+						loading="lazy"
+					/>
 				</figure>
 			{/if}
 			{#if blok.video}

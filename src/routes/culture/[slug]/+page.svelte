@@ -4,6 +4,7 @@
 
 	import { base } from '$app/paths';
 	import { Link, Heading, Image } from '$lib/components';
+	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
 
 	export let data;
 
@@ -48,7 +49,14 @@
 			>
 			{#if data.story.content.thumbnail}
 				<figure class="col-start-0 col-span-12 mb-16 mt-8 lg:col-span-9">
-					<Image src={data.story.content.thumbnail.filename} class="w-full" alt={data.story.name} />
+					<Image
+						src={`${data.story.content.thumbnail.filename}/m/`}
+						width={getImageDimensionsFromUrl(data.story.content.thumbnail.filename).width}
+						height={getImageDimensionsFromUrl(data.story.content.thumbnail.filename).height}
+						alt={data.story.content.thumbnail.name}
+						loading="lazy"
+						class="w-full"
+					/>
 				</figure>
 			{/if}
 

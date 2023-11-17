@@ -7,6 +7,7 @@
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
 
 	export let blok: any;
 
@@ -29,13 +30,14 @@
 	});
 
 	useTransitionReady(() => {
-		scrollTrigger = ScrollTrigger.create({
-			trigger: el,
-			start: '-50px top',
-			end: () => `+=${contentEl.offsetHeight - pinEl.offsetHeight - 160}`,
-			pin: pinEl,
-			invalidateOnRefresh: true
-		});
+		if (contentEl)
+			scrollTrigger = ScrollTrigger.create({
+				trigger: el,
+				start: '-50px top',
+				end: () => `+=${contentEl.offsetHeight - pinEl.offsetHeight - 160}`,
+				pin: pinEl,
+				invalidateOnRefresh: true
+			});
 	});
 
 	onDestroy(() => {
@@ -54,9 +56,12 @@
 	<div class="relative grid grid-cols-12" bind:this={el}>
 		<img
 			bind:this={pinEl}
-			src={blok.asset.filename}
-			alt=""
+			src={`${blok.asset.filename}/m/`}
+			width={getImageDimensionsFromUrl(blok.asset.filename).width}
+			height={getImageDimensionsFromUrl(blok.asset.filename).height}
+			alt={blok.asset.name}
 			class="-translate-x-1/8 absolute left-1/2 top-0 col-span-12 translate-y-1/4 -rotate-45 scale-150 transform"
+			loading="lazy"
 		/>
 		<div class="col-span-6 col-start-3 py-32" bind:this={contentEl}>
 			<div class=" flex flex-col gap-32">
