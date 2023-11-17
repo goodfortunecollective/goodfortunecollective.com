@@ -30,7 +30,7 @@
 	});
 
 	useTransitionReady(() => {
-		if (contentEl)
+		if (contentEl && pinEl && !scrollTrigger)
 			scrollTrigger = ScrollTrigger.create({
 				trigger: el,
 				start: '-50px top',
@@ -54,15 +54,17 @@
 	class={cls(blok.class, textStyle({ theme: $backgroundTheme }))}
 >
 	<div class="relative grid grid-cols-12" bind:this={el}>
-		<img
-			bind:this={pinEl}
-			src={`${blok.asset.filename}/m/`}
-			width={getImageDimensionsFromUrl(blok.asset.filename).width}
-			height={getImageDimensionsFromUrl(blok.asset.filename).height}
-			alt={blok.asset.name}
-			class="-translate-x-1/8 absolute left-1/2 top-0 col-span-12 translate-y-1/4 -rotate-45 scale-150 transform"
-			loading="lazy"
-		/>
+		{#if blok.asset.filename?.length > 0}
+			<img
+				bind:this={pinEl}
+				src={`${blok.asset.filename}/m/`}
+				width={getImageDimensionsFromUrl(blok.asset.filename).width}
+				height={getImageDimensionsFromUrl(blok.asset.filename).height}
+				alt={blok.asset.name}
+				class="-translate-x-1/8 absolute left-1/2 top-0 col-span-12 translate-y-1/4 -rotate-45 scale-150 transform"
+				loading="lazy"
+			/>
+		{/if}
 		<div class="col-span-6 col-start-3 py-32" bind:this={contentEl}>
 			<div class=" flex flex-col gap-32">
 				{#each blok.list as b}

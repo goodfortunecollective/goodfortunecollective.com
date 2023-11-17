@@ -35,13 +35,15 @@
 		<div class="flex md:w-1/2">
 			{#if blok.image && !blok.video}
 				<figure>
-					<img
-						src={`${blok.image.filename}/m/`}
-						width={getImageDimensionsFromUrl(blok.image.filename).width}
-						height={getImageDimensionsFromUrl(blok.image.filename).height}
-						alt={blok.image.name}
-						loading="lazy"
-					/>
+					{#if blok.image.filename?.length > 0}
+						<img
+							src={`${blok.image.filename}/m/`}
+							width={getImageDimensionsFromUrl(blok.image.filename).width}
+							height={getImageDimensionsFromUrl(blok.image.filename).height}
+							alt={blok.image.name}
+							loading="lazy"
+						/>
+					{/if}
 				</figure>
 			{/if}
 			{#if blok.video}

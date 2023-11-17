@@ -13,13 +13,15 @@
 	{...$$restProps}
 	class={cls('relative overflow-hidden', blok.class)}
 >
-	<Image
-		src={`${blok.background.filename}/m/`}
-		width={getImageDimensionsFromUrl(blok.background.filename).width}
-		height={getImageDimensionsFromUrl(blok.background.filename).height}
-		aspect={blok.aspect}
-		alt={blok.background.name}
-	/>
+	{#if blok.background.filename?.length > 0}
+		<Image
+			src={`${blok.background.filename}/m/`}
+			width={getImageDimensionsFromUrl(blok.background.filename).width}
+			height={getImageDimensionsFromUrl(blok.background.filename).height}
+			aspect={blok.aspect}
+			alt={blok.background.name}
+		/>
+	{/if}
 	{#each blok.content as b}
 		<StoryblokComponent blok={b} />
 	{/each}

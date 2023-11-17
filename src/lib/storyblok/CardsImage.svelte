@@ -57,14 +57,16 @@
 	<div class="flex h-full w-full flex-col">
 		<div class={containerStyle({ aspect: blok.aspect })}>
 			<div class="absolute inset-0">
-				<img
-					src={`${blok.asset.filename}/m/`}
-					width={getImageDimensionsFromUrl(blok.asset.filename).width}
-					height={getImageDimensionsFromUrl(blok.asset.filename).height}
-					alt={blok.asset.name}
-					class={imageStyle({ objectFit: blok.objectFit })}
-					loading="lazy"
-				/>
+				{#if blok.asset.filename?.length > 0}
+					<img
+						src={`${blok.asset.filename}/m/`}
+						width={getImageDimensionsFromUrl(blok.asset.filename).width}
+						height={getImageDimensionsFromUrl(blok.asset.filename).height}
+						alt={blok.asset.name}
+						class={imageStyle({ objectFit: blok.objectFit })}
+						loading="lazy"
+					/>
+				{/if}
 			</div>
 		</div>
 	</div>

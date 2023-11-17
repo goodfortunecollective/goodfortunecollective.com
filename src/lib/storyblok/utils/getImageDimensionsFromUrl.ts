@@ -10,7 +10,7 @@ const getImageDimensionsFromUrl = (imageUrl:string) => {
     const height = parseInt(match[2]);
     return { width, height };
   } else {
-    console.log('Image dimensions not found in URL.');
+    console.log('Image dimensions not found in URL -- ', imageUrl);
     return { width: 0, height: 0 };
   }
   };

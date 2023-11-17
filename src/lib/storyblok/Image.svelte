@@ -7,7 +7,7 @@
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	{#if blok.asset && blok.asset.filename}
+	{#if blok.asset.filename?.length > 0}
 		<img
 			src={`${blok.asset.filename}/m/`}
 			width={getImageDimensionsFromUrl(blok.asset.filename).width}

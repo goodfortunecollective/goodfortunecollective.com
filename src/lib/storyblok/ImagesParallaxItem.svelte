@@ -12,7 +12,8 @@
 
 	useTransitionReady(
 		() => {
-			console.log('blok.asset', blok.asset);
+			if (!element) return;
+
 			ctx = gsap.context(() => {
 				gsap.to(element, {
 					yPercent: blok.speed,
@@ -32,12 +33,14 @@
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={cls('absolute inset-0', blok.class)}>
-	<img
-		bind:this={element}
-		src={`${blok.asset.filename}/m/`}
-		width={getImageDimensionsFromUrl(blok.asset.filename).width}
-		height={getImageDimensionsFromUrl(blok.asset.filename).height}
-		alt={blok.asset.name}
-		loading="lazy"
-	/>
+	{#if blok.asset.filename?.length > 0}
+		<img
+			bind:this={element}
+			src={`${blok.asset.filename}/m/`}
+			width={getImageDimensionsFromUrl(blok.asset.filename).width}
+			height={getImageDimensionsFromUrl(blok.asset.filename).height}
+			alt={blok.asset.name}
+			loading="lazy"
+		/>
+	{/if}
 </div>

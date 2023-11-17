@@ -30,14 +30,16 @@
 	<div class="flex flex-col p-8">
 		<div class="relative aspect-square w-full">
 			<div class="absolute inset-0">
-				<img
-					src={`${blok.asset.filename}/m/`}
-					width={getImageDimensionsFromUrl(blok.asset.filename).width}
-					height={getImageDimensionsFromUrl(blok.asset.filename).height}
-					alt={blok.asset.name ? blok.asset.name : ''}
-					class="h-full w-full object-contain"
-					loading="lazy"
-				/>
+				{#if blok.asset.filename?.length > 0}
+					<img
+						src={`${blok.asset.filename}/m/`}
+						width={getImageDimensionsFromUrl(blok.asset.filename).width}
+						height={getImageDimensionsFromUrl(blok.asset.filename).height}
+						alt={blok.asset.name ? blok.asset.name : ''}
+						class="h-full w-full object-contain"
+						loading="lazy"
+					/>
+				{/if}
 			</div>
 			<div class="absolute inset-0 text-red-100">
 				<NumberedListItem index={$$restProps.index} />
