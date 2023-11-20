@@ -83,8 +83,12 @@
 				</div>
 			{/if}
 		</figure>
-		<div class="absolute bottom-0 left-0 col-span-12 col-start-1 grid w-full grid-cols-12 pb-32">
-			<div class="col-span-10 col-start-2 mx-auto flex flex-row space-x-8 lg:space-x-24">
+		<div
+			class="absolute bottom-0 left-0 col-span-12 col-start-1 grid w-full grid-cols-12 pb-24 lg:pb-32"
+		>
+			<div
+				class="col-span-10 col-start-2 mx-auto flex flex-col gap-8 lg:flex-row lg:gap-0 lg:space-x-24"
+			>
 				{#if data.story.content.brand}
 					<div>
 						<h5 class="mb-2 text-sm font-bold uppercase tracking-wide text-rose-50">Brand</h5>
@@ -95,7 +99,7 @@
 					<div>
 						<h5 class="mb-2 text-sm font-bold uppercase tracking-wide text-rose-50">Ask</h5>
 						<ul
-							class="[&>*:not(:first-child)]:before:mr-4 [&>*:not(:first-child)]:before:content-['•']"
+							class="[&>*:not(:last-child)]:after:ml-4 [&>*:not(:last-child)]:after:content-['•']"
 						>
 							{#each data.story.content.ask as item}
 								<li class="mr-4 inline-block">{item}</li>
