@@ -5,7 +5,9 @@
 	import { cls } from '$lib/styles';
 	import { ScrollTrigger } from '$lib/gsap';
 
-	export let aspect: 'square' | 'video' | 'portrait' = 'video';
+	export let aspect: 'square' | 'video' | 'portrait' | 'auto' = 'video';
+
+	$: innerWidth = 0;
 
 	let el!: HTMLElement;
 	let scrollTrigger!: ScrollTrigger;
@@ -17,7 +19,8 @@
 			aspect: {
 				square: 'aspect-square',
 				video: 'aspect-video',
-				portrait: 'aspect-[2/3]'
+				portrait: 'aspect-[2/3]',
+				auto: 'aspect-auto'
 			}
 		},
 		defaultVariants: {
@@ -25,7 +28,17 @@
 		}
 	});
 
+	function setStyleContainer() {
+		if (aspect === 'auto' && $$props.width) {
+			const scale = innerWidth / $$props.width;
+			el.style.setProperty('width', `${$$props.width * scale}px`);
+			el.style.setProperty('height', `${$$props.height * scale}px`);
+		}
+	}
+
 	onMount(() => {
+		setStyleContainer();
+
 		scrollTrigger = ScrollTrigger.create({
 			trigger: el,
 			start: 'top bottom',
@@ -44,13 +57,20 @@
 	});
 </script>
 
-<div bind:this={el} class={$$props.class}>
+<svelte:window bind:innerWidth on:resize={setStyleContainer} />
+
+<div
+	bind:this={el}
+	class={$$props.class}
+	style={`width: ${$$props.width * (innerWidth / $$props.width)}px; height: ${
+		$$props.height * (innerWidth / $$props.width)
+	}px;`}
+>
 	<div class={cls(containerStyle({ aspect }))}>
 		<img
-			{...$$restProps}
 			src={$$props.src}
 			alt={$$props.alt}
-			class="c-image absolute bottom-0 left-0 right-0 top-0 h-full w-full object-cover"
+			class="c-image absolute inset-0 h-full w-full object-cover"
 			style="--parallax-effect: {parallaxEffect}"
 		/>
 	</div>
@@ -58,7 +78,7 @@
 
 <style lang="scss">
 	.c-image {
-		transform: translateY(calc(100px * var(--parallax-effect)))
+		transform: translateY(calc(50px * var(--parallax-effect)))
 			scale(calc(1.05 + 0.2 * var(--parallax-effect)));
 	}
 </style>

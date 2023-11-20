@@ -18,7 +18,7 @@
 			src={`${blok.background.filename}/m/`}
 			width={getImageDimensionsFromUrl(blok.background.filename).width}
 			height={getImageDimensionsFromUrl(blok.background.filename).height}
-			aspect={blok.aspect}
+			aspect="auto"
 			alt={blok.background.name}
 		/>
 	{/if}
