@@ -84,9 +84,7 @@
 			{/if}
 		</figure>
 		<div class="absolute bottom-0 left-0 col-span-12 col-start-1 grid w-full grid-cols-12 pb-32">
-			<div
-				class="col-span-10 col-start-2 mx-auto flex flex-row space-x-8 lg:col-span-6 lg:col-start-4 lg:space-x-24"
-			>
+			<div class="col-span-10 col-start-2 mx-auto flex flex-row space-x-8 lg:space-x-24">
 				{#if data.story.content.brand}
 					<div>
 						<h5 class="mb-2 text-sm font-bold uppercase tracking-wide text-rose-50">Brand</h5>
