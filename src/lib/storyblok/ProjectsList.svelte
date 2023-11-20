@@ -45,7 +45,7 @@
 
 <section use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	<div class="mb-16 md:mb-64" bind:this={containerEl}>
-		{#each blok.projects as { name, slug, content }, index (content._uid)}
+		{#each blok.projects as { name, slug, content }, index}
 			<div class="ProjectListItem-wrapper grid grid-cols-12">
 				<ProjectListItem
 					{name}
