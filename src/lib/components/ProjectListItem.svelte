@@ -1,75 +1,160 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import { cva } from 'class-variance-authority';
+	import { renderRichText } from '@storyblok/svelte';
+
 	import { base } from '$app/paths';
 	import { cls } from '$lib/styles';
-	import ScrollPlane from './ScrollPlane.svelte';
+	import { ScrollPlane } from '$lib/components';
+	import { project_list_hover, isTransitioning } from '$lib/stores';
 
 	export let name: string;
 	export let slug: string;
 	export let content: any;
 	export let isMainItem: boolean;
 	export let layout: 'left' | 'right' = 'left';
-	export let useCurtainsPlanes: boolean = true;
+	export let theme: 'light' | 'dark' = 'light';
+
+	$: description = renderRichText(content.description);
+
+	const variants = cva('transition-colors duration-1000 ease-out', {
+		variants: {
+			theme: {
+				light: '',
+				dark: 'text-white'
+			}
+		},
+		defaultVariants: {
+			theme: 'light'
+		}
+	});
+
+	function onEnter() {
+		project_list_hover.set(name);
+	}
+
+	const onLeave = () => {
+		// reset hover title only if we're not transitioning
+		if (!$isTransitioning) {
+			project_list_hover.set(null);
+		}
+	};
+
+	// parallax
+	let projectEl: HTMLElement;
+	let ww: number;
+	let wh: number;
+	let initScroll: number = 0;
+	let currentScroll: number = 0;
+	let projectDOMRect: DOMRect;
+	const parallaxStrength: number = 0.5;
+	$: parallaxEffect = 0;
+
+	const onResize = () => {
+		ww = window.innerWidth;
+		wh = window.innerHeight;
+		initScroll = window.pageYOffset;
+
+		if (projectEl) {
+			projectDOMRect = projectEl.getBoundingClientRect();
+		}
+
+		applyParallax();
+	};
+
+	const applyParallax = () => {
+		if (!projectDOMRect || !ww || !wh) return;
+
+		const planeOffsetTop = projectDOMRect.top + projectDOMRect.height / 2 - wh * 0.5;
+		// get a float value based on window height (0 means the plane is centered)
+		const distanceToCenter = planeOffsetTop - (currentScroll - initScroll);
+
+		// parallax strength is based on item relative width
+		const itemParallaxStrength = ww / projectDOMRect.width - 1;
+
+		// get parallax effect
+		parallaxEffect = distanceToCenter * parallaxStrength * itemParallaxStrength;
+	};
+
+	const onScroll = (event: any) => {
+		currentScroll = event.detail.scrollTop;
+		applyParallax();
+	};
+
+	onMount(() => {
+		const resizeObserver = new ResizeObserver(() => onResize());
+		resizeObserver.observe(document.body);
+
+		window.addEventListener('onLenisUpdate', onScroll);
+
+		return () => {
+			resizeObserver.disconnect();
+			// this function is called when the component is destroyed
+			window.removeEventListener('onLenisUpdate', onScroll);
+		};
+	});
 </script>
 
-<a
-	href="{base}/work/{slug}"
+<div
+	bind:this={projectEl}
 	class={cls(
 		'ProjectListItem',
 		isMainItem && 'ProjectListItem--is-main',
 		`ProjectListItem--is-${layout}-layout`,
 		$$props.class
 	)}
-	data-id={slug}
+	style="--parallax-effect: {parallaxEffect};"
 >
-	<div class="ProjectListItem-thumb">
-		{#if useCurtainsPlanes}
+	<a href="{base}/work/{slug}" data-id={slug}>
+		<div
+			class="ProjectListItem-thumb will-change-transform"
+			on:mouseenter={onEnter}
+			on:mouseleave={onLeave}
+		>
 			<ScrollPlane {slug} {content} {name} />
-		{:else}
-			<div class="ProjectListItem-thumb-image">
-				<img
-					src={content.thumbnail
-						? content.thumbnail.filename.replace('//a-us.storyblok.com', '//a2-us.storyblok.com')
-						: 'https://source.unsplash.com/random/?Motion&1'}
-					crossorigin=""
-					data-sampler="planeTexture"
-					alt={name}
-				/>
-			</div>
-		{/if}
+		</div>
 
-		<div class="ProjectListItem-thumb-hover-title text-white font-degular-display text-6xl">
-			<div class="ProjectListItem-thumb-hover-title-inner">
-				{name}
+		<div class="ProjectListItem-infos">
+			<div class="ProjectListItem-category text-sm uppercase">
+				{content.category && content.category[0]}
 			</div>
+			<div class="ProjectListItem-infos-inner">
+				<h2
+					class={cls(
+						'ProjectListItem-title',
+						isMainItem ? 'text-5xl' : 'text-3xl',
+						variants({ theme: theme })
+					)}
+				>
+					{name}
+				</h2>
+				<div class={cls('ProjectListItem-summary', variants({ theme: theme }))}>
+					{@html description}
+				</div>
+			</div>
+			<div class="ProjectListItem-client uppercase">{content.brand}</div>
 		</div>
-	</div>
-
-	<div class="ProjectListItem-infos">
-		<div class="ProjectListItem-category uppercase text-sm">
-			{content.category && content.category[0]}
-		</div>
-		<div class="ProjectListItem-infos-inner">
-			<h2 class={cls('ProjectListItem-title', isMainItem ? 'text-5xl' : 'text-3xl')}>
-				{name}
-			</h2>
-			<div class="ProjectListItem-summary">{content.summary}</div>
-		</div>
-		<div class="uppercase ProjectListItem-client">{content.client}</div>
-	</div>
-</a>
+	</a>
+</div>
 
 <style lang="scss">
 	@import '../../vars.scss';
 
 	.ProjectListItem {
-		display: flex;
-		flex-wrap: nowrap;
-		width: 100%;
-		flex-direction: column;
-		align-items: flex-end;
 		position: relative;
 		overflow: visible;
 		//margin: 200px 0;
+		pointer-events: none;
+
+		a {
+			display: flex;
+			flex-wrap: nowrap;
+			width: 100%;
+			flex-direction: column;
+			align-items: flex-end;
+			transform: translate3d(0, calc(var(--parallax-effect) * 1px), 0);
+			pointer-events: auto;
+		}
 
 		&-thumb {
 			width: 100%;
@@ -87,33 +172,22 @@
 					object-fit: cover;
 				}
 			}
-
-			&-hover-title {
-				position: absolute;
-				top: 50%;
-				right: 0;
-				left: 0;
-				pointer-events: none;
-				text-align: center;
-				transform: translate3d(0, -50%, 0);
-				overflow: hidden;
-				line-height: 120%;
-
-				&-inner {
-					transform: translate3d(0, 100%, 0);
-					opacity: 0;
-					transition: transform 0.3s ease-out, opacity 0.3s linear;
-				}
-			}
 		}
 
 		&-infos {
-			width: 50%;
+			width: 100%;
 			//box-sizing: border-box;
-			position: absolute;
-			bottom: 0;
-			padding-top: 1rem;
-			transform: translate3d(0, 100%, 0);
+			position: relative;
+			padding: 1rem 8.3333%;
+
+			@media (min-width: $media-md) {
+				width: 65%;
+				position: absolute;
+				bottom: 0;
+				transform: translate3d(0, 100%, 0);
+				padding: 0;
+				padding-top: 1rem;
+			}
 
 			&-inner {
 				position: relative;
@@ -124,7 +198,9 @@
 		}
 
 		&-title {
-			transition: transform 0.3s ease-out, opacity 0.3s linear;
+			transition:
+				transform 0.3s ease-out,
+				opacity 0.3s linear;
 		}
 
 		&-category,
@@ -135,30 +211,38 @@
 		&-summary {
 			opacity: 0;
 			transform: translate3d(0, 100%, 0);
-			position: absolute;
-			right: 0;
-			bottom: 0;
-			left: 0;
-			transition: transform 0.3s ease-out, opacity 0.3s linear;
+			transition:
+				transform 0.3s ease-out,
+				opacity 0.3s linear;
+
+			@media (min-width: $media-md) {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				left: 0;
+			}
 		}
 
-		&--is-main {
-			flex-direction: row;
-			align-items: flex-end;
-			justify-content: space-between;
+		@media (min-width: 768px) {
+			&--is-main {
+				a {
+					flex-direction: row;
+					align-items: flex-end;
+					justify-content: space-between;
+				}
 
-			.ProjectListItem-thumb {
-				width: 75%;
-			}
+				.ProjectListItem-thumb {
+					width: 75%;
+				}
+				.ProjectListItem-infos {
+					position: static;
+					transform: none;
+					width: calc(30% - 8.33vw);
 
-			.ProjectListItem-infos {
-				position: static;
-				transform: none;
-				width: calc(25% - 8.33vw);
-
-				&-inner {
-					padding: 2rem 0 0.5rem 0;
-					margin: 2rem 0 0.5rem 0;
+					&-inner {
+						padding: 2rem 0 0.5rem 0;
+						margin: 2rem 0 0.5rem 0;
+					}
 				}
 			}
 		}
@@ -166,14 +250,19 @@
 		&--is-left-layout {
 			.ProjectListItem-infos {
 				left: 0;
-				right: 50%;
+				right: 35%;
 			}
 		}
 
 		&--is-right-layout {
 			.ProjectListItem-infos {
-				right: 0;
-				left: 50%;
+				left: 0;
+				right: 35%;
+
+				@media (min-width: $media-md) {
+					right: 0;
+					left: 35%;
+				}
 			}
 		}
 

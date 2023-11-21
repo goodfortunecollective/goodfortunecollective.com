@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { onDestroy, tick } from 'svelte';
-	import { base } from '$app/paths';
 	import { clamp } from '../utils/maths';
-	import { ScrollSmoother } from '$lib/gsap';
 	import { useCurtains } from '$lib/utils/useCurtains';
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
-	import { isPageHidden, isTransitioning } from '../stores';
+	import gsap from '$lib/gsap';
+	import { onDestroy } from 'svelte';
+
+	import { isPageHidden, isTransitioning, project_list_hover, lenis } from '$lib/stores';
 
 	import type { Curtains, Plane as PlaneType, PlaneParams } from '@types/curtainsjs';
 
@@ -68,9 +68,11 @@
         uniform float uEffectStrength;
 
         void main( void ) {
-            vec4 color = texture2D(planeTexture, vTextureCoord);
-            vec4 rColor = texture2D(planeTexture, vTextureCoord + vec2(0.0, uScrollVelocity * uEffectStrength) * 0.15);
-            vec4 bColor = texture2D(planeTexture, vTextureCoord - vec2(0.0, uScrollVelocity * uEffectStrength) * 0.15);
+        		vec2 uv = vTextureCoord;
+
+            vec4 color = texture2D(planeTexture, uv);
+            vec4 rColor = texture2D(planeTexture, uv + vec2(0.0, uScrollVelocity * uEffectStrength) * 0.15);
+            vec4 bColor = texture2D(planeTexture, uv - vec2(0.0, uScrollVelocity * uEffectStrength) * 0.15);
 
             color.a *= uOpacity;
 
@@ -97,29 +99,38 @@
 			opacity: {
 				name: 'uOpacity',
 				type: '1f',
-				value: 1
+				value: 0
 			}
 		}
 	};
 
 	const createPlane = () => {
-		if (curtains && canCreatePlane) {
+		if (curtains && canCreatePlane && planeEl) {
 			params.renderOrder = curtains.planes.length;
 
 			plane = new Plane(curtains, planeEl, params);
 
-			console.log('add plane', plane);
+			const inTransition = {
+				opacity: plane.uniforms.opacity.value
+			};
+
+			gsap.to(inTransition, {
+				opacity: 1,
+				duration: 0.5,
+				ease: 'power2.inOut',
+				onUpdate: () => {
+					if (plane) {
+						plane.uniforms.opacity.value = inTransition.opacity;
+					}
+				}
+			});
 
 			plane.onRender(() => {
-				const scroll = ScrollSmoother.get();
-				const velocity = clamp(scroll.getVelocity() * 0.01, -60, 60);
+				const velocity = clamp($lenis ? $lenis.velocity : 0, -60, 60);
 				plane.uniforms.scrollVelocity.value = velocity;
 
-				//plane.rotation.z = velocity * 0.00125;
-
-				// scale plane and its texture
-				//plane.scale.y = 1 + Math.abs(velocity * 0.0025);
-				plane.textures[0].scale.y = 1 + Math.abs(velocity * 0.005);
+				// not super optimized but since we're translating its parent container it's mandatory
+				plane.updatePosition();
 			});
 		}
 	};
@@ -134,34 +145,70 @@
 		}
 	});
 
-	isPageHidden.subscribe((value: boolean) => {
-		isHidden = value;
-		if (value && isTransition && !canCreatePlane) {
-			// coming from a page transition
-			// wait a couple ticks for old planes to be removed first
-			canCreatePlane = true;
-			setTimeout(() => {
-				createPlane();
-			}, 32);
-		}
-	});
+	let resizeObserver: ResizeObserver | null;
 
 	useCurtains(
 		(curtainsInstance) => {
 			curtains = curtainsInstance;
+
 			createPlane();
+
+			resizeObserver = new ResizeObserver(() => {
+				if (plane) plane.resize();
+			});
+
+			resizeObserver.observe(document.body);
 		},
 		(curtainsInstance) => {
-			// TODO not triggered after using work page filters!!
-			// https://github.com/sveltejs/svelte/issues/5268 ?
 			if (plane) {
-				console.log('plane removed', plane.renderOrder, curtainsInstance);
+				//console.log('plane removed', plane.index, name);
 				plane.remove();
 				plane = null;
-				curtainsInstance.resize();
 			}
+
+			resizeObserver?.disconnect();
 		}
 	);
+
+	// hover
+	let hoverTween = null;
+	project_list_hover.subscribe((value) => {
+		if (!plane) return;
+
+		hoverTween?.kill();
+
+		const texture = plane.textures[0];
+
+		const hoverTransition = {
+			textureScale: texture?.scale.x
+		};
+
+		if (value === name) {
+			hoverTween = gsap.to(hoverTransition, {
+				textureScale: 1.15,
+				duration: 0.5,
+				ease: 'power2.inOut',
+				onUpdate: () => {
+					texture.scale.x = hoverTransition.textureScale;
+					texture.scale.y = hoverTransition.textureScale;
+				}
+			});
+		} else if (texture && texture.scale.x) {
+			hoverTween = gsap.to(hoverTransition, {
+				textureScale: 1,
+				duration: 0.5,
+				ease: 'power2.inOut',
+				onUpdate: () => {
+					texture.scale.x = hoverTransition.textureScale;
+					texture.scale.y = hoverTransition.textureScale;
+				}
+			});
+		}
+	});
+
+	onDestroy(() => {
+		hoverTween?.kill();
+	});
 </script>
 
 <div class="ScrollPlane" bind:this={planeEl}>

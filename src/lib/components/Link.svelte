@@ -1,32 +1,34 @@
 <script lang="ts">
-	export let href = { url: '', cached_url: '' };
+	export let href = '';
 	export let label = '';
 	export let isExternal = false;
-
-	export let url = href.url ? href.url : href.cached_url;
 </script>
 
 <a
 	{...$$restProps}
-	href={url}
+	{href}
 	target={isExternal ? '_blank' : undefined}
 	rel={isExternal ? 'noopener' : undefined}
-	class="flex flex-row items-stretch h-10 text-xs font-bold tracking-widest uppercase link"
+	class="3xl:text-md link flex h-10 flex-row items-stretch text-xs font-bold uppercase tracking-widest 4xl:text-lg"
 >
-	<span class="flex items-center pr-4">{label}</span>
+	{#if label}
+		<span class="flex items-center pr-4">{label}</span>{/if}
 	<span
-		class="relative flex items-center justify-center ml-[50px] text-4xl 3xl:text-5xl 4xl:text-6xl"
+		class="relative ml-[50px] flex items-center justify-center text-4xl 3xl:text-5xl 4xl:text-6xl"
 	>
-		<span class="arrow arrow-default" /><span class="flex items-center justify-center link-circle">
+		<span class="arrow arrow-default" /><span class="link-circle flex items-center justify-center">
 			<span class="arrow arrow-hover" />
 		</span>
-	</span></a
->
+	</span>
+</a>
 
 <style lang="scss">
 	@import '../../vars.scss';
 
 	.link {
+		display: inline-flex;
+		overflow: hidden;
+
 		&:hover {
 			.link-circle {
 				&:before {
@@ -35,7 +37,8 @@
 			}
 
 			.arrow-default {
-				transform: scale(0, 1) translate(45px, 0);
+				//transform: scale(0, 1) translate(45px, 0);
+				transform: translate3d(200%, 0, 0);
 			}
 
 			.arrow-hover {
@@ -66,7 +69,9 @@
 			background: $black;
 			z-index: 9;
 			content: '';
-			transition: 0.4s transform ease-out, 0.4s opacity ease-out;
+			transition:
+				0.5s transform $ease-out-expo,
+				0.5s opacity $ease-out-expo;
 		}
 	}
 
@@ -74,7 +79,9 @@
 		position: absolute;
 		width: 50%;
 		height: 1px;
-		transition: 0.4s transform ease-out, 0.4s opacity ease-out;
+		transition:
+			0.5s transform $ease-out-expo,
+			0.5s opacity $ease-out-expo;
 
 		&:before,
 		&:after {
@@ -112,8 +119,11 @@
 		&.arrow-hover {
 			width: 38%;
 			background: $white;
-			transform: translate(-100%, 0);
+			transform: translate3d(-200%, 0, 0);
 			z-index: 10;
+			transition:
+				0.5s 0.1s transform $ease-out-expo,
+				0.5s opacity $ease-out-expo;
 
 			&:before,
 			&:after {

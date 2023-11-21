@@ -1,148 +1,187 @@
 <script lang="ts">
-	import { onMount, onDestroy, getContext } from 'svelte';
+	import { cva } from 'class-variance-authority';
+	import { onMount, getContext } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent, renderRichText } from '@storyblok/svelte';
 
-	import { base } from '$app/paths';
-	import { goto } from '$app/navigation';
-
-	import { Heading } from '$lib/components';
-	import { gsap } from '$lib/gsap';
+	import {
+		Heading,
+		HoverPlane,
+		Video,
+		BackgroundTheme,
+		RichtextTransition,
+		ScrollActionToPage
+	} from '$lib/components';
+	import { cls } from '$lib/styles';
+	import { backgroundTheme } from '$lib/stores';
 
 	export let data;
 
-	let tl: any = null;
-	let scrollBottomContainerEl: HTMLElement;
-	let scrollBottomEl: HTMLElement;
-	let scrollProgressBottomEl: HTMLElement;
+	// title hover
+	let isTitleHovered = false as boolean;
 
 	$: description = renderRichText(data.story.content.description);
+	$: ask_text = renderRichText(data.story.content.ask_text);
+	$: strategy_text = renderRichText(data.story.content.strategy_text);
+	$: solution_text = renderRichText(data.story.content.solution_text);
 
 	const preview = getContext('storyblok-preview');
 
-	let isExit = false;
-
-	onMount(() => {
-		if (data.story) {
-			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
+	const variants = cva('relative transition-colors duration-1000 ease-out', {
+		variants: {
+			theme: {
+				light: '',
+				dark: 'text-white'
+			}
+		},
+		defaultVariants: {
+			theme: 'light'
 		}
-
-		// avoid auto navigation animation on Storyblok preview
-		if (preview) return;
-
-		tl = gsap.timeline();
-
-		tl.fromTo(
-			scrollBottomEl,
-			{ y: 0 },
-			{
-				y: '-=300',
-				scrollTrigger: {
-					trigger: scrollBottomContainerEl,
-					end: 'top center',
-					scrub: 0.5
-				},
-				onComplete: () => {
-					if (isExit) return;
-
-					gsap.to(scrollBottomEl, {
-						opacity: 0,
-						onComplete: () => {
-							goto(`${base}/work`);
-						}
-					});
-
-					isExit = true;
-				}
-			}
-		);
-
-		tl.fromTo(
-			scrollProgressBottomEl,
-			{ scaleY: 0 },
-			{
-				scaleY: 1,
-				scrollTrigger: {
-					trigger: scrollBottomEl,
-					end: 'center center',
-					scrub: 0.5
-				}
-			}
-		);
 	});
 
-	onDestroy(() => {
-		if (tl) {
-			tl.kill();
-			tl = null;
+	onMount(() => {
+		console.log(data.story);
+		if (data.story) {
+			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
 	});
 </script>
 
-<section class="pt-[var(--header-height)] bg-black text-white">
-	<div class="flex flex-row max-w-6xl pt-16 pb-32 mx-auto">
-		<div class="flex flex-col px-12 md:w-3/4">
-			<div class="flex flex-row gap-4">
-				{#if data.story.content.client}
-					<div class="flex flex-col md:w-1/5">
-						<h5 class="mb-2 text-sm font-bold tracking-wide uppercase">Client</h5>
-						{data.story.content.client}
-					</div>
-				{/if}
-				{#if data.story.content.solutions}
-					<div class="flex flex-col md:w-1/5">
-						<h5 class="mb-2 text-sm font-bold tracking-wide uppercase">Solutions</h5>
-						{#each data.story.content.solutions as item}
-							<span>{item}</span>
-						{/each}
-					</div>
-				{/if}
-				{#if data.story.content.roles}
-					<div class="flex flex-col md:w-1/5">
-						<h5 class="mb-2 text-sm font-bold tracking-wide uppercase">Roles</h5>
-						{#each data.story.content.roles as item}
-							<span>{item}</span>
-						{/each}
-					</div>
-				{/if}
-				{#if data.story.content.deliverables}
-					<div class="flex flex-col md:w-1/5">
-						<h5 class="mb-2 text-sm font-bold tracking-wide uppercase">Deliverables</h5>
-						{#each data.story.content.deliverables as item}
-							<span>{item}</span>
-						{/each}
-					</div>
-				{/if}
+<BackgroundTheme
+	preload={true}
+	startColor={data.story.content.color_brand}
+	endColor={data.story.content.color_brand}
+	startTheme={data.story.content.theme_brand}
+	endTheme={data.story.content.theme_brand}
+/>
+
+<section class={variants({ theme: $backgroundTheme })}>
+	<div class="absolute inset-0 flex h-full w-full items-center text-center">
+		<div class="mx-auto grid -translate-y-1/2 grid-cols-12 pt-16 lg:-translate-y-1/4">
+			<div
+				class="col-span-10 col-start-2"
+				on:mouseenter={() => (isTitleHovered = true)}
+				on:mouseleave={() => (isTitleHovered = false)}
+			>
+				<Heading
+					as="h1"
+					size="h1"
+					class="leading-extra-tight lg:leading-extra-tight"
+					animated={false}
+				>
+					{data.story.name}
+				</Heading>
 			</div>
-			<Heading size="h1" class="mt-6">{data.story.name}</Heading>
-			{#if data.story.content.description}
-				<div class="mt-12">
-					{@html description}
-				</div>
-			{/if}
 		</div>
-		<figure class="md:w-1/4">
+	</div>
+	<div class="grid h-screen w-full grid-cols-12 pt-24 lg:pt-32">
+		<figure
+			class="left-[50%]hidden pointer-events-none absolute h-auto w-1/4 -translate-x-1/2 pb-[50%] md:block lg:col-span-4 lg:col-start-9"
+		>
 			{#if data.story.content.thumbnail}
-				<img src={data.story.content.thumbnail.filename} alt={data.story.content.title} />
+				<div class="absolute h-full w-full">
+					<HoverPlane content={data.story.content} {isTitleHovered} />
+				</div>
 			{/if}
 		</figure>
-	</div>
-</section>
-<section>
-	<div class="max-w-6xl mx-auto">
-		{#if data.story}
-			<StoryblokComponent blok={data.story.content} />
-		{/if}
-		<div bind:this={scrollBottomContainerEl} class=" mt-72 pb-[100vh]">
+		<div
+			class="absolute bottom-0 left-0 col-span-12 col-start-1 grid w-full grid-cols-12 pb-24 lg:pb-32"
+		>
 			<div
-				bind:this={scrollBottomEl}
-				class="flex flex-col justify-center items-center text-center gap-8"
+				class="col-span-10 col-start-2 mx-auto flex flex-col gap-8 lg:flex-row lg:gap-0 lg:space-x-24"
 			>
-				<p class="uppercase font-medium tracking-widest">Scroll</p>
-				<div class="h-48 w-px bg-gray-100">
-					<div bind:this={scrollProgressBottomEl} class="bg-black h-full origin-top" />
-				</div>
-				<span class="font-degular-display leading-8 text-[10em]">All projects</span>
+				{#if data.story.content.brand}
+					<div>
+						<h5 class="mb-2 text-sm font-bold uppercase tracking-wide text-rose-50">Brand</h5>
+						{data.story.content.brand}
+					</div>
+				{/if}
+				{#if data.story.content.ask}
+					<div>
+						<h5 class="mb-2 text-sm font-bold uppercase tracking-wide text-rose-50">Ask</h5>
+						<ul
+							class="[&>*:not(:last-child)]:after:ml-4 [&>*:not(:last-child)]:after:content-['•']"
+						>
+							{#each data.story.content.ask as item}
+								<li class="mr-4 inline-block">{item}</li>
+							{/each}
+						</ul>
+					</div>
+				{/if}
 			</div>
 		</div>
 	</div>
 </section>
+
+<section class={cls(variants({ theme: $backgroundTheme }))}>
+	<div class="grid -translate-y-16 grid-cols-12 pb-16">
+		<div class="col-span-10 col-start-2">
+			<div class="w-full">
+				<Video
+					name={data.story.content.video_id}
+					videoID={data.story.content.video_id}
+					videoUrl={data.story.content.video_url}
+					posterUrl={data.story.content.video_poster?.filename
+						? data.story.content.video_poster.filename
+						: `https://vumbnail.com/${data.story.content.video_id}.jpg`}
+					autoplay={data.story.content.video_autoplay}
+					muted={data.story.content.video_autoplay}
+					loop={data.story.content.video_autoplay}
+					animated={false}
+				/>
+			</div>
+			<div class=" max-w-4xl py-16">
+				<Heading as="h2" size="h2">{@html description}</Heading>
+			</div>
+		</div>
+		{#if data.story.content.ask_text}
+			<div class="col-span-10 col-start-2 py-16 lg:col-span-6 lg:col-start-4">
+				<Heading as="h4" size="h4" class="uppercase"><strong>Ask</strong></Heading>
+				<RichtextTransition class="text-xl [&_p]:my-8 [&_p]:leading-8">
+					{@html ask_text}
+				</RichtextTransition>
+			</div>
+		{/if}
+
+		{#if data.story.content.strategy_text}
+			<div class="col-span-10 col-start-2 py-16 lg:col-span-6 lg:col-start-4">
+				<Heading as="h4" size="h4" class="uppercase"><strong>Strategy</strong></Heading>
+				<RichtextTransition class="text-xl [&_p]:my-8 [&_p]:leading-8">
+					{@html strategy_text}
+				</RichtextTransition>
+			</div>
+		{/if}
+
+		{#if data.story.content.solution_text}
+			<div class="col-span-10 col-start-2 py-16 lg:col-span-6 lg:col-start-4">
+				<Heading as="h4" size="h4" class="uppercase"><strong>Solution</strong></Heading>
+				<RichtextTransition class="text-xl [&_p]:my-8 [&_p]:leading-8">
+					{@html solution_text}
+				</RichtextTransition>
+				{#if data.story.content.output}
+					<ul
+						class="mt-8 text-gray-500 [&>*:not(:last-child)]:after:ml-4 [&>*:not(:last-child)]:after:content-['•']"
+					>
+						{#each data.story.content.output as item}
+							<li class="mr-4 inline-block">{item}</li>
+						{/each}
+					</ul>
+				{/if}
+			</div>
+		{/if}
+	</div>
+</section>
+
+<BackgroundTheme
+	startColor={data.story.content.color_brand}
+	endColor="#fff"
+	startTheme={data.story.content.theme_brand}
+	endTheme="light"
+/>
+
+<section>
+	{#if data.story}
+		<StoryblokComponent blok={data.story.content} />
+	{/if}
+</section>
+
+<ScrollActionToPage href={'/work'} label={'All projects'} disabled={!!preview} />

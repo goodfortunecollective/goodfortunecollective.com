@@ -3,52 +3,31 @@
 	import { cva } from 'class-variance-authority';
 
 	import { cls } from '$lib/styles';
-	import { Heading } from '$lib/components';
+	import { backgroundTheme } from '$lib/stores';
 
 	export let blok: any;
 
-	const variants = cva('relative', {
+	const variants = cva('transition-colors duration-1000 ease-out', {
 		variants: {
-			layoutDirection: {
-				left: 'flex-row',
-				right: 'flex-row-reverse'
-			},
-			columnIndex: {
-				'0': 'md:w-5/12',
-				'1': '',
-				'2': 'md:w-4/12',
-				'3': 'md:w-1/12'
+			theme: {
+				light: '',
+				dark: 'text-white'
 			}
 		},
 		defaultVariants: {
-			layoutDirection: 'left'
+			theme: 'light'
 		}
 	});
-
-	const getColumnIndex = (index: number) => (index % 4).toString() as '0' | '1' | '2' | '3';
 </script>
 
 <div
 	use:storyblokEditable={blok}
 	{...$$restProps}
-	class={cls(
-		'max-w-6xl mx-auto px-6 xl:px-0 md:flex justify-between',
-		variants({ layoutDirection: blok.layoutDirection }),
-		blok.class
-	)}
+	class={cls(variants({ theme: $backgroundTheme }), blok.class)}
 >
-	<div class="md:w-4/12 lg:absolute">
-		<Heading as="h3" size="h2">{blok.heading}</Heading>
-	</div>
-
-	<dl class="flex flex-col gap-24 mt-16">
+	<dl class="flex flex-col gap-24 lg:gap-32">
 		{#each blok.list as b, index}
-			<div class={cls('flex justify-start', variants({ layoutDirection: blok.layoutDirection }))}>
-				<div class={cls(variants({ columnIndex: getColumnIndex(index) }))} />
-				<div class="md:w-7/12 min-w-[500px]">
-					<StoryblokComponent blok={b} {index} />
-				</div>
-			</div>
+			<StoryblokComponent blok={b} {index} />
 		{/each}
 	</dl>
 </div>

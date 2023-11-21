@@ -1,122 +1,35 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
+	import { cva } from 'class-variance-authority';
 
-	import { delay_anim_page, isPageHidden, isTransitioning } from '$lib/stores';
-	import { gsap, SplitText, ScrollTrigger } from '$lib/gsap';
+	import { TextTransition } from '$lib/components';
 	import { cls } from '$lib/styles';
 
 	export let as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1';
 	export let size: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1';
+	export let animated: boolean = true;
+	export let underline: boolean = false;
 
-	const textSizes = {
-		h1: 'text-6xl md:text-8xl 3xl:text-9xl 4xl:text-10xl',
-		h2: 'text-5xl 3xl:text-6xl 4xl:text-7xl',
-		h3: 'text-4xl 3xl:text-5xl 4xl:text-6xl',
-		h4: 'text-3xl 3xl:text-4xl 4xl:text-5xl',
-		h5: 'text-2xl 3xl:text-3xl 4xl:text-4xl',
-		h6: 'text-xl 3xl:text-2xl 4xl:text-3xl'
-	};
-
-	let headingTl: any = null;
-	let headingEl: HTMLElement;
-
-	// only add timeline when the page has been scrolled to top after a transition
-	let canCreateTl,
-		isTransition,
-		isHidden: boolean = false;
-
-	const createScrollTriggerTl = () => {
-		if (canCreateTl) {
-			//console.log('create scroll tl', as, headingEl.innerText);
-
-			if (headingTl) headingTl.kill();
-
-			const text = new SplitText(headingEl, {
-				type: 'chars, lines',
-				tag: 'span',
-				charsClass: 'split-char'
-			});
-
-			let chars = text.chars;
-
-			// @ts-ignore
-			gsap.set(headingEl, { perspective: 400 });
-
-			const scrollTrigger = ScrollTrigger.create({
-				trigger: headingEl,
-				start: '50% 80%',
-				end: 'bottom 20%',
-				once: true,
-				onEnter: ({ isActive }) => {
-					// force animation to play on first load
-					// super dirty but not working otherwise...
-					if (isActive) {
-						setTimeout(() => {
-							if (headingTl && !headingTl.isActive()) {
-								headingTl.restart();
-							}
-						});
-					}
-				}
-			});
-
-			if (chars.length) {
-				headingTl = gsap
-					.timeline({
-						scrollTrigger,
-						delay: as === 'h1' ? $delay_anim_page : 0
-					})
-					.from(chars, {
-						duration: 0.8,
-						opacity: 0,
-						scale: 0,
-						y: 80,
-						rotationX: 180,
-						transformOrigin: '0% 50% -50',
-						ease: 'back',
-						stagger: 0.01
-					});
+	const variants = cva('w-full', {
+		variants: {
+			size: {
+				h1: 'text-6xl md:text-8xl lg:text-9xl xl:text-10xl 4xl:text-10xl leading-10 font-degular-display ',
+				h2: 'text-5xl lg:text-8xl font-degular-display',
+				h3: 'text-4xl 3xl:text-5xl 4xl:text-6xl font-degular-display',
+				h4: 'text-3xl 3xl:text-4xl 4xl:text-5xl font-bold',
+				h5: 'text-2xl 3xl:text-3xl 4xl:text-4xl font-bold',
+				h6: 'text-xl md:text-sm lg:text-xl 3xl:text-2xl 4xl:text-3xl font-bold'
 			}
+		},
+		defaultVariants: {
+			size: 'h1'
 		}
-	};
-
-	onMount(() => {
-		//createScrollTriggerTl();
-
-		isTransitioning.subscribe((value: boolean) => {
-			isTransition = value;
-			// create plane if we're not coming from a page transition
-			// (ie first load, project filters, etc)
-			if (!value && !canCreateTl) {
-				canCreateTl = true;
-				createScrollTriggerTl();
-			}
-		});
-
-		isPageHidden.subscribe((value: boolean) => {
-			isHidden = value;
-			if (value && isTransition && !canCreateTl) {
-				// coming from a page transition
-				canCreateTl = true;
-				createScrollTriggerTl();
-			}
-		});
-	});
-
-	onDestroy(() => {
-		if (headingTl) headingTl.kill();
-
-		headingTl = null;
 	});
 </script>
 
-<svelte:element
-	this={as}
-	bind:this={headingEl}
-	{...$$restProps}
-	class={cls(textSizes[size], 'w-full font-degular-display', $$props.class)}
->
-	<slot />
+<svelte:element this={as} {...$$restProps} class={cls(variants({ size }), $$props.class)}>
+	<TextTransition enabled={animated} {underline}>
+		<slot />
+	</TextTransition>
 </svelte:element>
 
 <!--

@@ -1,44 +1,40 @@
 <script lang="ts">
 	import { renderRichText, storyblokEditable } from '@storyblok/svelte';
+	import { cva } from 'class-variance-authority';
+
+	import { backgroundTheme } from '$lib/stores';
+	import { Heading, RichtextTransition } from '$lib/components';
 
 	export let blok: any;
 
-	$: content = renderRichText(blok.content);
 	$: list = renderRichText(blok.list);
+
+	const headingStyle = cva(
+		'max-w-xl lg:leading-tightest leading-tightest transition-colors duration-1000 ease-out',
+		{
+			variants: {
+				theme: {
+					light: '',
+					dark: 'text-yellow-50'
+				}
+			},
+			defaultVariants: {
+				theme: 'light'
+			}
+		}
+	);
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	{@html content}
-	<div
-		class="grid grid-cols-2 pt-4 mt-4 text-sm tracking-wide uppercase gap-y-4 md:pt-8 md:mt-12 list"
-	>
-		{@html list}
+	<div class="flex flex-col gap-8">
+		<Heading size="h5" as="h5" class="font-bold uppercase">{blok.category}</Heading>
+		<Heading size="h2" as="h2" class={headingStyle({ theme: $backgroundTheme })}>
+			{blok.title}
+		</Heading>
+		<div class="[&_p]:my-4 [&_p]:leading-8">
+			<RichtextTransition class="text-xl [&_p]:my-16 [&_p]:leading-8"
+				>{@html list}</RichtextTransition
+			>
+		</div>
 	</div>
 </div>
-
-<style lang="scss">
-	@import '../../vars.scss';
-
-	.list {
-		position: relative;
-
-		&:before,
-		&:after {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 35%;
-			height: 1px;
-			background: #333;
-			content: '';
-		}
-
-		&:after {
-			left: 50%;
-		}
-
-		p {
-			margin-bottom: 1rem;
-		}
-	}
-</style>

@@ -1,31 +1,22 @@
 <script lang="ts">
 	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
-	import { cva } from 'class-variance-authority';
 
 	import { cls } from '$lib/styles';
 
 	export let blok: any;
-
-	const variants = cva('', {
-		variants: {
-			backgroundColor: {
-				transparent: '',
-				black: 'bg-black text-white',
-				grey: 'bg-zinc-200'
-			}
-		},
-		defaultVariants: {
-			backgroundColor: 'transparent'
-		}
-	});
 </script>
 
 <div
 	use:storyblokEditable={blok}
 	{...$$restProps}
-	class={cls(variants({ backgroundColor: blok.backgroundColor }), blok.class)}
+	class={cls(blok.wrapped && 'grid grid-cols-12', blok.class)}
+	style={blok.backgroundColor &&
+		blok.backgroundColor !== '' &&
+		`background-color: ${blok.backgroundColor};`}
 >
-	{#each blok.children as b}
-		<StoryblokComponent blok={b} />
-	{/each}
+	<div class={cls(blok.wrapped && 'col-span-10 col-start-2')}>
+		{#each blok.children as b}
+			<StoryblokComponent blok={b} />
+		{/each}
+	</div>
 </div>

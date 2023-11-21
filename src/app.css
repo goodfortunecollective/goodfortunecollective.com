@@ -5,12 +5,16 @@
 @layer base {
 	html {
 		-webkit-font-smoothing: antialiased;
-		font-family: 'Roboto', sans-serif;
+		font-family: 'tenon', sans-serif;
 	}
 
 	html,
 	body {
-		background-color: #fff;
+		background-color:  var(--theme-color);
+	}
+
+	body {
+		transition: background-color 1s ease;
 	}
 
 	.preserve-3d {
@@ -41,8 +45,45 @@
 		display: inline-block !important;
 		white-space: nowrap;
 	}
-}
 
-:root {
-	--header-height: 4rem;
+	.split-line {
+		overflow: hidden;
+	}
+
+	.split-line > * {
+		vertical-align: text-top;
+	}
+
+	.split-line__underline::after {
+		content: '';
+		display: block;
+		position: absolute;
+		bottom: 0;
+		width: 0;
+		height: 4px;
+		background: currentColor;
+		transition: width 0.3s;
+	}
+
+	.split-line__underline:hover::after {
+		width: 100%;
+	}
+
+	/** LENIS **/
+
+	html.lenis {
+		height: auto;
+	}
+
+	.lenis.lenis-smooth {
+		scroll-behavior: auto;
+	}
+
+	.lenis.lenis-smooth [data-lenis-prevent] {
+		overscroll-behavior: contain;
+	}
+
+	.lenis.lenis-scrolling iframe {
+		pointer-events: none;
+	}
 }

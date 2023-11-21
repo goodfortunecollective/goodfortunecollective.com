@@ -1,17 +1,18 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
-	import { navigating } from '$app/stores';
+	import type { Curtains } from '@types/curtainsjs';
 
 	import { base } from '$app/paths';
-	import { page } from '$app/stores';
+	import { navigating, page } from '$app/stores';
 	import { ProjectListItem } from '$lib/components';
+	import { ScrollTrigger } from '$lib/gsap';
+	import { project_list_hover } from '$lib/stores';
+	import { useCurtains } from '$lib/utils/useCurtains';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	import MenuList from './MenuList.svelte';
 	import MenuItem from './MenuItem.svelte';
-
-	import type { Curtains } from '@types/curtainsjs';
-	import { useCurtains } from '../../lib/utils/useCurtains';
 
 	let curtains: undefined | Curtains;
 
@@ -21,6 +22,9 @@
 
 	export let data;
 
+	let containerEl: HTMLElement;
+
+	//$: filter = $page.url.searchParams.get('filter');
 	$: filter = $page.url.hash.slice(1);
 
 	/**
@@ -63,12 +67,12 @@
 	$: projects = getProjectsByFilter(data.projects, filter);
 
 	const projectGridItemsClasses = [
-		'col-span-5 col-start-7 mt-[16.66%] z-2 text-right',
-		'col-span-6 col-start-2 -mt-[25%] z-1 text-left',
-		'col-span-6 col-start-5 mt-[8.33%] z-2 text-right',
-		'col-span-4 col-start-2 -mt-[16.66%] z-1 text-left',
-		'col-span-4 col-start-8 mt-[16.66%] z-2 text-right',
-		'col-span-7 col-start-2 -mt-[4.166%] z-1 text-left'
+		'col-span-10 col-start-3 md:col-span-5 md:col-start-7 md:mt-[16.66%] z-2 text-right',
+		'col-span-10 col-start-1 md:col-span-6 md:col-start-2 md:-mt-[25%] z-1 text-left',
+		'col-span-10 col-start-3 md:col-span-6 md:col-start-5 md:mt-[8.33%] z-2 text-right',
+		'col-span-10 col-start-1 md:col-span-4 md:col-start-2 md:-mt-[16.66%] z-1 text-left',
+		'col-span-10 col-start-3 md:col-span-4 md:col-start-8 md:mt-[16.66%] z-2 text-right',
+		'col-span-10 col-start-1 md:col-span-7 md:col-start-2 md:-mt-[4.166%] z-1 text-left'
 	];
 
 	const getProjectGridItemClass = (index: number) => {
@@ -79,33 +83,42 @@
 		}
 	};
 
-	// force removing all projects planes when navigating away
-	// works even if we have used the filters
-	$: useCurtainsPlanes = true as boolean;
-	$: if ($navigating) {
-		if (curtains && $navigating?.from?.route.id === '/work') {
-			useCurtainsPlanes = false;
-		}
-	}
-
 	onMount(() => {
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
 	});
 
-	// update planes sizes and positions
-	async function hashchange() {
-		if (curtains) curtains.resize();
-	}
+	useTransitionReady(
+		() => {
+			// @ts-ignore
+			ScrollTrigger.create({
+				id: 'project-work',
+				trigger: containerEl,
+				start: 'top center',
+				end: 'bottom center'
+				// onToggle: (self: any) => {
+				// 	if (!self.isActive) {
+				// 		$project_list_hover = '';
+				// 	}
+				// }
+			});
+		},
+		() => {
+			const scrollTrigger = ScrollTrigger.getById('project-work');
+			if (scrollTrigger) scrollTrigger.kill();
+		}
+	);
 </script>
 
-<svelte:window on:hashchange={hashchange} />
+{#if data.story}
+	<StoryblokComponent blok={data.story.content} />
+{/if}
 
-<section class="ProjectListPage pt-[var(--header-height)] pb-32">
+<section class="pb-32 pt-20 3xl:pt-24">
 	<div class="mt-16">
-		<div class="max-w-6xl mx-auto relative">
-			<MenuList class="z-10 absolute top-0 right-0 flex flex-col items-end gap-4">
+		<div class="relative">
+			<MenuList class="absolute right-0 top-0 z-10 flex flex-col items-end gap-4">
 				<MenuItem
 					name="All Projects"
 					sup={data.projects.length}
@@ -126,16 +139,17 @@
 			</MenuList>
 		</div>
 
-		<div class="ProjectListPage-list mb-32">
-			{#each projects as { name, slug, content }, index (content._uid)}
+		<div class="mb-32" bind:this={containerEl}>
+			{#each projects as { name, slug, content }, index (name)}
 				<div class="grid grid-cols-12">
 					<ProjectListItem
+						theme="dark"
+						hover={$project_list_hover === name}
 						{name}
 						{slug}
 						{content}
 						isMainItem={index === 0}
 						layout={index % 2 === 0 ? 'left' : 'right'}
-						{useCurtainsPlanes}
 						class={getProjectGridItemClass(index)}
 					/>
 				</div>
@@ -143,10 +157,6 @@
 		</div>
 	</div>
 </section>
-
-{#if data.story}
-	<StoryblokComponent blok={data.story.content} />
-{/if}
 
 <style lang="scss">
 </style>

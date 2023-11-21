@@ -1,22 +1,50 @@
 <script lang="ts">
 	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+	import { cva } from 'class-variance-authority';
 
 	import { Heading } from '$lib/components';
+	import { cls } from '$lib/styles';
+	import { backgroundTheme } from '$lib/stores';
 
 	export let blok: any;
+
+	const headingStyle = cva('transition-colors duration-1000 ease-out', {
+		variants: {
+			theme: {
+				light: '',
+				dark: 'text-yellow-50'
+			}
+		},
+		defaultVariants: {
+			theme: 'light'
+		}
+	});
+
+	const textStyle = cva('transition-colors duration-1000 ease-out', {
+		variants: {
+			theme: {
+				light: '',
+				dark: 'text-white'
+			}
+		},
+		defaultVariants: {
+			theme: 'light'
+		}
+	});
 </script>
 
-<div
-	use:storyblokEditable={blok}
-	{...$$restProps}
-	class={'heading-richtext-2col max-w-5xl mx-auto ' + blok.class}
->
-	<div class="flex flex-col gap-8 px-8 pt-32 lg:flex-row lg:px-24 lg:gap-0">
-		<Heading as="h2" size="h5" class="font-bold tracking-widest uppercase md:w-1/2 title"
-			>{blok.heading}</Heading
+<div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
+	<div class="grid grid-cols-12 gap-8 pt-24 md:gap-0 md:pt-32">
+		<Heading
+			as="h2"
+			size="h6"
+			class={cls(
+				'title col-span-10 col-start-2 w-full break-keep font-bold uppercase tracking-widest md:col-span-3 md:col-start-3 xl:w-[75%]',
+				headingStyle({ theme: $backgroundTheme })
+			)}>{blok.heading}</Heading
 		>
-		<div class="flex-1 text-lg text text-block">
-			<div class="flex flex-col gap-{blok.gap}">
+		<div class="col-span-10 col-start-2 text-lg md:col-span-5 md:col-start-7">
+			<div class={cls('gap-{blok.gap} flex flex-col', textStyle({ theme: $backgroundTheme }))}>
 				{#each blok.content as b}
 					<StoryblokComponent blok={b} />
 				{/each}
@@ -24,13 +52,3 @@
 		</div>
 	</div>
 </div>
-
-<style lang="scss">
-	.text-block {
-		:global(p),
-		:global(h3),
-		:global(ul) {
-			color: #929292;
-		}
-	}
-</style>

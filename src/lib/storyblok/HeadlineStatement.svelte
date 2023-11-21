@@ -1,68 +1,104 @@
 <script lang="ts">
 	import { renderRichText, storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+	import { cva } from 'class-variance-authority';
 
-	import { Heading } from '$lib/components';
+	import { Heading, RichtextTransition } from '$lib/components';
+	import { cls } from '$lib/styles';
+	import { backgroundTheme } from '$lib/stores';
 
 	export let blok: any;
+
+	const headingStyle = cva(
+		'flex-1 lg:leading-extra-tight leading-extra-tight transition-colors duration-1000 ease-out',
+		{
+			variants: {
+				theme: {
+					light: '',
+					dark: 'text-yellow-50'
+				},
+				maxWidth: {
+					md: 'max-w-screen-md',
+					lg: 'max-w-screen-lg',
+					xl: 'max-w-screen-xl',
+					'2xl': 'max-w-screen-2xl'
+				},
+				lineHeight: {
+					none: '',
+					'extra-tight': 'leading-extra-tight lg:leading-extra-tight',
+					tightest: 'leading-tightest lg:leading-tightest'
+				}
+			},
+			defaultVariants: {
+				theme: 'light',
+				maxWidth: 'md',
+				lineHeight: 'none'
+			}
+		}
+	);
+
+	const textStyle = cva('transition-colors duration-1000 ease-out', {
+		variants: {
+			theme: {
+				light: '',
+				dark: 'text-yellow-50'
+			}
+		},
+		defaultVariants: {
+			theme: 'light'
+		}
+	});
+
+	const childrenStyle = cva('col-span-10 col-start-2  ', {
+		variants: {
+			align: {
+				left: 'lg:col-span-2 lg:col-start-2 lg:pt-12',
+				right: 'flex lg:justify-end lg:-translate-y-16'
+			}
+		},
+		defaultVariants: {
+			align: 'left'
+		}
+	});
 
 	$: content = renderRichText(blok.content);
 </script>
 
-<div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	<div class="max-w-6xl mx-auto">
-		<div class="flex flex-col items-stretch gap-12 px-8 pt-16 pb-8 lg:flex-row lg:gap-0">
-			<div class="flex flex-col justify-between space md:w-1/2">
-				<Heading as="h2" size="h1">{blok.title}</Heading>
-				{#if blok.children.length}
-					<div class="hidden mt-8 lg:block">
-						{#each blok.children as b}
-							<StoryblokComponent blok={b} />
-						{/each}
-					</div>
-				{/if}
+<div
+	use:storyblokEditable={blok}
+	{...$$restProps}
+	class={cls(blok.class, textStyle({ theme: $backgroundTheme }))}
+>
+	<div class="pt-18 grid grid-cols-12 gap-8 pt-32 lg:gap-0 lg:pt-[25vh]">
+		<div class="col-span-10 col-start-2">
+			<div class="flex h-full flex-col">
+				<Heading
+					as="h1"
+					size="h1"
+					class={headingStyle({
+						theme: $backgroundTheme,
+						maxWidth: blok.maxWidth,
+						lineHeight: blok.lineHeight
+					})}
+					>{blok.title}
+				</Heading>
 			</div>
-			<div class="flex items-end flex-1 text-xl">
-				<div class="pt-0 leading-6 text lg:pt-24">{@html content}</div>
-			</div>
-			{#if blok.children.length}
-				<div class="mt-4 lg:hidden">
-					{#each blok.children as b}
-						<StoryblokComponent blok={b} />
-					{/each}
-				</div>
-			{/if}
 		</div>
+		{#if blok.children.length}
+			<div class={childrenStyle({ align: blok.align })}>
+				{#each blok.children as b}
+					<StoryblokComponent blok={b} />
+				{/each}
+			</div>
+		{/if}
+		{#if content}
+			<div class="col-span-10 col-start-2 lg:col-span-6 lg:col-start-5">
+				<div
+					class="max-w-screen-xl text-xl leading-9 lg:pt-12 xl:text-2xl 4xl:text-4xl 4xl:leading-loose"
+					{...$$restProps}
+				>
+					<RichtextTransition>{@html content}</RichtextTransition>
+				</div>
+			</div>
+		{/if}
 	</div>
 </div>
-
-<style lang="scss">
-	@import '../../vars.scss';
-
-	.grey-bg {
-		position: relative;
-		background: #bec6c4;
-
-		&:before {
-			position: absolute;
-			bottom: 100%;
-			height: var(--header-height);
-			right: 0;
-			left: 0;
-			background: #bec6c4;
-			content: '';
-		}
-	}
-
-	.black-bg {
-		background: #1c1c1c;
-		color: $white;
-
-		.text {
-			color: $white;
-		}
-	}
-
-	.text {
-		color: #2c3436;
-	}
-</style>

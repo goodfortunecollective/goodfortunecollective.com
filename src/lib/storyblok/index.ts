@@ -1,65 +1,95 @@
+import ArticleList from './ArticleList.svelte';
+import ArticleHeadline from './ArticleHeadline.svelte';
+import ArticleListItem from './ArticleListItem.svelte';
+import ArticleText from './ArticleText.svelte';
+import BackgroundTheme from './BackgroundTheme.svelte';
+import CardsImage from './CardsImage.svelte';
+import CardsVideo from './CardsVideo.svelte';
+import CardsItem from './CardsItem.svelte';
+import CardsScroller from './CardsScroller.svelte';
+import CenterHeadline from './CenterHeadline.svelte';
 import Container from './Container.svelte';
 import Figure from './Figure.svelte';
-import Figures from './Figures.svelte';
 import Footer from './Footer.svelte';
 import Header from './Header.svelte';
 import Heading from './Heading.svelte';
 import HeadingDescription from './HeadingDescription.svelte';
+import HeadingHoverImage from './HeadingHoverImage.svelte';
 import HeadingList from './HeadingList.svelte';
 import HeadingListItem from './HeadingListItem.svelte';
-import HeadlineImages from './HeadlineImages.svelte';
 import HeadlineStatement from './HeadlineStatement.svelte';
 import HeadlineVideo from './HeadlineVideo.svelte';
+import Image from './Image.svelte';
 import ImageList from './ImageList.svelte';
-import Images from './Images.svelte';
-import ImagesCarousel from './ImagesCarousel.svelte';
 import ImagesList from './ImagesList.svelte';
-import ImageAndText from './ImageAndText.svelte';
-import ProjectsList from './ProjectsList.svelte';
 import JobList from './JobList.svelte';
 import Link from './Link.svelte';
+import MediaAndText from './MediaAndText.svelte';
+import MediaParallax from './MediaParallax.svelte';
+import MediaParallaxImage from './MediaParallaxImage.svelte';
+import MediaParallaxVideo from './MediaParallaxVideo.svelte';
+import MemberItem from './MemberItem.svelte';
+import MemberList from './MemberList.svelte';
+import Paragraph from './Paragraph.svelte';
+import ProjectsList from './ProjectsList.svelte';
 import Page from './Page.svelte';
 import RichText from './RichText.svelte';
 import SEO from './SEO.svelte';
 import SocialLink from './SocialLink.svelte';
 import SocialLinks from './SocialLinks.svelte';
+import Spacer from './Spacer.svelte';
 import SubHeadline from './SubHeadline.svelte';
 import TagsList from './TagsList.svelte';
 import Text from './Text.svelte';
-import TextCols from './TextCols.svelte';
+import TwoCols from './TwoCols.svelte';
 import Video from './Video.svelte';
 
 export const components: any = {
+	'article-headline': ArticleHeadline,
+	'article-list': ArticleList,
+	'article-list-item': ArticleListItem,
+	'article-text': ArticleText,
+	'background-theme': BackgroundTheme,
+	'cards-image': CardsImage,
+	'cards-video': CardsVideo,
+	'cards-item': CardsItem,
+	'cards-scroller': CardsScroller,
+	'center-headline': CenterHeadline,
 	'container': Container,
 	'figure': Figure,
-	'figures': Figures,
 	'footer': Footer,
 	'header': Header,
 	'heading': Heading,
 	'heading-description': HeadingDescription,
+	'heading-hover-image': HeadingHoverImage,
 	'heading-list': HeadingList,
 	'heading-list-item': HeadingListItem,
-	'headline-images': HeadlineImages,
 	'headline-statement': HeadlineStatement,
 	'headline-video': HeadlineVideo,
+	'image': Image,
 	'image-list': ImageList,
-	'images': Images,
-	'images-carousel': ImagesCarousel,
-	'image-and-text': ImageAndText,
 	'images-list': ImagesList,
 	'job-list': JobList,
-	'projects-list': ProjectsList,
 	'link': Link,
+	'media-and-text': MediaAndText,
+	'media-parallax': MediaParallax,
+	'media-parallax-image':  MediaParallaxImage,
+	'media-parallax-video':  MediaParallaxVideo,
+	'member-item': MemberItem,
+	'member-list': MemberList,
+	'projects-list': ProjectsList,
 	'page': Page,
+	'paragraph': Paragraph,
 	'project': Page,
 	'rich-text': RichText,
 	'seo': SEO,
 	'social-link': SocialLink,
 	'social-links': SocialLinks,
+	'spacer': Spacer,
 	'subheadline': SubHeadline,
 	'text': Text,
 	'tags-list': TagsList,
-	'text-cols': TextCols,
+	'two-cols': TwoCols,
 	'video': Video,
 };
 

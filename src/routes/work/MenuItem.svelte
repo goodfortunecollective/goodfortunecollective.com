@@ -11,9 +11,67 @@
 	export let delay: number = 0;
 </script>
 
-<li in:fade={{ delay }} out:fade class="whitespace-nowrap text-right">
+<li
+	in:fade|local={{ delay }}
+	out:fade|local
+	class={cls(
+		'menu-item mb-2 whitespace-nowrap text-right text-xs font-bold uppercase tracking-wider' +
+			(selected ? ' active' : '')
+	)}
+>
 	<a href={url}>
 		<span class={cls(selected && 'font-bold')}>{name}</span>
-		<sup class="font-features sups">{zeroPad(sup)}</sup>
+		<sup class="number font-features sups font-normal">{zeroPad(sup)}</sup>
 	</a>
 </li>
+
+<style lang="scss">
+	@import '../../vars.scss';
+
+	.menu-item {
+		position: relative;
+		color: #a7a89a;
+		transition:
+			0.4s color ease-out,
+			0.4s transform ease-out;
+		&:after {
+			position: absolute;
+			right: -40px;
+			width: 4px;
+			height: 4px;
+			border-radius: 100%;
+			top: 50%;
+			margin-top: -2px;
+			background: $black;
+			opacity: 0;
+			content: '';
+			transition:
+				0.4s opacity ease-out 0s,
+				0.4s transform ease-out 0s;
+		}
+		&.active {
+			color: #596669;
+			transform: translate(-40px, 0);
+			cursor: default;
+			&:after {
+				opacity: 1;
+			}
+		}
+		@media (min-width: $media-md) {
+			&:hover {
+				color: #596669;
+				transform: translate(-40px, 0);
+				&:after {
+					opacity: 1;
+					transition:
+						0.4s opacity ease-out 0.2s,
+						0.4s transform ease-out 0.2s;
+				}
+			}
+		}
+	}
+
+	.number {
+		margin-top: -2px;
+	}
+</style>

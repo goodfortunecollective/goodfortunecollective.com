@@ -1,21 +1,24 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition';
-	import { onMount } from 'svelte';
-	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+	import { storyblokEditable } from '@storyblok/svelte';
 
 	import { base } from '$app/paths';
-	import { gsap } from '$lib/gsap';
+	import gsap from '$lib/gsap';
 	import { Gfc } from '$lib/components';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import { onMount } from 'svelte';
 
 	export let blok: any;
 
 	const navigation = [
 		{ name: 'Work', path: 'work' },
 		{ name: 'About', path: 'about' },
+		{ name: 'Culture', path: 'culture' },
 		{ name: 'Careers', path: 'careers' },
 		{ name: 'Contact', path: 'contact' }
 	];
 
+	let ready = false;
 	let mobileMenuOpen = false;
 	const toggleMobileMenu = () => (mobileMenuOpen = !mobileMenuOpen);
 	const closeMobileMenu = () => (mobileMenuOpen = false);
@@ -37,6 +40,15 @@
 	$: offscreen = scrollDirection === 'down' && currentY > clientHeight * 4;
 
 	onMount(() => {
+		gsap.set(logo, { opacity: 0, y: -20 });
+		gsap.set('[data-gsap="nav-items"]', { opacity: 0, y: -20 });
+	});
+
+	useTransitionReady(() => {
+		if (ready) return;
+
+		ready = true;
+
 		const tl = gsap.timeline();
 
 		tl.fromTo(
@@ -49,7 +61,7 @@
 				opacity: 1,
 				y: 0,
 				duration: 1.8,
-				delay: 1,
+				delay: 0.4,
 				ease: 'power4.out'
 			}
 		);
@@ -65,7 +77,7 @@
 				y: 0,
 				duration: 1.8,
 				stagger: 0.1,
-				delay: 0.6,
+				delay: 0.2,
 				ease: 'power4.out'
 			},
 			'<'
@@ -82,18 +94,18 @@
 			<!-- Background backdrop, show/hide based on slide-over state. -->
 			<div class="fixed inset-0 z-20" />
 			<div
-				in:fade
-				out:fade={{ delay: 500 }}
-				class="fixed inset-y-0 right-0 z-20 w-full px-6 py-6 overflow-y-auto bg-black sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+				in:fade|local
+				out:fade|local={{ delay: 500 }}
+				class="fixed inset-y-0 right-0 z-20 w-full overflow-y-auto bg-black px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
 			>
-				<div class="flow-root mt-24">
+				<div class="mt-24 flow-root">
 					<div class="-my-6 divide-y divide-gray-500/10">
-						<div class="py-6 space-y-2">
+						<div class="space-y-2 py-6">
 							{#each navigation as { name, path }, i}<a
 									href="{base}/{path}"
-									class="block px-3 py-2 -mx-3 text-xl font-semibold leading-7 text-white"
-									in:fly={{ x: -48, duration: 500, delay: 300 + 50 * i }}
-									out:fly={{ x: -48, duration: 500, delay: 300 - 50 * i }}
+									class="-mx-3 block px-3 py-2 text-xl font-semibold leading-7 text-white"
+									in:fly|global={{ x: -48, duration: 500, delay: 300 + 50 * i }}
+									out:fly|global={{ x: -48, duration: 500, delay: 300 - 50 * i }}
 									on:click={closeMobileMenu}>{name}</a
 								>
 							{/each}
@@ -105,15 +117,18 @@
 	{/if}
 
 	<header
-		class="grid grid-cols-12 fixed w-full top-0 z-30 h-[var(--header-height)] transition-transform ease-in mix-blend-difference"
+		class="fixed top-0 z-30 grid h-20 w-full grid-cols-24 mix-blend-difference transition-transform ease-in 3xl:h-24"
 		class:motion-safe:-translate-y-full={offscreen}
 		bind:clientHeight
 	>
-		<nav class="col-span-10 col-start-2 px-8 xl:px-0 py-6" aria-label="Global">
+		<nav
+			class="col-span-20 col-start-3 py-6 lg:col-span-22 lg:col-start-2 lg:py-9 3xl:py-12"
+			aria-label="Global"
+		>
 			<div class="flex items-center justify-between">
 				<a href="{base}/" class="-m-1.5 p-1.5" bind:this={logo}>
 					<span class="sr-only">Good Fortune Collective</span>
-					<Gfc class="w-auto h-8 3xl:h-10 text-white" alt="" />
+					<Gfc class="h-8 w-auto text-white 3xl:h-10" alt="" />
 				</a>
 				<div class="flex sm:hidden">
 					<button
@@ -124,7 +139,7 @@
 						<span class="sr-only">{mobileMenuOpen ? 'Close' : 'Open'} main menu</span>
 						{#if mobileMenuOpen}
 							<svg
-								class="w-6 h-6"
+								class="h-6 w-6"
 								fill="none"
 								viewBox="0 0 24 24"
 								stroke-width="1.5"
@@ -135,7 +150,7 @@
 							</svg>
 						{:else}
 							<svg
-								class="w-6 h-6"
+								class="h-6 w-6"
 								fill="none"
 								viewBox="0 0 24 24"
 								stroke-width="1.5"
@@ -153,7 +168,7 @@
 				</div>
 				<div class="hidden sm:flex sm:gap-x-12">
 					{#each navigation as { name, path }, i}
-						<a href="{base}/{path}" class="text-sm 3xl:text-lg leading-6">
+						<a href="{base}/{path}" class="text-sm leading-6 3xl:text-lg">
 							<span data-gsap="nav-items" class="block text-white">{name}</span>
 						</a>
 					{/each}

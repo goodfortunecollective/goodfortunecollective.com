@@ -1,91 +1,76 @@
 <script lang="ts">
+	import { onDestroy } from 'svelte';
 	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+	import { cva } from 'class-variance-authority';
+
+	import { ScrollTrigger } from '$lib/gsap';
+	import { cls } from '$lib/styles';
+	import { backgroundTheme } from '$lib/stores';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
 
 	export let blok: any;
 
-	export let titleClasses = ['md:col-start-5', 'md:col-start-11'];
-	export let imageClasses = ['md:col-start-1', 'md:col-start-14'];
-	export let textClasses = ['md:col-start-14', 'md:col-start-4'];
+	let el!: HTMLElement;
+	let pinEl!: HTMLElement;
+	let contentEl!: HTMLElement;
+
+	let scrollTrigger!: ScrollTrigger;
+
+	const textStyle = cva('flex flex-col transition-colors duration-1000 ease-out', {
+		variants: {
+			theme: {
+				light: '',
+				dark: 'text-white'
+			}
+		},
+		defaultVariants: {
+			theme: 'light'
+		}
+	});
+
+	useTransitionReady(() => {
+		if (contentEl && pinEl && !scrollTrigger)
+			scrollTrigger = ScrollTrigger.create({
+				trigger: el,
+				start: '-50px top',
+				end: () => `+=${contentEl.offsetHeight - pinEl.offsetHeight - 160}`,
+				pin: pinEl,
+				invalidateOnRefresh: true
+			});
+	});
+
+	onDestroy(() => {
+		if (scrollTrigger) {
+			scrollTrigger.kill();
+			scrollTrigger = null;
+		}
+	});
 </script>
 
-<div use:storyblokEditable={blok} {...$$restProps} class={'images-list-block ' + blok.class}>
-	<div class="flex flex-col list">
-		{#each blok.list as item, i}
-			<div class="flex px-8 py-16 md:px-0 md:grid md:grid-cols-24 md:gap-2 md:py-32 list-item">
-				<div class={'list-item-title-cont mb-8 flex flex-row md:col-span-8 ' + titleClasses[i % 2]}>
-					<div class="text-lg font-bold list-item-number">
-						{#if i <= 10}0{/if}{i + 1}
-					</div>
-					<h2 class="text-4xl list-item-title">{item.title}</h2>
-				</div>
-				<div class={'list-item-text mb-8 md:mb-0 md:col-span-8 ' + textClasses[i % 2]}>
-					<StoryblokComponent blok={item} />
-				</div>
-				<figure class={'list-item-image md:col-span-12 ' + imageClasses[i % 2]}>
-					<img src={item.image.filename} alt={item.title} />
-				</figure>
+<div
+	use:storyblokEditable={blok}
+	{...$$restProps}
+	class={cls(blok.class, textStyle({ theme: $backgroundTheme }))}
+>
+	<div class="relative grid grid-cols-12" bind:this={el}>
+		{#if blok.asset.filename?.length > 0}
+			<img
+				bind:this={pinEl}
+				src={`${blok.asset.filename}/m/`}
+				width={getImageDimensionsFromUrl(blok.asset.filename).width}
+				height={getImageDimensionsFromUrl(blok.asset.filename).height}
+				alt={blok.asset.name}
+				class="-translate-x-1/8 absolute left-1/2 top-0 col-span-12 translate-y-1/4 -rotate-45 scale-150 transform"
+				loading="lazy"
+			/>
+		{/if}
+		<div class="col-span-6 col-start-3 py-32" bind:this={contentEl}>
+			<div class=" flex flex-col gap-32">
+				{#each blok.list as b}
+					<StoryblokComponent blok={b} />
+				{/each}
 			</div>
-		{/each}
+		</div>
 	</div>
 </div>
-
-<style lang="scss">
-	@import '../../vars.scss';
-
-	.images-list-block {
-		background: #1c1c1c;
-		color: $white;
-	}
-
-	.list {
-		// color: $grayDark;
-	}
-
-	.list-item {
-		&:last-child {
-			margin-bottom: 0;
-		}
-
-		@media (min-width: $media-md) {
-			&:nth-child(2n + 1) {
-				.list-item-text {
-					order: 3;
-				}
-
-				.list-item-image {
-					order: 2;
-				}
-			}
-		}
-	}
-
-	.list-item-number {
-		position: relative;
-		width: calc(2% / 10) * 100;
-		@media (min-width: $media-md) {
-			width: calc(3% / 8) * 100;
-		}
-
-		&:after {
-			position: absolute;
-			top: 14px;
-			right: 15px;
-			left: 30px;
-			height: 1px;
-			background: $white;
-			content: '';
-		}
-	}
-
-	.list-item-title {
-		width: calc(8% / 10) * 100;
-		@media (min-width: $media-md) {
-			width: calc(5% / 8) * 100;
-		}
-	}
-
-	.list-title {
-		@media (min-width: screen-sm-min) {
-		}
-	}
-</style>

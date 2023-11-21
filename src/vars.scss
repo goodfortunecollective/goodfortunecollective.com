@@ -1,5 +1,4 @@
 // Colors
-$blackPure: #000;
 $black: #2c3436;
 $grayDark: #414141;
 $gray: #d4d9da;
@@ -14,6 +13,9 @@ $media-md: 768px;
 $media-lg: 1024px;
 $media-xl: 1280px;
 $media-2xl: 1536px;
+
+// Easings
+$ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
 // Mixins
 @mixin nth-child-order($start, $end) {

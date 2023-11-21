@@ -1,12 +1,13 @@
 <script lang="ts">
-	import { curtains } from '../lib/stores';
-	import { gsap } from '$lib/gsap';
-	import { Curtains } from '$lib/vendors/curtainsjs/core/Curtains';
 	import { onMount } from 'svelte';
+
+	import gsap from '$lib/gsap';
+	import { curtains } from '$lib/stores';
+	import { Curtains } from '$lib/vendors/curtainsjs/core/Curtains';
 
 	function scrollonUpdate(event: any) {
 		if ($curtains) {
-			$curtains.updateScrollValues(0, event.detail.offsetY);
+			$curtains.updateScrollValues(0, event.detail.scrollTop);
 			// $curtains.needRender();
 		}
 	}
@@ -55,11 +56,11 @@
 		gsap.ticker.fps(60);
 		gsap.ticker.add(onRender);
 
-		window.addEventListener('smoothScrollUpdate', scrollonUpdate);
+		window.addEventListener('onLenisUpdate', scrollonUpdate);
 
 		return () => {
 			// this function is called when the component is destroyed
-			window.removeEventListener('smoothScrollUpdate', scrollonUpdate);
+			window.removeEventListener('onLenisUpdate', scrollonUpdate);
 
 			if ($curtains) {
 				gsap.ticker.remove(onRender);

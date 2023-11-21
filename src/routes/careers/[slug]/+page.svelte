@@ -3,6 +3,7 @@
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 
 	import { base } from '$app/paths';
+	import { Link, Heading } from '$lib/components';
 
 	export let data;
 
@@ -15,11 +16,24 @@
 	onDestroy(() => {});
 </script>
 
-<section class="pt-[var(--header-height)] pb-32">
-	<div class="max-w-6xl mx-auto">
-		<a href="{base}/careers/"> &#10229; </a>
+<section class=" pb-32">
+	<div class="mb-8 mt-24 grid grid-cols-12">
+		<div class="col-span-10 col-start-2 lg:col-span-4 lg:col-start-2">
+			<span class="inline-block rotate-180">
+				<Link href="{base}/careers/">&#10229;</Link>
+			</span>
+		</div>
+	</div>
+	<div class="grid grid-cols-12">
 		{#if data.story}
-			<StoryblokComponent blok={data.story.content} />
+			<Heading as="h1" size="h2" class="col-span-10 col-start-2 lg:col-span-4 lg:col-start-2"
+				>{data.story.content.title}</Heading
+			>
+			<div class="col-span-11 col-start-1">
+				{#each data.story.content.description as item}
+					<StoryblokComponent blok={item} />
+				{/each}
+			</div>
 		{/if}
 	</div>
 </section>

@@ -1,13 +1,31 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { beforeNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { isTransitioning, isPageHidden } from '$lib/stores';
-	import { gsap, ScrollSmoother } from '$lib/gsap';
-	import { cls } from '$lib/styles';
-	import { useCurtains } from '$lib/utils/useCurtains';
-	import type { CurtainsInstance } from '../lib/utils/useCurtains';
 
-	let background!: HTMLElement;
+	import gsap, { ScrollTrigger } from '$lib/gsap';
+
+	import { cls } from '$lib/styles';
+	import {
+		backgroundColor,
+		backgroundTheme,
+		isTransitioning,
+		isTransitionDone,
+		isPageHidden,
+		project_list_hover,
+		lenis
+	} from '$lib/stores';
+
+	import { Heading } from '$lib/components';
+
+	import { useCurtains } from '$lib/utils/useCurtains';
+	import type { CurtainsInstance } from '$lib/utils/useCurtains';
+	import {
+		pageLeaveDuration,
+		pageEnterDuration,
+		pageTransitionPauseDuration
+	} from '$lib/utils/page-transitions';
+
 	let curtains: CurtainsInstance;
 	let tl: any;
 
@@ -15,83 +33,184 @@
 		curtains = c;
 	});
 
-	beforeNavigate(async () => {
+	let canvasEl: HTMLCanvasElement;
+	let canvasDOMRect: DOMRect | null = null;
+	let ctx: CanvasRenderingContext2D | null = null;
+	const archStrength: number = 2;
+
+	let showTitle = false;
+
+	let list_hover: string | null = null;
+
+	project_list_hover.subscribe((value) => {
+		list_hover = value;
+	});
+
+	const onResize = () => {
+		canvasDOMRect = canvasEl.getBoundingClientRect();
+		canvasEl.width = canvasDOMRect.width;
+		canvasEl.height = canvasDOMRect.height;
+	};
+
+	const drawCanvas = (enteringProgress = 0, leavingProgress = 0) => {
+		if (!ctx || !canvasDOMRect) return;
+
+		ctx.save();
+
+		ctx.clearRect(0, 0, canvasDOMRect.width, canvasDOMRect.height);
+
+		ctx.beginPath();
+		ctx.moveTo(0, canvasDOMRect.height * (1 - enteringProgress));
+
+		// prettier-ignore
+		ctx.bezierCurveTo(
+			canvasDOMRect.width * 0.25, canvasDOMRect.height * Math.pow((1 - enteringProgress), archStrength),
+			canvasDOMRect.width * 0.75, canvasDOMRect.height * Math.pow((1 - enteringProgress), archStrength),
+			canvasDOMRect.width, canvasDOMRect.height * (1 - enteringProgress)
+		)
+
+		ctx.lineTo(canvasDOMRect.width, canvasDOMRect.height * (1 - leavingProgress));
+
+		//ctx.lineTo(0, canvasDOMRect.height)
+		ctx.bezierCurveTo(
+			canvasDOMRect.width * 0.75,
+			canvasDOMRect.height * Math.pow(1 - leavingProgress, 1 / (archStrength * 0.75)),
+			canvasDOMRect.width * 0.25,
+			canvasDOMRect.height * Math.pow(1 - leavingProgress, 1 / (archStrength * 0.75)),
+			0,
+			canvasDOMRect.height * (1 - leavingProgress)
+		);
+
+		ctx.lineTo(0, canvasDOMRect.height * (1 - enteringProgress));
+
+		ctx.clip();
+
+		ctx.fillStyle = '#dbd5bf';
+		ctx.fillRect(0, 0, canvasDOMRect.width, canvasDOMRect.height);
+
+		ctx.restore();
+	};
+
+	onMount(() => {
+		ctx = canvasEl.getContext('2d');
+		onResize();
+	});
+
+	export const animateTransition = ({
+		onLeavingDone = () => {},
+		onEnteringDone = () => {}
+	} = {}) => {
 		// @ts-ignore
-		const scroll = ScrollSmoother.get();
+		if ($lenis) $lenis.stop();
 
-		isTransitioning.set(true);
-		isPageHidden.set(false);
-
-		if (scroll) scroll.paused(true);
+		const canvasTransition = {
+			enteringProgress: 0,
+			leavingProgress: 0
+		};
 
 		tl = gsap.timeline();
 
-		tl.fromTo(
-			background,
-			{
-				y: '150vh',
-				scale: 1.5,
-				rotation: 10
+		tl.to(canvasTransition, {
+			enteringProgress: 1,
+			duration: pageLeaveDuration / 1000,
+			ease: 'circ.inOut',
+			onStart: () => {
+				if (list_hover) showTitle = true;
+
+				setTimeout(() => {
+					backgroundColor.set('#fff');
+					backgroundTheme.set('light');
+				}, 500);
 			},
-			{
-				y: 0,
-				rotation: 0,
-				duration: 2,
-				ease: 'circ.inOut',
-				onComplete: () => {
-					if (scroll) scroll.scrollTo(0, 0);
+			onUpdate: () => {
+				drawCanvas(canvasTransition.enteringProgress, canvasTransition.leavingProgress);
+			},
+			onComplete: () => {
+				if (curtains) {
+					curtains.updateScrollValues(0, 0);
+				}
 
-					if (curtains) {
-						curtains.updateScrollValues(0, 0);
+				ScrollTrigger.refresh();
+
+				onEnteringDone();
+			}
+		})
+			.to(
+				canvasTransition,
+				{
+					leavingProgress: 1,
+					duration: pageEnterDuration / 1000,
+					ease: 'circ.inOut',
+					onUpdate: () => {
+						drawCanvas(canvasTransition.enteringProgress, canvasTransition.leavingProgress);
+					}
+				},
+				`+=${pageTransitionPauseDuration / 1000}`
+			)
+			.then(() => {
+				isPageHidden.set(false);
+				isTransitioning.set(false);
+				isTransitionDone.set(true);
+
+				// reset project hover
+				project_list_hover.set(null);
+				showTitle = false;
+
+				const hash = $page.url.hash.slice(1);
+
+				if ($lenis) {
+					$lenis.start();
+
+					if (hash) {
+						const scrollElem = document.getElementById(hash);
+
+						if (scrollElem) {
+							$lenis.scrollTo(scrollElem, {
+								duration: 1
+								//delay: 0.5
+							});
+						}
 					}
 				}
-			}
-		);
 
-		tl.fromTo(
-			background,
-			{ rotation: 10 },
-			{
-				y: '-100vh',
-				scale: 1,
-				rotation: 0,
-				duration: 1.5,
-				ease: 'power4.out'
-			}
-		).then(() => {
-			isPageHidden.set(false);
-			isTransitioning.set(false);
+				onLeavingDone();
+			});
+	};
 
-			const hash = $page.url.hash.slice(1);
+	beforeNavigate(async () => {
+		isTransitionDone.set(false);
+		isTransitioning.set(true);
+		isPageHidden.set(false);
 
-			if (scroll) {
-				scroll.paused(false);
-
-				if (hash) {
-					const scrollElem = document.getElementById(hash);
-
-					if (scrollElem) {
-						gsap.to(scroll, {
-							scrollTop: scroll.offset(scrollElem, 'top top'),
-							duration: 1,
-							delay: 0.5
-						});
-					}
-				}
-			}
-		});
-
-		// resize curtains to avoid misplaced plane after navigation because of fly transition
-		// tl.call(() => {
-		// 	if (curtains) {
-		// 		curtains.resize();
-		// 	}
-		// }, null, 2.15); // add a small delay after effective DOM change
+		animateTransition();
 	});
 </script>
 
-<div class={cls('h-full w-full fixed z-40 top-0 left-0', $isTransitioning ? 'block' : 'hidden')}>
-	<div bind:this={background} class="h-full w-full bg-gray-900" />
+<svelte:window on:resize={onResize} />
+
+<div
+	class={cls(
+		'fixed inset-0 z-40  h-full w-full items-center overflow-hidden text-center',
+		!$isTransitioning && 'pointer-events-none'
+	)}
+>
+	{#if list_hover && showTitle}
+		<div class="relative z-1 flex h-full w-full items-center text-center">
+			<div class="mx-auto grid -translate-y-1/2 grid-cols-12 pt-16 lg:-translate-y-1/4">
+				<div class="col-span-10 col-start-2">
+					<Heading
+						as="h1"
+						size="h1"
+						class="leading-extra-tight text-white lg:leading-extra-tight"
+						animated={false}
+					>
+						{list_hover}
+					</Heading>
+				</div>
+			</div>
+		</div>
+	{/if}
+	<canvas bind:this={canvasEl} class="absolute inset-0 h-full w-full" />
 </div>
 
 <style></style>
