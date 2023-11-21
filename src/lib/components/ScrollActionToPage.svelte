@@ -43,6 +43,8 @@
 					onLeave: () => {
 						if (disabled) return;
 
+						ctx?.revert();
+						scrollTrigger?.kill();
 						goto(base + href);
 					}
 				});
