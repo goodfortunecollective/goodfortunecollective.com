@@ -16,6 +16,7 @@
 		loop={blok.loop}
 		muted={blok.muted}
 		autoplay={blok.autoplay}
+		animated={blok.animated}
 		class={blok.class}
 	/>
 </div>
