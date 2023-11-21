@@ -6,6 +6,7 @@
 	import { ScrollTrigger } from '$lib/gsap';
 
 	export let aspect: 'square' | 'video' | 'portrait' | 'auto' = 'video';
+	export let animated: boolean = true;
 
 	$: innerWidth = 0;
 
@@ -39,14 +40,16 @@
 	onMount(() => {
 		setStyleContainer();
 
-		scrollTrigger = ScrollTrigger.create({
-			trigger: el,
-			start: 'top bottom',
-			end: 'bottom top',
-			onUpdate: (self: any) => {
-				parallaxEffect = self.progress;
-			}
-		});
+		if (animated) {
+			scrollTrigger = ScrollTrigger.create({
+				trigger: el,
+				start: 'top bottom',
+				end: 'bottom top',
+				onUpdate: (self: any) => {
+					parallaxEffect = self.progress;
+				}
+			});
+		}
 	});
 
 	onDestroy(() => {

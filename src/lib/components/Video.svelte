@@ -151,7 +151,7 @@
 			/>
 		{/if}
 		<figure class={cls(variants({ visible: !videoVisible }), 'video-poster')} on:click={showVideo}>
-			<Image class="relative h-auto w-full" src={posterUrl} alt={name} />
+			<Image class="relative h-auto w-full" src={posterUrl} alt={name} {animated} />
 		</figure>
 	</div>
 </div>
