@@ -58,11 +58,10 @@
 			<div class="absolute h-full w-full bg-white" />
 			<video
 				bind:this={logo}
-				class="absolute scale-75"
+				class="absolute scale-50"
 				src={'/GFC-intro.mp4'}
 				autoplay={false}
 				muted
-				preload="metadata"
 			/>
 		</div>
 	</div>
