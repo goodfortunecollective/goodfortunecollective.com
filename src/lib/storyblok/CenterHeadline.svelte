@@ -31,7 +31,9 @@
 	<div class="col-span-10 col-start-2 4xl:col-span-6 4xl:col-start-4">
 		<Heading as="h3" size="h2" cl>{blok.title}</Heading>
 	</div>
-	<div class="col-span-10 col-start-2 my-8 text-center text-xl 4xl:col-span-6 4xl:col-start-4">
+	<div
+		class="col-span-10 col-start-2 my-8 text-center text-xl lg:col-span-8 lg:col-start-3 4xl:col-span-6 4xl:col-start-4"
+	>
 		<RichtextTransition class="[&_p]:my-4 [&_p]:leading-8">{@html content}</RichtextTransition>
 	</div>
 	<div
