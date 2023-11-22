@@ -3,7 +3,7 @@
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 
 	import { base } from '$app/paths';
-	import { Link, Heading } from '$lib/components';
+	import { Link, Heading, BackgroundTheme } from '$lib/components';
 
 	export let data;
 
@@ -15,6 +15,14 @@
 
 	onDestroy(() => {});
 </script>
+
+<BackgroundTheme
+	preload={true}
+	startColor="#fff"
+	endColor="#fff"
+	startTheme="light"
+	endTheme="light"
+/>
 
 <section class=" pb-32">
 	<div class="mb-8 mt-24 grid grid-cols-12">

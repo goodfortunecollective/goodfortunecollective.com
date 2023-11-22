@@ -3,7 +3,7 @@
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 
 	import { base } from '$app/paths';
-	import { Link, Heading, Image } from '$lib/components';
+	import { BackgroundTheme, Link, Heading, Image } from '$lib/components';
 	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
 
 	export let data;
@@ -33,6 +33,14 @@
 		}
 	});
 </script>
+
+<BackgroundTheme
+	preload={true}
+	startColor="#fff"
+	endColor="#fff"
+	startTheme="light"
+	endTheme="light"
+/>
 
 <section class="pt-[var(--header-height)]">
 	<div class="mb-8 mt-24 grid grid-cols-12">
