@@ -238,10 +238,10 @@
 					on:mouseenter={videoOnEnter}
 					on:mouseleave={videoOnLeave}
 					class="aspect-portrait w-full rounded-3xl"
-					src={blok.video}
+					src={blok.videoPreview}
 					autoplay={true}
 					loop={true}
-					muted={blok.muted}
+					muted={true}
 				>
 					<track kind="captions" />
 				</video>
