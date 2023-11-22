@@ -15,6 +15,9 @@ export default {
 				},
 				rose: {
 					50: "#e9bdb2"
+				},
+				stone: {
+					450: "#a7a89a"
 				}
 			},
 			screens: {
