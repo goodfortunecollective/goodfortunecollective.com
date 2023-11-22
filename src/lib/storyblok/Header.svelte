@@ -10,14 +10,6 @@
 
 	export let blok: any;
 
-	const navigation = [
-		{ name: 'Work', path: 'work' },
-		{ name: 'About', path: 'about' },
-		{ name: 'Culture', path: 'culture' },
-		{ name: 'Careers', path: 'careers' },
-		{ name: 'Contact', path: 'contact' }
-	];
-
 	let ready = false;
 	let mobileMenuOpen = false;
 	const toggleMobileMenu = () => (mobileMenuOpen = !mobileMenuOpen);
@@ -101,8 +93,8 @@
 				<div class="mt-24 flow-root">
 					<div class="-my-6 divide-y divide-gray-500/10">
 						<div class="space-y-2 py-6">
-							{#each navigation as { name, path }, i}<a
-									href="{base}/{path}"
+							{#each blok.navigation as { name, slug }, i}<a
+									href="{base}/{slug}"
 									class="-mx-3 block px-3 py-2 text-xl font-semibold leading-7 text-white"
 									in:fly|global={{ x: -48, duration: 500, delay: 300 + 50 * i }}
 									out:fly|global={{ x: -48, duration: 500, delay: 300 - 50 * i }}
@@ -167,8 +159,8 @@
 					</button>
 				</div>
 				<div class="hidden sm:flex sm:gap-x-12">
-					{#each navigation as { name, path }, i}
-						<a href="{base}/{path}" class="text-sm leading-6 3xl:text-lg">
+					{#each blok.navigation as { name, slug }, i}
+						<a href="{base}/{slug}" class="text-sm leading-6 3xl:text-lg">
 							<span data-gsap="nav-items" class="block text-white">{name}</span>
 						</a>
 					{/each}

@@ -20,7 +20,8 @@ export const load: LayoutLoad = async ({ url }) => {
 	let storyblokApi = await useStoryblokApi();
 
 	const settingsStory = await storyblokApi.get('cdn/stories/settings/', {
-		version: dev || isPreview(url) ? 'draft' : 'published'
+		version: dev || isPreview(url) ? 'draft' : 'published',
+		resolve_relations: ['header.navigation']
 	});
 
 	return {
