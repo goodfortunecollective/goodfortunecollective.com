@@ -12,7 +12,7 @@
 	const variants = cva('w-full', {
 		variants: {
 			size: {
-				h1: 'text-6xl md:text-8xl lg:text-9xl xl:text-10xl 4xl:text-10xl leading-10 font-degular-display text-yellow-50',
+				h1: 'text-6xl md:text-8xl lg:text-9xl xl:text-10xl 4xl:text-10xl leading-10 font-degular-display text-stone-450',
 				h2: 'text-5xl lg:text-8xl font-degular-display',
 				h3: 'text-4xl 3xl:text-5xl 4xl:text-6xl font-degular-display',
 				h4: 'text-3xl 3xl:text-4xl 4xl:text-5xl font-bold',
