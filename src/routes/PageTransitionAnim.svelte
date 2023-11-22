@@ -116,11 +116,6 @@
 			ease: 'circ.inOut',
 			onStart: () => {
 				if (list_hover) showTitle = true;
-
-				setTimeout(() => {
-					backgroundColor.set('#fff');
-					backgroundTheme.set('light');
-				}, 500);
 			},
 			onUpdate: () => {
 				drawCanvas(canvasTransition.enteringProgress, canvasTransition.leavingProgress);
