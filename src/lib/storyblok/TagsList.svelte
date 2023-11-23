@@ -32,10 +32,14 @@
 				const container: HTMLElement | null = parent.querySelector('ul');
 
 				if (container) {
+					const startTarget = -parent.offsetWidth / 2 - container.scrollWidth * (index + 1) * 0.1;
+					const startTargetNext =
+						-parent.offsetWidth / 2 - container.scrollWidth * (index + 4) * 0.1;
+
 					const [x, xEnd] =
 						index % 2
-							? ['100%', (container.scrollWidth - parent.offsetWidth) * -1]
-							: [container.scrollWidth * -1, 0];
+							? [startTargetNext, startTargetNext + container.scrollWidth * 0.1]
+							: [startTarget, startTarget - container.scrollWidth * 0.1];
 
 					gsap.fromTo(
 						container,
