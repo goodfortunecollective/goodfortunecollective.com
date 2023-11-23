@@ -15,7 +15,6 @@
 
 	let videoContainer!: HTMLElement;
 	let video!: HTMLElement;
-	let videoPreview!: HTMLElement;
 	let videoPlayer!: HTMLElement;
 	let line!: HTMLElement;
 	let container!: HTMLElement;
@@ -115,7 +114,10 @@
 						start: '=+50%',
 						end: '=+100%',
 						onUpdate: (self) => {
-							console.log('self.progress', self.progress);
+							if (self.progress === 0) {
+								cursorType.set('none');
+								isScrollFullVideo = false;
+							}
 						},
 						onEnter: () => {
 							if (isCursorEnter) {
@@ -206,6 +208,14 @@
 		cursorType.set('none');
 	}
 
+	function startVideo() {
+		if (isScrollFullVideo) {
+			videoPlayer.src = blok.video;
+			cursorType.set('pause');
+			videoPlaying = true;
+		}
+	}
+
 	function playPauseVideo() {
 		if (videoPlayer.paused) {
 			videoPlayer.play();
@@ -214,8 +224,6 @@
 			videoPlayer.pause();
 			cursorType.set('play');
 		}
-
-		videoPlaying = !videoPlaying;
 	}
 
 	onDestroy(() => {
@@ -238,14 +246,15 @@
 				style="--video-effect: {videoTransformEffect}; --rotation-x: {videoRotation.x}deg; --rotation-y: {videoRotation.y}deg"
 			>
 				<video
-					bind:this={videoPreview}
+					bind:this={videoPlayer}
+					on:click={videoPlaying ? playPauseVideo : startVideo}
 					on:mouseenter={videoPreviewOnEnter}
 					on:mouseleave={videoPreviewOnLeave}
 					class="aspect-portrait w-full rounded-3xl"
 					src={blok.videoPreview}
 					autoplay={true}
 					loop={true}
-					muted={true}
+					muted={!videoPlaying}
 				>
 					<track kind="captions" />
 				</video>
