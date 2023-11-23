@@ -297,7 +297,7 @@
 		</div>
 	</div>
 </section>
-<div class="h-[100vh]" />
+<div class="h-[50vh]" />
 <BackgroundTheme startColor="#1a1a1a" endColor="#fff" startTheme="dark" endTheme="light" />
 <div class="h-[50vh]" />
 
