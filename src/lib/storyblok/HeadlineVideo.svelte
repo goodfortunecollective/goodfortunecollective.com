@@ -21,14 +21,13 @@
 
 	let videoPlaying = blok.autoplay;
 
-	let constrain = 100;
-
-	let bgOpacity: number = 1;
-
 	// avoid division by 0
 	let scrollPosition: number = 0;
 	let videoBBox: DOMRect | undefined;
 	let splitTexts: any[] = [];
+
+	let isScrollFullVideo = false;
+	let isCursorEnter = false;
 
 	interface DOMPosition {
 		x: number;
@@ -79,11 +78,9 @@
 		}
 
 		videoRotation.x =
-			(1 - videoTransformEffect) *
-			(-(mousePosition.y - videoBBox.y - videoBBox.height / 2) / constrain);
+			(1 - videoTransformEffect) * (-(mousePosition.y - videoBBox.y - videoBBox.height / 2) / 100);
 		videoRotation.y =
-			(1 - videoTransformEffect) *
-			((mousePosition.x - videoBBox.x - videoBBox.width / 2) / constrain);
+			(1 - videoTransformEffect) * ((mousePosition.x - videoBBox.x - videoBBox.width / 2) / 100);
 	};
 
 	onMount(() => {
@@ -102,6 +99,9 @@
 		splitTexts.forEach((text) => {
 			gsap.set(text.chars, { yPercent: 200, opacity: 0 });
 		});
+
+		gsap.set(videoContainer, { scale: 0 });
+		gsap.set(line, { scaleX: 0 });
 	});
 
 	useTransitionReady(
@@ -111,13 +111,40 @@
 			onResize();
 
 			ctx = gsap.context(() => {
+				gsap.to(videoContainer, {
+					duration: 1,
+					scale: 1,
+					delay: 0.2,
+					ease: 'circ.out'
+				});
+
+				gsap.to(line, {
+					duration: 1,
+					scaleX: 1,
+					ease: 'circ.out'
+				});
+
 				gsap.timeline({
 					scrollTrigger: {
 						trigger: container,
 						start: '=+50%',
 						end: '=+100%',
 						onUpdate: (self) => {
-							bgOpacity = 1 - self.progress;
+							if (self.progress === 0) {
+								cursorType.set('none');
+								isScrollFullVideo = false;
+							}
+						},
+						onEnter: () => {
+							if (isCursorEnter) {
+								cursorType.set('play');
+							}
+
+							isScrollFullVideo = true;
+						},
+						onLeave: () => {
+							cursorType.set('none');
+							isScrollFullVideo = false;
 						}
 					}
 				});
@@ -138,14 +165,6 @@
 						start: 'center 55%',
 						end: 'center 30%',
 						toggleActions: 'play reverse play reverse' // onEnter onLeave onEnterBack onLeaveBack
-					},
-					onStart: () => {
-						// move video behind title
-						// if (videoContainer) videoContainer.style.zIndex = '9';
-					},
-					onReverseComplete: () => {
-						// move video on top of title
-						// if (videoContainer) videoContainer.style.zIndex = '11';
 					}
 				});
 				tlSplitText.addLabel('start');
@@ -193,12 +212,24 @@
 		}
 	);
 
-	function videoOnEnter() {
-		cursorType.set(videoPlaying ? 'pause' : 'play');
+	function videoPreviewOnEnter() {
+		if (isScrollFullVideo) {
+			cursorType.set('play');
+		}
+		isCursorEnter = true;
 	}
 
-	function videoOnLeave() {
+	function videoPreviewOnLeave() {
+		isCursorEnter = false;
 		cursorType.set('none');
+	}
+
+	function startVideo() {
+		if (isScrollFullVideo) {
+			videoPlayer.src = blok.video;
+			cursorType.set('pause');
+			videoPlaying = true;
+		}
 	}
 
 	function playPauseVideo() {
@@ -209,8 +240,6 @@
 			videoPlayer.pause();
 			cursorType.set('play');
 		}
-
-		videoPlaying = !videoPlaying;
 	}
 
 	onDestroy(() => {
@@ -221,27 +250,27 @@
 <svelte:window bind:innerWidth bind:innerHeight on:mousemove={onMouseMove} on:resize={onResize} />
 
 <section use:storyblokEditable={blok} {...$$restProps} class="grid h-screen grid-cols-12">
-	<div class="absolute z-[-1] h-[250vh] w-full" style="opacity:{bgOpacity}" />
 	<div class="relative col-span-10 col-start-2 h-full w-full" bind:this={container}>
 		<div class="perspective-800 relative z-[9] h-full w-full" bind:this={videoContainer}>
 			<div
 				bind:this={video}
 				class={cls(
-					'preserve-3d absolute mt-[20vh] h-full w-full transform-gpu cursor-pointer md:mt-[7vh]',
-					'b-headline-video__container'
+					'preserve-3d absolute mt-[20vh] h-full w-full transform-gpu md:mt-[7vh]',
+					'b-headline-video__container',
+					videoTransformEffect >= 0.99 && 'cursor-pointer'
 				)}
 				style="--video-effect: {videoTransformEffect}; --rotation-x: {videoRotation.x}deg; --rotation-y: {videoRotation.y}deg"
 			>
 				<video
 					bind:this={videoPlayer}
-					on:click={playPauseVideo}
-					on:mouseenter={videoOnEnter}
-					on:mouseleave={videoOnLeave}
+					on:click={videoPlaying ? playPauseVideo : startVideo}
+					on:mouseenter={videoPreviewOnEnter}
+					on:mouseleave={videoPreviewOnLeave}
 					class="aspect-portrait w-full rounded-3xl"
 					src={blok.videoPreview}
 					autoplay={true}
 					loop={true}
-					muted={true}
+					muted={!videoPlaying}
 				>
 					<track kind="captions" />
 				</video>
@@ -284,7 +313,7 @@
 		</div>
 	</div>
 </section>
-<div class="h-[100vh]" />
+<div class="h-[50vh]" />
 <BackgroundTheme startColor="#1a1a1a" endColor="#fff" startTheme="dark" endTheme="light" />
 <div class="h-[50vh]" />
 

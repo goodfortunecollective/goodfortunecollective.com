@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { cva } from 'class-variance-authority';
 
-	export let gap: 'small' | 'medium' | 'large';
+	export let gap: 'small' | 'medium' | 'base' | 'large' | 'extra-large' = 'large';
 
 	const variants = cva('', {
 		variants: {
