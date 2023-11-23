@@ -65,12 +65,15 @@
 <div use:storyblokEditable={blok} class={blok.class} bind:this={el}>
 	<div class="flex flex-col gap-8 py-8">
 		{#each Array(4) as _, index (index)}
-			<div data-gsap="tags-list" class="border-b-2 border-b-gray-200 last-of-type:border-0">
+			<div
+				data-gsap="tags-list"
+				class="border-b-2 border-b-gray-200 border-opacity-10 last-of-type:border-0"
+			>
 				<ul class=" whitespace-nowrap">
 					{#each blok.tags as b}
 						<li class={cls('mb-8 inline-block', textStyle({ theme: $backgroundTheme }))}>
 							<span class="mx-8 flex items-center">
-								<Heading class="mr-16 uppercase">
+								<Heading as="h4" size="h2" class="mr-16 uppercase">
 									<StoryblokComponent blok={b} />
 								</Heading>
 								<span class="4xl:text-10x inline-block text-8xl 3xl:text-9xl">*</span>
