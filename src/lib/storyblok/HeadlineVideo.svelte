@@ -99,6 +99,9 @@
 		splitTexts.forEach((text) => {
 			gsap.set(text.chars, { yPercent: 200, opacity: 0 });
 		});
+
+		gsap.set(videoContainer, { scale: 0 });
+		gsap.set(line, { scaleX: 0 });
 	});
 
 	useTransitionReady(
@@ -108,6 +111,19 @@
 			onResize();
 
 			ctx = gsap.context(() => {
+				gsap.to(videoContainer, {
+					duration: 1,
+					scale: 1,
+					delay: 0.2,
+					ease: 'circ.out'
+				});
+
+				gsap.to(line, {
+					duration: 1,
+					scaleX: 1,
+					ease: 'circ.out'
+				});
+
 				gsap.timeline({
 					scrollTrigger: {
 						trigger: container,
