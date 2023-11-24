@@ -16,7 +16,7 @@
 		lenis
 	} from '$lib/stores';
 
-	import { Heading } from '$lib/components';
+	import { ProjectTitle } from '$lib/components';
 
 	import { useCurtains } from '$lib/utils/useCurtains';
 	import type { CurtainsInstance } from '$lib/utils/useCurtains';
@@ -193,19 +193,10 @@
 		<div class="relative z-1 flex h-full w-full items-center text-center">
 			<div class="mx-auto grid -translate-y-1/2 grid-cols-12 pt-16 lg:-translate-y-1/4">
 				<div class="col-span-10 col-start-2">
-					<Heading
-						as="h1"
-						size="h1"
-						class="leading-extra-tight text-white lg:leading-extra-tight"
-						animated={false}
-					>
-						{list_hover}
-					</Heading>
+					<ProjectTitle name={list_hover} />
 				</div>
 			</div>
 		</div>
 	{/if}
 	<canvas bind:this={canvasEl} class="absolute inset-0 h-full w-full" />
 </div>
-
-<style></style>

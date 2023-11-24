@@ -8,6 +8,7 @@ export { default as LinkListItem } from './LinkListItem.svelte';
 export { default as NumberedListItem } from './NumberedListItem.svelte';
 export { default as ProjectListHover } from './ProjectListHover.svelte';
 export { default as ProjectListItem } from './ProjectListItem.svelte';
+export { default as ProjectTitle } from './ProjectTitle.svelte';
 export { default as RichtextTransition } from './RichtextTransition.svelte';
 export { default as ScrollActionToPage } from './ScrollActionToPage.svelte';
 export { default as ScrollPlane } from './ScrollPlane.svelte';
