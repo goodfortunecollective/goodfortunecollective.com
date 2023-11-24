@@ -1,9 +1,11 @@
 <script lang="ts">
+	import { onDestroy } from 'svelte';
+
 	import { clamp } from '../utils/maths';
+	import { cls } from '$lib/styles';
 	import { useCurtains } from '$lib/utils/useCurtains';
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
 	import gsap from '$lib/gsap';
-	import { onDestroy } from 'svelte';
 
 	import { isPageHidden, isTransitioning, project_list_hover, lenis } from '$lib/stores';
 
@@ -211,7 +213,7 @@
 	});
 </script>
 
-<div class="ScrollPlane" bind:this={planeEl}>
+<div class={cls('flex aspect-video overflow-hidden', 'c-scroll-plane')} bind:this={planeEl}>
 	<img
 		src={content.thumbnail
 			? content.thumbnail.filename.replace('//a-us.storyblok.com', '//a2-us.storyblok.com')
@@ -219,21 +221,12 @@
 		crossorigin=""
 		data-sampler="planeTexture"
 		alt={name}
+		class="hidden"
 	/>
 </div>
 
 <style lang="scss">
-	@import '../../vars.scss';
-
-	.ScrollPlane {
-		display: flex;
-		aspect-ratio: 16 / 9;
-		overflow: hidden;
-	}
-
-	.ScrollPlane img {
-		display: none;
-
+	.c-scroll-plane img {
 		@at-root.no-curtains & {
 			display: block;
 			min-width: 100%;

@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
+	import { cva } from 'class-variance-authority';
 	import type { Curtains } from '@types/curtainsjs';
 
 	import { base } from '$app/paths';
-	import { navigating, page } from '$app/stores';
+	import { page } from '$app/stores';
+	import { cls } from '$lib/styles';
 	import { ProjectListItem } from '$lib/components';
-	import { ScrollTrigger } from '$lib/gsap';
 	import { project_list_hover } from '$lib/stores';
 	import { useCurtains } from '$lib/utils/useCurtains';
-	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	import MenuList from './MenuList.svelte';
 	import MenuItem from './MenuItem.svelte';
@@ -26,6 +26,18 @@
 
 	//$: filter = $page.url.searchParams.get('filter');
 	$: filter = $page.url.hash.slice(1);
+
+	const variants = cva('', {
+		variants: {
+			layout: {
+				left: 'col-span-10 col-start-1 z-1 text-right md:text-left md:col-span-5 md:col-start-2',
+				right: 'col-span-10 col-start-3 text-left md:col-span-5 md:col-start-6 md:text-right md:z-2'
+			}
+		},
+		defaultVariants: {
+			layout: 'left'
+		}
+	});
 
 	/**
 	 * @param {any} projects
@@ -66,94 +78,53 @@
 
 	$: projects = getProjectsByFilter(data.projects, filter);
 
-	const projectGridItemsClasses = [
-		'col-span-10 col-start-3 md:col-span-5 md:col-start-7 md:mt-[16.66%] z-2 text-right',
-		'col-span-10 col-start-1 md:col-span-6 md:col-start-2 md:-mt-[25%] z-1 text-left',
-		'col-span-10 col-start-3 md:col-span-6 md:col-start-5 md:mt-[8.33%] z-2 text-right',
-		'col-span-10 col-start-1 md:col-span-4 md:col-start-2 md:-mt-[16.66%] z-1 text-left',
-		'col-span-10 col-start-3 md:col-span-4 md:col-start-8 md:mt-[16.66%] z-2 text-right',
-		'col-span-10 col-start-1 md:col-span-7 md:col-start-2 md:-mt-[4.166%] z-1 text-left'
-	];
-
-	const getProjectGridItemClass = (index: number) => {
-		if (index === 0) {
-			return 'col-span-11 z-1 text-left';
-		} else {
-			return projectGridItemsClasses[(index - 1) % 6];
-		}
-	};
-
 	onMount(() => {
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
 	});
-
-	useTransitionReady(
-		() => {
-			// @ts-ignore
-			ScrollTrigger.create({
-				id: 'project-work',
-				trigger: containerEl,
-				start: 'top center',
-				end: 'bottom center'
-				// onToggle: (self: any) => {
-				// 	if (!self.isActive) {
-				// 		$project_list_hover = '';
-				// 	}
-				// }
-			});
-		},
-		() => {
-			const scrollTrigger = ScrollTrigger.getById('project-work');
-			if (scrollTrigger) scrollTrigger.kill();
-		}
-	);
 </script>
 
 {#if data.story}
 	<StoryblokComponent blok={data.story.content} />
 {/if}
 
-<section class="pb-32 pt-20 3xl:pt-24">
-	<div class="mt-16">
-		<div class="relative">
-			<MenuList class="absolute right-0 top-0 z-10 flex flex-col items-end gap-4">
-				<MenuItem
-					name="All Projects"
-					sup={data.projects.length}
-					url={`${base}/work#all`}
-					selected={!filter || filter === 'all'}
-				/>
-				{#each categories as category, i}
-					{#if category.count > 0}
-						<MenuItem
-							name={category.name}
-							sup={category.count}
-							url={`${base}/work#${category.value}`}
-							delay={i * 50}
-							selected={filter === category.value}
-						/>
-					{/if}
-				{/each}
-			</MenuList>
-		</div>
-
-		<div class="mb-32" bind:this={containerEl}>
-			{#each projects as { name, slug, content }, index (name)}
-				<div class="grid grid-cols-12">
-					<ProjectListItem
-						theme="dark"
-						hover={$project_list_hover === name}
-						{name}
-						{slug}
-						{content}
-						isMainItem={index === 0}
-						layout={index % 2 === 0 ? 'left' : 'right'}
-						class={getProjectGridItemClass(index)}
+<section class="pt-32 3xl:pt-48">
+	<div class="relative">
+		<MenuList class="absolute right-0 top-0 z-10 flex flex-col items-end gap-4">
+			<MenuItem
+				name="All Projects"
+				sup={data.projects.length}
+				url={`${base}/work#all`}
+				selected={!filter || filter === 'all'}
+			/>
+			{#each categories as category, i}
+				{#if category.count > 0}
+					<MenuItem
+						name={category.name}
+						sup={category.count}
+						url={`${base}/work#${category.value}`}
+						delay={i * 50}
+						selected={filter === category.value}
 					/>
-				</div>
+				{/if}
 			{/each}
-		</div>
+		</MenuList>
+	</div>
+
+	<div bind:this={containerEl}>
+		{#each projects as { name, slug, content }, index (name)}
+			<div class="grid grid-cols-12">
+				<ProjectListItem
+					theme="dark"
+					hover={$project_list_hover === name}
+					{name}
+					{slug}
+					{content}
+					layout={index % 2 === 0 ? 'left' : 'right'}
+					class={cls(variants({ layout: index % 2 === 0 ? 'left' : 'right' }))}
+				/>
+			</div>
+		{/each}
 	</div>
 </section>
