@@ -71,15 +71,4 @@
 	});
 </script>
 
-<div id="canvas" />
-
-<style lang="scss">
-	#canvas {
-		position: fixed;
-		top: 0;
-		right: 0;
-		left: 0;
-		height: 100vh;
-		z-index: 1;
-	}
-</style>
+<div id="canvas" class="fixed left-0 right-0 top-0 z-[1] h-screen" />
