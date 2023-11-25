@@ -88,7 +88,7 @@
 {/if}
 
 <section class="pt-32 3xl:pt-48">
-	<div class="relative">
+	<div class="relative hidden lg:block">
 		<MenuList class="fixed right-0 top-32 z-10 flex flex-col items-end gap-4 pr-8 pt-8">
 			<MenuItem
 				name="All Projects"
@@ -122,6 +122,7 @@
 					{name}
 					{slug}
 					{content}
+					parallaxSpeed={index % 2 === 0 ? '0.99' : '1.01'}
 					layout={index % 2 === 0 ? 'left' : 'right'}
 					class={cls(variants({ layout: index % 2 === 0 ? 'left' : 'right' }))}
 				/>
