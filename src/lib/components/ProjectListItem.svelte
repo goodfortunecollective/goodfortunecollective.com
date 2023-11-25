@@ -1,20 +1,27 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import { cva } from 'class-variance-authority';
 	import { renderRichText } from '@storyblok/svelte';
 
 	import { base } from '$app/paths';
 	import { cls } from '$lib/styles';
+	import gsap, { ScrollTrigger } from '$lib/gsap';
 	import { ScrollPlane, Heading } from '$lib/components';
 	import { project_list_hover, isTransitioning } from '$lib/stores';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	export let name: string;
 	export let slug: string;
 	export let content: any;
 	export let layout: 'left' | 'right' = 'left';
 	export let theme: 'light' | 'dark' = 'light';
+	export let parallaxSpeed: string = '1';
 
 	$: description = renderRichText(content.description);
+	$: innerWidth = 0;
+
+	let ctx: any = null;
+	let el!: HTMLElement;
 
 	const variants = cva('transition-colors duration-1000 ease-out', {
 		variants: {
@@ -43,12 +50,46 @@
 			project_list_hover.set(null);
 		}
 	};
+
+	useTransitionReady(() => {
+		ctx = gsap.context(() => {
+			// apply parallax effect to any element with a data-speed attribute
+			if (innerWidth < 1024) return;
+
+			gsap.utils.toArray<HTMLElement>('[data-speed]').forEach((parent) => {
+				gsap.to(parent, {
+					y: function () {
+						return (
+							(1 - parseFloat(parent.getAttribute('data-speed'))) *
+							(ScrollTrigger.maxScroll(window) -
+								(this.scrollTrigger ? this.scrollTrigger.start : 0))
+						);
+					},
+					ease: 'none',
+					scrollTrigger: {
+						trigger: el,
+						start: 'top bottom',
+						end: 'max',
+						invalidateOnRefresh: true,
+						scrub: true
+					}
+				});
+			});
+		}, el);
+	});
+
+	onDestroy(() => {
+		if (ctx) ctx.revert();
+	});
 </script>
 
-<div class={cls('pointer-events-none', $$props.class)}>
+<svelte:window bind:innerWidth />
+
+<div class={cls('pointer-events-none mb-24 lg:mb-0', $$props.class)} bind:this={el}>
 	<a
 		href="{base}/work/{slug}"
 		data-id={slug}
+		data-speed={parallaxSpeed}
 		class={cls(
 			'flex-no-wrap pointer-events-auto flex w-full flex-col',
 			variants({ theme: theme, layout: layout }),

@@ -30,6 +30,7 @@
 					{name}
 					{slug}
 					{content}
+					parallaxSpeed={index % 2 === 0 ? '0.9' : '1.1'}
 					layout={index % 2 === 0 ? 'right' : 'left'}
 					class={cls(variants({ layout: index % 2 === 0 ? 'right' : 'left' }))}
 				/>
