@@ -1,12 +1,14 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { fade, fly } from 'svelte/transition';
 	import { storyblokEditable } from '@storyblok/svelte';
 
+	import { page } from '$app/stores';
 	import { base } from '$app/paths';
 	import gsap from '$lib/gsap';
 	import { Gfc } from '$lib/components';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
-	import { onMount } from 'svelte';
+	import { cls } from '$lib/styles';
 
 	export let blok: any;
 
@@ -75,6 +77,14 @@
 			'<'
 		);
 	});
+
+	function getRootPathname(url: string) {
+		const segments = url.split('/');
+		if (segments.length > 1) {
+			return `${segments[1]}`;
+		}
+		return '';
+	}
 </script>
 
 <svelte:window bind:scrollY={currentY} />
@@ -161,7 +171,15 @@
 				<div class="hidden sm:flex sm:gap-x-12">
 					{#each blok.navigation as { name, slug }, i}
 						<a href="{base}/{slug}" class="text-sm leading-6 3xl:text-lg">
-							<span data-gsap="nav-items" class="block text-white">{name}</span>
+							<span
+								data-gsap="nav-items"
+								class={cls(
+									'block text-stone-450 transition-colors duration-200 hover:text-white',
+									getRootPathname($page.url.pathname) === slug &&
+										'text-white underline underline-offset-8'
+								)}
+								>{name}
+							</span>
 						</a>
 					{/each}
 				</div>
