@@ -22,8 +22,6 @@
 
 	export let data;
 
-	let containerEl: HTMLElement;
-
 	//$: filter = $page.url.searchParams.get('filter');
 	$: filter = $page.url.hash.slice(1);
 
@@ -91,11 +89,13 @@
 
 <section class="pt-32 3xl:pt-48">
 	<div class="relative">
-		<MenuList class="absolute right-0 top-0 z-10 flex flex-col items-end gap-4">
+		<MenuList class="fixed right-0 top-32 z-10 flex flex-col items-end gap-4 pr-8 pt-8">
 			<MenuItem
 				name="All Projects"
 				sup={data.projects.length}
 				url={`${base}/work#all`}
+				delayIn={0}
+				delayOut={categories.length * 25}
 				selected={!filter || filter === 'all'}
 			/>
 			{#each categories as category, i}
@@ -104,7 +104,8 @@
 						name={category.name}
 						sup={category.count}
 						url={`${base}/work#${category.value}`}
-						delay={i * 50}
+						delayIn={i * 50}
+						delayOut={(categories.length - i) * 25}
 						selected={filter === category.value}
 					/>
 				{/if}
@@ -112,7 +113,7 @@
 		</MenuList>
 	</div>
 
-	<div bind:this={containerEl}>
+	<div>
 		{#each projects as { name, slug, content }, index (name)}
 			<div class="grid grid-cols-12">
 				<ProjectListItem
