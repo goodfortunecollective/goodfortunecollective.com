@@ -4,7 +4,6 @@
 
 	import { ProjectListItem, Link } from '$lib/components';
 	import { cls } from '$lib/styles';
-	import { zeroPad } from '$lib/utils/text';
 
 	export let blok: any;
 
@@ -37,7 +36,7 @@
 						{name}
 						{slug}
 						{content}
-						parallaxSpeed={`1.${zeroPad(index * 2)}`}
+						parallaxSpeed={index % 2 === 0 ? '0.95' : '1.05'}
 						layout={index % 2 === 0 ? 'right' : 'left'}
 						class={cls(variants({ layout: index % 2 === 0 ? 'right' : 'left' }))}
 					/>
