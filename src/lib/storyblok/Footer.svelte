@@ -34,7 +34,7 @@
 	});
 
 	const backToTop = (event: any) => {
-		gsap.to(window, { scrollTo: { y: 0 }, duration: 0.8 });
+		gsap.to(window, { scrollTo: { y: 0 }, duration: 3 });
 		event.preventDefault();
 	};
 </script>
