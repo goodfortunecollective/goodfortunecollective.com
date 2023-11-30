@@ -116,12 +116,12 @@
 <svelte:window bind:innerWidth />
 
 <div class={cls('h-full w-full', clazz)}>
-	<div class="grid grid-cols-12">
+	<div class="grid w-full grid-cols-12">
 		<div class="col-span-10 col-start-2" bind:offsetWidth />
 	</div>
 	<div
 		bind:this={videoContainer}
-		class={cls('relative flex  items-center justify-center', !autoplay && 'cursor-pointer')}
+		class={cls('relative flex w-full items-center justify-center', !autoplay && 'cursor-pointer')}
 		on:mouseenter={activate}
 		on:mouseleave={deactivate}
 		role="presentation"
@@ -150,9 +150,14 @@
 				muted={autoplay}
 			/>
 		{/if}
-		<figure class={cls(variants({ visible: !videoVisible }), 'video-poster')} on:click={showVideo}>
-			<Image class="relative h-auto w-full" src={posterUrl} alt={name} {animated} />
-		</figure>
+		{#if !autoplay && posterUrl}
+			<figure
+				class={cls(variants({ visible: !videoVisible }), 'video-poster')}
+				on:click={showVideo}
+			>
+				<Image class="relative h-auto w-full" src={posterUrl} alt={name} {animated} />
+			</figure>
+		{/if}
 	</div>
 </div>
 
