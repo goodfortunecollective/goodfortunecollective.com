@@ -76,9 +76,7 @@
 								<Heading as="h4" size="h2" class="mr-16 uppercase">
 									<StoryblokComponent blok={b} />
 								</Heading>
-								<span class="4xl:text-8x inline-block font-degular-display text-6xl 3xl:text-7xl"
-									>*</span
-								>
+								<span class="4xl:text-10x inline-block text-8xl 3xl:text-9xl">*</span>
 							</span>
 						</li>
 					{/each}
