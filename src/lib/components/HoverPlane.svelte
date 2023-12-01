@@ -23,7 +23,7 @@
 
 	const planeDeformation: Vec2Type = new Vec2();
 
-	const onMouseMove = (event) => {
+	const onMouseMove = (event: MouseEvent) => {
 		mousePosition.x = event.clientX;
 		mousePosition.y = event.clientY;
 	};

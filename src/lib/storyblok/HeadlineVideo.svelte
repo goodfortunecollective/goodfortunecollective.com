@@ -239,7 +239,7 @@
 	}
 
 	const onScroll = (scroll: any) => {
-		if (video.offsetHeight) {
+		if (video?.offsetHeight) {
 			if (scroll.animatedScroll <= video.offsetHeight) {
 				scrollPosition = scroll.animatedScroll;
 			}

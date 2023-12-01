@@ -9,8 +9,6 @@
 	export let animated: boolean = false;
 	export let type: 'hover' | 'theme' = 'theme';
 
-	let el!: HTMLElement;
-
 	const variantsTheme = cva('', {
 		variants: {
 			theme: {

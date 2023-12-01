@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { useScroll } from '$lib/lifecycle-functions/useScroll';
+	import { useFrame } from '$lib/lifecycle-functions/useFrame';
 	import { curtains } from '$lib/stores';
 	import { Curtains } from '$lib/vendors/curtainsjs/core/Curtains';
 
@@ -44,19 +44,14 @@
 
 		return () => {
 			if ($curtains) {
-				//gsap.ticker.remove(onRender);
 				$curtains.dispose();
 			}
 			curtains.set(null);
 		};
 	});
 
-	function onScroll(scroll: number) {
+	useFrame(() => {
 		if ($curtains) $curtains.render();
-	}
-
-	useScroll((scroll) => {
-		onScroll(scroll);
 	});
 </script>
 
