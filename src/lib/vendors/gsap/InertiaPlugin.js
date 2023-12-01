@@ -1,10 +1,10 @@
 /*!
- * InertiaPlugin 3.12.1
- * https://greensock.com
+ * InertiaPlugin 3.12.3
+ * https://gsap.com
  *
  * @license Copyright 2008-2023, GreenSock. All rights reserved.
- * Subject to the terms at https://greensock.com/standard-license or for
- * Club GreenSock members, the agreement issued with that membership.
+ * Subject to the terms at https://gsap.com/standard-license or for
+ * Club GSAP members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
 */
 /* eslint-disable */
@@ -229,7 +229,7 @@ let gsap, _coreInitted, _parseEase, _toArray, _power3, _config, _getUnit, PropTw
 
 
 export const InertiaPlugin = {
-	version: "3.12.1",
+	version: "3.12.3",
 	name: "inertia",
 	register(core) {
 		gsap = core;

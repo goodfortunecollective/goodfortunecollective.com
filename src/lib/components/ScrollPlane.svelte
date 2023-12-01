@@ -7,7 +7,8 @@
 	import { Plane } from '$lib/vendors/curtainsjs/core/Plane';
 	import gsap from '$lib/gsap';
 
-	import { isPageHidden, isTransitioning, project_list_hover, lenis } from '$lib/stores';
+	import { lenisStore as lenis } from '$lib/stores/lenis';
+	import { isPageHidden, isTransitioning, project_list_hover } from '$lib/stores';
 
 	import type { Curtains, Plane as PlaneType, PlaneParams } from '@types/curtainsjs';
 

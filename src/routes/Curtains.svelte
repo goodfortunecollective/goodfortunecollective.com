@@ -1,16 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import gsap from '$lib/gsap';
+	import { useScroll } from '$lib/lifecycle-functions/useScroll';
 	import { curtains } from '$lib/stores';
 	import { Curtains } from '$lib/vendors/curtainsjs/core/Curtains';
-
-	function scrollonUpdate(event: any) {
-		if ($curtains) {
-			$curtains.updateScrollValues(0, event.detail.scrollTop);
-			// $curtains.needRender();
-		}
-	}
 
 	onMount(() => {
 		// 0 - no touch (pointer/mouse only)
@@ -49,25 +42,21 @@
 			document.body.classList.add('no-curtains');
 		}
 
-		const onRender = () => {
-			if ($curtains) $curtains.render();
-		};
-
-		gsap.ticker.fps(60);
-		gsap.ticker.add(onRender);
-
-		window.addEventListener('onLenisUpdate', scrollonUpdate);
-
 		return () => {
-			// this function is called when the component is destroyed
-			window.removeEventListener('onLenisUpdate', scrollonUpdate);
-
 			if ($curtains) {
-				gsap.ticker.remove(onRender);
+				//gsap.ticker.remove(onRender);
 				$curtains.dispose();
 			}
 			curtains.set(null);
 		};
+	});
+
+	function onScroll(scroll: number) {
+		if ($curtains) $curtains.render();
+	}
+
+	useScroll((scroll) => {
+		onScroll(scroll);
 	});
 </script>
 

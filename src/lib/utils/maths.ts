@@ -1,9 +1,19 @@
-export const clamp = (value = 0, min = 0, max = 0) => {
-	return Math.max(min, Math.min(value, max));
-};
+function clamp(min: number, input: number, max: number) {
+	return Math.max(min, Math.min(input, max));
+}
 
-export const lerp = (source: number = 0, target: number = 0, amount: number = 0.1): number => {
-	amount = amount < 0 ? 0 : amount;
-	amount = amount > 1 ? 1 : amount;
-	return (1 - amount) * source + amount * target;
-};
+function mapRange(in_min: number, in_max: number, input: number, out_min: number, out_max: number) {
+	return ((input - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
+}
+
+function lerp(start: number, end: number, amt: number) {
+	return (1 - amt) * start + amt * end;
+}
+
+function truncate(value: number, decimals: number) {
+	return parseFloat(value.toFixed(decimals));
+}
+
+const Maths = { lerp, clamp, mapRange, truncate };
+
+export { Maths as default, lerp, clamp, mapRange, truncate };

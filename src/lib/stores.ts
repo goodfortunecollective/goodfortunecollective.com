@@ -1,5 +1,4 @@
 
-import Lenis from "@studio-freight/lenis";
 import { writable } from 'svelte/store';
 
 import { dev } from '$app/environment';
@@ -7,8 +6,6 @@ import type { CurtainsInstance } from './utils/useCurtains';
 
 export const delay_anim_page = writable(dev ? 1.5 : 6.5);
 export const curtains = writable(null as CurtainsInstance);
-
-export const lenis = writable(null as null | Lenis)
 
 export const cursorType = writable('none' as 'none' | 'play' | 'pause');
 

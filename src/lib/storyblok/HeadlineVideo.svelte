@@ -8,6 +8,8 @@
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 	import { cursorType } from '$lib/stores';
 	import { cls } from '$lib/styles';
+	import { useScroll } from '$lib/lifecycle-functions/useScroll';
+	import { useFrame } from '$lib/lifecycle-functions/useFrame';
 
 	export let blok: any;
 
@@ -55,10 +57,6 @@
 		}
 	};
 
-	const onScroll = (event: any) => {
-		scrollPosition = event.detail.scrollTop;
-	};
-
 	const onMouseMove = (event: MouseEvent) => {
 		mousePosition.x = event.clientX;
 		mousePosition.y = event.clientY;
@@ -67,8 +65,8 @@
 	const onRender = () => {
 		videoTransformEffect =
 			innerWidth > 768
-				? clamp(scrollPosition / (innerHeight * 0.5), 0, 1)
-				: clamp(scrollPosition / (innerHeight * 0.5), 0.5, 1);
+				? clamp(scrollPosition / innerHeight, 0, 1)
+				: clamp(scrollPosition / innerHeight, 0.5, 1);
 
 		// bail if translation is almost complete
 		if (videoTransformEffect >= 0.99) {
@@ -77,10 +75,13 @@
 			return;
 		}
 
-		videoRotation.x =
-			(1 - videoTransformEffect) * (-(mousePosition.y - videoBBox.y - videoBBox.height / 2) / 100);
-		videoRotation.y =
-			(1 - videoTransformEffect) * ((mousePosition.x - videoBBox.x - videoBBox.width / 2) / 100);
+		if (videoBBox) {
+			videoRotation.x =
+				(1 - videoTransformEffect) *
+				(-(mousePosition.y - videoBBox.y - videoBBox.height / 2) / 100);
+			videoRotation.y =
+				(1 - videoTransformEffect) * ((mousePosition.x - videoBBox.x - videoBBox.width / 2) / 100);
+		}
 	};
 
 	onMount(() => {
@@ -106,8 +107,6 @@
 
 	useTransitionReady(
 		() => {
-			window.addEventListener('onLenisUpdate', onScroll);
-			gsap.ticker.add(onRender);
 			onResize();
 
 			ctx = gsap.context(() => {
@@ -206,10 +205,7 @@
 				);
 			}, container);
 		},
-		() => {
-			window.removeEventListener('onLenisUpdate', onScroll);
-			gsap.ticker.remove(onRender);
-		}
+		() => {}
 	);
 
 	function videoPreviewOnEnter() {
@@ -242,8 +238,20 @@
 		}
 	}
 
-	onDestroy(() => {
-		if (ctx) ctx.revert();
+	const onScroll = (scroll: any) => {
+		if (video.offsetHeight) {
+			if (scroll.animatedScroll <= video.offsetHeight) {
+				scrollPosition = scroll.animatedScroll;
+			}
+		}
+	};
+
+	useScroll((scroll) => {
+		onScroll(scroll);
+	});
+
+	useFrame((time) => {
+		onRender();
 	});
 </script>
 

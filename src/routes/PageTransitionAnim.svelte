@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { beforeNavigate } from '$app/navigation';
+
+	import { lenisStore as lenis } from '$lib/stores/lenis';
 	import { page } from '$app/stores';
 
 	import gsap, { ScrollTrigger } from '$lib/gsap';
@@ -12,8 +14,7 @@
 		isTransitioning,
 		isTransitionDone,
 		isPageHidden,
-		project_list_hover,
-		lenis
+		project_list_hover
 	} from '$lib/stores';
 
 	import { ProjectTitle } from '$lib/components';
