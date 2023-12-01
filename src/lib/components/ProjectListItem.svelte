@@ -96,11 +96,7 @@
 			'c-project-list-item__container'
 		)}
 	>
-		<div
-			class="relative w-full will-change-transform"
-			on:mouseenter={onEnter}
-			on:mouseleave={onLeave}
-		>
+		<div class="relative w-full" on:mouseenter={onEnter} on:mouseleave={onLeave}>
 			<ScrollPlane {slug} {content} {name} />
 		</div>
 
