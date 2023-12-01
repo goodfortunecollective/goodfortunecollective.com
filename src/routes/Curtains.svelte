@@ -44,7 +44,6 @@
 
 		return () => {
 			if ($curtains) {
-				//gsap.ticker.remove(onRender);
 				$curtains.dispose();
 			}
 			curtains.set(null);
