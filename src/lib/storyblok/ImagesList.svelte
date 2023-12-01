@@ -30,7 +30,7 @@
 	});
 
 	useTransitionReady(() => {
-		if (contentEl && pinEl && !scrollTrigger)
+		if (contentEl && pinEl && !scrollTrigger) {
 			scrollTrigger = ScrollTrigger.create({
 				trigger: el,
 				start: '-50px top',
@@ -38,6 +38,7 @@
 				pin: pinEl,
 				invalidateOnRefresh: true
 			});
+		}
 	});
 
 	onDestroy(() => {

@@ -1,10 +1,10 @@
 /*!
- * SplitText: 3.12.1
- * https://greensock.com
+ * SplitText: 3.12.3
+ * https://gsap.com
  *
  * @license Copyright 2008-2023, GreenSock. All rights reserved.
- * Subject to the terms at https://greensock.com/standard-license or for
- * Club GreenSock members, the agreement issued with that membership.
+ * Subject to the terms at https://gsap.com/standard-license or for
+ * Club GSAP members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
 */
 /* eslint-disable */
@@ -13,6 +13,7 @@ import { emojiExp, getText } from "./utils/strings.js";
 let _doc, _win, _coreInitted, gsap, _context, _toArray,
 	_stripExp = /(?:\r|\n|\t\t)/g, //find carriage returns, new line feeds and double-tabs.
 	_multipleSpacesExp = /(?:\s\s+)/g,
+	_nonBreakingSpace = String.fromCharCode(160),
 	_initCore = (core) => {
 		_doc = document;
 		_win = window;
@@ -324,6 +325,7 @@ let _doc, _win, _coreInitted, gsap, _context, _toArray,
 			chars = ~types.indexOf("chars"),
 			absolute = _isAbsolute(vars),
 			wordDelimiter = vars.wordDelimiter || " ",
+			isWordDelimiter = char => char === wordDelimiter || (char === _nonBreakingSpace && wordDelimiter === " "),
 			space = wordDelimiter !== " " ? "" : (absolute ? "&#173; " : " "),
 			wordEnd = "</" + tag + ">",
 			wordIsOpen = 1,
@@ -353,10 +355,10 @@ let _doc, _win, _coreInitted, gsap, _context, _toArray,
 				character = text.substr(i, testResult || 1);
 				splitText += (chars && character !== " ") ? charStart() + character + "</" + tag + ">" : character;
 				i += testResult - 1;
-			} else if (character === wordDelimiter && text.charAt(i-1) !== wordDelimiter && i) {
+			} else if (isWordDelimiter(character) && !isWordDelimiter(text.charAt(i-1)) && i) {
 				splitText += wordIsOpen ? wordEnd : "";
 				wordIsOpen = 0;
-				while (text.charAt(i + 1) === wordDelimiter) { //skip over empty spaces (to avoid making them words)
+				while (isWordDelimiter(text.charAt(i + 1))) { //skip over empty spaces (to avoid making them words)
 					splitText += space;
 					i++;
 				}
@@ -434,7 +436,7 @@ export class SplitText {
 		//we split in reversed order so that if/when we position:absolute elements, they don't affect the position of the ones after them in the document flow (shifting them up as they're taken out of the document flow).
 		while (--i > -1) {
 			e = this.elements[i];
-			this._originals[i] = e.innerHTML;
+			this._originals[i] = {html: e.innerHTML, style: e.getAttribute("style")};
 			origHeight = e.clientHeight;
 			origWidth = e.clientWidth;
 			_split(e, vars, wordStart, charStart);
@@ -452,7 +454,10 @@ export class SplitText {
 		if (!originals) {
 			throw("revert() call wasn't scoped properly.");
 		}
-		this.elements.forEach((e, i) => e.innerHTML = originals[i]);
+		this.elements.forEach((e, i) => {
+			e.innerHTML = originals[i].html;
+			e.setAttribute("style", originals[i].style);
+		});
 		this.chars = [];
 		this.words = [];
 		this.lines = [];
@@ -466,7 +471,7 @@ export class SplitText {
 
 }
 
-SplitText.version = "3.12.1";
+SplitText.version = "3.12.3";
 SplitText.register = _initCore;
 
 export { SplitText as default };

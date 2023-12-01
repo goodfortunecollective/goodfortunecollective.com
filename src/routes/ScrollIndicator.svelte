@@ -1,31 +1,19 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { useScroll } from '$lib/lifecycle-functions/useScroll';
 
-	export let progress = 0;
 	export let strokeDashArray = '0px';
 	export let strokeDashOffset = '0px';
 
-	const onScroll = () => {
-		progress = Math.round((100 * window.scrollY) / (documentHeight() - window.innerHeight));
+	const onScroll = (scroll: any) => {
 		let c = Math.PI * (9 * 2);
-		let pct = ((100 - progress) / 100) * c;
+		let pct = (1 - scroll.progress) * c;
+
 		strokeDashArray = c + 'px';
 		strokeDashOffset = pct + 'px';
 	};
 
-	const documentHeight = () => {
-		return Math.max(
-			document.documentElement.clientHeight,
-			document.body.scrollHeight,
-			document.documentElement.scrollHeight,
-			document.body.offsetHeight,
-			document.documentElement.offsetHeight
-		);
-	};
-
-	onMount(async () => {
-		onScroll();
-		window.addEventListener('scroll', onScroll);
+	useScroll((scroll) => {
+		onScroll(scroll);
 	});
 </script>
 

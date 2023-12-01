@@ -6,15 +6,22 @@
 	html {
 		-webkit-font-smoothing: antialiased;
 		font-family: 'tenon', sans-serif;
+		scrollbar-width: thin;
 	}
 
 	html,
 	body {
 		background-color:  var(--theme-color);
+		overscroll-behavior-y: none;
 	}
 
 	body {
 		transition: background-color 1s ease;
+		min-height: 100vh;
+	}
+	
+	html.lenis-stopped {
+		overflow: hidden;
 	}
 
 	.preserve-3d {
@@ -67,23 +74,5 @@
 
 	.split-line__underline:hover::after {
 		width: 100%;
-	}
-
-	/** LENIS **/
-
-	html.lenis {
-		height: auto;
-	}
-
-	.lenis.lenis-smooth {
-		scroll-behavior: auto;
-	}
-
-	.lenis.lenis-smooth [data-lenis-prevent] {
-		overscroll-behavior: contain;
-	}
-
-	.lenis.lenis-scrolling iframe {
-		pointer-events: none;
 	}
 }

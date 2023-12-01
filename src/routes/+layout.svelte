@@ -1,14 +1,18 @@
 <script lang="ts">
 	import Lenis from '@studio-freight/lenis';
 	import { onMount, setContext } from 'svelte';
-	import { custom_event } from 'svelte/internal';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 	import { Body } from 'svelte-body';
 
+	import { browser } from '$app/environment';
 	import { isIntroDone, backgroundColor } from '$lib/stores';
-	import { page } from '$app/stores';
 	import gsap, { ScrollTrigger, CustomEase } from '$lib/gsap';
-	import { lenis } from '$lib/stores';
+
+	import { lenisStore as lenis, setLenisStore } from '$lib/stores/lenis';
+	import { useScroll } from '$lib/lifecycle-functions/useScroll';
+	import { useFrame } from '$lib/lifecycle-functions/useFrame';
+	import { raf } from '$lib/utils/tempus';
+
 	import { getComponentByName } from '$lib/storyblok';
 	import { ProjectListHover } from '$lib/components';
 
@@ -25,17 +29,42 @@
 
 	export let data: LayoutData;
 
-	let lenisScroll: Lenis | null = null;
-
-	let ref: any;
-
 	setContext('storyblok-preview', data.preview);
+
+	let hash = '';
+
+	if (browser) {
+		// Merge rafs
+		gsap.ticker.remove(gsap.updateRoot);
+		raf.add((time) => {
+			gsap.updateRoot(time! / 1000);
+		}, 0);
+	}
+
+	useScroll(ScrollTrigger.update);
+
+	$: if (browser && $lenis) {
+		ScrollTrigger.refresh();
+		$lenis.start();
+	}
+
+	$: if (browser && $lenis && hash) {
+		const target = document.querySelector(hash);
+		$lenis.scrollTo(target, { offset: 0 });
+	}
+
+	// ScrollTrigger.defaults({ markers: process.env.NODE_ENV === 'development' });
 
 	onMount(() => {
 		CustomEase.create('css-ease', 'M0,0 C0.25,0.1 0.25,1 1,1');
 		CustomEase.create('css-ease.in', 'M0,0 C0.42,0 1,1 1,1');
 		CustomEase.create('css-ease.out', 'M0,0 C0,0 0.58,1 1,1');
 		CustomEase.create('css-ease.in-out', 'M0,0 C0.42,0 0.58,1 1,1');
+
+		if (window.history.scrollRestoration) {
+			window.history.scrollRestoration = 'manual';
+		}
+		window.scrollTo(0, 0);
 
 		if (data.settings) {
 			useStoryblokBridge(
@@ -44,51 +73,11 @@
 			);
 		}
 
-		console.log('data.settings', data.settings.content.content[0]);
-
-		lenisScroll = new Lenis();
-
-		lenis.set(lenisScroll);
-
-		lenisScroll.on('scroll', (e) => {
-			ScrollTrigger.update();
-			ref.dispatchEvent(
-				custom_event(
-					'onLenisUpdate',
-					{ scrollTop: e.scroll, velocity: e.velocity },
-					{ bubbles: true }
-				)
-			);
-		});
-
-		const onRaf = (time) => {
-			lenisScroll.raf(time * 1000); // ms
-		};
-
-		gsap.ticker.add(onRaf);
-		gsap.ticker.lagSmoothing(0);
-
-		if (lenisScroll) {
-			const hash = $page.url.hash.slice(1);
-
-			if (hash) {
-				const scrollElem = document.getElementById(hash);
-
-				if (scrollElem) {
-					lenisScroll.scrollTo(scrollElem, {
-						duration: 1
-						//delay: 0.5
-					});
-				} else {
-					lenisScroll.stop();
-				}
-			}
-		}
+		const lenisInstance = new Lenis();
+		setLenisStore(lenisInstance);
 
 		return () => {
-			gsap.ticker.remove(onRaf);
-			lenisScroll.destroy();
-			lenis.set(null);
+			$lenis?.destroy();
 		};
 	});
 
@@ -100,9 +89,7 @@
 				// TODO start page content entering animations
 				hideLoader();
 
-				if (lenisScroll) {
-					lenisScroll.start();
-				}
+				$lenis?.start();
 
 				isIntroDone.set(true);
 			},
@@ -111,6 +98,10 @@
 			}
 		});
 	}
+
+	useFrame((time) => {
+		$lenis?.raf(time);
+	});
 </script>
 
 <Body style="--theme-color: {$backgroundColor}" />
@@ -119,7 +110,7 @@
 	<StoryblokComponent blok={getComponentByName(data.settings.content, 'header')} />
 {/if}
 
-<main bind:this={ref} class="overflow-hidden">
+<main class="overflow-hidden">
 	<PageTransition pathname={data.pathname}>
 		<slot key={data.pathname} />
 		{#if data.settings}

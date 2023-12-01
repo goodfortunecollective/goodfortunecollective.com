@@ -1,10 +1,10 @@
 /*!
- * MotionPathHelper 3.12.1
- * https://greensock.com
+ * MotionPathHelper 3.12.3
+ * https://gsap.com
  *
  * @license Copyright 2008-2023, GreenSock. All rights reserved.
- * Subject to the terms at https://greensock.com/standard-license or for
- * Club GreenSock members, the agreement issued with that membership.
+ * Subject to the terms at https://gsap.com/standard-license or for
+ * Club GSAP members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
 */
 /* eslint-disable */
@@ -17,7 +17,7 @@ let gsap, _win, _doc, _docEl, _body, MotionPathPlugin,  _arrayToRawPath, _rawPat
 	_isString = value => typeof(value) === "string",
 	_createElement = (type, ns) => {
 		let e = _doc.createElementNS ? _doc.createElementNS((ns || "http://www.w3.org/1999/xhtml").replace(/^https/, "http"), type) : _doc.createElement(type); //some servers swap in https for http in the namespace which can break things, making "style" inaccessible.
-		return e.style ? e : _doc.createElement(type); //some environments won't allow access to the element's style when created with a namespace in which case we default to the standard createElement() to work around the issue. Also note that when GSAP is embedded directly inside an SVG file, createElement() won't allow access to the style object in Firefox (see https://greensock.com/forums/topic/20215-problem-using-tweenmax-in-standalone-self-containing-svg-file-err-cannot-set-property-csstext-of-undefined/).
+		return e.style ? e : _doc.createElement(type); //some environments won't allow access to the element's style when created with a namespace in which case we default to the standard createElement() to work around the issue. Also note that when GSAP is embedded directly inside an SVG file, createElement() won't allow access to the style object in Firefox (see https://gsap.com/forums/topic/20215-problem-using-tweenmax-in-standalone-self-containing-svg-file-err-cannot-set-property-csstext-of-undefined/).
 	},
 	_getPositionOnPage = target => {
 		let bounds = target.getBoundingClientRect(),
@@ -114,7 +114,7 @@ export class MotionPathHelper {
 		let copyButton = _createElement("div"),
 			self = this,
 			offset = {x:0, y:0},
-			target, path, isSVG, startX, startY, position, svg, animation, svgNamespace, temp, matrix, refreshPath, animationToScrub;
+			target, path, isSVG, startX, startY, position, svg, animation, svgNamespace, temp, matrix, refreshPath, animationToScrub, createdSVG;
 		if (targetOrTween instanceof gsap.core.Tween) {
 			animation = targetOrTween;
 			target = animation.targets()[0];
@@ -150,6 +150,7 @@ export class MotionPathHelper {
 				offset.y = temp.y;
 			} else {
 				svg = _createElement("svg", svgNamespace);
+				createdSVG = true;
 				_body.appendChild(svg);
 				svg.setAttribute("viewBox", "0 0 100 100");
 				svg.setAttribute("class", "motion-path-helper");
@@ -182,7 +183,7 @@ export class MotionPathHelper {
 			};
 		}
 
-		animationToScrub = animation && animation.parent.data === "nested" ? animation.parent.parent : animation;
+		animationToScrub = animation && animation.parent && animation.parent.data === "nested" ? animation.parent.parent : animation;
 
 		vars.onPress = () => {
 			animationToScrub.pause(0);
@@ -235,7 +236,7 @@ export class MotionPathHelper {
 		this.kill = this.revert = () => {
 			this.editor.kill();
 			copyButton.parentNode && copyButton.parentNode.removeChild(copyButton);
-			isSVG || (svg.parentNode && svg.parentNode.removeChild(svg));
+			createdSVG && svg.parentNode && svg.parentNode.removeChild(svg);
 			animationToScrub && animationToScrub.revert();
 		}
 	}
@@ -249,6 +250,6 @@ export class MotionPathHelper {
 MotionPathHelper.register = _initCore;
 MotionPathHelper.create = (target, vars) => new MotionPathHelper(target, vars);
 MotionPathHelper.editPath = (path, vars) => PathEditor.create(path, vars);
-MotionPathHelper.version = "3.12.1";
+MotionPathHelper.version = "3.12.3";
 
 export { MotionPathHelper as default };

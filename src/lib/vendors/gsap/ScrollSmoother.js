@@ -1,10 +1,10 @@
 /*!
- * ScrollSmoother 3.12.1
- * https://greensock.com
+ * ScrollSmoother 3.12.3
+ * https://gsap.com
  *
  * @license Copyright 2008-2023, GreenSock. All rights reserved.
- * Subject to the terms at https://greensock.com/standard-license or for
- * Club GreenSock members, the agreement issued with that membership.
+ * Subject to the terms at https://gsap.com/standard-license or for
+ * Club GSAP members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
 */
 /* eslint-disable */
@@ -54,7 +54,7 @@ export class ScrollSmoother {
 		_context(this);
 
 		let {smoothTouch, onUpdate, onStop, smooth, onFocusIn, normalizeScroll, wholePixels} = vars,
-			content, wrapper, height, mainST, effects, sections, intervalID, wrapperCSS, contentCSS, paused, pausedNormalizer, recordedRefreshScroll, recordedRefreshScrub,
+			content, wrapper, height, mainST, effects, sections, intervalID, wrapperCSS, contentCSS, paused, pausedNormalizer, recordedRefreshScroll, recordedRefreshScrub, allowUpdates,
 			self = this,
 			effectsPrefix = vars.effectsPrefix || "",
 			scrollFunc = ScrollTrigger.getScrollFunc(_win),
@@ -89,7 +89,7 @@ export class ScrollSmoother {
 					}
 					delta = y - currentY;
 					currentY = y;
-					ScrollTrigger.isUpdating || ScrollSmoother.isRefreshing || ScrollTrigger.update(); // note: if we allowed an update() when in the middle of a refresh() it could render all the other ScrollTriggers and inside the update(), _refreshing would be true thus scrubs would jump instantly, but then on the very next update they'd continue from there. Basically this allowed update() to be called on OTHER ScrollTriggers during the refresh() of the mainST which could cause some complications. See https://greensock.com/forums/topic/35536-smoothscroller-ignoremobileresize-for-non-touch-devices
+					ScrollTrigger.isUpdating || ScrollSmoother.isRefreshing || ScrollTrigger.update(); // note: if we allowed an update() when in the middle of a refresh() it could render all the other ScrollTriggers and inside the update(), _refreshing would be true thus scrubs would jump instantly, but then on the very next update they'd continue from there. Basically this allowed update() to be called on OTHER ScrollTriggers during the refresh() of the mainST which could cause some complications. See https://gsap.com/forums/topic/35536-smoothscroller-ignoremobileresize-for-non-touch-devices
 				}
 			},
 			scrollTop = function(value) {
@@ -345,11 +345,11 @@ export class ScrollSmoother {
 		this.scrollTop = scrollTop;
 
 		this.scrollTo = (target, smooth, position) => {
-			let p = gsap.utils.clamp(0, _maxScroll(), isNaN(target) ? this.offset(target, position) : +target);
+			let p = gsap.utils.clamp(0, _maxScroll(), isNaN(target) ? this.offset(target, position, !!smooth && !paused) : +target);
 			!smooth ? scrollTop(p) : paused ? gsap.to(this, {duration: smoothDuration, scrollTop: p, overwrite: "auto", ease: _expo}) : scrollFunc(p);
 		};
 
-		this.offset = (target, position) => {
+		this.offset = (target, position, ignoreSpeed) => {
 			target = _toArray(target)[0];
 			let cssText = target.style.cssText, // because if there's an effect applied, we revert(). We need to restore.
 				st = ScrollTrigger.create({trigger: target, start: position || "top top"}),
@@ -357,7 +357,7 @@ export class ScrollSmoother {
 			if (effects) {
 				startupPhase ? ScrollTrigger.refresh() : adjustParallaxPosition([st], true); // all the effects need to go through the initial full refresh() so that all the pins and ratios and offsets are set up. That's why we do a full refresh() if it's during the startupPhase.
 			}
-			y = st.start / speed;
+			y = st.start / (ignoreSpeed ? speed : 1);
 			st.kill(false);
 			target.style.cssText = cssText;
 			gsap.core.getCache(target).uncache = 1;
@@ -459,14 +459,14 @@ export class ScrollSmoother {
 		existingScrollTriggers.forEach(st => st.revert(true, true)); // in case it's in an environment like React where child components that have ScrollTriggers instantiate BEFORE the parent that does ScrollSmoother.create(...);
 
 		mainST = ScrollTrigger.create({
-			animation: gsap.fromTo(scroll, {y: 0}, {
-				y: () => -refreshHeight(),
+			animation: gsap.fromTo(scroll, {y: () => { allowUpdates = 0; return 0;}}, {
+				y: () => {allowUpdates = 1; return -refreshHeight();},
 				immediateRender: false,
 				ease: "none",
 				data: "ScrollSmoother",
 				duration: 100, // for added precision
 				onUpdate: function() {
-					if (this._dur) { // skip when it's the "from" part of the tween (setting the startAt)
+					if (allowUpdates) { // skip when it's the "from" part of the tween (setting the startAt)
 						let force = isProxyScrolling;
 						if (force) {
 							killScrub(mainST);
@@ -514,7 +514,10 @@ export class ScrollSmoother {
 				recordedRefreshScrub || killScrub(self);
 				scroll.y = -scrollFunc() * speed; // in 3.11.1, we shifted to forcing the scroll position to 0 during the entire refreshAll() in ScrollTrigger and then restored the scroll position AFTER everything had been updated, thus we should always make these adjustments AFTER a full refresh rather than putting it in the onRefresh() of the individual mainST ScrollTrigger which would fire before the scroll position was restored.
 				render(scroll.y);
-				startupPhase || self.animation.progress(gsap.utils.clamp(0, 1, recordedRefreshScroll / speed / -self.end));
+				if (!startupPhase) {
+					recordedRefreshScrub && (isProxyScrolling = false); // otherwise, we lose any in-progress scrub. When we set the progress(), it fires the onUpdate() which sets the scroll position immediately (jumps ahead if isProxyScrolling is true). See https://gsap.com/community/forums/topic/37515-dynamic-scrolltrigger-with-pin-inside-a-scrollsmoother/
+					self.animation.progress(gsap.utils.clamp(0, 1, recordedRefreshScroll / speed / -self.end));
+				}
 				if (recordedRefreshScrub) { // we need to trigger the scrub to happen again
 					self.progress -= 0.001;
 					self.update();
@@ -667,7 +670,7 @@ export class ScrollSmoother {
 
 }
 
-ScrollSmoother.version = "3.12.1";
+ScrollSmoother.version = "3.12.3";
 ScrollSmoother.create = vars => (_mainInstance && vars && _mainInstance.content() === _toArray(vars.content)[0]) ? _mainInstance : new ScrollSmoother(vars);
 ScrollSmoother.get = () => _mainInstance;
 

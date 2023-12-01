@@ -35,10 +35,12 @@
 		>
 			<Heading
 				as="h2"
-				animated={false}
+				animated={blok.animated}
 				size={blok.titleSize}
-				class="leading-extra-tight lg:leading-extra-tight">{blok.title}</Heading
+				class="leading-extra-tight lg:leading-extra-tight"
 			>
+				{blok.title}
+			</Heading>
 			{#if blok.links.length}
 				<div class="mt-8 hidden lg:block">
 					{#each blok.links as b}
