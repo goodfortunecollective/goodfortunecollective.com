@@ -5,7 +5,6 @@
 	import { backgroundTheme } from '$lib/stores';
 	import { cls } from '$lib/styles';
 	import { Gfc } from '$lib/components';
-	import gsap from '$lib/gsap';
 
 	export let blok: any;
 
@@ -32,11 +31,6 @@
 			theme: 'light'
 		}
 	});
-
-	const backToTop = (event: any) => {
-		gsap.to(window, { scrollTo: { y: 0 }, duration: 3 });
-		event.preventDefault();
-	};
 </script>
 
 <footer
@@ -92,12 +86,6 @@
 			</div>
 		</div>
 	</div>
-	<a
-		on:click={backToTop}
-		class="back-to-top-btn absolute right-[20px] top-[-50px] z-1 hidden h-[66px] w-[20px] md:right-[60px] md:block"
-	>
-		<div class="arrow" />
-	</a>
 	<Gfc
 		class={cls(
 			'absolute bottom-0 left-2/4 z-0 h-auto w-[66%] max-w-[700px] -translate-x-2/4 translate-y-[35%]',
@@ -164,65 +152,6 @@
 						transform: translate(0, 0);
 					}
 				}
-			}
-		}
-	}
-
-	.back-to-top-btn {
-		opacity: 0.4;
-		transition: 0.5s opacity;
-
-		&:hover {
-			opacity: 0.6;
-		}
-
-		&:before {
-			position: absolute;
-			top: 0;
-			left: 50%;
-			width: 1px;
-			bottom: 0;
-			content: '';
-			background: white;
-		}
-
-		&:after {
-			position: absolute;
-			width: 1px;
-			left: 2px;
-			height: 100%;
-			// background: white;
-			content: '';
-		}
-
-		.arrow {
-			position: absolute;
-			top: 0;
-			left: 50%;
-			transform: translate(-50%, 0) rotate(-90deg);
-
-			&:before,
-			&:after {
-				width: 4px;
-				height: 1px;
-				position: absolute;
-				top: 0;
-				right: 0;
-				background: white;
-				content: '';
-				#footer.light & {
-					background: black;
-				}
-			}
-
-			&:before {
-				transform: rotate(40deg);
-				transform-origin: top right;
-			}
-
-			&:after {
-				transform: rotate(-40deg);
-				transform-origin: bottom right;
 			}
 		}
 	}

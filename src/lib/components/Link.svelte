@@ -1,4 +1,32 @@
 <script lang="ts">
+	import { cva } from 'class-variance-authority';
+	import { cls } from '$lib/styles';
+	import { backgroundTheme } from '$lib/stores';
+
+	const arrowStyle = cva('', {
+		variants: {
+			theme: {
+				light: 'bg-zinc-200 before:bg-black',
+				dark: 'bg-white before:bg-rose-50'
+			}
+		},
+		defaultVariants: {
+			theme: 'light'
+		}
+	});
+
+	const arrowHoverStyle = cva('', {
+		variants: {
+			theme: {
+				light: 'bg-white before:bg-white after:bg-white',
+				dark: 'bg-black before:bg-black after:bg-black'
+			}
+		},
+		defaultVariants: {
+			theme: 'light'
+		}
+	});
+
 	export let href = '';
 	export let label = '';
 	export let isExternal = false;
@@ -12,12 +40,20 @@
 	class="3xl:text-md link flex h-10 flex-row items-stretch text-xs font-bold uppercase tracking-widest 4xl:text-lg"
 >
 	{#if label}
-		<span class="flex items-center pr-4">{label}</span>{/if}
+		<span class="flex items-center pr-4">{label}</span>
+	{/if}
 	<span
 		class="relative ml-[50px] flex items-center justify-center text-4xl 3xl:text-5xl 4xl:text-6xl"
 	>
-		<span class="arrow arrow-default" /><span class="link-circle flex items-center justify-center">
-			<span class="arrow arrow-hover" />
+		<span class={cls('bg-black before:bg-black after:bg-black', 'arrow arrow-default')} />
+		<span
+			class={cls(
+				'flex items-center justify-center',
+				'link-circle',
+				arrowStyle({ theme: $backgroundTheme })
+			)}
+		>
+			<span class={cls('arrow arrow-hover', arrowHoverStyle({ theme: $backgroundTheme }))} />
 		</span>
 	</span>
 </a>
@@ -54,7 +90,6 @@
 		height: 40px;
 		border-radius: 40px;
 		overflow: hidden;
-		background: $grayUltraLight;
 		overflow: hidden;
 		z-index: 8;
 
@@ -66,7 +101,6 @@
 			left: 0;
 			border-radius: 40px;
 			transform: scale(1.2) translate(-100%, 0);
-			background: $black;
 			z-index: 9;
 			content: '';
 			transition:
@@ -106,29 +140,17 @@
 		&.arrow-default {
 			width: 29px;
 			right: 20px;
-			background: #313131;
 			z-index: 15;
 			transform-origin: 100% 50%;
-
-			&:before,
-			&:after {
-				background: $grayLight;
-			}
 		}
 
 		&.arrow-hover {
 			width: 38%;
-			background: $white;
 			transform: translate3d(-200%, 0, 0);
 			z-index: 10;
 			transition:
 				0.5s 0.1s transform $ease-out-expo,
 				0.5s opacity $ease-out-expo;
-
-			&:before,
-			&:after {
-				background: $white;
-			}
 		}
 	}
 </style>
