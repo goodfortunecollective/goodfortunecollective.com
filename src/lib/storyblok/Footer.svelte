@@ -11,8 +11,8 @@
 	const hightlightStyle = cva('transition-colors duration-1000 ease-out', {
 		variants: {
 			theme: {
-				light: 'text-black before:bg-gray-600',
-				dark: 'text-gray-300 before:bg-gray-300'
+				light: 'before:bg-gray-600',
+				dark: 'before:bg-gray-300'
 			}
 		},
 		defaultVariants: {
@@ -51,8 +51,9 @@
 					class="flex flex-col gap-4 text-xs uppercase leading-5 tracking-wider text-gray-500 md:flex-row 3xl:text-sm"
 				>
 					Let’s work together
-					<a class={hightlightStyle({ theme: $backgroundTheme })} href={`mailto:${blok.email}`}
-						>{blok.email}</a
+					<a
+						class={cls('text-rose-50', hightlightStyle({ theme: $backgroundTheme }))}
+						href={`mailto:${blok.email}`}>{blok.email}</a
 					>
 				</p>
 			</div>
@@ -65,8 +66,8 @@
 				<p
 					class="flex flex-col gap-4 text-xs uppercase leading-5 tracking-wider text-gray-500 md:flex-row 3xl:text-sm"
 				>
-					Find us in<span class={hightlightStyle({ theme: $backgroundTheme })}
-						>Vancouver, Canada</span
+					Find us in<a href={blok.address} class={hightlightStyle({ theme: $backgroundTheme })}
+						>Vancouver, Canada</a
 					>
 				</p>
 			</div>
@@ -110,48 +111,6 @@
 				left: 0;
 				height: 1px;
 				content: '';
-			}
-
-			&:first-child {
-				a {
-					&:before {
-						transform-origin: 0 0;
-					}
-				}
-			}
-			&:last-child {
-				a {
-					&:before {
-						transform-origin: 100% 100%;
-						transform: translate(150%, 0);
-					}
-				}
-			}
-
-			a {
-				position: relative;
-				display: inline-block;
-
-				&:before {
-					position: absolute;
-					top: -2rem;
-					right: 0;
-					height: 1px;
-					width: 100%;
-					transform: translate(-200%, 0);
-					content: '';
-					/** background-color: purple; **/
-					transition:
-						0.4s width ease-out,
-						0.4s transform ease-out;
-				}
-
-				&:hover {
-					&:before {
-						width: 100%;
-						transform: translate(0, 0);
-					}
-				}
 			}
 		}
 	}
