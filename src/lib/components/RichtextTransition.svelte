@@ -40,7 +40,9 @@
 						gsap.to(text.words, {
 							scrollTrigger: {
 								trigger: p,
-								top: 'top bottom',
+								start: 'top 90%',
+								end: 'bottom 10%',
+								top: 'top center',
 								toggleActions: 'restart pause resume reverse'
 							},
 							duration: 0.4,
@@ -55,7 +57,9 @@
 						gsap.to(text.lines, {
 							scrollTrigger: {
 								trigger: p,
-								top: 'top bottom',
+								start: 'top 90%',
+								end: 'bottom 10%',
+								top: 'top center',
 								toggleActions: 'restart pause resume reverse'
 							},
 							duration: 0.4,
