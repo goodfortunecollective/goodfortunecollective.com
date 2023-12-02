@@ -3,6 +3,16 @@
 @tailwind utilities;
 
 @layer base {
+	a {
+	  @apply text-rose-50 transition-colors;
+	}
+
+	a:hover {
+		@apply underline underline-offset-8 ;
+	  }
+  }
+
+@layer base {
 	html {
 		-webkit-font-smoothing: antialiased;
 		font-family: 'tenon', sans-serif;

@@ -26,7 +26,7 @@
 	const variants = cva('transition-colors duration-1000 ease-out', {
 		variants: {
 			theme: {
-				light: '',
+				light: 'text-black',
 				dark: 'text-white'
 			},
 			layout: {
@@ -91,7 +91,7 @@
 		data-id={slug}
 		data-speed={parallaxSpeed}
 		class={cls(
-			'flex-no-wrap pointer-events-auto flex w-full flex-col',
+			'flex-no-wrap pointer-events-auto flex w-full flex-col hover:no-underline',
 			variants({ theme: theme, layout: layout }),
 			'c-project-list-item__container'
 		)}
