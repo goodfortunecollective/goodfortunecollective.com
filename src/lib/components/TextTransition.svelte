@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 
 	import { cls } from '$lib/styles';
-	import gsap, { SplitText } from '$lib/gsap';
+	import gsap, { SplitText, ScrollTrigger } from '$lib/gsap';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	let clazz: string = '';
@@ -33,18 +33,20 @@
 			if (enabled) {
 				ctx = gsap.context(() => {
 					gsap.set(text.chars, { opacity: 1 });
-					gsap.to(text.chars, {
-						scrollTrigger: {
-							trigger: element,
-							start: 'top 90%',
-							end: 'bottom 10%',
-							top: 'top center',
-							toggleActions: 'restart pause resume reverse'
-						},
-						duration: 0.2,
-						ease: 'circ.out',
-						yPercent: 0,
-						stagger: 0.01
+
+					ScrollTrigger.batch(text.chars, {
+						start: 'top 90%',
+						end: 'bottom 10%',
+						top: 'top center',
+						toggleActions: 'restart pause resume reverse',
+						onEnter(elements: any, triggers: any) {
+							gsap.to(elements, {
+								duration: 0.2,
+								ease: 'circ.out',
+								yPercent: 0,
+								stagger: 0.01
+							});
+						}
 					});
 				}, element);
 			}
