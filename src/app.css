@@ -4,7 +4,7 @@
 
 @layer base {
 	a {
-	  @apply text-rose-50 transition-colors;
+	  @apply text-rose-50;
 	}
 
 	a:hover {
