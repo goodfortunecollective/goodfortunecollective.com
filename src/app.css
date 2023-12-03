@@ -4,7 +4,7 @@
 
 @layer base {
 	a {
-	  @apply text-rose-50 transition-colors;
+	  @apply text-rose-50;
 	}
 
 	a:hover {
@@ -21,7 +21,7 @@
 
 	html,
 	body {
-		background-color:  var(--theme-color);
+		background: var(--theme-color);
 		overscroll-behavior-y: none;
 	}
 

@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 
 	import { cls } from '$lib/styles';
-	import gsap, { SplitText } from '$lib/gsap';
+	import gsap, { SplitText, ScrollTrigger } from '$lib/gsap';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	let clazz: string = '';
@@ -37,35 +37,37 @@
 
 						gsap.set(text.words, { yPercent: 200, opacity: 0 });
 
-						gsap.to(text.words, {
-							scrollTrigger: {
-								trigger: p,
-								start: 'top 90%',
-								end: 'bottom 10%',
-								top: 'top center',
-								toggleActions: 'restart pause resume reverse'
-							},
-							duration: 0.4,
-							ease: 'circ.out',
-							yPercent: 0,
-							opacity: 1,
-							stagger: 0.005
+						ScrollTrigger.batch(text.words, {
+							start: 'top 90%',
+							end: 'bottom 10%',
+							top: 'top center',
+							toggleActions: 'restart pause resume reverse',
+							onEnter(elements: any, triggers: any) {
+								gsap.to(elements, {
+									duration: 0.4,
+									ease: 'circ.out',
+									yPercent: 0,
+									opacity: 1,
+									stagger: 0.005
+								});
+							}
 						});
 
 						gsap.set(text.lines, { skewY: 5 });
 
-						gsap.to(text.lines, {
-							scrollTrigger: {
-								trigger: p,
-								start: 'top 90%',
-								end: 'bottom 10%',
-								top: 'top center',
-								toggleActions: 'restart pause resume reverse'
-							},
-							duration: 0.4,
-							ease: 'circ.out',
-							skewY: 0,
-							stagger: 0.02
+						ScrollTrigger.batch(text.lines, {
+							start: 'top 90%',
+							end: 'bottom 10%',
+							top: 'top center',
+							toggleActions: 'restart pause resume reverse',
+							onEnter(elements: any, triggers: any) {
+								gsap.to(elements, {
+									duration: 0.4,
+									ease: 'circ.out',
+									skewY: 0,
+									stagger: 0.02
+								});
+							}
 						});
 					});
 				}, element);
