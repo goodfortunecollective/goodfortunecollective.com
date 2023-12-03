@@ -1,15 +1,16 @@
 <script lang="ts">
 	import { cva } from 'class-variance-authority';
+
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
-
+	import { inViewColorTransition } from '$lib/utils/animations';
 	import { Heading } from '$lib/components';
 
 	export let name: string;
 	export let url: string;
 	export let label: string;
 
-	const variants = cva('transition-colors duration-1000 ease-out', {
+	const variants = cva('duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: '',
@@ -48,7 +49,12 @@
 
 <li>
 	<a class="list-item-link flex w-full items-center py-4" href={url}>
-		<Heading as="h3" size="h3" class={variants({ theme: $backgroundTheme })}>
+		<Heading
+			as="h3"
+			size="h3"
+			on:inview_change={inViewColorTransition}
+			class={variants({ theme: $backgroundTheme })}
+		>
 			{name}
 		</Heading>
 		<span class="list-item-action text-xs font-bold uppercase tracking-widest">{label}</span>

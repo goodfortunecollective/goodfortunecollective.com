@@ -1,14 +1,16 @@
 <script lang="ts">
+	import { inview } from 'svelte-inview';
 	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
 
 	import { Heading } from '$lib/components';
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
+	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;
 
-	const headingStyle = cva('transition-colors duration-1000 ease-out', {
+	const headingStyle = cva('duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: '',
@@ -20,7 +22,7 @@
 		}
 	});
 
-	const textStyle = cva('transition-colors duration-1000 ease-out', {
+	const textStyle = cva('duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: '',
@@ -45,6 +47,7 @@
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	<div class="grid grid-cols-12 gap-8 pt-24 md:gap-0 md:pt-32">
 		<Heading
+			on:inview_change={inViewColorTransition}
 			as="h2"
 			size="h6"
 			class={cls(
@@ -53,7 +56,11 @@
 			)}>{blok.heading}</Heading
 		>
 		<div class="col-span-10 col-start-2 text-lg md:col-span-5 md:col-start-7">
-			<div class={cls('flex flex-col', textStyle({ theme: $backgroundTheme, gap: blok.gap }))}>
+			<div
+				use:inview
+				on:inview_change={inViewColorTransition}
+				class={cls('flex flex-col', textStyle({ theme: $backgroundTheme, gap: blok.gap }))}
+			>
 				{#each blok.content as b}
 					<StoryblokComponent blok={b} />
 				{/each}

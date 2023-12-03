@@ -1,14 +1,16 @@
 <script lang="ts">
 	import { storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
+	import { inview } from 'svelte-inview';
 
 	import { base } from '$app/paths';
 	import { Heading } from '$lib/components';
 	import { backgroundTheme, heading_hover_media } from '$lib/stores';
+	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;
 
-	const headingStyle = cva('transition-colors duration-1000 ease-out no-underline', {
+	const headingStyle = cva('duration-1000 ease-out no-underline', {
 		variants: {
 			theme: {
 				light: '',
@@ -27,7 +29,7 @@
 	});
 
 	const textStyle = cva(
-		'flex flex-row gap-2 pb-4 text-xs tracking-widest uppercase transition-colors duration-1000 ease-out',
+		'flex flex-row gap-2 pb-4 text-xs tracking-widest uppercase duration-1000 ease-out',
 		{
 			variants: {
 				theme: {
@@ -66,13 +68,18 @@
 		>
 			<span class="mt-16 inline-block">
 				{#if blok.article.tag_list}
-					<span class={textStyle({ theme: $backgroundTheme })}>
+					<span
+						use:inview
+						on:inview_change={inViewColorTransition}
+						class={textStyle({ theme: $backgroundTheme })}
+					>
 						{#each blok.article.tag_list as tag}
 							<span>#{tag}</span>
 						{/each}
 					</span>
 				{/if}
 				<Heading
+					on:inview_change={inViewColorTransition}
 					as="h2"
 					size={headingSize[blok.kind]}
 					underline

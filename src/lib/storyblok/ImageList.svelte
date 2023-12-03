@@ -4,37 +4,40 @@
 
 	import { backgroundTheme } from '$lib/stores';
 	import { Heading, RichtextTransition } from '$lib/components';
+	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;
 
 	$: list = renderRichText(blok.list);
 
-	const headingStyle = cva(
-		'max-w-xl lg:leading-tightest leading-tightest transition-colors duration-1000 ease-out',
-		{
-			variants: {
-				theme: {
-					light: '',
-					dark: 'text-yellow-50'
-				}
-			},
-			defaultVariants: {
-				theme: 'light'
+	const headingStyle = cva('max-w-xl lg:leading-tightest leading-tightest duration-1000 ease-out', {
+		variants: {
+			theme: {
+				light: '',
+				dark: 'text-yellow-50'
 			}
+		},
+		defaultVariants: {
+			theme: 'light'
 		}
-	);
+	});
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	<div class="flex flex-col gap-8">
 		<Heading size="h5" as="h5" class="font-bold uppercase">{blok.category}</Heading>
-		<Heading size="h2" as="h2" class={headingStyle({ theme: $backgroundTheme })}>
+		<Heading
+			size="h2"
+			as="h2"
+			on:inview_change={inViewColorTransition}
+			class={headingStyle({ theme: $backgroundTheme })}
+		>
 			{blok.title}
 		</Heading>
 		<div class="[&_p]:my-4 [&_p]:leading-8">
-			<RichtextTransition class="text-xl [&_p]:my-16 [&_p]:leading-8"
-				>{@html list}</RichtextTransition
-			>
+			<RichtextTransition class="text-xl [&_p]:my-16 [&_p]:leading-8">
+				{@html list}
+			</RichtextTransition>
 		</div>
 	</div>
 </div>

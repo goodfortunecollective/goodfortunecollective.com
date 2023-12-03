@@ -4,7 +4,7 @@
 	// avoid to reload the loader animation each time we update the page
 	export let skip: boolean = false;
 
-	export const hideLoader = () => {
+	export const hide = () => {
 		active = false;
 	};
 

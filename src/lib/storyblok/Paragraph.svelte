@@ -1,16 +1,18 @@
 <script lang="ts">
 	import { renderRichText, storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
+	import { inview } from 'svelte-inview';
 
 	import { RichtextTransition } from '$lib/components';
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
+	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;
 	$: content = renderRichText(blok.content);
 
 	const variants = cva(
-		'flex text-xl leading-9 w-full  xl:text-2xl 4xl:text-4xl 4xl:leading-loose transition-colors duration-1000 ease-out',
+		'flex text-xl leading-9 w-full  xl:text-2xl 4xl:text-4xl 4xl:leading-loose duration-1000 ease-out',
 		{
 			variants: {
 				theme: {
@@ -41,6 +43,8 @@
 		variants({ theme: $backgroundTheme, align: blok.align, maxWidth: blok.maxWidth }),
 		blok.class
 	)}
+	use:inview
+	on:inview_change={inViewColorTransition}
 >
 	<RichtextTransition class="[&_p]:my-16 [&_p]:leading-8">{@html content}</RichtextTransition>
 </div>

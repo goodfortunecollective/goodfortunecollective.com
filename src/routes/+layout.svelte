@@ -9,9 +9,6 @@
 	import gsap, { ScrollTrigger, CustomEase } from '$lib/gsap';
 
 	import { lenisStore as lenis, setLenisStore } from '$lib/stores/lenis';
-	import { useScroll } from '$lib/lifecycle-functions/useScroll';
-	import { useFrame } from '$lib/lifecycle-functions/useFrame';
-	import { raf } from '$lib/utils/tempus';
 
 	import { getComponentByName } from '$lib/storyblok';
 	import { ProjectListHover } from '$lib/components';
@@ -29,24 +26,12 @@
 
 	export let data: LayoutData;
 
+	let loaderRef: Loader | null = null;
+	let pageTransitionAnimRef: PageTransitionAnim | null = null;
+
 	setContext('storyblok-preview', data.preview);
 
 	let hash = '';
-
-	if (browser) {
-		// Merge rafs
-		gsap.ticker.remove(gsap.updateRoot);
-		raf.add((time) => {
-			gsap.updateRoot(time! / 1000);
-		}, 0);
-	}
-
-	useScroll(ScrollTrigger.update);
-
-	$: if (browser && $lenis) {
-		ScrollTrigger.refresh();
-		$lenis.start();
-	}
 
 	$: if (browser && $lenis && hash) {
 		const target = document.querySelector(hash);
@@ -74,21 +59,25 @@
 		}
 
 		const lenisInstance = new Lenis();
+
+		lenisInstance.on('scroll', ScrollTrigger.update);
+
 		setLenisStore(lenisInstance);
+		gsap.ticker.add((time) => {
+			$lenis?.raf(time * 1000);
+		});
+
+		gsap.ticker.lagSmoothing(0);
 
 		return () => {
 			$lenis?.destroy();
 		};
 	});
 
-	let introComplete, hideLoader;
-
 	function handleCompleteLoader() {
-		introComplete({
+		pageTransitionAnimRef?.animateTransition({
 			onEnteringDone: () => {
-				// TODO start page content entering animations
-				hideLoader();
-
+				loaderRef?.hide();
 				$lenis?.start();
 
 				isIntroDone.set(true);
@@ -98,10 +87,6 @@
 			}
 		});
 	}
-
-	useFrame((time) => {
-		$lenis?.raf(time);
-	});
 </script>
 
 <Body style="--theme-color: {$backgroundColor}" />
@@ -125,9 +110,9 @@
 
 <ScrollIndicator />
 
-<Loader on:complete={handleCompleteLoader} bind:hideLoader skip={data.preview} />
+<Loader bind:this={loaderRef} on:complete={handleCompleteLoader} skip={data.preview} />
 
-<PageTransitionAnim bind:animateTransition={introComplete} />
+<PageTransitionAnim bind:this={pageTransitionAnimRef} />
 
 <Cursor />
 

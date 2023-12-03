@@ -1,16 +1,18 @@
 <script lang="ts">
+	import { inview } from 'svelte-inview';
 	import { renderRichText, storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
 
 	import { Heading, RichtextTransition } from '$lib/components';
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
+	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;
 
 	$: content = renderRichText(blok.content);
 
-	const variants = cva('grid grid-cols-12 text-center transition-colors duration-1000 ease-out', {
+	const variants = cva('grid grid-cols-12 text-center duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: '',
@@ -26,6 +28,8 @@
 <div
 	use:storyblokEditable={blok}
 	{...$$restProps}
+	use:inview
+	on:inview_change={inViewColorTransition}
 	class={cls(variants({ theme: $backgroundTheme }), blok.class)}
 >
 	<div class="col-span-10 col-start-2 4xl:col-span-6 4xl:col-start-4">
