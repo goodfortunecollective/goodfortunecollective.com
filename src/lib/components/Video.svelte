@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { cva } from 'class-variance-authority';
 	import { onDestroy, onMount } from 'svelte';
+	import { inview } from 'svelte-inview';
 
 	import { cls } from '$lib/styles';
 	import gsap from '$lib/gsap';
@@ -23,7 +24,7 @@
 	let tl: any = null;
 
 	let videoContainer!: HTMLElement;
-	let video!: HTMLVideoElement;
+	let videoPlayer!: HTMLVideoElement;
 
 	$: innerWidth = 0;
 	$: offsetWidth = 0;
@@ -55,8 +56,8 @@
 	function showVideo() {
 		if (!videoVisible) {
 			videoVisible = true;
-			if (video) {
-				video.play();
+			if (videoPlayer) {
+				videoPlayer.play();
 				cursorType.set('pause');
 			}
 			videoPlaying = true;
@@ -66,11 +67,11 @@
 	}
 
 	function playPauseVideo() {
-		if (video.paused) {
-			video.play();
+		if (videoPlayer.paused) {
+			videoPlayer.play();
 			cursorType.set('pause');
 		} else {
-			video.pause();
+			videoPlayer.pause();
 			cursorType.set('play');
 		}
 
@@ -111,11 +112,25 @@
 			tl = null;
 		}
 	});
+
+	const inViewPlayer = ({ detail }: CustomEvent<ObserverEventDetails>) => {
+		const { inView } = detail as ObserverEventDetails;
+
+		if (inView) {
+			if (videoVisible && videoPlayer.paused) {
+				videoPlayer.play();
+			}
+		} else {
+			if (videoVisible) {
+				videoPlayer.pause();
+			}
+		}
+	};
 </script>
 
 <svelte:window bind:innerWidth />
 
-<div class={cls('h-full w-full', clazz)}>
+<div class={cls('h-full w-full', clazz)} use:inview on:inview_change={inViewPlayer}>
 	<div class="grid w-full grid-cols-12">
 		<div class="col-span-10 col-start-2" bind:offsetWidth />
 	</div>
@@ -140,7 +155,7 @@
 			<video
 				class={cls(!autoplay && posterUrl && 'absolute z-10', 'h-auto w-full')}
 				src={videoUrl}
-				bind:this={video}
+				bind:this={videoPlayer}
 				poster=""
 				on:click={playPauseVideo}
 				playsinline

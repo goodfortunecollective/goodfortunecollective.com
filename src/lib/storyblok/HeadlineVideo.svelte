@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 	import { storyblokEditable } from '@storyblok/svelte';
+	import type { ObserverEventDetails } from 'svelte-inview';
+	import { inview } from 'svelte-inview';
 
 	import { BackgroundTheme } from '$lib/components';
 	import gsap, { SplitText } from '$lib/gsap';
@@ -16,7 +18,7 @@
 
 	let videoContainer!: HTMLElement;
 	let video!: HTMLElement;
-	let videoPlayer!: HTMLElement;
+	let videoPlayer!: HTMLVideoElement;
 	let line!: HTMLElement;
 	let container!: HTMLElement;
 
@@ -251,77 +253,88 @@
 		$lenis?.off('scroll', onScroll);
 		gsap.ticker.remove(onRender);
 	});
+
+	const inViewPlayer = ({ detail }: CustomEvent<ObserverEventDetails>) => {
+		const { inView } = detail as ObserverEventDetails;
+		if (inView) {
+			videoPlayer.play();
+		} else {
+			videoPlayer.pause();
+		}
+	};
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight on:mousemove={onMouseMove} on:resize={onResize} />
 
-<section use:storyblokEditable={blok} {...$$restProps} class="grid h-screen grid-cols-12">
-	<div class="relative col-span-10 col-start-2 h-full w-full" bind:this={container}>
-		<div class="perspective-800 relative z-[9] h-full w-full" bind:this={videoContainer}>
-			<div
-				bind:this={video}
-				class={cls(
-					'preserve-3d absolute mt-[20vh] h-full w-full transform-gpu md:mt-[7vh]',
-					'b-headline-video__container',
-					videoTransformEffect >= 0.99 && 'cursor-pointer'
-				)}
-				style="--video-effect: {videoTransformEffect}; --rotation-x: {videoRotation.x}deg; --rotation-y: {videoRotation.y}deg"
-			>
-				<video
-					bind:this={videoPlayer}
-					on:click={videoPlaying ? playPauseVideo : startVideo}
-					on:mouseenter={videoPreviewOnEnter}
-					on:mouseleave={videoPreviewOnLeave}
-					class="aspect-portrait w-full rounded-3xl"
-					src={blok.videoPreview}
-					autoplay={true}
-					loop={true}
-					muted={!videoPlaying}
-				>
-					<track kind="captions" />
-				</video>
-			</div>
-		</div>
-
-		<div
-			class="title-cont pointer-events-none absolute left-0 top-0 flex h-full w-full items-start"
-		>
-			<div class="flex h-full flex-col justify-between py-[15vh]">
-				<h1
-					data-gsap="split-text"
+<div use:inview on:inview_change={inViewPlayer}>
+	<section use:storyblokEditable={blok} {...$$restProps} class="grid h-screen grid-cols-12">
+		<div class="relative col-span-10 col-start-2 h-full w-full" bind:this={container}>
+			<div class="perspective-800 relative z-[9] h-full w-full" bind:this={videoContainer}>
+				<div
+					bind:this={video}
 					class={cls(
-						'z-[8] max-w-7xl font-degular-display leading-tightest tracking-wide text-neutral-950',
-						'b-headline-video__title'
+						'preserve-3d absolute mt-[20vh] h-full w-full transform-gpu md:mt-[7vh]',
+						'b-headline-video__container',
+						videoTransformEffect >= 0.99 && 'cursor-pointer'
 					)}
+					style="--video-effect: {videoTransformEffect}; --rotation-x: {videoRotation.x}deg; --rotation-y: {videoRotation.y}deg"
 				>
-					{blok.headline}
-				</h1>
-				<h2
-					data-gsap="split-text"
-					class="z-10 mb-[5vh] max-w-2xl font-degular-display text-4xl text-white md:text-6xl lg:max-w-2xl"
-				>
-					{blok.subheadline}
-				</h2>
+					<video
+						bind:this={videoPlayer}
+						on:click={videoPlaying ? playPauseVideo : startVideo}
+						on:mouseenter={videoPreviewOnEnter}
+						on:mouseleave={videoPreviewOnLeave}
+						class="aspect-portrait w-full rounded-3xl"
+						src={blok.videoPreview}
+						autoplay={true}
+						loop={true}
+						muted={!videoPlaying}
+					>
+						<track kind="captions" />
+					</video>
+				</div>
 			</div>
-		</div>
 
-		<div
-			class="pointer-events-none absolute left-0 top-0 z-10 flex h-full w-full items-center justify-end"
-		>
-			<div class="relative mr-[15vw] w-full max-w-xs">
-				<div class="absolute inline-flex w-full items-center justify-center gap-4">
-					<hr bind:this={line} class="h-px w-32" />
-					<div class="w-[10rem] text-xs uppercase text-white" data-gsap="split-text">
-						<h3 class="leading-3"><strong data-gsap="split-text">{blok.description}</strong></h3>
+			<div
+				class="title-cont pointer-events-none absolute left-0 top-0 flex h-full w-full items-start"
+			>
+				<div class="flex h-full flex-col justify-between py-[15vh]">
+					<h1
+						data-gsap="split-text"
+						class={cls(
+							'z-[8] max-w-7xl font-degular-display leading-tightest tracking-wide text-neutral-950',
+							'b-headline-video__title'
+						)}
+					>
+						{blok.headline}
+					</h1>
+					<h2
+						data-gsap="split-text"
+						class="z-10 mb-[5vh] max-w-2xl font-degular-display text-4xl text-white md:text-6xl lg:max-w-2xl"
+					>
+						{blok.subheadline}
+					</h2>
+				</div>
+			</div>
+
+			<div
+				class="pointer-events-none absolute left-0 top-0 z-10 flex h-full w-full items-center justify-end"
+			>
+				<div class="relative mr-[15vw] w-full max-w-xs">
+					<div class="absolute inline-flex w-full items-center justify-center gap-4">
+						<hr bind:this={line} class="h-px w-32" />
+						<div class="w-[10rem] text-xs uppercase text-white" data-gsap="split-text">
+							<h3 class="leading-3"><strong data-gsap="split-text">{blok.description}</strong></h3>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</section>
-<div class="h-[50vh]" />
-<BackgroundTheme startColor="#1a1a1a" endColor="#fff" startTheme="dark" endTheme="light" />
-<div class="h-[50vh]" />
+	</section>
+	<div class="h-[50vh]" />
+	<BackgroundTheme startColor="#1a1a1a" endColor="#fff" startTheme="dark" endTheme="light" />
+	<div class="h-[50vh]" />
+</div>
 
 <style lang="scss">
 	.b-headline-video {
