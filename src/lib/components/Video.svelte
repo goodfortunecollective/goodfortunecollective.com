@@ -7,6 +7,7 @@
 	import gsap from '$lib/gsap';
 	import { Image } from '$lib/components';
 	import { cursorType } from '$lib/stores';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	let clazz: string = '';
 	export { clazz as class };
@@ -79,6 +80,10 @@
 	}
 
 	onMount(() => {
+		gsap.set(videoContainer, { clipPath: 'inset(0)' });
+	});
+
+	useTransitionReady(() => {
 		let mm = gsap.matchMedia();
 		const clipPath = (2 / 12) * 100;
 		const scale = offsetWidth / innerWidth;
@@ -153,6 +158,7 @@
 			/>
 		{:else if videoUrl}
 			<video
+				preload="metadata"
 				class={cls(!autoplay && posterUrl && 'absolute z-10', 'h-auto w-full')}
 				src={videoUrl}
 				bind:this={videoPlayer}

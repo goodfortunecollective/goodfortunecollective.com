@@ -18,7 +18,6 @@
 	onMount(() => {
 		if (enabled) {
 			paragraphs = element.querySelectorAll('p:not(:empty)');
-			gsap.set(paragraphs, { opacity: 0 });
 		}
 	});
 
@@ -26,50 +25,56 @@
 		() => {
 			if (enabled) {
 				ctx = gsap.context(() => {
-					paragraphs.forEach((p: any) => {
-						gsap.set(p, { opacity: 1 });
+					if (paragraphs?.length > 0) {
+						paragraphs.forEach((p: any) => {
+							gsap.set(p, { opacity: 1 });
 
-						const text = new SplitText(p, {
-							type: 'lines,words,chars',
-							linesClass: 'split-line',
-							charClass: 'split-char'
-						});
+							const text = new SplitText(p, {
+								type: 'lines,words,chars',
+								linesClass: 'split-line',
+								charClass: 'split-char'
+							});
 
-						gsap.set(text.words, { yPercent: 200, opacity: 0 });
+							if (text.words.length > 0) {
+								gsap.set(text.words, { yPercent: 200, opacity: 0 });
 
-						ScrollTrigger.batch(text.words, {
-							start: 'top 90%',
-							end: 'bottom 10%',
-							top: 'top center',
-							toggleActions: 'restart pause resume reverse',
-							onEnter(elements: any, triggers: any) {
-								gsap.to(elements, {
-									duration: 0.4,
-									ease: 'circ.out',
-									yPercent: 0,
-									opacity: 1,
-									stagger: 0.005
+								ScrollTrigger.batch(text.words, {
+									start: 'top 90%',
+									end: 'bottom 10%',
+									top: 'top center',
+									toggleActions: 'restart pause resume reverse',
+									onEnter(elements: any, triggers: any) {
+										gsap.to(elements, {
+											duration: 0.4,
+											ease: 'circ.out',
+											yPercent: 0,
+											opacity: 1,
+											stagger: 0.005
+										});
+									}
+								});
+							}
+
+							if (text.lines.length > 0) {
+								gsap.set(text.lines, { skewY: 5 });
+
+								ScrollTrigger.batch(text.lines, {
+									start: 'top 90%',
+									end: 'bottom 10%',
+									top: 'top center',
+									toggleActions: 'restart pause resume reverse',
+									onEnter(elements: any, triggers: any) {
+										gsap.to(elements, {
+											duration: 0.4,
+											ease: 'circ.out',
+											skewY: 0,
+											stagger: 0.02
+										});
+									}
 								});
 							}
 						});
-
-						gsap.set(text.lines, { skewY: 5 });
-
-						ScrollTrigger.batch(text.lines, {
-							start: 'top 90%',
-							end: 'bottom 10%',
-							top: 'top center',
-							toggleActions: 'restart pause resume reverse',
-							onEnter(elements: any, triggers: any) {
-								gsap.to(elements, {
-									duration: 0.4,
-									ease: 'circ.out',
-									skewY: 0,
-									stagger: 0.02
-								});
-							}
-						});
-					});
+					}
 				}, element);
 			}
 		},

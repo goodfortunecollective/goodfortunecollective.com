@@ -79,7 +79,7 @@
 							on:inview_change={inViewColorTransition}
 						>
 							<span class="mx-8 flex items-center">
-								<Heading as="h4" size="h2" class="mr-16 uppercase">
+								<Heading as="h4" size="h2" class="mr-16 uppercase" animated={false}>
 									<StoryblokComponent blok={b} />
 								</Heading>
 								<span class="inline-block font-degular-display text-6xl 3xl:text-7xl">*</span>

@@ -58,7 +58,7 @@
 <style lang="scss">
 	.c-heading__h1 {
 		// text-shadow: -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
-		font-size: clamp(64px, calc(80px + (220 - 80) * (100vw - 768px) / (1920 - 768)), 175px);
+		font-size: clamp(64px, calc(80px + (180 - 80) * (100vw - 768px) / (1920 - 768)), 175px);
 
 		//font-size: clamp(16px, calc(20px + (36 - 20) * (100vw - 768px) / (1920 - 768)), 48px);
 

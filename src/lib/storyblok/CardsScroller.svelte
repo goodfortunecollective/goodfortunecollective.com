@@ -38,6 +38,7 @@
 	});
 
 	function getScrollAmount() {
+		if (!scrollEl.scrollWidth) return 0;
 		return -(scrollEl.scrollWidth - innerWidth);
 	}
 

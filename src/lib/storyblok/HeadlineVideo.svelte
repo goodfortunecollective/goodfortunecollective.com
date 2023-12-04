@@ -280,6 +280,7 @@
 					style="--video-effect: {videoTransformEffect}; --rotation-x: {videoRotation.x}deg; --rotation-y: {videoRotation.y}deg"
 				>
 					<video
+						preload="metadata"
 						bind:this={videoPlayer}
 						on:click={videoPlaying ? playPauseVideo : startVideo}
 						on:mouseenter={videoPreviewOnEnter}
