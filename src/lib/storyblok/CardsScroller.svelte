@@ -44,7 +44,7 @@
 	useTransitionReady(
 		() => {
 			ctx = gsap.context(() => {
-				if (!scrollEl) return;
+				if (!scrollEl || !scrollEl.scrollWidth) return;
 
 				gsap.to(scrollEl, {
 					x: () => scrollEl.scrollWidth * -1,
