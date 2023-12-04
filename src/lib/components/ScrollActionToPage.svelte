@@ -45,7 +45,7 @@
 
 						ctx?.revert();
 						scrollTrigger?.kill();
-						goto(base + href);
+						setTimeout(() => goto(base + href), 0);
 					}
 				});
 

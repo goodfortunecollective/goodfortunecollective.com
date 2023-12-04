@@ -190,4 +190,8 @@
 	{/if}
 </section>
 
-<ScrollActionToPage href={'/work'} label={'All projects'} disabled={!!preview} />
+<ScrollActionToPage
+	href={`/work?slug=${data.story.slug}`}
+	label={'All projects'}
+	disabled={!!preview}
+/>
