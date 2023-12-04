@@ -1,15 +1,17 @@
 <script lang="ts">
+	import { inview } from 'svelte-inview';
 	import { renderRichText, storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
 
 	import { Heading, RichtextTransition } from '$lib/components';
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
+	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;
 
 	const headingStyle = cva(
-		'flex-1 lg:leading-extra-tight leading-extra-tight transition-colors duration-1000 ease-out',
+		'flex-1 lg:leading-extra-tight leading-extra-tight duration-1000 ease-out',
 		{
 			variants: {
 				theme: {
@@ -36,7 +38,7 @@
 		}
 	);
 
-	const textStyle = cva('transition-colors duration-1000 ease-out', {
+	const textStyle = cva('duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: '',
@@ -66,12 +68,15 @@
 <div
 	use:storyblokEditable={blok}
 	{...$$restProps}
+	use:inview
+	on:inview_change={inViewColorTransition}
 	class={cls(blok.class, textStyle({ theme: $backgroundTheme }))}
 >
 	<div class="pt-18 grid grid-cols-12 gap-8 pt-32 lg:gap-0 lg:pt-[25vh]">
 		<div class="col-span-10 col-start-2">
 			<div class="flex h-full flex-col">
 				<Heading
+					on:inview_change={inViewColorTransition}
 					as="h1"
 					size="h1"
 					class={headingStyle({
@@ -79,7 +84,8 @@
 						maxWidth: blok.maxWidth,
 						lineHeight: blok.lineHeight
 					})}
-					>{blok.title}
+				>
+					{blok.title}
 				</Heading>
 			</div>
 		</div>

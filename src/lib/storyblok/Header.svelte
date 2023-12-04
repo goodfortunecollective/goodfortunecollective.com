@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { inview } from 'svelte-inview';
 	import { onMount } from 'svelte';
 	import { fade, fly } from 'svelte/transition';
 	import { storyblokEditable } from '@storyblok/svelte';
@@ -9,6 +10,7 @@
 	import { Gfc } from '$lib/components';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 	import { cls } from '$lib/styles';
+	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;
 
@@ -173,8 +175,10 @@
 						<a href="{base}/{slug}" class="text-sm leading-6 3xl:text-lg">
 							<span
 								data-gsap="nav-items"
+								use:inview
+								on:inview_change={inViewColorTransition}
 								class={cls(
-									'block text-stone-450 transition-colors duration-200 hover:text-white',
+									'block text-stone-450  duration-200 hover:text-white',
 									getRootPathname($page.url.pathname) === slug &&
 										'text-white underline underline-offset-8'
 								)}

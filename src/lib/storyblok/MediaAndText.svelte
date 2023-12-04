@@ -1,16 +1,18 @@
 <script lang="ts">
 	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
+	import { inview } from 'svelte-inview';
 
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
 	import { Video } from '$lib/components';
 	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
+	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;
 
 	const variants = cva(
-		'col-span-10 col-start-2 flex flex-col gap-16 lg:gap-32 transition-colors duration-1000 ease-out',
+		'col-span-10 col-start-2 flex flex-col gap-16 lg:gap-32 duration-1000 ease-out',
 		{
 			variants: {
 				layoutDirection: {
@@ -31,7 +33,11 @@
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={cls('grid grid-cols-12', blok.class)}>
-	<div class={variants({ layoutDirection: blok.layoutDirection, theme: $backgroundTheme })}>
+	<div
+		use:inview
+		on:inview_change={inViewColorTransition}
+		class={variants({ layoutDirection: blok.layoutDirection, theme: $backgroundTheme })}
+	>
 		<div class="flex md:w-1/2">
 			{#if blok.image && !blok.video}
 				<figure>

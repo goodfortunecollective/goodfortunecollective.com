@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { cva } from 'class-variance-authority';
+	import { inview } from 'svelte-inview';
 
 	import { TextTransition } from '$lib/components';
 	import { cls } from '$lib/styles';
@@ -26,7 +27,12 @@
 	});
 </script>
 
-<svelte:element this={as} {...$$restProps} class={cls(variants({ size }), $$props.class)}>
+<svelte:element
+	this={as}
+	use:inview
+	{...$$restProps}
+	class={cls(variants({ size }), $$props.class)}
+>
 	<TextTransition enabled={animated} {underline}>
 		<slot />
 	</TextTransition>

@@ -1,14 +1,16 @@
 <script lang="ts">
 	import { storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
+	import { inview } from 'svelte-inview';
 
 	import { Heading, Spacer } from '$lib/components';
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
+	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;
 
-	const textStyle = cva('transition-colors duration-1000 ease-out', {
+	const textStyle = cva('duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: '',
@@ -24,6 +26,8 @@
 <div
 	use:storyblokEditable={blok}
 	{...$$restProps}
+	use:inview
+	on:inview_change={inViewColorTransition}
 	class={cls('relative grid grid-cols-12', blok.class, textStyle({ theme: $backgroundTheme }))}
 >
 	<div class="col-span-10 col-start-3">

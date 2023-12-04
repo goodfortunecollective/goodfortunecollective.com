@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { inview } from 'svelte-inview';
 	import { onDestroy } from 'svelte';
 	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
@@ -6,8 +7,9 @@
 	import { ScrollTrigger } from '$lib/gsap';
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
-	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;
 
@@ -17,7 +19,7 @@
 
 	let scrollTrigger!: ScrollTrigger;
 
-	const textStyle = cva('flex flex-col transition-colors duration-1000 ease-out', {
+	const textStyle = cva('flex flex-col duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: '',
@@ -52,6 +54,8 @@
 <div
 	use:storyblokEditable={blok}
 	{...$$restProps}
+	use:inview
+	on:inview_change={inViewColorTransition}
 	class={cls(blok.class, textStyle({ theme: $backgroundTheme }))}
 >
 	<div class="relative grid grid-cols-12" bind:this={el}>

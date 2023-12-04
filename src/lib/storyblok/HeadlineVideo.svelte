@@ -8,8 +8,7 @@
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 	import { cursorType } from '$lib/stores';
 	import { cls } from '$lib/styles';
-	import { useScroll } from '$lib/lifecycle-functions/useScroll';
-	import { useFrame } from '$lib/lifecycle-functions/useFrame';
+	import { lenisStore as lenis } from '$lib/stores/lenis';
 
 	export let blok: any;
 
@@ -108,6 +107,8 @@
 	useTransitionReady(
 		() => {
 			onResize();
+			$lenis?.on('scroll', onScroll);
+			gsap.ticker.add(onRender);
 
 			ctx = gsap.context(() => {
 				gsap.to(videoContainer, {
@@ -246,12 +247,9 @@
 		}
 	};
 
-	useScroll((scroll) => {
-		onScroll(scroll);
-	});
-
-	useFrame((time) => {
-		onRender();
+	onDestroy(() => {
+		$lenis?.off('scroll', onScroll);
+		gsap.ticker.remove(onRender);
 	});
 </script>
 

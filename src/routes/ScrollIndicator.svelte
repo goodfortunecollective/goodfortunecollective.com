@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
-	import { useScroll } from '$lib/lifecycle-functions/useScroll';
 	import { cls } from '$lib/styles';
 	import gsap from '$lib/gsap';
+	import { lenisStore as lenis } from '$lib/stores/lenis';
+	import { onDestroy } from 'svelte';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	export let strokeDashArray = '0px';
 	export let strokeDashOffset = '0px';
@@ -19,8 +21,12 @@
 		buttonBackToTopVisible = scroll.progress > 0.75;
 	};
 
-	useScroll((scroll) => {
-		onScroll(scroll);
+	useTransitionReady(() => {
+		$lenis?.on('scroll', onScroll);
+	});
+
+	onDestroy(() => {
+		$lenis?.off('scroll', onScroll);
 	});
 </script>
 

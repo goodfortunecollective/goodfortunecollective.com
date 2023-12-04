@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { inview } from 'svelte-inview';
 	import { cva } from 'class-variance-authority';
 	import { onMount, getContext } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent, renderRichText } from '@storyblok/svelte';
@@ -14,6 +15,7 @@
 	} from '$lib/components';
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
+	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let data;
 
@@ -27,7 +29,7 @@
 
 	const preview = getContext('storyblok-preview');
 
-	const variants = cva('relative transition-colors duration-1000 ease-out', {
+	const variants = cva('relative duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: '',
@@ -55,7 +57,11 @@
 	endTheme={data.story.content.theme_brand}
 />
 
-<section class={variants({ theme: $backgroundTheme })}>
+<section
+	use:inview
+	on:inview_change={inViewColorTransition}
+	class={variants({ theme: $backgroundTheme })}
+>
 	<div class="absolute inset-0 flex h-full w-full items-center text-center">
 		<div class="mx-auto grid -translate-y-1/2 grid-cols-12 pt-16 lg:-translate-y-1/4">
 			<div
@@ -106,7 +112,11 @@
 	</div>
 </section>
 
-<section class={cls(variants({ theme: $backgroundTheme }))}>
+<section
+	use:inview
+	on:inview_change={inViewColorTransition}
+	class={cls(variants({ theme: $backgroundTheme }))}
+>
 	<div class="grid -translate-y-16 grid-cols-12 pb-16">
 		<div class="col-span-10 col-start-2">
 			<div class="w-full">

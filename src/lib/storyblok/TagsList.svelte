@@ -2,16 +2,18 @@
 	import { onDestroy } from 'svelte';
 	import { StoryblokComponent, storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
+	import { inview } from 'svelte-inview';
 
 	import { Heading } from '$lib/components';
 	import gsap from '$lib/gsap';
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;
 
-	const textStyle = cva('transition-colors duration-1000 ease-out', {
+	const textStyle = cva('duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: '',
@@ -71,7 +73,11 @@
 			>
 				<ul class=" whitespace-nowrap">
 					{#each blok.tags as b}
-						<li class={cls('mb-8 inline-block', textStyle({ theme: $backgroundTheme }))}>
+						<li
+							class={cls('mb-8 inline-block', textStyle({ theme: $backgroundTheme }))}
+							use:inview
+							on:inview_change={inViewColorTransition}
+						>
 							<span class="mx-8 flex items-center">
 								<Heading as="h4" size="h2" class="mr-16 uppercase">
 									<StoryblokComponent blok={b} />

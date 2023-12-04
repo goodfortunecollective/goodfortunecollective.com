@@ -1,14 +1,16 @@
 <script lang="ts">
+	import { inview } from 'svelte-inview';
 	import { cva } from 'class-variance-authority';
 	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 
 	import { backgroundTheme } from '$lib/stores';
 	import { cls } from '$lib/styles';
 	import { Gfc } from '$lib/components';
+	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;
 
-	const hightlightStyle = cva('transition-colors duration-1000 ease-out', {
+	const hightlightStyle = cva('duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: 'before:bg-gray-600',
@@ -20,7 +22,7 @@
 		}
 	});
 
-	const lineStyle = cva('transition-colors duration-1000 ease-out', {
+	const lineStyle = cva('duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: 'before:bg-gray-300 ',
@@ -42,6 +44,8 @@
 	<div class="relative z-[1] w-full py-6">
 		<div class="grid grid-cols-12 py-2">
 			<div
+				use:inview
+				on:inview_change={inViewColorTransition}
 				class={cls(
 					'footer-col col-span-10 col-start-2 pb-2 pt-8 md:col-span-5 md:col-start-2 lg:col-span-4 lg:col-start-2',
 					lineStyle({ theme: $backgroundTheme })
@@ -52,12 +56,16 @@
 				>
 					Let’s work together
 					<a
+						use:inview
+						on:inview_change={inViewColorTransition}
 						class={cls('text-rose-50', hightlightStyle({ theme: $backgroundTheme }))}
 						href={`mailto:${blok.email}`}>{blok.email}</a
 					>
 				</p>
 			</div>
 			<div
+				use:inview
+				on:inview_change={inViewColorTransition}
 				class={cls(
 					'footer-col col-span-10 col-start-2 pb-2 pt-8 md:col-span-4 md:col-start-8',
 					lineStyle({ theme: $backgroundTheme })
@@ -66,8 +74,11 @@
 				<p
 					class="flex flex-col gap-4 text-xs uppercase leading-5 tracking-wider text-gray-500 md:flex-row 3xl:text-sm"
 				>
-					Find us in<a href={blok.address} class={hightlightStyle({ theme: $backgroundTheme })}
-						>Vancouver, Canada</a
+					Find us in<a
+						href={blok.address}
+						use:inview
+						on:inview_change={inViewColorTransition}
+						class={hightlightStyle({ theme: $backgroundTheme })}>Vancouver, Canada</a
 					>
 				</p>
 			</div>

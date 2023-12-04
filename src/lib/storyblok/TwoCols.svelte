@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { storyblokEditable, renderRichText } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
+	import { inview } from 'svelte-inview';
 
 	import { cls } from '$lib/styles';
 	import { Heading, RichtextTransition } from '$lib/components';
 	import { backgroundTheme } from '$lib/stores';
+	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;
 
@@ -27,6 +29,8 @@
 <div
 	use:storyblokEditable={blok}
 	{...$$restProps}
+	use:inview
+	on:inview_change={inViewColorTransition}
 	class={cls(variants({ theme: $backgroundTheme }), blok.class, blok.padding_title ? 'pt-32' : '')}
 >
 	<div class="grid grid-cols-12">

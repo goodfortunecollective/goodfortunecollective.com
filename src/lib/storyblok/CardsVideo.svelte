@@ -1,14 +1,16 @@
 <script lang="ts">
+	import { inview } from 'svelte-inview';
 	import { storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
 
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
 	import { Video } from '$lib/components';
+	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;
 
-	const variants = cva('h-full w-full transition-colors duration-1000 ease-out', {
+	const variants = cva('h-full w-full duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: '',
@@ -51,6 +53,8 @@
 <div
 	use:storyblokEditable={blok}
 	{...$$restProps}
+	use:inview
+	on:inview_change={inViewColorTransition}
 	class={cls(variants({ theme: $backgroundTheme }), blok.class)}
 >
 	<div class="flex h-full w-full flex-col">
