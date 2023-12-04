@@ -13,7 +13,7 @@
 	const variants = cva('w-full', {
 		variants: {
 			size: {
-				h1: 'text-6xl md:text-8xl lg:text-9xl xl:text-10xl 4xl:text-10xl leading-10 font-degular-display text-stone-450',
+				h1: 'leading-10 font-degular-display text-stone-450',
 				h2: 'text-5xl lg:text-8xl font-degular-display',
 				h3: 'text-4xl 3xl:text-5xl 4xl:text-6xl font-degular-display',
 				h4: 'text-3xl 3xl:text-4xl 4xl:text-5xl font-bold',
@@ -31,7 +31,7 @@
 	this={as}
 	use:inview
 	{...$$restProps}
-	class={cls(variants({ size }), $$props.class)}
+	class={cls(variants({ size }), size === 'h1' && 'c-heading__h1', $$props.class)}
 >
 	<TextTransition enabled={animated} {underline}>
 		<slot />
@@ -54,3 +54,18 @@
      </div>
     ```
   -->
+
+<style lang="scss">
+	.c-heading__h1 {
+		// text-shadow: -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
+		font-size: clamp(64px, calc(80px + (220 - 80) * (100vw - 768px) / (1920 - 768)), 175px);
+
+		//font-size: clamp(16px, calc(20px + (36 - 20) * (100vw - 768px) / (1920 - 768)), 48px);
+
+		// This text has a font size of 20px at viewport width of 768px
+		// font size of 36px when viewport width is 1920px.
+		// But if the viewport width is less than 768px,
+		// the font-size won't get lower than 16px
+		// the viewport width is more than 1920px font size will stop scaling at 48px.
+	}
+</style>
