@@ -37,22 +37,25 @@
 		}
 	});
 
-	function getScrollAmount() {
-		return -(scrollEl.scrollWidth - innerWidth);
-	}
-
 	useTransitionReady(
 		() => {
 			ctx = gsap.context(() => {
 				if (!scrollEl || !scrollEl.scrollWidth) return;
 
 				gsap.to(scrollEl, {
-					x: () => scrollEl.scrollWidth * -1,
+					x: () => {
+						return scrollEl?.scrollWidth ? scrollEl.scrollWidth * -1 : 0;
+					},
 					xPercent: 100,
 					scrollTrigger: {
 						trigger: scrollEl,
 						start: 'center center',
-						end: () => `+=${getScrollAmount() * -1}`,
+						end: () => {
+							if (scrollEl?.scrollWidth && innerWidth) {
+								return `+=${scrollEl.scrollWidth - innerWidth}`;
+							}
+							return 0;
+						},
 						pin: el,
 						scrub: true,
 						invalidateOnRefresh: true

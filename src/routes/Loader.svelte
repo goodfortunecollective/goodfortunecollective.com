@@ -30,10 +30,10 @@
 		}
 	};
 
-	onMount(async () => {
+	onMount(() => {
 		if (skip) {
 			requestAnimationFrame(ready);
-			hideLoader();
+			hide();
 			return;
 		}
 

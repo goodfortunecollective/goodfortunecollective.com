@@ -1,6 +1,7 @@
-import { onMount } from 'svelte';
+import { onDestroy, onMount } from 'svelte';
 import { curtains } from '$lib/stores';
 import type { Curtains } from '@types/curtainsjs';
+import { useTransitionReady } from './useTransitionReady';
 
 export type CurtainsInstance = null | Curtains;
 
@@ -17,11 +18,13 @@ export function useCurtains(
 		}
 	};
 
-	onMount(() => {
+	useTransitionReady(() => {
 		isMounted = true;
 		launchCallback();
+	});
 
-		return () => cleanUp(curtainsInstance);
+	onDestroy(() => {
+		cleanUp(curtainsInstance);
 	});
 
 	const unsubscribeCurtains = curtains.subscribe((value) => {

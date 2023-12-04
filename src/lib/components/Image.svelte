@@ -4,6 +4,7 @@
 
 	import { cls } from '$lib/styles';
 	import { ScrollTrigger } from '$lib/gsap';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	export let aspect: 'square' | 'video' | 'portrait' | 'auto' = 'video';
 	export let animated: boolean = true;
@@ -39,7 +40,9 @@
 
 	onMount(() => {
 		setStyleContainer();
+	});
 
+	useTransitionReady(() => {
 		if (animated) {
 			scrollTrigger = ScrollTrigger.create({
 				trigger: el,

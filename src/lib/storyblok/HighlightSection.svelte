@@ -45,6 +45,7 @@
 	>
 		<div class="col-span-10 col-start-3">
 			<video
+				preload="metadata"
 				class="aspect-video w-full"
 				bind:this={videoPlayer}
 				src={blok.video}

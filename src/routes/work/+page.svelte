@@ -115,7 +115,7 @@
 
 	<div>
 		{#each projects as { name, slug, content }, index (name)}
-			<div class="grid grid-cols-12">
+			<div class="grid grid-cols-12" id={`${slug}`}>
 				<ProjectListItem
 					theme="dark"
 					hover={$project_list_hover === name}

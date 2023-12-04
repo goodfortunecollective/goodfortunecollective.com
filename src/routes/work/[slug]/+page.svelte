@@ -134,7 +134,9 @@
 				/>
 			</div>
 			<div class=" max-w-4xl py-16">
-				<Heading as="h2" size="h2">{@html description}</Heading>
+				<Heading as="h2" size="h2" animated={false}
+					><RichtextTransition>{@html description}</RichtextTransition></Heading
+				>
 			</div>
 		</div>
 		{#if data.story.content.ask_text}
@@ -188,4 +190,8 @@
 	{/if}
 </section>
 
-<ScrollActionToPage href={'/work'} label={'All projects'} disabled={!!preview} />
+<ScrollActionToPage
+	href={`/work?slug=${data.story.slug}`}
+	label={'All projects'}
+	disabled={!!preview}
+/>
