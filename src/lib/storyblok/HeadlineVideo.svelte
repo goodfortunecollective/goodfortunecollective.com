@@ -11,6 +11,7 @@
 	import { cursorType } from '$lib/stores';
 	import { cls } from '$lib/styles';
 	import { lenisStore as lenis } from '$lib/stores/lenis';
+	import { beforeNavigate } from '$app/navigation';
 
 	export let blok: any;
 
@@ -250,9 +251,9 @@
 		}
 	};
 
-	onDestroy(() => {
-		$lenis?.off('scroll', onScroll);
+	beforeNavigate(() => {
 		gsap.ticker.remove(onRender);
+		$lenis?.off('scroll', onScroll);
 	});
 
 	const inViewPlayer = ({ detail }: CustomEvent<ObserverEventDetails>) => {
