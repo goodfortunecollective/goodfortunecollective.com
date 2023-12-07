@@ -31,7 +31,16 @@
 		</div>
 		<div>
 			{#each blok.projects as { name, slug, content }, index}
-				<div class="grid grid-cols-12"></div>
+				<div class="grid grid-cols-12">
+					<ProjectListItem
+						{name}
+						{slug}
+						{content}
+						parallaxSpeed={index % 2 === 0 ? '1' : '1.08'}
+						layout={index % 2 === 0 ? 'right' : 'left'}
+						class={cls(variants({ layout: index % 2 === 0 ? 'right' : 'left' }))}
+					/>
+				</div>
 			{/each}
 		</div>
 	</div>
