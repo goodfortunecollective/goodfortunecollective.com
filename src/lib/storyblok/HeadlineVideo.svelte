@@ -104,13 +104,14 @@
 
 		gsap.set(videoContainer, { scale: 0 });
 		gsap.set(line, { scaleX: 0 });
+
+		gsap.ticker.add(onRender);
 	});
 
 	useTransitionReady(
 		() => {
 			onResize();
 			$lenis?.on('scroll', onScroll);
-			gsap.ticker.add(onRender);
 
 			ctx = gsap.context(() => {
 				gsap.to(videoContainer, {
