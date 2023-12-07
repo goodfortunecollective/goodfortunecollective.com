@@ -48,6 +48,7 @@
 							height={getImageDimensionsFromUrl(blok.image.filename).height}
 							alt={blok.image.name}
 							loading="lazy"
+							decoding="async"
 						/>
 					{/if}
 				</figure>

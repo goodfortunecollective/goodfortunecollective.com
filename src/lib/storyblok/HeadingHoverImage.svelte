@@ -81,6 +81,7 @@
 			width="auto"
 			height="100%"
 			alt=""
+			decoding="async"
 		/>
 	</div>
 </div>

@@ -34,6 +34,11 @@
 		overflow: hidden;
 	}
 
+	.lenis.lenis-stopped body {
+		transition: none;
+	}
+
+
 	.preserve-3d {
 		transform-style: preserve-3d;
 	}

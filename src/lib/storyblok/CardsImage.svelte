@@ -69,6 +69,7 @@
 						alt={blok.asset.name}
 						class={imageStyle({ objectFit: blok.objectFit })}
 						loading="lazy"
+						decoding="async"
 					/>
 				{/if}
 			</div>
