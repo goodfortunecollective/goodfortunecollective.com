@@ -41,6 +41,7 @@
 			height={getImageDimensionsFromUrl(blok.asset.filename).height}
 			alt={blok.asset.name}
 			loading="lazy"
+			decoding="async"
 		/>
 	{/if}
 </div>

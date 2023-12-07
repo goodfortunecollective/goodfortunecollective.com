@@ -68,6 +68,7 @@
 				alt={blok.asset.name}
 				class="-translate-x-1/8 absolute left-1/2 top-0 col-span-12 translate-y-1/4 -rotate-45 scale-150 transform"
 				loading="lazy"
+				decoding="async"
 			/>
 		{/if}
 		<div class="col-span-6 col-start-3 py-32" bind:this={contentEl}>

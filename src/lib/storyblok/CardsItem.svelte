@@ -42,6 +42,7 @@
 						alt={blok.asset.name ? blok.asset.name : ''}
 						class="h-full w-full object-contain"
 						loading="lazy"
+						decoding="async"
 					/>
 				{/if}
 			</div>

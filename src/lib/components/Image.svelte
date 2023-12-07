@@ -79,6 +79,7 @@
 			class="c-image absolute inset-0 h-full w-full object-cover"
 			style="--parallax-effect: {parallaxEffect}"
 			loading="lazy"
+			decoding="async"
 		/>
 	</div>
 </div>
