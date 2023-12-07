@@ -251,7 +251,6 @@
 
 	onDestroy(() => {
 		$lenis?.off('scroll', onScroll);
-		gsap.ticker.remove(onRender);
 	});
 
 	const inViewPlayer = ({ detail }: CustomEvent<ObserverEventDetails>) => {
