@@ -4,6 +4,7 @@
 	import { cls } from '$lib/styles';
 	import gsap, { SplitText, ScrollTrigger } from '$lib/gsap';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import CardsImage from '$lib/storyblok/CardsImage.svelte';
 
 	let clazz: string = '';
 	export { clazz as class };
@@ -18,6 +19,13 @@
 	onMount(() => {
 		if (enabled) {
 			paragraphs = element.querySelectorAll('p:not(:empty)');
+			if (paragraphs?.length > 0) {
+				paragraphs.forEach((p: any) => {
+					p.style.opacity = '0';
+				});
+			} else {
+				gsap.set(element, { opacity: 0 });
+			}
 		}
 	});
 
@@ -74,6 +82,8 @@
 								});
 							}
 						});
+					} else {
+						gsap.to(element, { opacity: 1, delay: 0.4, duration: 0.6, ease: 'circ.out' });
 					}
 				}, element);
 			}
