@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { createEventDispatcher, onMount } from 'svelte';
 
+	import { base } from '$app/paths';
+
 	// avoid to reload the loader animation each time we update the page
 	export let skip: boolean = false;
 
@@ -16,53 +18,29 @@
 		dispatch('complete');
 	}
 
-	const onVideoReady = () => {
-		logo.addEventListener('ended', onVideoComplete, {
-			once: true
-		});
-
-		logo.play();
-	};
-
-	const onVideoComplete = () => {
-		if (!skip) {
-			ready();
-		}
-	};
-
 	onMount(() => {
 		if (skip) {
 			requestAnimationFrame(ready);
-			hide();
 			return;
 		}
 
-		if (logo.readyState >= logo.HAVE_ENOUGH_DATA) {
-			onVideoReady();
-		} else {
-			logo.addEventListener('canplaythrough', onVideoReady, {
-				once: true
-			});
-		}
+		logo.addEventListener('ended', ready);
 
 		return () => {
-			logo.removeEventListener('canplaythrough', onVideoReady);
-			logo.removeEventListener('ended', onVideoComplete);
+			if (!skip) {
+				logo.removeEventListener('ended', ready);
+			}
 		};
 	});
 </script>
 
 {#if active}
-	<div class="fixed left-0 top-0 z-40 h-screen w-screen overflow-hidden bg-white" id="loader">
+	<div class="fixed left-0 top-0 z-40 h-screen w-screen overflow-hidden bg-white">
 		<div class="flex h-full w-full items-center justify-center">
 			<div class="absolute h-full w-full bg-white" />
-			<video
-				bind:this={logo}
-				class="absolute scale-50"
-				src={'/GFC-intro.mp4'}
-				autoplay={false}
-				muted
-			/>
+			<video bind:this={logo} playsinline autoplay muted class="absolute scale-50">
+				<source src={`${base}/assets/GFC-intro.mp4`} />
+			</video>
 		</div>
 	</div>
 {/if}

@@ -48,11 +48,12 @@
 				preload="metadata"
 				class="aspect-video w-full"
 				bind:this={videoPlayer}
-				src={blok.video}
-				autoplay={true}
+				playsinline
+				autoplay={false}
 				loop={true}
 				muted={true}
 			>
+				<source src={blok.video} type="video/mp4" />
 				<track kind="captions" />
 			</video>
 		</div>

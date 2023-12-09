@@ -165,7 +165,6 @@
 				poster=""
 				on:click={playPauseVideo}
 				playsinline
-				webkit-playsinline
 				{autoplay}
 				loop={autoplay}
 				muted={autoplay}

@@ -33,6 +33,8 @@
 	let isScrollFullVideo = false;
 	let isCursorEnter = false;
 
+	let isReady = false;
+
 	interface DOMPosition {
 		x: number;
 		y: number;
@@ -113,6 +115,13 @@
 		() => {
 			onResize();
 			$lenis?.on('scroll', onScroll);
+
+			if (!isReady) {
+				isReady = true;
+				if (videoPlayer.paused) {
+					videoPlayer.play();
+				}
+			}
 
 			ctx = gsap.context(() => {
 				gsap.to(videoContainer, {
@@ -259,7 +268,11 @@
 	const inViewPlayer = ({ detail }: CustomEvent<ObserverEventDetails>) => {
 		const { inView } = detail as ObserverEventDetails;
 		if (inView) {
-			videoPlayer.play();
+			if (isReady) {
+				videoPlayer.play();
+			} else {
+				videoPlayer.pause();
+			}
 		} else {
 			videoPlayer.pause();
 		}
@@ -288,11 +301,12 @@
 						on:mouseenter={videoPreviewOnEnter}
 						on:mouseleave={videoPreviewOnLeave}
 						class="aspect-portrait w-full rounded-3xl"
-						src={blok.videoPreview}
 						autoplay={true}
 						loop={true}
 						muted={!videoPlaying}
+						playsinline
 					>
+						<source src={blok.videoPreview} type="video/mp4" />
 						<track kind="captions" />
 					</video>
 				</div>
