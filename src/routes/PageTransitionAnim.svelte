@@ -186,18 +186,19 @@
 
 <div
 	class={cls(
-		'fixed inset-0 z-40  h-full w-full items-center overflow-hidden text-center',
+		'fixed inset-0 z-40 h-full w-full items-center overflow-hidden text-center',
 		!$isTransitioning && 'pointer-events-none'
 	)}
 >
-	{#if list_hover && showTitle}
-		<div class="relative z-1 flex h-full w-full items-center text-center">
-			<div class="mx-auto grid -translate-y-1/2 grid-cols-12 pt-16 lg:-translate-y-1/4">
-				<div class="col-span-10 col-start-2">
-					<ProjectTitle name={list_hover} />
-				</div>
-			</div>
-		</div>
-	{/if}
 	<canvas bind:this={canvasEl} class="absolute inset-0 h-full w-full" />
 </div>
+
+{#if list_hover && showTitle}
+	<div class="fixed inset-0 z-50 flex h-screen w-full items-center text-center">
+		<div class="mx-auto grid -translate-y-1/2 grid-cols-12 pt-16 lg:-translate-y-1/4">
+			<div class="col-span-10 col-start-2">
+				<ProjectTitle name={list_hover} />
+			</div>
+		</div>
+	</div>
+{/if}
