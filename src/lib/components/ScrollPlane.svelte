@@ -214,7 +214,7 @@
 	});
 </script>
 
-<div class={cls('flex aspect-video overflow-hidden', 'c-scroll-plane')} bind:this={planeEl}>
+<div class="flex aspect-video overflow-hidden" bind:this={planeEl}>
 	<img
 		src={content.thumbnail
 			? content.thumbnail.filename.replace('//a-us.storyblok.com', '//a2-us.storyblok.com')
@@ -222,17 +222,6 @@
 		crossorigin=""
 		data-sampler="planeTexture"
 		alt={name}
-		class="hidden"
+		class={cls('hidden', 'img-plane')}
 	/>
 </div>
-
-<style lang="scss">
-	.c-scroll-plane img {
-		@at-root.no-curtains & {
-			display: block;
-			min-width: 100%;
-			min-height: 100%;
-			object-fit: cover;
-		}
-	}
-</style>

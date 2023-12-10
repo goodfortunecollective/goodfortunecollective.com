@@ -71,7 +71,7 @@
 				decoding="async"
 			/>
 		{/if}
-		<div class="col-span-6 col-start-3 py-32" bind:this={contentEl}>
+		<div class="col-span-10 col-start-2 py-32 lg:col-span-6 lg:col-start-3" bind:this={contentEl}>
 			<div class=" flex flex-col gap-32">
 				{#each blok.list as b}
 					<StoryblokComponent blok={b} />

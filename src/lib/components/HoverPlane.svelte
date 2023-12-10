@@ -11,6 +11,7 @@
 		Vec2 as Vec2Type
 	} from '@types/curtainsjs';
 	import { isPageHidden, isTransitioning } from '$lib/stores';
+	import { cls } from '$lib/styles';
 	import gsap from '$lib/gsap';
 
 	export let content: any;
@@ -232,6 +233,7 @@
 		crossorigin=""
 		data-sampler="planeTexture"
 		alt={content.title}
+		class={cls('hidden')}
 	/>
 </div>
 
@@ -243,16 +245,5 @@
 		overflow: hidden;
 		width: 100%;
 		height: 33%;
-
-		img {
-			display: none;
-
-			@at-root.no-curtains & {
-				display: block;
-				min-width: 100%;
-				min-height: 100%;
-				object-fit: cover;
-			}
-		}
 	}
 </style>
