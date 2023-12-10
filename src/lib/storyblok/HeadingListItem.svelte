@@ -18,7 +18,7 @@
 		</span>
 	</dt>
 	<dd
-		class="col-span-7 col-start-2 mt-8 flex flex-col gap-4 text-xl leading-7 lg:col-span-6 lg:col-start-4 4xl:text-3xl"
+		class="col-span-10 col-start-2 mt-8 flex flex-col gap-4 text-xl leading-7 lg:col-span-6 lg:col-start-4 4xl:text-3xl"
 	>
 		{#if blok.heading}
 			<Heading as="h3" size="h2" class="w-full leading-tightest lg:leading-tightest"

@@ -69,7 +69,7 @@
 			<p class="font-medium uppercase tracking-widest">Scroll</p>
 			<div class="ScrollActionToPage-bar relative h-32 w-px" />
 			<span
-				class="ScrollActionToPage-label inline-flex h-[1em] font-degular-display text-[10em] leading-8"
+				class="ScrollActionToPage-label inline-flex h-[1em] font-degular-display text-7xl leading-8 md:text-9xl lg:text-[12em]"
 				>{label}</span
 			>
 		</div>
