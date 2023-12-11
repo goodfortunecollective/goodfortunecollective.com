@@ -1,13 +1,16 @@
 <script lang="ts">
-	import { slide } from 'svelte/transition';
 	import { cva } from 'class-variance-authority';
 
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
 
+	import gsap, { SplitText } from '$lib/gsap';
+
 	export let name: string | null = null;
 	export let animated: boolean = false;
 	export let type: 'hover' | 'theme' = 'theme';
+
+	let element: HTMLSpanElement;
 
 	const variantsTheme = cva('', {
 		variants: {
@@ -32,6 +35,60 @@
 			theme: 'light'
 		}
 	});
+
+	function animateIn(node: HTMLElement, { delay = 0, duration = 0.3 }) {
+		let tl = gsap.timeline();
+
+		const text = new SplitText(element, {
+			type: 'lines,words,chars',
+			linesClass: 'split-line',
+			charClass: 'split-char'
+		});
+
+		tl.from(text.chars, {
+			duration,
+			delay,
+			ease: 'circ.out',
+			yPercent: 100,
+			stagger: 0.03,
+			opacity: 1
+		});
+
+		return {
+			/* GSAP's duration is in seconds. Svelte's is in miliseconds */
+			duration: duration * 1000,
+			tick: (t) => {
+				tl.progress(t);
+			}
+		};
+	}
+
+	function animateOut(node: HTMLElement, { delay = 0, duration = 0.3 }) {
+		let tl = gsap.timeline();
+
+		const text = new SplitText(element, {
+			type: 'lines,words,chars',
+			linesClass: 'split-line',
+			charClass: 'split-char'
+		});
+
+		tl.to(text.chars, {
+			duration,
+			delay,
+			ease: 'circ.in',
+			yPercent: -100,
+			stagger: 0.01,
+			opacity: 0
+		});
+
+		return {
+			/* GSAP's duration is in seconds. Svelte's is in miliseconds */
+			duration: duration * 1000,
+			tick: (t, u) => {
+				tl.progress(u);
+			}
+		};
+	}
 </script>
 
 {#key name}
@@ -39,14 +96,17 @@
 		class={cls('overflow-hidden p-8 font-degular-display leading-extra-tight', 'c-project-title')}
 	>
 		<span
-			in:slide|global={{ duration: animated ? 300 : 0, delay: animated ? 100 : 0 }}
-			out:slide|global={{ duration: animated ? 200 : 0 }}
+			in:animateIn|global={{ duration: animated ? 0.7 : 0, delay: animated ? 0.6 : 0 }}
+			out:animateOut|global={{ duration: animated ? 0.4 : 0 }}
+			bind:this={element}
 			class={cls(
 				'block',
 				type === 'theme' && variantsTheme({ theme: $backgroundTheme }),
 				type === 'hover' && variantsHover({ theme: $backgroundTheme })
-			)}>{name}</span
+			)}
 		>
+			<span class="wrap" />{name}
+		</span>
 	</h2>
 {/key}
 
