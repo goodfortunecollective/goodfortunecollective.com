@@ -8,14 +8,7 @@
 	import gsap, { ScrollTrigger } from '$lib/gsap';
 
 	import { cls } from '$lib/styles';
-	import {
-		backgroundColor,
-		backgroundTheme,
-		isTransitioning,
-		isTransitionDone,
-		isPageHidden,
-		project_list_hover
-	} from '$lib/stores';
+	import { isTransitioning, isTransitionDone, isPageHidden, project_list_hover } from '$lib/stores';
 
 	import { ProjectTitle } from '$lib/components';
 

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { cva } from 'class-variance-authority';
 
+	import { beforeNavigate } from '$app/navigation';
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
 
@@ -49,9 +50,8 @@
 			duration,
 			delay,
 			ease: 'circ.out',
-			yPercent: 100,
-			stagger: 0.03,
-			opacity: 1
+			yPercent: 150,
+			stagger: 0.03
 		});
 
 		return {
@@ -77,8 +77,7 @@
 			delay,
 			ease: 'circ.in',
 			yPercent: -100,
-			stagger: 0.01,
-			opacity: 0
+			stagger: 0.01
 		});
 
 		return {
@@ -89,6 +88,10 @@
 			}
 		};
 	}
+
+	beforeNavigate(() => {
+		animateOut(element, { duration: 0 });
+	});
 </script>
 
 {#key name}
@@ -96,7 +99,7 @@
 		class={cls('overflow-hidden p-8 font-degular-display leading-extra-tight', 'c-project-title')}
 	>
 		<span
-			in:animateIn|global={{ duration: animated ? 0.7 : 0, delay: animated ? 0.6 : 0 }}
+			in:animateIn|global={{ duration: animated ? 0.7 : 0, delay: animated ? 0.5 : 0 }}
 			out:animateOut|global={{ duration: animated ? 0.4 : 0 }}
 			bind:this={element}
 			class={cls(
