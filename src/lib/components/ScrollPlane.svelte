@@ -11,6 +11,7 @@
 	import { isPageHidden, isTransitioning, project_list_hover } from '$lib/stores';
 
 	import type { Curtains, Plane as PlaneType, PlaneParams } from '@types/curtainsjs';
+	import { offsetLeft } from '$lib/lifecycle-functions/useRect';
 
 	export let name: string;
 	export let slug: string;
@@ -192,8 +193,10 @@
 				duration: 0.5,
 				ease: 'power2.inOut',
 				onUpdate: () => {
-					texture.scale.x = hoverTransition.textureScale;
-					texture.scale.y = hoverTransition.textureScale;
+					if (texture) {
+						texture.scale.x = hoverTransition.textureScale;
+						texture.scale.y = hoverTransition.textureScale;
+					}
 				}
 			});
 		} else if (texture && texture.scale.x) {
@@ -202,8 +205,10 @@
 				duration: 0.5,
 				ease: 'power2.inOut',
 				onUpdate: () => {
-					texture.scale.x = hoverTransition.textureScale;
-					texture.scale.y = hoverTransition.textureScale;
+					if (texture) {
+						texture.scale.x = hoverTransition.textureScale;
+						texture.scale.y = hoverTransition.textureScale;
+					}
 				}
 			});
 		}
@@ -214,7 +219,7 @@
 	});
 </script>
 
-<div class="flex aspect-video overflow-hidden" bind:this={planeEl}>
+<div class="absolute inset-0" bind:this={planeEl}>
 	<img
 		src={content.thumbnail
 			? content.thumbnail.filename.replace('//a-us.storyblok.com', '//a2-us.storyblok.com')

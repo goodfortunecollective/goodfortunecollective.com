@@ -22,6 +22,8 @@
 	$: description = renderRichText(content.description);
 	$: innerWidth = 0;
 
+	let inViewState = false;
+
 	let ctx: any = null;
 	let el!: HTMLElement;
 
@@ -80,6 +82,15 @@
 		}, el);
 	});
 
+	const inViewItem = ({ detail }: CustomEvent<ObserverEventDetails>) => {
+		const { inView, node } = detail as ObserverEventDetails;
+		node.style.transitionProperty = inView ? 'color' : 'none';
+
+		if (!inViewState && inView) {
+			inViewState = true;
+		}
+	};
+
 	onDestroy(() => {
 		if (ctx) ctx.revert();
 	});
@@ -93,7 +104,7 @@
 		data-id={slug}
 		data-speed={parallaxSpeed}
 		use:inview
-		on:inview_change={inViewColorTransition}
+		on:inview_change={inViewItem}
 		class={cls(
 			'flex-no-wrap pointer-events-auto flex w-full flex-col hover:no-underline',
 			variants({ theme: theme, layout: layout }),
@@ -101,7 +112,11 @@
 		)}
 	>
 		<div class="relative w-full" on:mouseenter={onEnter} on:mouseleave={onLeave}>
-			<ScrollPlane {slug} {content} {name} />
+			<div class="flex aspect-video overflow-hidden">
+				{#if inViewState}
+					<ScrollPlane {slug} {content} {name} />
+				{/if}
+			</div>
 		</div>
 
 		<div class="mt-8">
