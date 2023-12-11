@@ -7,7 +7,7 @@
 <svelte:head>
 	<title>{title}</title>
 	<meta name="description" content={description} />
-	{#if image.filename?.length > 0}
+	{#if image?.filename?.length > 0}
 		<meta property="og:image" content={image.filename} />
 	{/if}
 </svelte:head>
