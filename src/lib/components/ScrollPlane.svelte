@@ -219,7 +219,7 @@
 	});
 </script>
 
-<div class="absolute inset-0" bind:this={planeEl}>
+<div class="absolute inset-0 overflow-hidden" bind:this={planeEl}>
 	<img
 		src={content.thumbnail
 			? content.thumbnail.filename.replace('//a-us.storyblok.com', '//a2-us.storyblok.com')
