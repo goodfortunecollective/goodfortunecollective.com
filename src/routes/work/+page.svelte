@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
+	import { fade } from 'svelte/transition';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
 	import type { Curtains } from '@types/curtainsjs';
@@ -89,25 +90,28 @@
 
 <section class="pt-32 3xl:pt-48">
 	<div class="relative hidden lg:block">
-		<MenuList class="fixed right-0 top-32 z-10 flex flex-col items-end gap-4 pr-8 pt-8">
-			<MenuItem
-				name="All Projects"
-				sup={data.projects.length}
-				url={`${base}/work#all`}
-				delayIn={0}
-				delayOut={categories.length * 25}
-				selected={!filter || filter === 'all'}
-			/>
-			{#each categories as category, i}
+		<MenuList class="absolute right-0 top-32 z-10 flex flex-col items-end gap-4 pr-8 pt-8">
+			<div in:fade={{ delay: 0 }} out:fade={{ delay: categories.length * 25 }}>
+				<MenuItem
+					name="All Projects"
+					sup={data.projects.length}
+					url={`${base}/work#all`}
+					selected={!filter || filter === 'all'}
+				/>
+			</div>
+			{#each categories as category, index (category.id)}
 				{#if category.count > 0}
-					<MenuItem
-						name={category.name}
-						sup={category.count}
-						url={`${base}/work#${category.value}`}
-						delayIn={i * 50}
-						delayOut={(categories.length - i) * 25}
-						selected={filter === category.value}
-					/>
+					<div
+						in:fade|global={{ delay: index * 50 }}
+						out:fade|global={{ delay: (categories.length - index) * 25, duration: 150 }}
+					>
+						<MenuItem
+							name={category.name}
+							sup={category.count}
+							url={`${base}/work#${category.value}`}
+							selected={filter === category.value}
+						/>
+					</div>
 				{/if}
 			{/each}
 		</MenuList>

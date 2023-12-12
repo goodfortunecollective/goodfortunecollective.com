@@ -22,7 +22,7 @@
 	$: description = renderRichText(content.description);
 	$: innerWidth = 0;
 
-	let inViewState = false;
+	let isActive = false;
 
 	let ctx: any = null;
 	let el!: HTMLElement;
@@ -86,8 +86,8 @@
 		const { inView, node } = detail as ObserverEventDetails;
 		node.style.transitionProperty = inView ? 'color' : 'none';
 
-		if (!inViewState && inView) {
-			inViewState = true;
+		if (!isActive && inView) {
+			isActive = true;
 		}
 	};
 
@@ -113,7 +113,7 @@
 	>
 		<div class="relative w-full" on:mouseenter={onEnter} on:mouseleave={onLeave}>
 			<div class="flex aspect-video overflow-hidden">
-				{#if inViewState}
+				{#if isActive}
 					<ScrollPlane {slug} {content} {name} />
 				{/if}
 			</div>
