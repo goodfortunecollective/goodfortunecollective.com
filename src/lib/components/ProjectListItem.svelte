@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { inview } from 'svelte-inview';
 	import { cva } from 'class-variance-authority';
 	import { renderRichText } from '@storyblok/svelte';
@@ -9,8 +9,6 @@
 	import gsap, { ScrollTrigger } from '$lib/gsap';
 	import { ScrollPlane, Heading } from '$lib/components';
 	import { project_list_hover, isTransitioning } from '$lib/stores';
-	import { useTransitionReady } from '$lib/utils/useTransitionReady';
-	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let name: string;
 	export let slug: string;
@@ -55,7 +53,7 @@
 		}
 	};
 
-	useTransitionReady(() => {
+	onMount(() => {
 		ctx = gsap.context(() => {
 			// apply parallax effect to any element with a data-speed attribute
 			if (innerWidth < 1024) return;
