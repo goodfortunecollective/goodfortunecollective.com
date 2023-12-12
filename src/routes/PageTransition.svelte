@@ -6,6 +6,11 @@
 	import { pageTransitionPauseDuration } from '$lib/utils/page-transitions.js';
 
 	export let pathname: string = '';
+
+	function onPageChange(e): void {
+		e.target.style.position = 'absolute';
+		e.target.style.width = '100%';
+	}
 </script>
 
 <div class="relative z-10">
@@ -19,8 +24,9 @@
 			out:fly|local={{
 				easing: quartOut,
 				duration: 0.1,
-				delay: pageTransitionPauseDuration / 4
+				delay: pageLeaveDuration
 			}}
+			on:outrostart={onPageChange}
 		>
 			<slot />
 		</div>
