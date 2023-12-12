@@ -108,8 +108,8 @@
 							{#each blok.navigation as { name, slug }, i}<a
 									href="{base}/{slug}"
 									class="-mx-3 block px-3 py-2 text-xl font-semibold leading-7 text-white"
-									in:fly|global={{ x: -48, duration: 500, delay: 300 + 50 * i }}
-									out:fly|global={{ x: -48, duration: 500, delay: 300 - 50 * i }}
+									in:fly|local={{ x: -48, duration: 500, delay: 300 + 50 * i }}
+									out:fly|local={{ x: -48, duration: 500, delay: 300 - 50 * i }}
 									on:click={closeMobileMenu}>{name}</a
 								>
 							{/each}

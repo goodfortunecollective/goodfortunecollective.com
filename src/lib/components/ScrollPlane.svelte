@@ -8,7 +8,7 @@
 	import gsap from '$lib/gsap';
 
 	import { lenisStore as lenis } from '$lib/stores/lenis';
-	import { isPageHidden, isTransitioning, project_list_hover } from '$lib/stores';
+	import { isTransitioning, project_list_hover } from '$lib/stores';
 
 	import type { Curtains, Plane as PlaneType, PlaneParams } from '@types/curtainsjs';
 	import { offsetLeft } from '$lib/lifecycle-functions/useRect';

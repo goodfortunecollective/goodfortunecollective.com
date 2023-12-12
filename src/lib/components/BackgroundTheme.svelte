@@ -4,6 +4,8 @@
 	import { ScrollTrigger } from '$lib/gsap';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 	import { backgroundColor, backgroundTheme } from '$lib/stores';
+	import { Body } from 'svelte-body';
+	import { pageTransitionPauseDuration } from '$lib/utils/page-transitions';
 
 	export let preload: boolean = false;
 
@@ -18,14 +20,17 @@
 
 	onMount(() => {
 		if (preload) {
+			document.body.style.transitionProperty = 'none';
 			setTimeout(() => {
 				backgroundTheme.set(endTheme);
 				backgroundColor.set(endColor);
-			}, 750);
+			}, pageTransitionPauseDuration / 2);
 		}
 	});
 
 	useTransitionReady(() => {
+		document.body.style.transitionProperty = 'background-color';
+
 		scrollTrigger = ScrollTrigger.create({
 			trigger: el,
 			start: 'top center',

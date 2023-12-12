@@ -10,7 +10,7 @@
 		PlaneParams,
 		Vec2 as Vec2Type
 	} from '@types/curtainsjs';
-	import { isPageHidden, isTransitioning } from '$lib/stores';
+	import { isTransitioning } from '$lib/stores';
 	import { cls } from '$lib/styles';
 	import gsap from '$lib/gsap';
 
@@ -152,18 +152,6 @@
 		if (!value && !canCreatePlane) {
 			canCreatePlane = true;
 			createPlane();
-		}
-	});
-
-	isPageHidden.subscribe((value: boolean) => {
-		isHidden = value;
-		if (value && isTransition && !canCreatePlane) {
-			// coming from a page transition
-			// wait a couple ticks for old planes to be removed first
-			canCreatePlane = true;
-			setTimeout(() => {
-				createPlane();
-			}, 32);
 		}
 	});
 

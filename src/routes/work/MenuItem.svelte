@@ -13,8 +13,8 @@
 </script>
 
 <li
-	in:fade|global={{ delay: delayIn }}
-	out:fade|global={{ delay: delayOut, duration: 150 }}
+	in:fade|local={{ delay: delayIn }}
+	out:fade|local={{ delay: delayOut, duration: 150 }}
 	class={cls('mb-3 whitespace-nowrap text-right text-xs font-bold uppercase tracking-wider')}
 >
 	<a href={url} class={cls(selected ? 'text-white' : 'text-stone-450')}>
