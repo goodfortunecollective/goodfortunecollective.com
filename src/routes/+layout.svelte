@@ -96,7 +96,7 @@
 {/if}
 
 <main class="overflow-hidden">
-	<PageTransition pathname={data.pathname}>
+	<PageTransition>
 		<slot key={data.pathname} />
 		{#if data.settings}
 			<StoryblokComponent blok={getComponentByName(data.settings.content, 'footer')} />
@@ -110,7 +110,7 @@
 
 <ScrollIndicator />
 
-<Loader bind:this={loaderRef} on:complete={handleCompleteLoader} skip={data.preview} />
+<Loader bind:this={loaderRef} on:complete={handleCompleteLoader} skip={true} />
 
 <PageTransitionAnim bind:this={pageTransitionAnimRef} />
 

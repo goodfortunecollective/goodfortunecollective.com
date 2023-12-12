@@ -33,6 +33,7 @@
 	});
 
 	function checkTimeVideo() {
+		console.log(logo.currentTime, logo.duration, logo.currentTime / logo.duration);
 		if (logo.currentTime / logo.duration > 0.99) {
 			ready();
 		}
@@ -44,6 +45,7 @@
 		<div class="flex h-full w-full items-center justify-center">
 			<div class="absolute h-full w-full bg-white" />
 			<video
+				preload="metadata"
 				bind:this={logo}
 				playsinline
 				autoplay

@@ -22,12 +22,12 @@
 	html,
 	body {
 		background: var(--theme-color);
-		overscroll-behavior-y: none;
 	}
 
 	body {
 		transition: background-color 1s ease;
 		min-height: 100vh;
+		overflow-y: scroll;
 	}
 	
 	html.lenis-stopped {
