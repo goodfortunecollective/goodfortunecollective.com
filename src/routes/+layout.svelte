@@ -96,7 +96,7 @@
 {/if}
 
 <main class="overflow-hidden">
-	<PageTransition>
+	<PageTransition pathname={data.pathname}>
 		<slot key={data.pathname} />
 		{#if data.settings}
 			<StoryblokComponent blok={getComponentByName(data.settings.content, 'footer')} />

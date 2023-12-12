@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 	import { quartOut, cubicOut } from 'svelte/easing';
-	import { navigating } from '$app/stores';
 
-	import { isPageHidden } from '$lib/stores';
+	import { isPageHidden, isTransitioning } from '$lib/stores';
 	import { pageLeaveDuration, pageEnterDuration } from '$lib/utils/page-transitions';
 	import { pageTransitionPauseDuration } from '$lib/utils/page-transitions.js';
+
+	export let pathname: string = '';
 
 	function onPageChange(e): void {
 		e.target.style.position = 'absolute';
@@ -20,20 +21,18 @@
 </script>
 
 <div class="relative z-10">
-	{#key $navigating}
-		{#if !$navigating}
-			<div
-				in:fly|local={{
-					easing: cubicOut,
-					duration: 1,
-					delay: pageLeaveDuration + pageTransitionPauseDuration
-				}}
-				out:fly|local={{ easing: quartOut, duration: 1, delay: pageLeaveDuration * 0.5 - 100 }}
-				on:outrostart={onPageChange}
-				on:outroend={onOldContentRemoved}
-			>
-				<slot />
-			</div>
-		{/if}
+	{#key pathname}
+		<div
+			in:fly|local={{
+				easing: cubicOut,
+				duration: 1,
+				delay: pageLeaveDuration + pageTransitionPauseDuration
+			}}
+			out:fly|local={{ easing: quartOut, duration: 1, delay: pageLeaveDuration * 0.5 - 100 }}
+			on:outrostart={onPageChange}
+			on:outroend={onOldContentRemoved}
+		>
+			<slot />
+		</div>
 	{/key}
 </div>
