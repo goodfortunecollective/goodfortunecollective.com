@@ -33,7 +33,8 @@
 	});
 
 	function checkTimeVideo() {
-		console.log(logo.currentTime, logo.duration, logo.currentTime / logo.duration);
+		if (!logo.currentTime || !logo.duration) return;
+
 		if (logo.currentTime / logo.duration > 0.99) {
 			ready();
 		}
@@ -45,12 +46,11 @@
 		<div class="flex h-full w-full items-center justify-center">
 			<div class="absolute h-full w-full bg-white" />
 			<video
-				preload="metadata"
-				bind:this={logo}
+				muted
 				playsinline
 				autoplay
+				bind:this={logo}
 				on:timeupdate={checkTimeVideo}
-				muted
 				class="absolute scale-50"
 			>
 				<source src={`${base}/assets/GFC-intro.mp4`} />

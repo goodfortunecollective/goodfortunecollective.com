@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { inview } from 'svelte-inview';
 	import { cva } from 'class-variance-authority';
 	import { renderRichText } from '@storyblok/svelte';
@@ -9,8 +9,6 @@
 	import gsap, { ScrollTrigger } from '$lib/gsap';
 	import { ScrollPlane, Heading } from '$lib/components';
 	import { project_list_hover, isTransitioning } from '$lib/stores';
-	import { useTransitionReady } from '$lib/utils/useTransitionReady';
-	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let name: string;
 	export let slug: string;
@@ -22,7 +20,7 @@
 	$: description = renderRichText(content.description);
 	$: innerWidth = 0;
 
-	let inViewState = false;
+	let isActive = false;
 
 	let ctx: any = null;
 	let el!: HTMLElement;
@@ -55,7 +53,7 @@
 		}
 	};
 
-	useTransitionReady(() => {
+	onMount(() => {
 		ctx = gsap.context(() => {
 			// apply parallax effect to any element with a data-speed attribute
 			if (innerWidth < 1024) return;
@@ -86,8 +84,8 @@
 		const { inView, node } = detail as ObserverEventDetails;
 		node.style.transitionProperty = inView ? 'color' : 'none';
 
-		if (!inViewState && inView) {
-			inViewState = true;
+		if (!isActive && inView) {
+			isActive = true;
 		}
 	};
 
@@ -113,7 +111,7 @@
 	>
 		<div class="relative w-full" on:mouseenter={onEnter} on:mouseleave={onLeave}>
 			<div class="flex aspect-video overflow-hidden">
-				{#if inViewState}
+				{#if isActive}
 					<ScrollPlane {slug} {content} {name} />
 				{/if}
 			</div>

@@ -99,8 +99,8 @@
 		class={cls('overflow-hidden p-8 font-degular-display leading-extra-tight', 'c-project-title')}
 	>
 		<span
-			in:animateIn|local={{ duration: animated ? 0.7 : 0, delay: animated ? 0.5 : 0 }}
-			out:animateOut|local={{ duration: animated ? 0.4 : 0 }}
+			in:animateIn|global={{ duration: animated ? 0.7 : 0, delay: animated ? 0.5 : 0 }}
+			out:animateOut|global={{ duration: animated ? 0.4 : 0 }}
 			bind:this={element}
 			class={cls(
 				'block',

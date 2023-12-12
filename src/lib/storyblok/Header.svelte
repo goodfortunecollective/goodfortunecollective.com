@@ -98,8 +98,8 @@
 			<!-- Background backdrop, show/hide based on slide-over state. -->
 			<div class="fixed inset-0 z-20" />
 			<div
-				in:fade|local
-				out:fade|local={{ delay: 500 }}
+				in:fade
+				out:fade={{ delay: 500 }}
 				class="fixed inset-y-0 right-0 z-20 w-full overflow-y-auto bg-black px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
 			>
 				<div class="mt-24 flow-root">
@@ -108,8 +108,8 @@
 							{#each blok.navigation as { name, slug }, i}<a
 									href="{base}/{slug}"
 									class="-mx-3 block px-3 py-2 text-xl font-semibold leading-7 text-white"
-									in:fly|local={{ x: -48, duration: 500, delay: 300 + 50 * i }}
-									out:fly|local={{ x: -48, duration: 500, delay: 300 - 50 * i }}
+									in:fly={{ x: -48, duration: 500, delay: 300 + 50 * i }}
+									out:fly={{ x: -48, duration: 500, delay: 300 - 50 * i }}
 									on:click={closeMobileMenu}>{name}</a
 								>
 							{/each}
