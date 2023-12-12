@@ -110,7 +110,7 @@
 
 <ScrollIndicator />
 
-<Loader bind:this={loaderRef} on:complete={handleCompleteLoader} skip={true} />
+<Loader bind:this={loaderRef} on:complete={handleCompleteLoader} skip={data.preview} />
 
 <PageTransitionAnim bind:this={pageTransitionAnimRef} />
 
