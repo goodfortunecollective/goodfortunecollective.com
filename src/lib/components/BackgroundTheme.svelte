@@ -3,7 +3,7 @@
 
 	import { ScrollTrigger } from '$lib/gsap';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
-	import { backgroundColor, backgroundTheme } from '$lib/stores';
+	import { backgroundColor, backgroundTheme, isTransitioning } from '$lib/stores';
 	import { Body } from 'svelte-body';
 	import { pageTransitionPauseDuration } from '$lib/utils/page-transitions';
 
@@ -36,12 +36,16 @@
 			start: 'top center',
 			end: 'bottom center',
 			onEnter: () => {
-				backgroundTheme.set(endTheme);
-				backgroundColor.set(endColor);
+				if (!$isTransitioning) {
+					backgroundTheme.set(endTheme);
+					backgroundColor.set(endColor);
+				}
 			},
 			onLeaveBack: () => {
-				backgroundTheme.set(startTheme);
-				backgroundColor.set(startColor);
+				if (!$isTransitioning) {
+					backgroundTheme.set(startTheme);
+					backgroundColor.set(startColor);
+				}
 			}
 		});
 	});

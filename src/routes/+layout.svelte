@@ -4,6 +4,7 @@
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 	import { Body } from 'svelte-body';
 
+	import { afterNavigate, disableScrollHandling } from '$app/navigation';
 	import { browser } from '$app/environment';
 	import { isIntroDone, backgroundColor } from '$lib/stores';
 	import gsap, { ScrollTrigger, CustomEase } from '$lib/gsap';
@@ -23,6 +24,7 @@
 	import Cursor from './Cursor.svelte';
 
 	import '../app.css';
+	import { pageLeaveDuration, pageTransitionPauseDuration } from '$lib/utils/page-transitions';
 
 	export let data: LayoutData;
 
@@ -41,6 +43,8 @@
 	// ScrollTrigger.defaults({ markers: process.env.NODE_ENV === 'development' });
 
 	onMount(() => {
+		disableScrollHandling();
+
 		CustomEase.create('css-ease', 'M0,0 C0.25,0.1 0.25,1 1,1');
 		CustomEase.create('css-ease.in', 'M0,0 C0.42,0 1,1 1,1');
 		CustomEase.create('css-ease.out', 'M0,0 C0,0 0.58,1 1,1');
@@ -72,6 +76,15 @@
 		return () => {
 			$lenis?.destroy();
 		};
+	});
+
+	afterNavigate(() => {
+		setTimeout(
+			() => {
+				scrollTo({ top: 0, behavior: 'instant' });
+			},
+			pageLeaveDuration + pageTransitionPauseDuration / 2
+		);
 	});
 
 	function handleCompleteLoader() {
