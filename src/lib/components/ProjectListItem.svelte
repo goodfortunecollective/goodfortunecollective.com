@@ -109,7 +109,7 @@
 			'c-project-list-item__container'
 		)}
 	>
-		<div class="relative w-full" on:mouseenter={onEnter} on:mouseleave={onLeave}>
+		<div class="relative w-full" on:mouseenter={onEnter} on:mouseleave={onLeave} role="group">
 			<div class="flex aspect-video overflow-hidden">
 				{#if isActive}
 					<ScrollPlane {slug} {content} {name} />

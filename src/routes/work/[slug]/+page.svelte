@@ -68,6 +68,7 @@
 				class="col-span-10 col-start-2"
 				on:mouseenter={() => (isTitleHovered = true)}
 				on:mouseleave={() => (isTitleHovered = false)}
+				role="presentation"
 			>
 				<ProjectTitle name={data.story.name} />
 			</div>
