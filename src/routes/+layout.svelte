@@ -43,8 +43,6 @@
 	// ScrollTrigger.defaults({ markers: process.env.NODE_ENV === 'development' });
 
 	onMount(() => {
-		disableScrollHandling();
-
 		CustomEase.create('css-ease', 'M0,0 C0.25,0.1 0.25,1 1,1');
 		CustomEase.create('css-ease.in', 'M0,0 C0.42,0 1,1 1,1');
 		CustomEase.create('css-ease.out', 'M0,0 C0,0 0.58,1 1,1');
@@ -79,6 +77,7 @@
 	});
 
 	afterNavigate(() => {
+		disableScrollHandling();
 		setTimeout(
 			() => {
 				scrollTo({ top: 0, behavior: 'instant' });
