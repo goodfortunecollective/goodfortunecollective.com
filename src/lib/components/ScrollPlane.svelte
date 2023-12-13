@@ -11,7 +11,8 @@
 	import { isTransitioning, project_list_hover } from '$lib/stores';
 
 	import type { Curtains, Plane as PlaneType, PlaneParams } from '@types/curtainsjs';
-	import { offsetLeft } from '$lib/lifecycle-functions/useRect';
+
+	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
 
 	export let name: string;
 	export let slug: string;
@@ -224,6 +225,8 @@
 		src={content.thumbnail
 			? content.thumbnail.filename.replace('//a-us.storyblok.com', '//a2-us.storyblok.com')
 			: 'https://source.unsplash.com/random/?Motion&1'}
+		width={getImageDimensionsFromUrl(content.thumbnail.filename).width}
+		height={getImageDimensionsFromUrl(content.thumbnail.filename).height}
 		crossorigin=""
 		data-sampler="planeTexture"
 		alt={name}

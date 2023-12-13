@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
 	import { quartOut, cubicOut } from 'svelte/easing';
+	import { pageLeaveDuration } from '$lib/utils/page-transitions';
 
 	export let pathname: string = '';
 </script>
@@ -14,7 +15,8 @@
 			}}
 			out:fade={{
 				easing: quartOut,
-				duration: 0.1
+				duration: 0.1,
+				delay: pageLeaveDuration
 			}}
 		>
 			<slot />
