@@ -15,7 +15,6 @@
 	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
 
 	export let name: string;
-	export let slug: string;
 	export let content: any;
 
 	let planeEl: HTMLElement;

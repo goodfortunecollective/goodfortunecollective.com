@@ -144,7 +144,7 @@
 		class={cls('relative flex w-full items-center justify-center', !autoplay && 'cursor-pointer')}
 		on:mouseenter={activate}
 		on:mouseleave={deactivate}
-		role="presentation"
+		role="group"
 	>
 		{#if videoID && !videoUrl}
 			<iframe
@@ -155,6 +155,7 @@
 				frameborder="0"
 				allow="autoplay; fullscreen; picture-in-picture"
 				allowfullscreen
+				title={name}
 			/>
 		{:else if videoUrl}
 			<video
@@ -166,17 +167,18 @@
 				on:click={playPauseVideo}
 				playsinline
 				{autoplay}
-				loop={autoplay}
-				muted={autoplay}
+				loop={autoplay ? true : loop}
+				muted={autoplay ? true : muted}
 			/>
 		{/if}
 		{#if !autoplay && posterUrl}
-			<figure
+			<div
 				class={cls(variants({ visible: !videoVisible }), 'video-poster')}
 				on:click={showVideo}
+				role="presentation"
 			>
 				<Image class="relative h-auto w-full" src={posterUrl} alt={name} {animated} />
-			</figure>
+			</div>
 		{/if}
 	</div>
 </div>
