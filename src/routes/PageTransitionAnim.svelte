@@ -188,7 +188,7 @@
 	<div class="fixed inset-0 z-50 flex h-screen w-full items-center text-center">
 		<div class="mx-auto grid -translate-y-1/2 grid-cols-12 pt-16 lg:-translate-y-1/4">
 			<div class="col-span-10 col-start-2">
-				<ProjectTitle name={list_hover} />
+				<ProjectTitle type="hover" hasStartColor name={list_hover} />
 			</div>
 		</div>
 	</div>
