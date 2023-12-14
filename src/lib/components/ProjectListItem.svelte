@@ -138,8 +138,9 @@
 			<div class="text-md mt-4 max-w-md overflow-hidden font-medium">
 				<span
 					class={cls('block transition-transform lg:translate-y-full', 'c-project-list-item__desc')}
-					>{@html description}</span
 				>
+					{@html description}
+				</span>
 			</div>
 		</div>
 	</a>
