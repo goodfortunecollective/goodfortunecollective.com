@@ -7,12 +7,11 @@
 	import { backgroundTheme } from '$lib/stores';
 
 	import gsap, { SplitText } from '$lib/gsap';
-	import { pageLeaveDuration } from '$lib/utils/page-transitions';
 
 	export let name: string | null = null;
 	export let animated: boolean = false;
 	export let type: 'hover' | 'theme' = 'theme';
-	export let hasStartColor: boolean = false;
+	export let inheritTextColor: boolean = false;
 
 	let element: HTMLSpanElement;
 
@@ -95,14 +94,6 @@
 	beforeNavigate(() => {
 		animateOut(element, { duration: 0 });
 	});
-
-	onMount(() => {
-		if (type === 'hover' && hasStartColor) {
-			setTimeout(() => {
-				element.style.color = 'white';
-			}, pageLeaveDuration / 2);
-		}
-	});
 </script>
 
 {#key name}
@@ -115,9 +106,8 @@
 			bind:this={element}
 			class={cls(
 				'block',
-				type === 'theme' && variantsTheme({ theme: $backgroundTheme }),
-				type === 'hover' && variantsHover({ theme: $backgroundTheme }),
-				'c-project-title__text'
+				type === 'theme' && !inheritTextColor && variantsTheme({ theme: $backgroundTheme }),
+				type === 'hover' && !inheritTextColor && variantsHover({ theme: $backgroundTheme })
 			)}
 		>
 			<span class="wrap" />{name}
@@ -137,9 +127,5 @@
 		// But if the viewport width is less than 768px,
 		// the font-size won't get lower than 16px
 		// the viewport width is more than 1920px font size will stop scaling at 48px.
-	}
-
-	.c-project-title__text {
-		transition: color 1s ease;
 	}
 </style>

@@ -19,6 +19,7 @@
 		pageEnterDuration,
 		pageTransitionPauseDuration
 	} from '$lib/utils/page-transitions';
+	import { fade } from 'svelte/transition';
 
 	let curtains: CurtainsInstance;
 	let tl: any;
@@ -185,10 +186,13 @@
 </div>
 
 {#if list_hover && showTitle}
-	<div class="fixed inset-0 z-50 flex h-screen w-full items-center text-center">
+	<div
+		class="fixed inset-0 z-50 flex h-screen w-full transform-gpu items-center text-center"
+		in:fade={{ delay: pageLeaveDuration / 8, duration: pageLeaveDuration / 8 }}
+	>
 		<div class="mx-auto grid -translate-y-1/2 grid-cols-12 pt-16 lg:-translate-y-1/4">
-			<div class="col-span-10 col-start-2">
-				<ProjectTitle type="hover" hasStartColor name={list_hover} />
+			<div class="col-span-10 col-start-2 text-white">
+				<ProjectTitle type="hover" inheritTextColor name={list_hover} />
 			</div>
 		</div>
 	</div>
