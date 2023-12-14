@@ -112,7 +112,7 @@
 		<div class="relative w-full" on:mouseenter={onEnter} on:mouseleave={onLeave} role="group">
 			<div class="flex aspect-video overflow-hidden">
 				{#if isActive}
-					<ScrollPlane {slug} {content} {name} />
+					<ScrollPlane {content} {name} />
 				{/if}
 			</div>
 		</div>
