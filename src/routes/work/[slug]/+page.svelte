@@ -70,7 +70,7 @@
 				on:mouseleave={() => (isTitleHovered = false)}
 				role="presentation"
 			>
-				<ProjectTitle name={data.story.name} />
+				<ProjectTitle animated={false} name={data.story.name} />
 			</div>
 		</div>
 	</div>

@@ -1,17 +1,19 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { cva } from 'class-variance-authority';
 
-	import { beforeNavigate } from '$app/navigation';
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
 
 	import gsap, { SplitText } from '$lib/gsap';
+	import { beforeNavigate } from '$app/navigation';
+	import { pageLeaveDuration } from '$lib/utils/page-transitions';
 
 	export let name: string | null = null;
 	export let animated: boolean = false;
 	export let type: 'hover' | 'theme' = 'theme';
 	export let inheritTextColor: boolean = false;
+
+	let isExit = false;
 
 	let element: HTMLSpanElement;
 
@@ -66,6 +68,8 @@
 	}
 
 	function animateOut(node: HTMLElement, { delay = 0, duration = 0.3 }) {
+		if (isExit) return;
+
 		let tl = gsap.timeline();
 
 		const text = new SplitText(element, {
@@ -92,7 +96,8 @@
 	}
 
 	beforeNavigate(() => {
-		animateOut(element, { duration: 0 });
+		animateOut(element, { duration: 0, delay: pageLeaveDuration });
+		isExit = true;
 	});
 </script>
 

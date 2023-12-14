@@ -8,7 +8,12 @@
 	import gsap, { ScrollTrigger } from '$lib/gsap';
 
 	import { cls } from '$lib/styles';
-	import { isTransitioning, isTransitionDone, project_list_hover } from '$lib/stores';
+	import {
+		isTransitioning,
+		isTransitionDone,
+		project_list_hover,
+		isTransitioningIn
+	} from '$lib/stores';
 
 	import { ProjectTitle } from '$lib/components';
 
@@ -110,6 +115,7 @@
 			duration: pageLeaveDuration / 1000,
 			ease: 'circ.inOut',
 			onStart: () => {
+				isTransitioningIn.set(true);
 				if (list_hover) showTitle = true;
 			},
 			onUpdate: () => {
@@ -121,6 +127,8 @@
 				}
 
 				ScrollTrigger.refresh();
+
+				isTransitioningIn.set(false);
 
 				onEnteringDone();
 			}
@@ -192,7 +200,7 @@
 	>
 		<div class="mx-auto grid -translate-y-1/2 grid-cols-12 pt-16 lg:-translate-y-1/4">
 			<div class="col-span-10 col-start-2 text-white">
-				<ProjectTitle type="hover" inheritTextColor name={list_hover} />
+				<ProjectTitle type="hover" animated={false} inheritTextColor name={list_hover} />
 			</div>
 		</div>
 	</div>
