@@ -188,7 +188,7 @@
 {#if list_hover && showTitle}
 	<div
 		class="fixed inset-0 z-50 flex h-screen w-full transform-gpu items-center text-center"
-		in:fade={{ delay: pageLeaveDuration / 8, duration: pageLeaveDuration / 8 }}
+		in:fade={{ delay: pageLeaveDuration / 2, duration: pageLeaveDuration / 8 }}
 	>
 		<div class="mx-auto grid -translate-y-1/2 grid-cols-12 pt-16 lg:-translate-y-1/4">
 			<div class="col-span-10 col-start-2 text-white">
