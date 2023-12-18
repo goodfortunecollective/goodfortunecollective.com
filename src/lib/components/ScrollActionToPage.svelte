@@ -13,6 +13,7 @@
 	export let disabled: boolean = false;
 
 	let scrollEl!: HTMLElement;
+	let scrollLabel!: HTMLElement;
 
 	$: parallaxEffect = 0 as number;
 	let scrollTrigger: any = null;
@@ -45,7 +46,20 @@
 
 						ctx?.revert();
 						scrollTrigger?.kill();
-						setTimeout(() => goto(base + href), 0);
+
+						gsap.to(scrollEl, {
+							duration: 0.3,
+							y: '-20%',
+							opacity: 0,
+							onComplete: () => {
+								goto(base + href);
+							}
+						});
+
+						gsap.to(scrollLabel, {
+							duration: 0.3,
+							y: '-20%'
+						});
 					}
 				});
 
@@ -69,6 +83,7 @@
 			<p class="font-medium uppercase tracking-widest">Scroll</p>
 			<div class="ScrollActionToPage-bar relative h-32 w-px" />
 			<span
+				bind:this={scrollLabel}
 				class="ScrollActionToPage-label inline-flex h-[1em] font-degular-display text-7xl leading-8 md:text-9xl lg:text-[12em]"
 				>{label}</span
 			>

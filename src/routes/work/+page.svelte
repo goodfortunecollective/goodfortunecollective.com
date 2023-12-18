@@ -1,21 +1,29 @@
 <script lang="ts">
-	import { onMount, tick } from 'svelte';
+	import { onDestroy, onMount, tick } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
 	import type { Curtains } from '@types/curtainsjs';
 
+	import { lenisStore as lenis } from '$lib/stores/lenis';
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
 	import { cls } from '$lib/styles';
 	import { ProjectListItem } from '$lib/components';
-	import { project_list_hover } from '$lib/stores';
+	import { project_list_hover, isTransitioningEnabled } from '$lib/stores';
 	import { useCurtains } from '$lib/utils/useCurtains';
 
 	import MenuList from './MenuList.svelte';
 	import MenuItem from './MenuItem.svelte';
 
+	let el!: HTMLElement;
 	let curtains: undefined | Curtains;
+	let ctx: any = null;
+	let transitioningEnabled = true;
+
+	isTransitioningEnabled.subscribe((value) => {
+		transitioningEnabled = value;
+	});
 
 	useCurtains((curtainsInstance) => {
 		curtains = curtainsInstance;
@@ -81,6 +89,35 @@
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
+
+		if (!transitioningEnabled) {
+			ctx = gsap.context(() => {
+				if (el) {
+					gsap.set(el, { opacity: 0, y: 20 });
+					gsap.to(el, {
+						duration: 0.3,
+						opacity: 1,
+						delay: 3,
+						y: 0,
+						ease: 'power2.out'
+					});
+				}
+
+				const search = $page.url.searchParams.get('slug');
+
+				if (search) {
+					const scrollElem = document.getElementById(search);
+
+					if (scrollElem) {
+						$lenis?.scrollTo(scrollElem, { immediate: true });
+					}
+				}
+			});
+		}
+	});
+
+	onDestroy(() => {
+		ctx?.revert();
 	});
 </script>
 
@@ -88,7 +125,7 @@
 	<StoryblokComponent blok={data.story.content} />
 {/if}
 
-<section class="pt-32 3xl:pt-48">
+<section class="pt-32 3xl:pt-48" bind:this={el}>
 	<div class="relative hidden lg:block">
 		<MenuList class="absolute right-0 top-32 z-10 flex flex-col items-end gap-4 pr-8 pt-8">
 			<div in:fade={{ delay: 0 }} out:fade={{ delay: categories.length * 25 }}>
