@@ -83,6 +83,8 @@
 	$: projects = getProjectsByFilter(data.projects, filter);
 
 	onMount(() => {
+		gsap.set(el, { opacity: 0, y: 200 });
+
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
@@ -90,7 +92,6 @@
 		if (!$isTransitioningEnabled) {
 			ctx = gsap.context(() => {
 				if (el) {
-					gsap.set(el, { opacity: 0, y: 200 });
 					scrollTo({ top: 0, behavior: 'instant' });
 
 					const search = $page.url.searchParams.get('slug');
@@ -98,20 +99,16 @@
 					if (search) {
 						const scrollElem = document.getElementById(search);
 
-						setTimeout(() => {
-							scrollElem?.scrollIntoView(true);
-						}, 100);
-
-						console.log('scrollElem', scrollElem);
-
 						if (scrollElem) {
 							gsap.to(el, {
 								duration: 1,
 								opacity: 1,
+								delay: 0.3,
 								y: 0,
 								ease: 'power2.out',
 								onStart: () => {
 									isTransitioningEnabled.set(true);
+									scrollElem?.scrollIntoView(true);
 								}
 							});
 						}
