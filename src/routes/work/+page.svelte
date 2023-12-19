@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { onDestroy, onMount, tick } from 'svelte';
+
 	import { fade } from 'svelte/transition';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
 	import type { Curtains } from '@types/curtainsjs';
 
+	import gsap from '$lib/gsap';
 	import { lenisStore as lenis } from '$lib/stores/lenis';
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
@@ -19,11 +21,6 @@
 	let el!: HTMLElement;
 	let curtains: undefined | Curtains;
 	let ctx: any = null;
-	let transitioningEnabled = true;
-
-	isTransitioningEnabled.subscribe((value) => {
-		transitioningEnabled = value;
-	});
 
 	useCurtains((curtainsInstance) => {
 		curtains = curtainsInstance;
@@ -90,26 +87,34 @@
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
 
-		if (!transitioningEnabled) {
+		if (!$isTransitioningEnabled) {
 			ctx = gsap.context(() => {
 				if (el) {
-					gsap.set(el, { opacity: 0, y: 20 });
-					gsap.to(el, {
-						duration: 0.3,
-						opacity: 1,
-						delay: 3,
-						y: 0,
-						ease: 'power2.out'
-					});
-				}
+					gsap.set(el, { opacity: 0, y: 200 });
+					scrollTo({ top: 0, behavior: 'instant' });
 
-				const search = $page.url.searchParams.get('slug');
+					const search = $page.url.searchParams.get('slug');
 
-				if (search) {
-					const scrollElem = document.getElementById(search);
+					if (search) {
+						const scrollElem = document.getElementById(search);
 
-					if (scrollElem) {
-						$lenis?.scrollTo(scrollElem, { immediate: true });
+						setTimeout(() => {
+							scrollElem?.scrollIntoView(true);
+						}, 100);
+
+						console.log('scrollElem', scrollElem);
+
+						if (scrollElem) {
+							gsap.to(el, {
+								duration: 1,
+								opacity: 1,
+								y: 0,
+								ease: 'power2.out',
+								onStart: () => {
+									isTransitioningEnabled.set(true);
+								}
+							});
+						}
 					}
 				}
 			});

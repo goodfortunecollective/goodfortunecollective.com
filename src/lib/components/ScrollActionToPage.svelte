@@ -6,7 +6,7 @@
 	import gsap, { ScrollTrigger } from '$lib/gsap';
 	import { goto } from '$app/navigation';
 	import { cls } from '$lib/styles';
-	import { backgroundTheme } from '$lib/stores';
+	import { backgroundTheme, isTransitioningEnabled } from '$lib/stores';
 
 	export let label: string = '';
 	export let href: string = '/';
@@ -47,9 +47,11 @@
 						ctx?.revert();
 						scrollTrigger?.kill();
 
+						isTransitioningEnabled.set(false);
+
 						gsap.to(scrollEl, {
-							duration: 0.3,
-							y: '-20%',
+							duration: 0.5,
+							y: '-100px',
 							opacity: 0,
 							onComplete: () => {
 								goto(base + href);
@@ -57,8 +59,8 @@
 						});
 
 						gsap.to(scrollLabel, {
-							duration: 0.3,
-							y: '-20%'
+							duration: 0.5,
+							y: '-50px'
 						});
 					}
 				});

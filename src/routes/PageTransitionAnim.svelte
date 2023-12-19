@@ -12,7 +12,8 @@
 		isTransitioning,
 		isTransitionDone,
 		project_list_hover,
-		isTransitioningIn
+		isTransitioningIn,
+		isTransitioningEnabled
 	} from '$lib/stores';
 
 	import { ProjectTitle } from '$lib/components';
@@ -164,7 +165,6 @@
 						if (scrollElem) {
 							$lenis.scrollTo(scrollElem, {
 								duration: 1
-								//delay: 0.5
 							});
 						}
 					}
@@ -175,10 +175,12 @@
 	};
 
 	beforeNavigate(async () => {
-		isTransitionDone.set(false);
-		isTransitioning.set(true);
+		if ($isTransitioningEnabled) {
+			isTransitionDone.set(false);
+			isTransitioning.set(true);
 
-		animateTransition();
+			animateTransition();
+		}
 	});
 </script>
 
