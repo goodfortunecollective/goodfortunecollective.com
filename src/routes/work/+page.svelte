@@ -92,7 +92,7 @@
 		if (!$isTransitioningEnabled) {
 			ctx = gsap.context(() => {
 				if (el) {
-					scrollTo({ top: 0, behavior: 'instant' });
+					$lenis?.scrollTo(el, { offset: 0, immediate: true });
 
 					const search = $page.url.searchParams.get('slug');
 
@@ -108,7 +108,7 @@
 								ease: 'power2.out',
 								onStart: () => {
 									isTransitioningEnabled.set(true);
-									scrollElem?.scrollIntoView(true);
+									$lenis?.scrollTo(scrollElem, { offset: 0, immediate: true });
 								}
 							});
 						}

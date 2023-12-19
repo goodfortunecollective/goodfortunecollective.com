@@ -79,8 +79,8 @@
 	});
 
 	afterNavigate(() => {
+		disableScrollHandling();
 		if ($isTransitioningEnabled) {
-			disableScrollHandling();
 			setTimeout(
 				() => {
 					scrollTo({ top: 0, behavior: 'instant' });
