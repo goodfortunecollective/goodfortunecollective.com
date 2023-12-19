@@ -15,6 +15,7 @@ export const isTransitionDone = writable(false as boolean);
 // page transition states
 export const isTransitioning = writable(false as boolean);
 export const isTransitioningIn = writable(false as boolean);
+export const isTransitioningEnabled = writable(true as boolean);
 
 // scroll state background
 export const backgroundColor = writable('#ffffff' as string);
