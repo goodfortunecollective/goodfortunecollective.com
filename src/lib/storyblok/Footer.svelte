@@ -3,12 +3,24 @@
 	import { cva } from 'class-variance-authority';
 	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 
-	import { backgroundTheme } from '$lib/stores';
+	import gsap from '$lib/gsap';
+	import { backgroundTheme, isTransitioningEnabled } from '$lib/stores';
 	import { cls } from '$lib/styles';
 	import { Gfc } from '$lib/components';
 	import { inViewColorTransition } from '$lib/utils/animations';
+	import { onMount } from 'svelte';
 
 	export let blok: any;
+
+	let el!: HTMLElement;
+
+	isTransitioningEnabled.subscribe((value) => {
+		gsap.to(el, {
+			opacity: value ? 1 : 0,
+			duration: 0.4,
+			ease: 'power4.out'
+		});
+	});
 
 	const hightlightStyle = cva('duration-1000 ease-out', {
 		variants: {
@@ -33,13 +45,20 @@
 			theme: 'light'
 		}
 	});
+
+	onMount(() => {
+		if (!$isTransitioningEnabled) {
+			gsap.set(el, { opacity: 0 });
+		}
+	});
 </script>
 
 <footer
 	use:storyblokEditable={blok}
 	{...$$restProps}
+	bind:this={el}
 	id="footer"
-	class="relative pt-8 md:pt-32 xl:pt-48"
+	class={cls('relative pt-8 md:pt-32 xl:pt-48', 'c-footer')}
 >
 	<div class="relative z-[1] w-full py-6">
 		<div class="grid grid-cols-12 py-2">
