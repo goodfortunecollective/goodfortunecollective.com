@@ -15,11 +15,13 @@
 	let el!: HTMLElement;
 
 	isTransitioningEnabled.subscribe((value) => {
-		gsap.to(el, {
-			opacity: value ? 1 : 0,
-			duration: 0.4,
-			ease: 'power4.out'
-		});
+		if (el && gsap) {
+			gsap.to(el, {
+				opacity: value ? 1 : 0,
+				duration: 0.4,
+				ease: 'power4.out'
+			});
+		}
 	});
 
 	const hightlightStyle = cva('duration-1000 ease-out', {
