@@ -6,13 +6,14 @@
 	import gsap, { ScrollTrigger } from '$lib/gsap';
 	import { goto } from '$app/navigation';
 	import { cls } from '$lib/styles';
-	import { backgroundTheme } from '$lib/stores';
+	import { backgroundTheme, isTransitioningEnabled } from '$lib/stores';
 
 	export let label: string = '';
 	export let href: string = '/';
 	export let disabled: boolean = false;
 
 	let scrollEl!: HTMLElement;
+	let scrollLabel!: HTMLElement;
 
 	$: parallaxEffect = 0 as number;
 	let scrollTrigger: any = null;
@@ -45,7 +46,22 @@
 
 						ctx?.revert();
 						scrollTrigger?.kill();
-						setTimeout(() => goto(base + href), 0);
+
+						isTransitioningEnabled.set(false);
+
+						gsap.to(scrollEl, {
+							duration: 0.5,
+							y: '-100px',
+							opacity: 0,
+							onComplete: () => {
+								goto(base + href);
+							}
+						});
+
+						gsap.to(scrollLabel, {
+							duration: 0.5,
+							y: '-50px'
+						});
 					}
 				});
 
@@ -69,6 +85,7 @@
 			<p class="font-medium uppercase tracking-widest">Scroll</p>
 			<div class="ScrollActionToPage-bar relative h-32 w-px" />
 			<span
+				bind:this={scrollLabel}
 				class="ScrollActionToPage-label inline-flex h-[1em] font-degular-display text-7xl leading-8 md:text-9xl lg:text-[12em]"
 				>{label}</span
 			>

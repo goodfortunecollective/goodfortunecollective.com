@@ -6,7 +6,7 @@
 
 	import { afterNavigate, disableScrollHandling } from '$app/navigation';
 	import { browser } from '$app/environment';
-	import { isIntroDone, backgroundColor } from '$lib/stores';
+	import { isIntroDone, backgroundColor, isTransitioningEnabled } from '$lib/stores';
 	import gsap, { ScrollTrigger, CustomEase } from '$lib/gsap';
 
 	import { lenisStore as lenis, setLenisStore } from '$lib/stores/lenis';
@@ -15,6 +15,7 @@
 	import { ProjectListHover } from '$lib/components';
 
 	import type { LayoutData } from './$types';
+	import { pageLeaveDuration, pageTransitionPauseDuration } from '$lib/utils/page-transitions';
 
 	import Loader from './Loader.svelte';
 	import ScrollIndicator from './ScrollIndicator.svelte';
@@ -24,7 +25,6 @@
 	import Cursor from './Cursor.svelte';
 
 	import '../app.css';
-	import { pageLeaveDuration, pageTransitionPauseDuration } from '$lib/utils/page-transitions';
 
 	export let data: LayoutData;
 
@@ -37,7 +37,9 @@
 
 	$: if (browser && $lenis && hash) {
 		const target = document.querySelector(hash);
-		$lenis.scrollTo(target, { offset: 0 });
+		if ($isTransitioningEnabled) {
+			$lenis.scrollTo(target, { offset: 0 });
+		}
 	}
 
 	// ScrollTrigger.defaults({ markers: process.env.NODE_ENV === 'development' });
@@ -77,13 +79,15 @@
 	});
 
 	afterNavigate(() => {
-		disableScrollHandling();
-		setTimeout(
-			() => {
-				scrollTo({ top: 0, behavior: 'instant' });
-			},
-			pageLeaveDuration + pageTransitionPauseDuration / 2
-		);
+		if ($isTransitioningEnabled) {
+			disableScrollHandling();
+			setTimeout(
+				() => {
+					scrollTo({ top: 0, behavior: 'instant' });
+				},
+				pageLeaveDuration + pageTransitionPauseDuration / 2
+			);
+		}
 	});
 
 	function handleCompleteLoader() {
