@@ -103,14 +103,15 @@
 							gsap.to(el, {
 								duration: 1,
 								opacity: 1,
-								delay: 0.3,
+								delay: 0.2,
 								y: 0,
-								ease: 'power2.out',
-								onStart: () => {
-									isTransitioningEnabled.set(true);
-									$lenis?.scrollTo(scrollElem, { offset: 0, immediate: true });
-								}
+								ease: 'power2.out'
 							});
+
+							setTimeout(() => {
+								isTransitioningEnabled.set(true);
+								$lenis?.scrollTo(scrollElem, { offset: 0, immediate: true });
+							}, 100);
 						}
 					}
 				}
