@@ -1,5 +1,5 @@
 /*!
- * MotionPathHelper 3.12.3
+ * MotionPathHelper 3.12.4
  * https://gsap.com
  *
  * @license Copyright 2008-2023, GreenSock. All rights reserved.
@@ -250,6 +250,6 @@ export class MotionPathHelper {
 MotionPathHelper.register = _initCore;
 MotionPathHelper.create = (target, vars) => new MotionPathHelper(target, vars);
 MotionPathHelper.editPath = (path, vars) => PathEditor.create(path, vars);
-MotionPathHelper.version = "3.12.3";
+MotionPathHelper.version = "3.12.4";
 
 export { MotionPathHelper as default };
