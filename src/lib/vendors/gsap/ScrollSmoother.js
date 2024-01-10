@@ -1,5 +1,5 @@
 /*!
- * ScrollSmoother 3.12.3
+ * ScrollSmoother 3.12.4
  * https://gsap.com
  *
  * @license Copyright 2008-2023, GreenSock. All rights reserved.
@@ -670,7 +670,7 @@ export class ScrollSmoother {
 
 }
 
-ScrollSmoother.version = "3.12.3";
+ScrollSmoother.version = "3.12.4";
 ScrollSmoother.create = vars => (_mainInstance && vars && _mainInstance.content() === _toArray(vars.content)[0]) ? _mainInstance : new ScrollSmoother(vars);
 ScrollSmoother.get = () => _mainInstance;
 

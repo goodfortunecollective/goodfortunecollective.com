@@ -1,5 +1,5 @@
 /*!
- * ScrambleTextPlugin 3.12.3
+ * ScrambleTextPlugin 3.12.4
  * https://gsap.com
  *
  * @license Copyright 2008-2023, GreenSock. All rights reserved.
@@ -53,7 +53,7 @@ let gsap, _coreInitted,
 
 
 export const ScrambleTextPlugin = {
-	version:"3.12.3",
+	version:"3.12.4",
 	name:"scrambleText",
 	register(core, Plugin, propTween) {
 		gsap = core;
