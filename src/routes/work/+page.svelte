@@ -83,13 +83,13 @@
 	$: projects = getProjectsByFilter(data.projects, filter);
 
 	onMount(() => {
-		gsap.set(el, { opacity: 0, y: 200 });
-
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
 
 		if (!$isTransitioningEnabled) {
+			gsap.set(el, { opacity: 0, y: 200 });
+
 			ctx = gsap.context(() => {
 				if (el) {
 					$lenis?.scrollTo(el, { offset: 0, immediate: true });
@@ -128,9 +128,9 @@
 	<StoryblokComponent blok={data.story.content} />
 {/if}
 
-<section class="pt-32 3xl:pt-48" bind:this={el}>
+<section class="pb-16 pt-16 3xl:pb-24 3xl:pt-8" bind:this={el}>
 	<div class="relative hidden lg:block">
-		<MenuList class="absolute right-0 top-32 z-10 flex flex-col items-end gap-4 pr-8 pt-8">
+		<MenuList class="absolute right-0 top-0 z-10 flex flex-col items-end gap-4 pr-8 pt-8">
 			<div in:fade={{ delay: 0 }} out:fade={{ delay: categories.length * 25 }}>
 				<MenuItem
 					name="All Projects"
