@@ -1,16 +1,14 @@
 <script lang="ts">
-	import { onDestroy, onMount, tick } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 
 	import { fade } from 'svelte/transition';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
-	import { cva } from 'class-variance-authority';
 	import type { Curtains } from '@types/curtainsjs';
 
 	import gsap from '$lib/gsap';
 	import { lenisStore as lenis } from '$lib/stores/lenis';
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
-	import { cls } from '$lib/styles';
 	import { ProjectListItem } from '$lib/components';
 	import { project_list_hover, isTransitioningEnabled } from '$lib/stores';
 	import { useCurtains } from '$lib/utils/useCurtains';
@@ -31,17 +29,22 @@
 	//$: filter = $page.url.searchParams.get('filter');
 	$: filter = $page.url.hash.slice(1);
 
-	const variants = cva('', {
-		variants: {
-			layout: {
-				left: 'col-span-10 col-start-1 z-1 text-right md:text-left md:col-span-5 md:col-start-2',
-				right: 'col-span-10 col-start-3 text-left md:col-span-5 md:col-start-6 md:text-right md:z-2'
-			}
-		},
-		defaultVariants: {
-			layout: 'left'
+	const projectGridItemsClasses = [
+		'col-span-10 col-start-3 md:col-span-6 md:col-start-5 md:mt-[16.66%] z-2 text-left',
+		'col-span-10 col-start-1 md:col-span-6 md:col-start-2 md:-mt-[4.166%] z-1 text-right md:text-right',
+		'col-span-10 col-start-3 md:col-span-6 md:col-start-5 md:mt-[16.66%] z-2 text-left',
+		'col-span-10 col-start-1 md:col-span-4 md:col-start-2 md:-mt-[4.166%] z-1 text-right md:text-right',
+		'col-span-10 col-start-3 md:col-span-4 md:col-start-8 md:mt-[16.66%] z-2 text-left',
+		'col-span-10 col-start-1 md:col-span-7 md:col-start-2 md:-mt-[8.33%] z-1 text-right'
+	];
+
+	const getProjectGridItemClass = (index: number) => {
+		if (index === 0) {
+			return 'col-span-10 md:col-start-1 md:col-span-6  md:-mt-[8.33%] z-2 text-right';
+		} else {
+			return projectGridItemsClasses[(index - 1) % 6];
 		}
-	});
+	};
 
 	/**
 	 * @param {any} projects
@@ -83,13 +86,13 @@
 	$: projects = getProjectsByFilter(data.projects, filter);
 
 	onMount(() => {
-		gsap.set(el, { opacity: 0, y: 200 });
-
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
 
 		if (!$isTransitioningEnabled) {
+			gsap.set(el, { opacity: 0, y: 200 });
+
 			ctx = gsap.context(() => {
 				if (el) {
 					$lenis?.scrollTo(el, { offset: 0, immediate: true });
@@ -128,9 +131,9 @@
 	<StoryblokComponent blok={data.story.content} />
 {/if}
 
-<section class="pt-32 3xl:pt-48" bind:this={el}>
+<section class="pb-16 pt-8 3xl:pb-16 3xl:pt-8" bind:this={el}>
 	<div class="relative hidden lg:block">
-		<MenuList class="absolute right-0 top-32 z-10 flex flex-col items-end gap-4 pr-8 pt-8">
+		<MenuList class="absolute right-0 top-0 z-10 flex flex-col items-end gap-4 pr-8 pt-8">
 			<div in:fade={{ delay: 0 }} out:fade={{ delay: categories.length * 25 }}>
 				<MenuItem
 					name="All Projects"
@@ -167,8 +170,8 @@
 					{slug}
 					{content}
 					parallaxSpeed={index % 2 === 0 ? '0.99' : '1.01'}
-					layout={index % 2 === 0 ? 'left' : 'right'}
-					class={cls(variants({ layout: index % 2 === 0 ? 'left' : 'right' }))}
+					layout={index % 2 === 0 ? (index === 0 ? 'right' : 'left') : 'right'}
+					class={getProjectGridItemClass(index)}
 				/>
 			</div>
 		{/each}
