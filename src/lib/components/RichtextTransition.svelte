@@ -4,7 +4,6 @@
 	import { cls } from '$lib/styles';
 	import gsap, { SplitText, ScrollTrigger } from '$lib/gsap';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
-	import CardsImage from '$lib/storyblok/CardsImage.svelte';
 
 	let clazz: string = '';
 	export { clazz as class };

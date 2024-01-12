@@ -7,7 +7,7 @@
 	import { base } from '$app/paths';
 	import { cls } from '$lib/styles';
 	import gsap, { ScrollTrigger } from '$lib/gsap';
-	import { ScrollPlane, Heading } from '$lib/components';
+	import { ScrollPlane, Heading, RichtextAnimated } from '$lib/components';
 	import { project_list_hover, isTransitioning } from '$lib/stores';
 
 	export let name: string;
@@ -19,6 +19,8 @@
 
 	$: description = renderRichText(content.description);
 	$: innerWidth = 0;
+
+	let descriptionTextRef: RichtextAnimated | null = null;
 
 	let isActive = false;
 
@@ -44,6 +46,8 @@
 
 	function onEnter() {
 		project_list_hover.set(name);
+
+		descriptionTextRef?.animateIn();
 	}
 
 	const onLeave = () => {
@@ -51,6 +55,8 @@
 		if (!$isTransitioning) {
 			project_list_hover.set(null);
 		}
+
+		descriptionTextRef?.animateOut();
 	};
 
 	onMount(() => {
@@ -136,26 +142,10 @@
 				class="uppercase tracking-wide text-stone-450 lg:text-sm">{content.brand}</Heading
 			>
 			<div class="text-md mt-4 max-w-md overflow-hidden font-medium">
-				<span
-					class={cls('block transition-transform lg:translate-y-full', 'c-project-list-item__desc')}
-				>
-					{@html description}
-				</span>
+				<RichtextAnimated bind:this={descriptionTextRef}>
+					<span class="wrap" />{@html description}
+				</RichtextAnimated>
 			</div>
 		</div>
 	</a>
 </div>
-
-<style lang="scss">
-	.c-project-list-item {
-		&__container {
-			&:hover {
-				.c-project-list-item {
-					&__desc {
-						transform: translateY(0%);
-					}
-				}
-			}
-		}
-	}
-</style>
