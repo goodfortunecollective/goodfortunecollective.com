@@ -31,7 +31,7 @@
 
 	const projectGridItemsClasses = [
 		'col-span-10 col-start-3 md:col-span-5 md:col-start-6 md:mt-[16.66%]  3xl:mt-[8.333%] z-2 text-left md:text-right',
-		'col-span-10 col-start-1 md:col-span-6 md:col-start-2 md:-mt-[4.166%] z-1 text-right md:text-left',
+		'col-span-10 col-start-1 md:col-span-6 md:col-start-2 md:mt-0 z-1 text-right md:text-left',
 		'col-span-10 col-start-3 md:col-span-6 md:col-start-5 md:mt-[16.66%] z-2 text-left md:text-right',
 		'col-span-10 col-start-1 md:col-span-4 md:col-start-2 md:-mt-[4.166%] z-1 text-right md:text-left',
 		'col-span-10 col-start-3 md:col-span-4 md:col-start-7 md:mt-0 z-2 text-left md:text-right',
