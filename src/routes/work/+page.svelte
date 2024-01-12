@@ -30,17 +30,17 @@
 	$: filter = $page.url.hash.slice(1);
 
 	const projectGridItemsClasses = [
-		'col-span-10 col-start-3 md:col-span-6 md:col-start-5 md:mt-[16.66%] z-2 text-left',
+		'col-span-10 col-start-3 md:col-span-5 md:col-start-6 md:mt-[16.66%] z-2 text-left',
 		'col-span-10 col-start-1 md:col-span-6 md:col-start-2 md:-mt-[4.166%] z-1 text-right md:text-right',
 		'col-span-10 col-start-3 md:col-span-6 md:col-start-5 md:mt-[16.66%] z-2 text-left',
 		'col-span-10 col-start-1 md:col-span-4 md:col-start-2 md:-mt-[4.166%] z-1 text-right md:text-right',
-		'col-span-10 col-start-3 md:col-span-4 md:col-start-8 md:mt-[16.66%] z-2 text-left',
-		'col-span-10 col-start-1 md:col-span-7 md:col-start-2 md:-mt-[8.33%] z-1 text-right'
+		'col-span-10 col-start-3 md:col-span-4 md:col-start-7 md:mt-0 z-2 text-left',
+		'col-span-10 col-start-1 md:col-span-7 md:col-start-2 md:-mt-0 z-1 text-right'
 	];
 
 	const getProjectGridItemClass = (index: number) => {
 		if (index === 0) {
-			return 'col-span-10 md:col-start-1 md:col-span-6  md:-mt-[8.33%] z-2 text-right';
+			return 'col-span-10 md:col-start-3 md:col-span-5  md:-mt-[8.33%] z-2 text-left';
 		} else {
 			return projectGridItemsClasses[(index - 1) % 6];
 		}
@@ -132,8 +132,8 @@
 {/if}
 
 <section class="pb-16 pt-8 3xl:pb-16 3xl:pt-8" bind:this={el}>
-	<div class="relative hidden lg:block">
-		<MenuList class="absolute right-0 top-0 z-10 flex flex-col items-end gap-4 pr-8 pt-8">
+	<div class="relative hidden xl:block">
+		<MenuList class="fixed right-0 top-32 z-10 flex flex-col items-end gap-4 pr-8 pt-8">
 			<div in:fade={{ delay: 0 }} out:fade={{ delay: categories.length * 25 }}>
 				<MenuItem
 					name="All Projects"
@@ -170,7 +170,7 @@
 					{slug}
 					{content}
 					parallaxSpeed={index % 2 === 0 ? '0.99' : '1.01'}
-					layout={index % 2 === 0 ? (index === 0 ? 'right' : 'left') : 'right'}
+					layout={index % 2 === 0 ? 'left' : 'right'}
 					class={getProjectGridItemClass(index)}
 				/>
 			</div>

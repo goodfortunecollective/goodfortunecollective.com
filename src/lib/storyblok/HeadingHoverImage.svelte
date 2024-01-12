@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { storyblokEditable } from '@storyblok/svelte';
 	import { spring } from 'svelte/motion';
-	import { onDestroy, onMount } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import { cva } from 'class-variance-authority';
 
 	import gsap from '$lib/gsap';
@@ -17,9 +17,9 @@
 		variants: {
 			size: {
 				sm: 'h-16 w-16',
-				md: ' h-32 w-32',
-				lg: ' h-64 w-64',
-				xl: ' h-96 w-96'
+				md: 'h-32 w-32',
+				lg: 'h-64 w-64',
+				xl: 'h-96 w-96'
 			}
 		},
 		defaultVariants: {
