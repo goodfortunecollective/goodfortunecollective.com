@@ -30,12 +30,6 @@
 					<slot />
 				</ul>
 			{/if}
-			<div
-				class={cls(
-					'mr-6 mt-2 w-px flex-1 origin-top transform bg-white bg-opacity-50 transition-transform ease-in-out',
-					isOpen ? 'scale-y-100' : 'scale-y-0'
-				)}
-			></div>
 		</div>
 	</div>
 </div>

@@ -131,7 +131,7 @@
 
 			plane.onRender(() => {
 				const velocity = clamp($lenis ? $lenis.velocity : 0, -60, 60);
-				plane.uniforms.scrollVelocity.value = velocity;
+				plane.uniforms.scrollVelocity.value = velocity / 1.5;
 
 				// not super optimized but since we're translating its parent container it's mandatory
 				plane.updatePosition();
