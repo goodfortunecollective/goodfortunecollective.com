@@ -10,6 +10,7 @@ export { default as ProjectListHover } from './ProjectListHover.svelte';
 export { default as ProjectListItem } from './ProjectListItem.svelte';
 export { default as ProjectTitle } from './ProjectTitle.svelte';
 export { default as RichtextTransition } from './RichtextTransition.svelte';
+export { default as RichtextAnimated } from './RichtextAnimated.svelte';
 export { default as ScrollActionToPage } from './ScrollActionToPage.svelte';
 export { default as ScrollPlane } from './ScrollPlane.svelte';
 export { default as Spacer } from './Spacer.svelte';
