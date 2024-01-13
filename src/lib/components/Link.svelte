@@ -37,7 +37,7 @@
 	{href}
 	target={isExternal ? '_blank' : undefined}
 	rel={isExternal ? 'noopener' : undefined}
-	class="3xl:text-md link flex h-10 flex-row items-stretch text-xs font-bold uppercase tracking-widest 4xl:text-lg"
+	class="3xl:text-md link flex h-10 flex-row items-stretch text-xs font-bold uppercase tracking-widest hover:no-underline 4xl:text-lg"
 >
 	{#if label}
 		<span class="flex items-center pr-4">{label}</span>
