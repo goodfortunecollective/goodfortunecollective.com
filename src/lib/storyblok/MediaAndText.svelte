@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fade } from 'svelte/transition';
 	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
 	import { inview } from 'svelte-inview';
@@ -49,6 +50,7 @@
 							alt={blok.image.name}
 							loading="lazy"
 							decoding="async"
+							in:fade={{ duration: 500 }}
 						/>
 					{/if}
 				</figure>

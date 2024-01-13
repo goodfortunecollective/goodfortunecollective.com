@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fade } from 'svelte/transition';
 	import { inview } from 'svelte-inview';
 	import { onDestroy } from 'svelte';
 	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
@@ -69,6 +70,7 @@
 				class="-translate-x-1/8 absolute left-1/2 top-0 col-span-12 translate-y-1/4 -rotate-45 scale-150 transform"
 				loading="lazy"
 				decoding="async"
+				in:fade={{ duration: 500 }}
 			/>
 		{/if}
 		<div class="col-span-10 col-start-2 py-32 lg:col-span-6 lg:col-start-3" bind:this={contentEl}>

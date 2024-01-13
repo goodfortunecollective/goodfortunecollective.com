@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fade } from 'svelte/transition';
 	import { onDestroy, onMount } from 'svelte';
 	import { cva } from 'class-variance-authority';
 
@@ -80,6 +81,7 @@
 			style="--parallax-effect: {parallaxEffect}"
 			loading="lazy"
 			decoding="async"
+			in:fade={{ duration: 500 }}
 		/>
 	</div>
 </div>
