@@ -1,12 +1,16 @@
 <script lang="ts">
+	import { onDestroy, onMount } from 'svelte';
 	import { inview } from 'svelte-inview';
 	import { cva } from 'class-variance-authority';
 	import { renderRichText } from '@storyblok/svelte';
+
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	import { base } from '$app/paths';
 	import { cls } from '$lib/styles';
 	import { ScrollPlane, Heading, RichtextAnimated, Parallax } from '$lib/components';
 	import { project_list_hover, isTransitioning } from '$lib/stores';
+	import gsap from '$lib/gsap';
 
 	export let name: string;
 	export let slug: string;
@@ -20,7 +24,7 @@
 	let descriptionTextRef: RichtextAnimated | null = null;
 
 	let isActive = false;
-
+	let ctx: any = null;
 	let el!: HTMLElement;
 
 	const variants = cva('duration-1000 ease-out', {
@@ -63,6 +67,32 @@
 			isActive = true;
 		}
 	};
+
+	onMount(() => {
+		gsap.set(el, { opacity: 0, y: 100 });
+	});
+
+	useTransitionReady(() => {
+		ctx = gsap.context(() => {
+			gsap.fromTo(
+				el,
+				{
+					opacity: 0,
+					y: 100
+				},
+				{
+					opacity: 1,
+					y: 0,
+					duration: 0.75,
+					ease: 'power3.out'
+				}
+			);
+		}, el);
+	});
+
+	onDestroy(() => {
+		if (ctx) ctx.revert();
+	});
 </script>
 
 <div class={cls('pointer-events-none mb-24 lg:mb-0', $$props.class)} bind:this={el}>
@@ -74,8 +104,7 @@
 			on:inview_change={inViewItem}
 			class={cls(
 				'flex-no-wrap pointer-events-auto flex w-full flex-col hover:no-underline',
-				variants({ theme: theme, layout: layout }),
-				'c-project-list-item__container'
+				variants({ theme: theme, layout: layout })
 			)}
 		>
 			<div class="relative w-full" on:mouseenter={onEnter} on:mouseleave={onLeave} role="group">
