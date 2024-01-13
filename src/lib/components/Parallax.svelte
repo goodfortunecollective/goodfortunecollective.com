@@ -29,7 +29,7 @@
 					id,
 					trigger: triggerEl,
 					scrub: true,
-					start: 'top bottom',
+					start: 'top 75%',
 					end: 'bottom top',
 					onUpdate: (e) => {
 						setY(e.progress * y);
