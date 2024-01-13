@@ -4,7 +4,6 @@
 	import { ScrollTrigger } from '$lib/gsap';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 	import { backgroundColor, backgroundTheme, isTransitioning } from '$lib/stores';
-	import { Body } from 'svelte-body';
 	import { pageTransitionPauseDuration } from '$lib/utils/page-transitions';
 
 	export let preload: boolean = false;
