@@ -6,6 +6,7 @@ export { default as Image } from './Image.svelte';
 export { default as Link } from './Link.svelte';
 export { default as LinkListItem } from './LinkListItem.svelte';
 export { default as NumberedListItem } from './NumberedListItem.svelte';
+export { default as Parallax } from './Parallax.svelte';
 export { default as ProjectListHover } from './ProjectListHover.svelte';
 export { default as ProjectListItem } from './ProjectListItem.svelte';
 export { default as ProjectTitle } from './ProjectTitle.svelte';

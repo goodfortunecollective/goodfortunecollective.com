@@ -26,5 +26,5 @@ if (browser) {
 }
 
 
-export { CustomEase, Draggable, Flip,InertiaPlugin, MotionPathPlugin, ScrollSmoother, ScrollToPlugin, ScrollTrigger, SplitText };
+export { CustomEase, Draggable, Flip,InertiaPlugin, MotionPathPlugin, ScrollToPlugin, ScrollTrigger, SplitText };
 export default gsap;

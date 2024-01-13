@@ -16,6 +16,8 @@
 	import MenuList from './MenuList.svelte';
 	import MenuItem from './MenuItem.svelte';
 
+	$: innerWidth = 0;
+
 	let el!: HTMLElement;
 	let curtains: undefined | Curtains;
 	let ctx: any = null;
@@ -37,6 +39,8 @@
 		'col-span-10 col-start-3 md:col-span-4 md:col-start-7 md:mt-0 z-2 text-left md:text-right',
 		'col-span-10 col-start-1 md:col-span-7 md:col-start-2 md:-mt-0 z-1 text-right md:text-left'
 	];
+
+	const projectGridParallax = [1, -0.25, 0.25, -0.25, 0.25, -1.4];
 
 	const getProjectGridItemClass = (index: number) => {
 		if (index === 0) {
@@ -127,6 +131,8 @@
 	});
 </script>
 
+<svelte:window bind:innerWidth />
+
 {#if data.story}
 	<StoryblokComponent blok={data.story.content} />
 {/if}
@@ -162,14 +168,14 @@
 
 	<div>
 		{#each projects as { name, slug, content }, index (name)}
-			<div class="grid grid-cols-12" id={`${slug}`}>
+			<div id={`${slug}`} class="grid grid-cols-12">
 				<ProjectListItem
 					theme="dark"
 					hover={$project_list_hover === name}
 					{name}
 					{slug}
 					{content}
-					parallaxSpeed={index % 2 === 0 ? '0.99' : '1.01'}
+					parallaxSpeed={projectGridParallax[index % 6]}
 					layout={index % 2 === 0 ? 'left' : 'right'}
 					class={getProjectGridItemClass(index)}
 				/>
