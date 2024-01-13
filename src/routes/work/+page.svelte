@@ -2,6 +2,7 @@
 	import { onDestroy, onMount } from 'svelte';
 
 	import { fade } from 'svelte/transition';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 	import type { Curtains } from '@types/curtainsjs';
 
@@ -17,6 +18,8 @@
 	import MenuItem from './MenuItem.svelte';
 
 	$: innerWidth = 0;
+
+	let activeFilter = false;
 
 	let el!: HTMLElement;
 	let curtains: undefined | Curtains;
@@ -126,6 +129,10 @@
 		}
 	});
 
+	useTransitionReady(() => {
+		activeFilter = true;
+	});
+
 	onDestroy(() => {
 		ctx?.revert();
 	});
@@ -139,31 +146,33 @@
 
 <section class="pb-16 pt-8 3xl:pb-16 3xl:pt-8" bind:this={el}>
 	<div class="relative hidden xl:block">
-		<MenuList class="fixed right-4 top-32 z-10 flex flex-col items-end gap-4 pr-8 pt-8">
-			<div in:fade={{ delay: 0 }} out:fade={{ delay: categories.length * 25 }}>
-				<MenuItem
-					name="All Projects"
-					sup={data.projects.length}
-					url={`${base}/work#all`}
-					selected={!filter || filter === 'all'}
-				/>
-			</div>
-			{#each categories as category, index (category.id)}
-				{#if category.count > 0}
-					<div
-						in:fade|global={{ delay: index * 50 }}
-						out:fade|global={{ delay: (categories.length - index) * 25, duration: 150 }}
-					>
-						<MenuItem
-							name={category.name}
-							sup={category.count}
-							url={`${base}/work#${category.value}`}
-							selected={filter === category.value}
-						/>
-					</div>
-				{/if}
-			{/each}
-		</MenuList>
+		{#if activeFilter}
+			<MenuList class="fixed right-4 top-32 z-10 flex flex-col items-end gap-4 pr-8 pt-8">
+				<div in:fade={{ delay: 0 }} out:fade={{ delay: categories.length * 25 }}>
+					<MenuItem
+						name="All Projects"
+						sup={data.projects.length}
+						url={`${base}/work#all`}
+						selected={!filter || filter === 'all'}
+					/>
+				</div>
+				{#each categories as category, index (category.id)}
+					{#if category.count > 0}
+						<div
+							in:fade|global={{ delay: index * 50 }}
+							out:fade|global={{ delay: (categories.length - index) * 25, duration: 150 }}
+						>
+							<MenuItem
+								name={category.name}
+								sup={category.count}
+								url={`${base}/work#${category.value}`}
+								selected={filter === category.value}
+							/>
+						</div>
+					{/if}
+				{/each}
+			</MenuList>
+		{/if}
 	</div>
 
 	<div>
