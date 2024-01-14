@@ -348,9 +348,9 @@
 			</div>
 		</div>
 	</section>
-	<div class="h-[50vh]" />
+	<div class="h-[80vh]" />
 	<BackgroundTheme startColor="#1a1a1a" endColor="#fff" startTheme="dark" endTheme="light" />
-	<div class="h-[50vh]" />
+	<div class="h-[20vh]" />
 </div>
 
 <style lang="scss">
@@ -359,8 +359,8 @@
 			// prettier-ignore
 			transform:
 				scale3d(
-					calc(0.25 + var(--video-effect) * 0.75),
-					calc(0.25 + var(--video-effect) * 0.75),
+					calc(0.3 + var(--video-effect) * 0.7),
+					calc(0.3 + var(--video-effect) * 0.7),
 					1
 				)
 				rotateX(var(--rotation-x))
