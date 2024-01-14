@@ -93,6 +93,10 @@
 	);
 </script>
 
-<span bind:this={element} class={cls('inline-block break-words', clazz)} {style}>
+<span
+	bind:this={element}
+	class={cls('[&_a]:animated-underline inline-block break-words', clazz)}
+	{style}
+>
 	<span class="wrap" /><slot />
 </span>

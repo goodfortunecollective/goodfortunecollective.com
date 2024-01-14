@@ -82,18 +82,35 @@
 		vertical-align: text-top;
 	}
 
-	.split-line__underline::after {
+	.animated-underline {
+		position: relative;
+	}
+
+	.animated-underline::after {
 		content: '';
 		display: block;
 		position: absolute;
-		bottom: 0;
+		bottom: -2px;
 		width: 0;
-		height: 4px;
+		height: 1px;
 		background: currentColor;
 		transition: width 0.3s;
 	}
 
-	.split-line__underline:hover::after {
+	.animated-underline__align-right::after {
+		right: 0
+	}
+
+	.animated-underline__heading::after {
+		height: 4px;
+		bottom: 0px;
+	}
+
+	.animated-underline:hover {
+		text-decoration-line: none;
+	}
+
+	.animated-underline:hover::after {
 		width: 100%;
 	}
 }

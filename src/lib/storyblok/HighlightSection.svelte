@@ -64,7 +64,7 @@
 				</Heading>
 				<Spacer gap="extra-large" />
 				<a href={blok.link.cached_url}>
-					<Heading size="h2" underline as="h4" class="text-rose-50 underline">
+					<Heading size="h2" as="h4" underline class="text-rose-50 underline">
 						{blok.label}
 					</Heading>
 				</a>

@@ -9,8 +9,14 @@
 </script>
 
 <li class={cls('mb-3 whitespace-nowrap text-right text-xs font-bold uppercase tracking-wider')}>
-	<a href={url} class={cls(selected ? 'text-white' : 'text-stone-450')}>
-		<span class={cls(selected && 'font-bold')}>{name}</span>
+	<span
+		class={cls(selected ? 'text-white [&_a]:text-white' : 'text-stone-450 [&_a]:text-stone-450')}
+	>
+		<a
+			href={url}
+			class={cls('animated-underline animated-underline__align-right', selected && 'font-bold')}
+			>{name}</a
+		>
 		<sup class="font-features sups -mt-1 font-normal">{zeroPad(sup)}</sup>
-	</a>
+	</span>
 </li>

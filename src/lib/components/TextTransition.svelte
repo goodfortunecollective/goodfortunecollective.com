@@ -20,7 +20,9 @@
 		if (enabled) {
 			text = new SplitText(element, {
 				type: 'lines,words,chars',
-				linesClass: underline ? 'split-line split-line__underline' : 'split-line',
+				linesClass: underline
+					? 'split-line animated-underline animated-underline__heading'
+					: 'split-line',
 				charClass: 'split-char'
 			});
 
