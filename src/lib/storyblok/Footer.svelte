@@ -80,7 +80,7 @@
 						use:inview
 						on:inview_change={inViewColorTransition}
 						class={cls(
-							'animated-underline text-rose-50',
+							'c-animated-underline text-rose-50',
 							hightlightStyle({ theme: $backgroundTheme })
 						)}
 						href={`mailto:${blok.email}`}>{blok.email}</a
@@ -102,7 +102,7 @@
 						href={blok.address}
 						use:inview
 						on:inview_change={inViewColorTransition}
-						class={cls('animated-underline', hightlightStyle({ theme: $backgroundTheme }))}
+						class={cls('c-animated-underline', hightlightStyle({ theme: $backgroundTheme }))}
 						>Vancouver, Canada</a
 					>
 				</p>

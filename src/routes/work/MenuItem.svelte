@@ -14,7 +14,7 @@
 	>
 		<a
 			href={url}
-			class={cls('animated-underline animated-underline__align-right', selected && 'font-bold')}
+			class={cls('c-animated-underline c-animated-underline__align-right', selected && 'font-bold')}
 			>{name}</a
 		>
 		<sup class="font-features sups -mt-1 font-normal">{zeroPad(sup)}</sup>

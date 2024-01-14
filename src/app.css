@@ -82,11 +82,11 @@
 		vertical-align: text-top;
 	}
 
-	.animated-underline {
+	.c-animated-underline {
 		position: relative;
 	}
 
-	.animated-underline::after {
+	.c-animated-underline::after {
 		content: '';
 		display: block;
 		position: absolute;
@@ -97,20 +97,20 @@
 		transition: width 0.3s;
 	}
 
-	.animated-underline__align-right::after {
+	.c-animated-underline__align-right::after {
 		right: 0
 	}
 
-	.animated-underline__heading::after {
+	.c-animated-underline__heading::after {
 		height: 4px;
 		bottom: 0px;
 	}
 
-	.animated-underline:hover {
+	.c-animated-underline:hover {
 		text-decoration-line: none;
 	}
 
-	.animated-underline:hover::after {
+	.c-animated-underline:hover::after {
 		width: 100%;
 	}
 }

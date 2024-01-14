@@ -21,7 +21,7 @@
 			text = new SplitText(element, {
 				type: 'lines,words,chars',
 				linesClass: underline
-					? 'split-line animated-underline animated-underline__heading'
+					? 'split-line c-animated-underline c-animated-underline__heading'
 					: 'split-line',
 				charClass: 'split-char'
 			});
