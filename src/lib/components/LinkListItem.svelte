@@ -92,15 +92,6 @@
 			background: $gray;
 		}
 
-		&:after {
-			width: 100%;
-			transform: translate(-100%, 0);
-			background: $black;
-			transition:
-				0.6s width ease-out,
-				0.6s transform ease-out;
-		}
-
 		&:hover {
 			.list-item-action {
 				transform: translate(0, 0);

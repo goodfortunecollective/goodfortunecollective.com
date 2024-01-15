@@ -24,8 +24,12 @@
 <span use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	<RichtextTransition
 		enabled={blok.animated}
-		class={variants({ intent: blok.strokeColor ? 'stroke' : 'default' })}
-		style={blok.strokeColor ? `-webkit-text-stroke: 1px ${blok.strokeColor.color};` : ''}
+		class={variants({
+			intent: blok.strokeColor && blok.strokeColor.color !== '' ? 'stroke' : 'default'
+		})}
+		style={blok.strokeColor && blok.strokeColor.color !== ''
+			? `-webkit-text-stroke: 1px ${blok.strokeColor.color};`
+			: ''}
 	>
 		{@html content}
 	</RichtextTransition>
