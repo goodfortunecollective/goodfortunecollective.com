@@ -10,7 +10,7 @@
 
 	export let blok: any;
 
-	const variants = cva('duration-1000 ease-out', {
+	const containerStyle = cva('duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: '',
@@ -21,6 +21,20 @@
 			theme: 'light'
 		}
 	});
+
+	const headingStyle = cva('leading-extra-tight lg:leading-extra-tight', {
+		variants: {
+			maxWidth: {
+				md: 'max-w-screen-base',
+				lg: 'max-w-screen-lg',
+				xl: 'max-w-screen-xl',
+				'2xl': 'max-w-screen-2xl'
+			}
+		},
+		defaultVariants: {
+			maxWidth: 'md'
+		}
+	});
 </script>
 
 <div
@@ -28,7 +42,7 @@
 	{...$$restProps}
 	use:inview
 	on:inview_change={inViewColorTransition}
-	class={cls(blok.class, variants({ theme: $backgroundTheme }))}
+	class={cls(blok.class, containerStyle({ theme: $backgroundTheme }))}
 >
 	<div class="grid grid-cols-12 gap-8 pb-8 pt-16 lg:gap-0">
 		<div
@@ -41,7 +55,9 @@
 				as="h2"
 				animated={blok.animated}
 				size={blok.titleSize}
-				class="leading-extra-tight lg:leading-extra-tight"
+				class={headingStyle({
+					maxWidth: blok.maxWidth
+				})}
 			>
 				{blok.title}
 			</Heading>

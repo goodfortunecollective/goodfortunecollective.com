@@ -55,7 +55,9 @@
 	};
 
 	const onResize = () => {
-		scrollPosition = window.scrollY;
+		if ($lenis?.animatedScroll) {
+			scrollPosition = $lenis.animatedScroll;
+		}
 		if (video) {
 			videoBBox = video.getBoundingClientRect();
 		}

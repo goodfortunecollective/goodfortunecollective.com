@@ -21,6 +21,7 @@ export default {
 				}
 			},
 			screens: {
+				'base': '800px',
 				'3xl': '1920px',
 				'4xl': '2160px'
 			},
