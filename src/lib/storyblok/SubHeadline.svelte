@@ -25,7 +25,7 @@
 	const headingStyle = cva('leading-extra-tight lg:leading-extra-tight', {
 		variants: {
 			maxWidth: {
-				md: 'max-w-screen-base',
+				md: 'max-w-screen-base 3xl:max-w-screen-basexl',
 				lg: 'max-w-screen-lg',
 				xl: 'max-w-screen-xl',
 				'2xl': 'max-w-screen-2xl'
