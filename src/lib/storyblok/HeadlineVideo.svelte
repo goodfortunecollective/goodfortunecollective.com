@@ -20,7 +20,6 @@
 	let videoContainer!: HTMLElement;
 	let video!: HTMLElement;
 	let videoPlayer!: HTMLVideoElement;
-	let line!: HTMLElement;
 	let container!: HTMLElement;
 
 	let videoPlaying = blok.autoplay;
@@ -32,6 +31,7 @@
 
 	let isScrollFullVideo = false;
 	let isCursorEnter = false;
+	let isInView = false;
 
 	let isReady = false;
 
@@ -55,7 +55,7 @@
 	};
 
 	const onResize = () => {
-		scrollPosition = window.pageYOffset;
+		scrollPosition = window.scrollY;
 		if (video) {
 			videoBBox = video.getBoundingClientRect();
 		}
@@ -67,13 +67,15 @@
 	};
 
 	const onRender = () => {
+		if (!isInView) return;
+
 		videoTransformEffect =
 			innerWidth > 768
 				? clamp(scrollPosition / innerHeight, 0, 1)
 				: clamp(scrollPosition / innerHeight, 0.5, 1);
 
 		// bail if translation is almost complete
-		if (videoTransformEffect >= 0.99) {
+		if (videoTransformEffect >= 0.9) {
 			videoRotation.x = 0;
 			videoRotation.y = 0;
 			return;
@@ -106,7 +108,6 @@
 		});
 
 		gsap.set(videoContainer, { scale: 0 });
-		gsap.set(line, { scaleX: 0 });
 
 		gsap.ticker.add(onRender);
 	});
@@ -128,12 +129,6 @@
 					duration: 1,
 					scale: 1,
 					delay: 0.2,
-					ease: 'circ.out'
-				});
-
-				gsap.to(line, {
-					duration: 1,
-					scaleX: 1,
 					ease: 'circ.out'
 				});
 
@@ -196,27 +191,6 @@
 						'start'
 					);
 				});
-
-				const tl = gsap.timeline({
-					scrollTrigger: {
-						trigger: videoContainer,
-						start: 'center 55%',
-						end: 'center 30%',
-						toggleActions: 'play reverse play reverse' // onEnter onLeave onEnterBack onLeaveBack
-					}
-				});
-				tl.addLabel('start');
-
-				tl.from(
-					line,
-					{
-						duration: 0.8,
-						scaleX: 0,
-						transformOrigin: 'right center',
-						ease: 'back'
-					},
-					'start'
-				);
 			}, container);
 		},
 		() => {}
@@ -276,6 +250,7 @@
 		} else {
 			videoPlayer.pause();
 		}
+		isInView = inView;
 	};
 </script>
 
@@ -331,19 +306,6 @@
 					>
 						{blok.subheadline}
 					</h2>
-				</div>
-			</div>
-
-			<div
-				class="pointer-events-none absolute left-0 top-0 z-10 flex h-full w-full items-center justify-end"
-			>
-				<div class="relative mr-[15vw] w-full max-w-xs">
-					<div class="absolute inline-flex w-full items-center justify-center gap-4">
-						<hr bind:this={line} class="h-px w-32" />
-						<div class="w-[10rem] text-xs uppercase text-white" data-gsap="split-text">
-							<h3 class="leading-3"><strong data-gsap="split-text">{blok.description}</strong></h3>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
