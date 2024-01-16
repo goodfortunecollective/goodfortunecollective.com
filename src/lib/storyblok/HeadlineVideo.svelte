@@ -296,7 +296,7 @@
 					<h1
 						data-gsap="split-text"
 						class={cls(
-							'z-[8] max-w-7xl font-degular-display leading-tightest tracking-wide text-neutral-950',
+							'z-[8] max-w-11xl font-degular-display leading-tightest tracking-wide text-neutral-950',
 							'b-headline-video__title'
 						)}
 					>
@@ -334,7 +334,7 @@
 		&__title {
 			-webkit-text-stroke: 1px white;
 			// text-shadow: -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
-			font-size: clamp(64px, calc(80px + (220 - 80) * (100vw - 768px) / (1920 - 768)), 280px);
+			font-size: clamp(64px, calc(80px + (280 - 80) * (100vw - 768px) / (1920 - 768)), 280px);
 
 			//font-size: clamp(16px, calc(20px + (36 - 20) * (100vw - 768px) / (1920 - 768)), 48px);
 
