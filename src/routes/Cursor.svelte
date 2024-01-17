@@ -2,6 +2,7 @@
 	import { spring } from 'svelte/motion';
 	import { cva } from 'class-variance-authority';
 
+	import gsap from '$lib/gsap';
 	import { cls } from '$lib/styles';
 	import { cursorType } from '$lib/stores';
 
@@ -10,7 +11,9 @@
 			type: {
 				none: '',
 				play: 'cursor-pointer ml-0.5 inline-block h-0 w-0 border-y-[7px] border-l-[12px] border-solid border-y-transparent border-l-black content-[""]',
-				pause: 'cursor-pointer h-[18px] w-2.5 border-x-2 border-solid border-x-black content-[""]'
+				pause: 'cursor-pointer h-[18px] w-2.5 border-x-2 border-solid border-x-black content-[""]',
+				checkout:
+					'cursor-pointer inline-block text-black before:content-["Check_out"] font-bold text-sm'
 			}
 		},
 		defaultVariants: {
@@ -18,17 +21,27 @@
 		}
 	});
 
+	let el!: HTMLElement;
+
 	const mouseCoords = spring({ x: 0, y: 0 });
 
-	let type: 'none' | 'play' | 'pause' = 'none';
+	let type: 'none' | 'play' | 'pause' | 'checkout' = 'none';
 	let opacity: number = 0;
 
 	cursorType.subscribe((value) => {
+		console.log('cursorType', value);
 		if (value !== 'none') {
 			type = value;
 		}
 
 		opacity = value === 'none' ? 0 : 1;
+
+		gsap.to(el, {
+			scale: value === 'none' ? 0 : 1,
+			delay: value === 'none' ? 0 : 0.1,
+			duration: 0.5,
+			ease: 'back.out(1.2)'
+		});
 	});
 
 	const onMouseMove = (event: MouseEvent) => {
@@ -38,7 +51,10 @@
 
 <svelte:window on:mousemove={onMouseMove} />
 
-<div class="pointer-events-none fixed left-0 top-0 z-10 h-full w-full">
+<div
+	class="pointer-events-none fixed left-0 top-0 z-10 h-full w-full origin-center transform"
+	bind:this={el}
+>
 	<div
 		class={cls(
 			'absolute flex h-[86px] w-[86px] items-center justify-center rounded-[100%] bg-[#dbfa45]',

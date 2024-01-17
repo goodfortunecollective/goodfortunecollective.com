@@ -11,6 +11,7 @@
 	import { ScrollPlane, Heading, RichtextAnimated, Parallax } from '$lib/components';
 	import { project_list_hover, isTransitioning } from '$lib/stores';
 	import gsap from '$lib/gsap';
+	import { cursorType } from '$lib/stores';
 
 	export let name: string;
 	export let slug: string;
@@ -48,6 +49,7 @@
 		project_list_hover.set(name);
 
 		descriptionTextRef?.animateIn();
+		cursorType.set('checkout');
 	}
 
 	const onLeave = () => {
@@ -57,6 +59,7 @@
 		}
 
 		descriptionTextRef?.animateOut();
+		cursorType.set('none');
 	};
 
 	const inViewItem = ({ detail }: CustomEvent<ObserverEventDetails>) => {
