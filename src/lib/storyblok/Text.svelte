@@ -4,6 +4,7 @@
 
 	import { RichtextTransition } from '$lib/components';
 	import { backgroundTheme } from '$lib/stores';
+	import { onMount } from 'svelte';
 
 	export let blok: any;
 
@@ -26,11 +27,15 @@
 			theme: 'light'
 		}
 	});
+
+	onMount(() => {
+		console.log('blok.animated ', blok.animated, blok.animated === false);
+	});
 </script>
 
 <span use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	<RichtextTransition
-		enabled={blok.animated}
+		enabled={!!blok.animated}
 		class={variants({
 			intent: blok.stroke ? 'stroke' : 'default',
 			theme: blok.stroke ? $backgroundTheme : 'default'

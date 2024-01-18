@@ -34,14 +34,12 @@
 				const container: HTMLElement | null = parent.querySelector('ul');
 
 				if (container) {
-					const startTarget = -parent.offsetWidth / 2 - container.scrollWidth * (index + 1) * 0.1;
-					const startTargetNext =
-						-parent.offsetWidth / 2 - container.scrollWidth * (index + 4) * 0.1;
+					const startTarget = -parent.offsetWidth - container.scrollWidth * (index + 1) * 0.15;
 
 					const [x, xEnd] =
 						index % 2
-							? [startTargetNext, startTargetNext + container.scrollWidth * 0.1]
-							: [startTarget, startTarget - container.scrollWidth * 0.1];
+							? [startTarget, startTarget + container.scrollWidth * 0.04]
+							: [startTarget, startTarget + container.scrollWidth * 0.03];
 
 					gsap.fromTo(
 						container,
@@ -72,19 +70,21 @@
 				class="border-b-2 border-b-gray-200 border-opacity-10 last-of-type:border-0"
 			>
 				<ul class=" whitespace-nowrap">
-					{#each blok.tags as b}
-						<li
-							class={cls('mb-8 inline-block', textStyle({ theme: $backgroundTheme }))}
-							use:inview
-							on:inview_change={inViewColorTransition}
-						>
-							<span class="mx-8 flex items-center">
-								<Heading as="h4" size="h2" class="mr-16 uppercase" animated={false}>
-									<StoryblokComponent blok={b} />
-								</Heading>
-								<span class="inline-block font-degular-display text-6xl 3xl:text-7xl">*</span>
-							</span>
-						</li>
+					{#each Array(2) as _, index (index)}
+						{#each blok.tags as b}
+							<li
+								class={cls('mb-8 inline-block', textStyle({ theme: $backgroundTheme }))}
+								use:inview
+								on:inview_change={inViewColorTransition}
+							>
+								<span class="mx-8 flex items-center">
+									<Heading as="h4" size="h2" class="mr-16 uppercase" animated={false}>
+										<StoryblokComponent blok={b} />
+									</Heading>
+									<span class="inline-block font-degular-display text-6xl 3xl:text-7xl">*</span>
+								</span>
+							</li>
+						{/each}
 					{/each}
 				</ul>
 			</div>
