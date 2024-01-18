@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { spring } from 'svelte/motion';
+	import { tweened } from 'svelte/motion';
 	import { cva } from 'class-variance-authority';
 
 	import gsap from '$lib/gsap';
@@ -23,29 +23,30 @@
 
 	let el!: HTMLElement;
 
-	const mouseCoords = spring({ x: 0, y: 0 });
+	let mouseCoords = { x: 0, y: 0 };
 
 	let type: 'none' | 'play' | 'pause' | 'checkout' = 'none';
 	let opacity: number = 0;
 
 	cursorType.subscribe((value) => {
-		console.log('cursorType', value);
 		if (value !== 'none') {
 			type = value;
 		}
 
 		opacity = value === 'none' ? 0 : 1;
 
-		gsap.to(el, {
-			scale: value === 'none' ? 0 : 1,
-			delay: value === 'none' ? 0 : 0.1,
-			duration: 0.5,
-			ease: 'back.out(1.2)'
-		});
+		if (el) {
+			gsap.to(el, {
+				scale: value === 'none' ? 0 : 1,
+				delay: value === 'none' ? 0 : 0.1,
+				duration: value === 'none' ? 0 : 0.5,
+				ease: 'back.out(1.2)'
+			});
+		}
 	});
 
 	const onMouseMove = (event: MouseEvent) => {
-		$mouseCoords = { x: event.x, y: event.y };
+		mouseCoords = { x: event.x, y: event.y };
 	};
 </script>
 
@@ -60,8 +61,8 @@
 			'absolute flex h-[86px] w-[86px] items-center justify-center rounded-[100%] bg-[#dbfa45]',
 			'cursor'
 		)}
-		style:--x={`${$mouseCoords.x}px`}
-		style:--y={`${$mouseCoords.y}px`}
+		style:--x={`${mouseCoords.x}px`}
+		style:--y={`${mouseCoords.y}px`}
 		style:--opacity={opacity}
 	>
 		<div class={cls(variants({ type: type }))} />
