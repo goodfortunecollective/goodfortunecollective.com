@@ -3,19 +3,13 @@
 @tailwind utilities;
 
 @layer base {
+
 	a {
 	  @apply text-rose-50;
 	}
 
 	a:hover {
 		@apply underline underline-offset-8 ;
-	  }
-
-	.text-outline-red-100 {
-		-webkit-text-stroke: 1px var(--tw-text-red-100);
-	  }
-	.text-outline-black {
-		-webkit-text-stroke: 1px black;
 	  }
   }
 
@@ -120,4 +114,13 @@
 	.c-animated-underline:hover::after {
 		width: 100%;
 	}
+}
+
+@layer components { 
+	.outline-text-rose-50 { 
+		-webkit-text-stroke: 1px theme('colors.rose.50');
+	  }
+	.outline-text-black {
+		-webkit-text-stroke: 1px theme('colors.black');
+	  }
 }

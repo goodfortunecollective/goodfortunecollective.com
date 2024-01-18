@@ -16,8 +16,8 @@
 				stroke: ' text-transparent'
 			},
 			theme: {
-				light: 'text-outline-black',
-				dark: 'text-outline-red-100',
+				light: 'outline-text-black',
+				dark: 'outline-text-rose-50',
 				default: ''
 			}
 		},
