@@ -3,6 +3,7 @@
 	import { cva } from 'class-variance-authority';
 
 	import { RichtextTransition } from '$lib/components';
+	import { backgroundTheme } from '$lib/stores';
 
 	export let blok: any;
 
@@ -12,11 +13,17 @@
 		variants: {
 			intent: {
 				default: '',
-				stroke: 'text-transparent'
+				stroke: ' text-transparent'
+			},
+			theme: {
+				light: 'text-outline-black',
+				dark: 'text-outline-red-100',
+				default: ''
 			}
 		},
 		defaultVariants: {
-			intent: 'default'
+			intent: 'default',
+			theme: 'light'
 		}
 	});
 </script>
@@ -25,11 +32,9 @@
 	<RichtextTransition
 		enabled={blok.animated}
 		class={variants({
-			intent: blok.strokeColor && blok.strokeColor.color !== '' ? 'stroke' : 'default'
+			intent: blok.stroke ? 'stroke' : 'default',
+			theme: blok.stroke ? $backgroundTheme : 'default'
 		})}
-		style={blok.strokeColor && blok.strokeColor.color !== ''
-			? `-webkit-text-stroke: 1px ${blok.strokeColor.color};`
-			: ''}
 	>
 		{@html content}
 	</RichtextTransition>
