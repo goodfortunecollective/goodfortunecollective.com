@@ -26,13 +26,11 @@
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	<div class="flex flex-col">
-		<Heading size="h5" as="h5" class="mb-8 font-bold uppercase leading-none"
-			>{blok.category}</Heading
-		>
+		<Heading size="h5" as="h5" class="text-red mb-8 font-bold uppercase">{blok.category}</Heading>
 		<h2
 			on:inview_change={inViewColorTransition}
 			class={cls(
-				' font-degular-display text-5xl leading-none lg:text-9xl lg:leading-tightest',
+				' font-degular-display text-5xl leading-none  lg:text-9xl lg:leading-tightest',
 				headingStyle({ theme: $backgroundTheme })
 			)}
 		>
@@ -42,7 +40,7 @@
 		</h2>
 		<div class="mt-8 [&_p]:my-0 [&_p]:leading-10">
 			<RichtextTransition
-				class="mt-8 font-degular-display text-xl leading-10 text-stone-450 lg:text-2xl [&_p]:my-16"
+				class="mt-8 font-degular-display text-xl leading-10 text-white lg:text-2xl [&_p]:my-16"
 			>
 				{@html list}
 			</RichtextTransition>
