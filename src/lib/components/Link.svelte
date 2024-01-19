@@ -75,6 +75,9 @@
 			.arrow-default {
 				//transform: scale(0, 1) translate(45px, 0);
 				transform: translate3d(200%, 0, 0);
+				transition:
+					0.5s 0.05s transform $ease-out-expo,
+					0.5s opacity $ease-out-expo;
 			}
 
 			.arrow-hover {
@@ -142,6 +145,7 @@
 			right: 20px;
 			z-index: 15;
 			transform-origin: 100% 50%;
+			transition-delay: 0.2s;
 		}
 
 		&.arrow-hover {
