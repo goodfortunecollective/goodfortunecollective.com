@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { tweened } from 'svelte/motion';
+	import { spring } from 'svelte/motion';
 	import { cva } from 'class-variance-authority';
 
 	import gsap from '$lib/gsap';
@@ -36,7 +36,7 @@
 
 	let el!: HTMLElement;
 
-	let mouseCoords = { x: 0, y: 0 };
+	const mouseCoords = spring({ x: 0, y: 0 }, { damping: 0.77, stiffness: 0.25 });
 
 	let type: 'none' | 'play' | 'pause' | 'checkout' = 'none';
 	let opacity: number = 0;
@@ -59,7 +59,7 @@
 	});
 
 	const onMouseMove = (event: MouseEvent) => {
-		mouseCoords = { x: event.x, y: event.y };
+		$mouseCoords = { x: event.x, y: event.y };
 	};
 </script>
 
@@ -71,12 +71,12 @@
 >
 	<div
 		class={cls(
-			'absolute flex h-[86px] w-[86px] items-center justify-center rounded-[100%]',
+			'absolute flex h-[86px] w-[86px] origin-center items-center justify-center rounded-[100%]',
 			backgroundVariants({ type: type }),
 			'c-cursor'
 		)}
-		style:--x={`${mouseCoords.x}px`}
-		style:--y={`${mouseCoords.y}px`}
+		style:--x={`${$mouseCoords.x}px`}
+		style:--y={`${$mouseCoords.y}px`}
 		style:--opacity={opacity}
 	>
 		<div class={cls(variants({ type: type }))} />
