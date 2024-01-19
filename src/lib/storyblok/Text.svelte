@@ -4,7 +4,6 @@
 
 	import { RichtextTransition } from '$lib/components';
 	import { backgroundTheme } from '$lib/stores';
-	import { onMount } from 'svelte';
 
 	export let blok: any;
 
@@ -26,10 +25,6 @@
 			intent: 'default',
 			theme: 'light'
 		}
-	});
-
-	onMount(() => {
-		console.log('blok.animated ', blok.animated, blok.animated === false);
 	});
 </script>
 
