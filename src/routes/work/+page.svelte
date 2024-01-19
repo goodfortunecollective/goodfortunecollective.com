@@ -43,7 +43,7 @@
 		'col-span-10 col-start-1 md:col-span-7 md:col-start-2 md:-mt-0 z-1 text-right md:text-left'
 	];
 
-	const projectGridParallax = [0, -2, 1, -0.25, 0.25, -2];
+	const projectGridParallax = [-1, -4, -2, -3, -2, -3];
 
 	const getProjectGridItemClass = (index: number) => {
 		if (index === 0) {
