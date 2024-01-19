@@ -6,14 +6,27 @@
 	import { cls } from '$lib/styles';
 	import { cursorType } from '$lib/stores';
 
-	const variants = cva('', {
+	const backgroundVariants = cva('', {
+		variants: {
+			type: {
+				none: '',
+				play: 'bg-[#dbfa45]',
+				pause: 'bg-[#dbfa45]',
+				checkout: 'border-[#dbfa45]	border-solid border'
+			}
+		},
+		defaultVariants: {
+			type: 'none'
+		}
+	});
+
+	const variants = cva('origin-center transform', {
 		variants: {
 			type: {
 				none: '',
 				play: 'cursor-pointer ml-0.5 inline-block h-0 w-0 border-y-[7px] border-l-[12px] border-solid border-y-transparent border-l-black content-[""]',
 				pause: 'cursor-pointer h-[18px] w-2.5 border-x-2 border-solid border-x-black content-[""]',
-				checkout:
-					'cursor-pointer inline-block text-black before:content-["Check_out"] font-bold text-sm'
+				checkout: 'cursor-pointer'
 			}
 		},
 		defaultVariants: {
@@ -40,7 +53,7 @@
 				scale: value === 'none' ? 0 : 1,
 				delay: value === 'none' ? 0 : 0.1,
 				duration: value === 'none' ? 0 : 0.5,
-				ease: 'back.out(1.2)'
+				ease: 'power.out'
 			});
 		}
 	});
@@ -58,8 +71,9 @@
 >
 	<div
 		class={cls(
-			'absolute flex h-[86px] w-[86px] items-center justify-center rounded-[100%] bg-[#dbfa45]',
-			'cursor'
+			'absolute flex h-[86px] w-[86px] items-center justify-center rounded-[100%]',
+			backgroundVariants({ type: type }),
+			'c-cursor'
 		)}
 		style:--x={`${mouseCoords.x}px`}
 		style:--y={`${mouseCoords.y}px`}
@@ -70,7 +84,7 @@
 </div>
 
 <style>
-	.cursor {
+	.c-cursor {
 		transition:
 			0.3s opacity ease-out,
 			0s visibility 0.3s,
