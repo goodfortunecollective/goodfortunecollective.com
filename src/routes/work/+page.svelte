@@ -144,7 +144,7 @@
 	<StoryblokComponent blok={data.story.content} />
 {/if}
 
-<section class="pb-16 pt-8 3xl:pb-16 3xl:pt-8" bind:this={el}>
+<section class="relative pb-16 pt-8 3xl:pb-16 3xl:pt-8" bind:this={el}>
 	<div class="relative hidden xl:block">
 		{#if activeFilter}
 			<MenuList class="fixed right-4 top-32 z-10 flex flex-col items-end gap-4 pr-8 pt-8">
@@ -180,7 +180,6 @@
 			<div id={`${slug}`} class="grid grid-cols-12">
 				<ProjectListItem
 					theme="dark"
-					hover={$project_list_hover === name}
 					{name}
 					{slug}
 					{content}
