@@ -5,6 +5,7 @@
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 	import type { Curtains } from '@types/curtainsjs';
+	import { ScrollTrigger } from '$lib/gsap';
 
 	import gsap from '$lib/gsap';
 	import { lenisStore as lenis } from '$lib/stores/lenis';
@@ -131,6 +132,7 @@
 
 	useTransitionReady(() => {
 		activeFilter = true;
+		ScrollTrigger.refresh();
 	});
 
 	onDestroy(() => {

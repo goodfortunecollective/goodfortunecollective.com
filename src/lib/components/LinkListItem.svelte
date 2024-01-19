@@ -173,8 +173,8 @@
 		width: 50%;
 		height: 1px;
 		transition:
-			0.5s transform $ease-out-expo,
-			0.5s opacity $ease-out-expo;
+			0.3s transform $ease-out-expo,
+			0.3s opacity $ease-out-expo;
 
 		&:before,
 		&:after {
