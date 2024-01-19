@@ -27,7 +27,7 @@
 		}
 	});
 
-	const mouseCoords = spring({ x: 0, y: 0 }, { damping: 0.1, stiffness: 0.01 });
+	const mouseCoords = spring({ x: 0, y: 0 }, { damping: 0.77, stiffness: 0.25 });
 
 	const onMouseMove = (event: any) => {
 		$mouseCoords = { x: event.x, y: event.y };

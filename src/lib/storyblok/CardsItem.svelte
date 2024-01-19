@@ -1,11 +1,9 @@
 <script lang="ts">
-	import { fade } from 'svelte/transition';
 	import { inview } from 'svelte-inview';
 	import { storyblokEditable } from '@storyblok/svelte';
 
-	import { Heading, NumberedListItem } from '$lib/components';
+	import { NumberedListItem } from '$lib/components';
 	import { cls } from '$lib/styles';
-	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
 	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;
