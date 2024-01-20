@@ -111,7 +111,8 @@
 				right: 0;
 				bottom: 0;
 				left: 0;
-				background: #cccccc;
+				background: #fff;
+				opacity: 0.3;
 			}
 
 			&:after {
@@ -121,7 +122,7 @@
 				right: 0;
 				bottom: 0;
 				left: 0;
-				background: black;
+				background: theme('colors.yellow.350');
 				transform-origin: 50% 0;
 				transform: scale3d(1, var(--parallax-effect), 1);
 			}

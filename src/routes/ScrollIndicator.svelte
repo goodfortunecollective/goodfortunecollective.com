@@ -76,7 +76,7 @@
 		transition: 0.5s opacity;
 
 		&:hover {
-			opacity: 0.6;
+			opacity: 1;
 		}
 
 		&:before {
@@ -86,7 +86,7 @@
 			width: 1px;
 			bottom: 0;
 			content: '';
-			background: white;
+			background: theme('colors.yellow.350');
 		}
 
 		&:after {
@@ -111,7 +111,7 @@
 				position: absolute;
 				top: 0;
 				right: 0;
-				background: white;
+				background: theme('colors.yellow.350');
 				content: '';
 			}
 

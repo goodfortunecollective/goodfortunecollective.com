@@ -12,6 +12,7 @@ export default {
 				},
 				yellow: {
 					50: '#dbd5bf',
+					350: '#dbfa45',
 				},
 				rose: {
 					50: "#e9bdb2"

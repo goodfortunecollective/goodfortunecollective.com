@@ -10,9 +10,9 @@
 		variants: {
 			type: {
 				none: '',
-				play: 'bg-[#dbfa45]',
-				pause: 'bg-[#dbfa45]',
-				checkout: 'border-[#dbfa45]	border-solid border'
+				play: 'bg-yellow-350',
+				pause: 'bg-yellow-350',
+				checkout: 'border-yellow-350 border-solid border'
 			}
 		},
 		defaultVariants: {
