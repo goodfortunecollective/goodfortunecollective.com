@@ -17,7 +17,6 @@ export default {
 					50: "#e9bdb2"
 				},
 				stone: {
-					350: "#c9c3bd",
 					450: "#a7a89a"
 				}
 			},
