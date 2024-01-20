@@ -179,15 +179,15 @@
 				});
 				tlSplitText.addLabel('start');
 
-				splitTexts.forEach((text) => {
+				splitTexts.forEach((text, index) => {
 					gsap.set(text.chars, { opacity: 1 });
 					tlSplitText.to(
 						text.chars,
 						{
-							duration: 0.2,
+							duration: 0.5,
 							ease: 'circ.out',
 							yPercent: 0,
-							delay: 0.5,
+							delay: 0.5 + index,
 							stagger: 0.01
 						},
 						'start'

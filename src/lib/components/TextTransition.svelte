@@ -11,6 +11,7 @@
 	export let enabled: boolean = true;
 	export let underline: boolean = false;
 	export let type: 'words' | 'chars' = 'chars';
+	export let speed: number = 1;
 
 	let element: HTMLSpanElement;
 
@@ -47,7 +48,7 @@
 						toggleActions: 'restart pause resume reverse',
 						onEnter(elements: any, triggers: any) {
 							gsap.to(elements, {
-								duration: 0.4,
+								duration: 0.4 * speed,
 								ease: 'circ.out',
 								yPercent: 0,
 								stagger: 0.02
