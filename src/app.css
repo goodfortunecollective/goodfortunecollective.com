@@ -26,7 +26,7 @@
 	}
 
 	body {
-		transition: background-color 1s ease;
+		transition: background-color 1s 0.2s ease;
 		min-height: 100vh;
 		overflow-y: scroll;
 	}
