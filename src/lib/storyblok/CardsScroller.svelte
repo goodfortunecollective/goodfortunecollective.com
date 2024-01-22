@@ -49,7 +49,7 @@
 					xPercent: 100,
 					scrollTrigger: {
 						trigger: scrollEl,
-						start: 'center center',
+						start: 'center 66%',
 						end: () => {
 							if (scrollEl?.scrollWidth && innerWidth) {
 								return `+=${scrollEl.scrollWidth - innerWidth}`;
