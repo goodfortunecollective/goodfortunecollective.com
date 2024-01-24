@@ -120,22 +120,25 @@
 
 			<div class="mt-8">
 				<Heading
-					as="h6"
+					as="h4"
 					size="h6"
 					animated={false}
-					class="font-bold uppercase tracking-widest text-stone-450 lg:text-sm"
+					class="my-0 font-bold uppercase tracking-widest"
 				>
-					{content.category && content.category[0]}
+					<small>{content.brand}</small>
 				</Heading>
-				<Heading as="h3" size="h3" animated={false} class="my-2 text-3xl font-medium">
+				<Heading as="h3" size="h3" animated={false} class="mb-2 font-medium">
 					{name}
 				</Heading>
-				<Heading
-					animated={false}
-					as="h5"
-					size="h5"
-					class="uppercase tracking-wide text-stone-450 lg:text-sm">{content.brand}</Heading
+				<ul
+					class="uppercase tracking-widest text-stone-450 lg:[&>*:not(:first-child)]:before:ml-2 lg:[&>*:not(:last-child)]:after:content-['•']"
 				>
+					{#each content.category as category}
+						<li class="lg:inline-block">
+							<small>{category.replace('-', ' ')}</small>
+						</li>
+					{/each}
+				</ul>
 				<div class="text-md mt-4 max-w-md overflow-hidden font-medium">
 					<RichtextAnimated bind:this={descriptionTextRef}>
 						<span class="wrap" />{@html description}
