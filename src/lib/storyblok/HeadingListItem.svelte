@@ -9,7 +9,7 @@
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class="grid grid-cols-12">
-	<div class="col-span-2 col-start-2 lg:col-span-1 lg:col-start-3">
+	<div class="col-span-2 col-start-2 mt-0.5 lg:col-span-1 lg:col-start-3">
 		<NumberedListItem index={$$restProps.index} divider />
 	</div>
 	<dt class="col-span-6 col-start-4 lg:col-span-6 lg:col-start-4">
@@ -22,8 +22,8 @@
 	>
 		{#if blok.heading}
 			<Heading as="h3" size="h2" class="w-full leading-tightest lg:leading-tightest"
-				>{blok.heading}</Heading
-			>
+				>{blok.heading}
+			</Heading>
 		{/if}
 
 		<RichtextTransition class="w-full">{@html content}</RichtextTransition>
