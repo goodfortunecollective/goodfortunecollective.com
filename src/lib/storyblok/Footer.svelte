@@ -125,7 +125,7 @@
 	</div>
 	<Gfc
 		class={cls(
-			'absolute bottom-0 left-2/4 z-0 h-auto w-[66%] max-w-[700px] -translate-x-2/4 translate-y-[35%]',
+			'absolute bottom-12 left-2/4 z-0 h-auto w-[66%] max-w-[700px] -translate-x-2/4 translate-y-[35%]',
 			$backgroundTheme == 'light' ? 'text-[#faf9f5]' : 'text-black'
 		)}
 		alt=""
