@@ -3,6 +3,7 @@
 	import { cva } from 'class-variance-authority';
 	import { inview } from 'svelte-inview';
 
+	import { base } from '$app/paths';
 	import { Heading, Spacer } from '$lib/components';
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
@@ -43,7 +44,12 @@
 		on:inview_change={inViewColorTransition}
 		class={cls('relative grid grid-cols-12', blok.class, textStyle({ theme: $backgroundTheme }))}
 	>
-		<div class="col-span-10 col-start-3">
+		<div class="relative col-span-10 col-start-3">
+			<div class="absolute left-0 top-0">
+				<div class="-translate-x-1/2 -translate-y-1/2">
+					<img src={`${base}/assets/GFC-lockup.png`} alt="" class="animate-spin-slow" />
+				</div>
+			</div>
 			<video
 				preload="metadata"
 				class="aspect-video w-full rounded-s-3xl"
