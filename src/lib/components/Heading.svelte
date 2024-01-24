@@ -33,7 +33,12 @@
 	{...$$restProps}
 	class={cls(variants({ size }), size === 'h1' && 'c-heading__h1', $$props.class)}
 >
-	<TextTransition enabled={animated} {underline}>
+	<TextTransition
+		enabled={animated}
+		{underline}
+		type={size !== 'h1' ? 'words' : 'chars'}
+		speed={size !== 'h1' && size !== 'h2' ? 1 : 1.25}
+	>
 		<slot />
 	</TextTransition>
 </svelte:element>

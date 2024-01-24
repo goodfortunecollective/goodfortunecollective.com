@@ -3,6 +3,7 @@
 	import { cva } from 'class-variance-authority';
 
 	import { RichtextTransition } from '$lib/components';
+	import { backgroundTheme } from '$lib/stores';
 
 	export let blok: any;
 
@@ -12,20 +13,28 @@
 		variants: {
 			intent: {
 				default: '',
-				stroke: 'text-transparent'
+				stroke: ' text-transparent'
+			},
+			theme: {
+				light: 'outline-text-black',
+				dark: 'outline-text-rose-50',
+				default: ''
 			}
 		},
 		defaultVariants: {
-			intent: 'default'
+			intent: 'default',
+			theme: 'light'
 		}
 	});
 </script>
 
 <span use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	<RichtextTransition
-		enabled={blok.animated}
-		class={variants({ intent: blok.strokeColor ? 'stroke' : 'default' })}
-		style={blok.strokeColor ? `-webkit-text-stroke: 1px ${blok.strokeColor.color};` : ''}
+		enabled={!!blok.animated}
+		class={variants({
+			intent: blok.stroke ? 'stroke' : 'default',
+			theme: blok.stroke ? $backgroundTheme : 'default'
+		})}
 	>
 		{@html content}
 	</RichtextTransition>

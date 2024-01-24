@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fade } from 'svelte/transition';
 	import { storyblokEditable } from '@storyblok/svelte';
 
 	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
@@ -15,6 +16,7 @@
 			alt={blok.asset.name}
 			loading="lazy"
 			class="w-full"
+			in:fade={{ duration: 500 }}
 		/>
 	{/if}
 </div>

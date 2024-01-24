@@ -16,6 +16,7 @@
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
 	import { inViewColorTransition } from '$lib/utils/animations';
+	import TextTransition from '$lib/components/TextTransition.svelte';
 
 	export let data;
 
@@ -96,16 +97,10 @@
 						{data.story.content.brand}
 					</div>
 				{/if}
-				{#if data.story.content.ask}
+				{#if data.story.content.ask_text}
 					<div>
-						<h5 class="mb-2 text-sm font-bold uppercase tracking-wide text-rose-50">Ask</h5>
-						<ul
-							class="[&>*:not(:last-child)]:after:ml-4 [&>*:not(:last-child)]:after:content-['•']"
-						>
-							{#each data.story.content.ask as item}
-								<li class="mr-4 inline-block">{item}</li>
-							{/each}
-						</ul>
+						<h5 class="mb-2 text-sm font-bold uppercase tracking-wide text-rose-50">The ask</h5>
+						{@html ask_text}
 					</div>
 				{/if}
 			</div>
@@ -140,39 +135,61 @@
 				>
 			</div>
 		</div>
-		{#if data.story.content.ask_text}
-			<div class="col-span-10 col-start-2 py-16 lg:col-span-6 lg:col-start-4">
-				<Heading as="h4" size="h4" class="uppercase"><strong>Ask</strong></Heading>
-				<RichtextTransition class="text-xl [&_p]:my-8 [&_p]:leading-8">
-					{@html ask_text}
-				</RichtextTransition>
-			</div>
-		{/if}
-
 		{#if data.story.content.strategy_text}
-			<div class="col-span-10 col-start-2 py-16 lg:col-span-6 lg:col-start-4">
-				<Heading as="h4" size="h4" class="uppercase"><strong>Strategy</strong></Heading>
-				<RichtextTransition class="text-xl [&_p]:my-8 [&_p]:leading-8">
+			<div class="col-span-12 grid w-full grid-cols-12 py-16">
+				<Heading
+					as="h4"
+					size="h5"
+					class="col-span-10 col-start-2 uppercase lg:col-span-2 lg:col-start-2"
+					><strong>Strategy</strong></Heading
+				>
+				<RichtextTransition
+					class="col-span-10 col-start-2 text-xl lg:col-span-6 lg:col-start-5 [&_p]:leading-8"
+				>
 					{@html strategy_text}
 				</RichtextTransition>
 			</div>
 		{/if}
 
 		{#if data.story.content.solution_text}
-			<div class="col-span-10 col-start-2 py-16 lg:col-span-6 lg:col-start-4">
-				<Heading as="h4" size="h4" class="uppercase"><strong>Solution</strong></Heading>
-				<RichtextTransition class="text-xl [&_p]:my-8 [&_p]:leading-8">
+			<div class="col-span-12 grid w-full grid-cols-12 pt-16">
+				<Heading
+					as="h4"
+					size="h5"
+					class="col-span-10 col-start-2 uppercase lg:col-span-2 lg:col-start-2"
+					><strong>Solution</strong></Heading
+				>
+				<RichtextTransition
+					class="col-span-10 col-start-2 text-xl lg:col-span-6 lg:col-start-5 [&_p]:leading-8"
+				>
 					{@html solution_text}
 				</RichtextTransition>
-				{#if data.story.content.output}
-					<ul
-						class="mt-8 text-gray-500 [&>*:not(:last-child)]:after:ml-4 [&>*:not(:last-child)]:after:content-['•']"
-					>
+			</div>
+		{/if}
+		{#if data.story.content.ask}
+			<div class="col-span-12 grid w-full grid-cols-12 py-16">
+				<ul
+					class="col-span-10 col-start-2 text-[#dcf945] lg:col-span-6 lg:col-start-5 [&>*:not(:last-child)]:after:ml-4 [&>*:not(:last-child)]:after:content-['•']"
+				>
+					<TextTransition type="words">
+						{#each data.story.content.ask as item}
+							<li class="mr-4 inline-block">{item}</li>
+						{/each}
+					</TextTransition>
+				</ul>
+			</div>
+		{/if}
+		{#if data.story.content.output}
+			<div class="col-span-12 grid w-full grid-cols-12">
+				<ul
+					class="col-span-10 col-start-2 text-[#dcf945] lg:col-span-6 lg:col-start-5 [&>*:not(:last-child)]:after:ml-4 [&>*:not(:last-child)]:after:content-['•']"
+				>
+					<TextTransition type="words">
 						{#each data.story.content.output as item}
 							<li class="mr-4 inline-block">{item}</li>
 						{/each}
-					</ul>
-				{/if}
+					</TextTransition>
+				</ul>
 			</div>
 		{/if}
 	</div>

@@ -9,6 +9,8 @@
 
 	let containerEl: HTMLElement;
 
+	const projectGridParallax = [-3, -5, -2, -1, -2, -1];
+
 	const variants = cva('', {
 		variants: {
 			layout: {
@@ -36,7 +38,7 @@
 						{name}
 						{slug}
 						{content}
-						parallaxSpeed={index % 2 === 0 ? (index === 0 ? 1 : 0.5) : -0.25}
+						parallaxSpeed={projectGridParallax[index % 6]}
 						layout={index % 2 === 0 ? 'right' : 'left'}
 						class={cls(variants({ layout: index % 2 === 0 ? 'right' : 'left' }))}
 					/>

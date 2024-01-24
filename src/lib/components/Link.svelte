@@ -37,7 +37,7 @@
 	{href}
 	target={isExternal ? '_blank' : undefined}
 	rel={isExternal ? 'noopener' : undefined}
-	class="3xl:text-md link flex h-10 flex-row items-stretch text-xs font-bold uppercase tracking-widest 4xl:text-lg"
+	class="3xl:text-md link flex h-10 flex-row items-stretch text-xs font-bold uppercase tracking-widest hover:no-underline 4xl:text-lg"
 >
 	{#if label}
 		<span class="flex items-center pr-4">{label}</span>
@@ -75,6 +75,9 @@
 			.arrow-default {
 				//transform: scale(0, 1) translate(45px, 0);
 				transform: translate3d(200%, 0, 0);
+				transition:
+					0.5s 0.05s transform $ease-out-expo,
+					0.5s opacity $ease-out-expo;
 			}
 
 			.arrow-hover {
@@ -142,6 +145,7 @@
 			right: 20px;
 			z-index: 15;
 			transform-origin: 100% 50%;
+			transition-delay: 0.2s;
 		}
 
 		&.arrow-hover {

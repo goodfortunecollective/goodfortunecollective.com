@@ -172,7 +172,13 @@
 				</div>
 				<div class="hidden sm:flex sm:gap-x-12">
 					{#each blok.navigation as { name, slug }, i}
-						<a href="{base}/{slug}" class="text-sm leading-6 3xl:text-lg">
+						<a
+							href="{base}/{slug}"
+							class={cls(
+								getRootPathname($page.url.pathname) !== slug && 'c-animated-underline',
+								'text-sm leading-6 3xl:text-lg'
+							)}
+						>
 							<span
 								data-gsap="nav-items"
 								use:inview

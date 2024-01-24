@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fade } from 'svelte/transition';
 	import { storyblokEditable } from '@storyblok/svelte';
 
 	import { cls } from '$lib/styles';
@@ -42,6 +43,7 @@
 			alt={blok.asset.name}
 			loading="lazy"
 			decoding="async"
+			in:fade={{ duration: 500 }}
 		/>
 	{/if}
 </div>

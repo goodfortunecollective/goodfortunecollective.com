@@ -92,15 +92,6 @@
 			background: $gray;
 		}
 
-		&:after {
-			width: 100%;
-			transform: translate(-100%, 0);
-			background: $black;
-			transition:
-				0.6s width ease-out,
-				0.6s transform ease-out;
-		}
-
 		&:hover {
 			.list-item-action {
 				transform: translate(0, 0);
@@ -182,8 +173,8 @@
 		width: 50%;
 		height: 1px;
 		transition:
-			0.5s transform $ease-out-expo,
-			0.5s opacity $ease-out-expo;
+			0.3s transform $ease-out-expo,
+			0.3s opacity $ease-out-expo;
 
 		&:before,
 		&:after {

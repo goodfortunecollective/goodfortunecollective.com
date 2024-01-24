@@ -3,14 +3,15 @@
 	import { cva } from 'class-variance-authority';
 
 	import { backgroundTheme } from '$lib/stores';
-	import { Heading, RichtextTransition } from '$lib/components';
+	import { Heading, RichtextTransition, TextTransition } from '$lib/components';
 	import { inViewColorTransition } from '$lib/utils/animations';
+	import { cls } from '$lib/styles';
 
 	export let blok: any;
 
 	$: list = renderRichText(blok.list);
 
-	const headingStyle = cva('max-w-xl lg:leading-tightest leading-tightest duration-1000 ease-out', {
+	const headingStyle = cva('max-w-4xl leading-tightest duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: '',
@@ -24,18 +25,25 @@
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	<div class="flex flex-col gap-8">
-		<Heading size="h5" as="h5" class="font-bold uppercase">{blok.category}</Heading>
-		<Heading
-			size="h2"
-			as="h2"
-			on:inview_change={inViewColorTransition}
-			class={headingStyle({ theme: $backgroundTheme })}
+	<div class="flex flex-col">
+		<Heading size="h6" as="h5" class="text-red mb-8 font-bold uppercase tracking-widest	"
+			>{blok.category}</Heading
 		>
-			{blok.title}
-		</Heading>
-		<div class="[&_p]:my-4 [&_p]:leading-8">
-			<RichtextTransition class="text-xl [&_p]:my-16 [&_p]:leading-8">
+		<h2
+			on:inview_change={inViewColorTransition}
+			class={cls(
+				' font-degular-display text-5xl leading-none  lg:text-9xl lg:leading-tightest',
+				headingStyle({ theme: $backgroundTheme })
+			)}
+		>
+			<TextTransition type="words">
+				{blok.title}
+			</TextTransition>
+		</h2>
+		<div class="mt-8 [&_p]:my-0 [&_p]:leading-10">
+			<RichtextTransition
+				class="font-degular-display text-xl leading-10 text-white lg:text-2xl [&_p]:my-4"
+			>
 				{@html list}
 			</RichtextTransition>
 		</div>

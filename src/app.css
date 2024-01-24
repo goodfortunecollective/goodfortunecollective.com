@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer base {
+
 	a {
 	  @apply text-rose-50;
 	}
@@ -25,7 +26,7 @@
 	}
 
 	body {
-		transition: background-color 1s ease;
+		transition: background-color 1s 0.2s ease;
 		min-height: 100vh;
 		overflow-y: scroll;
 	}
@@ -82,18 +83,44 @@
 		vertical-align: text-top;
 	}
 
-	.split-line__underline::after {
+	.c-animated-underline {
+		position: relative;
+	}
+
+	.c-animated-underline::after {
 		content: '';
 		display: block;
 		position: absolute;
-		bottom: 0;
+		bottom: -2px;
 		width: 0;
-		height: 4px;
+		height: 1px;
 		background: currentColor;
 		transition: width 0.3s;
 	}
 
-	.split-line__underline:hover::after {
+	.c-animated-underline__align-right::after {
+		right: 0
+	}
+
+	.c-animated-underline__heading::after {
+		height: 4px;
+		bottom: 0px;
+	}
+
+	.c-animated-underline:hover {
+		text-decoration-line: none;
+	}
+
+	.c-animated-underline:hover::after {
 		width: 100%;
 	}
+}
+
+@layer components { 
+	.outline-text-rose-50 { 
+		-webkit-text-stroke: 1px theme('colors.rose.50');
+	  }
+	.outline-text-black {
+		-webkit-text-stroke: 1px theme('colors.black');
+	  }
 }

@@ -15,10 +15,15 @@
 			theme: {
 				light: '',
 				dark: 'text-yellow-50'
+			},
+			textAlign: {
+				true: 'md:col-span-4 md:col-start-2',
+				false: 'md:col-span-3 md:col-start-3'
 			}
 		},
 		defaultVariants: {
-			theme: 'light'
+			theme: 'light',
+			textAlign: false
 		}
 	});
 
@@ -42,17 +47,35 @@
 			gap: 4
 		}
 	});
+
+	const dividerStyle = cva('h-px w-full duration-1000 ease-out', {
+		variants: {
+			theme: {
+				light: 'bg-gray-300',
+				dark: 'bg-gray-600'
+			}
+		},
+		defaultVariants: {
+			theme: 'light'
+		}
+	});
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	<div class="grid grid-cols-12 gap-8 pt-24 md:gap-0 md:pt-32">
+	<div class="grid grid-cols-12 gap-8 pt-24 md:gap-0">
+		{#if blok.divider}
+			<div class="col-span-10 col-start-2 flex pb-24">
+				<div class={cls(dividerStyle({ theme: $backgroundTheme }))}></div>
+			</div>
+		{/if}
+
 		<Heading
 			on:inview_change={inViewColorTransition}
 			as="h2"
 			size="h6"
 			class={cls(
-				'col-span-10 col-start-2 w-full break-keep font-bold uppercase tracking-widest md:col-span-3 md:col-start-3 xl:w-[75%]',
-				headingStyle({ theme: $backgroundTheme })
+				'col-span-10 col-start-2 w-full break-keep font-bold uppercase tracking-widest xl:w-[75%]',
+				headingStyle({ theme: $backgroundTheme, textAlign: blok.heading_leftAlign })
 			)}>{blok.heading}</Heading
 		>
 		<div class="col-span-10 col-start-2 text-lg md:col-span-5 md:col-start-7">

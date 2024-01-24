@@ -12,7 +12,7 @@
 	$: content = renderRichText(blok.content);
 
 	const variants = cva(
-		'flex text-xl leading-9 w-full  xl:text-2xl 4xl:text-4xl 4xl:leading-loose duration-1000 ease-out',
+		'flex w-full text-xl leading-9 duration-1000 ease-out xl:text-2xl 4xl:text-4xl 4xl:leading-loose',
 		{
 			variants: {
 				theme: {
@@ -26,7 +26,10 @@
 				maxWidth: {
 					sm: 'max-w-sm',
 					md: 'max-w-md',
-					lg: 'max-w-lg'
+					lg: 'max-w-lg',
+					xl: 'max-w-xl',
+					'2xl': 'max-w-2xl',
+					'3xl': 'max-w-3xl'
 				}
 			},
 			defaultVariants: {

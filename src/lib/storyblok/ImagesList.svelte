@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fade } from 'svelte/transition';
 	import { inview } from 'svelte-inview';
 	import { onDestroy } from 'svelte';
 	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
@@ -58,7 +59,7 @@
 	on:inview_change={inViewColorTransition}
 	class={cls(blok.class, textStyle({ theme: $backgroundTheme }))}
 >
-	<div class="relative grid grid-cols-12" bind:this={el}>
+	<div class="relative mt-32 grid grid-cols-12" bind:this={el}>
 		{#if blok.asset.filename?.length > 0}
 			<img
 				bind:this={pinEl}
@@ -69,10 +70,11 @@
 				class="-translate-x-1/8 absolute left-1/2 top-0 col-span-12 translate-y-1/4 -rotate-45 scale-150 transform"
 				loading="lazy"
 				decoding="async"
+				in:fade={{ duration: 500 }}
 			/>
 		{/if}
-		<div class="col-span-10 col-start-2 py-32 lg:col-span-6 lg:col-start-3" bind:this={contentEl}>
-			<div class=" flex flex-col gap-32">
+		<div class="col-span-10 col-start-2 my-32 lg:col-span-8 lg:col-start-4" bind:this={contentEl}>
+			<div class=" flex flex-col gap-64">
 				{#each blok.list as b}
 					<StoryblokComponent blok={b} />
 				{/each}

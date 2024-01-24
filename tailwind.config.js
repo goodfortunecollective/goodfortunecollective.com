@@ -12,6 +12,7 @@ export default {
 				},
 				yellow: {
 					50: '#dbd5bf',
+					350: '#dbfa45',
 				},
 				rose: {
 					50: "#e9bdb2"
@@ -21,6 +22,8 @@ export default {
 				}
 			},
 			screens: {
+				'base': '800px',
+				'basexl': '998px',
 				'3xl': '1920px',
 				'4xl': '2160px'
 			},

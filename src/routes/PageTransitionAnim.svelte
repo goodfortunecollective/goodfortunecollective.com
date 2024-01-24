@@ -154,13 +154,13 @@
 				project_list_hover.set(null);
 				showTitle = false;
 
-				const search = $page.url.searchParams.get('slug');
+				const scrollTo = $page.url.searchParams.get('slug') || $page.url.hash.replace('#', '');
 
 				if ($lenis) {
 					$lenis.start();
 
-					if (search) {
-						const scrollElem = document.getElementById(search);
+					if (scrollTo) {
+						const scrollElem = document.getElementById(scrollTo);
 
 						if (scrollElem) {
 							$lenis.scrollTo(scrollElem, {
