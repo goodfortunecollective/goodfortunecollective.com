@@ -46,7 +46,7 @@
 		<div class="col-span-10 col-start-3">
 			<video
 				preload="metadata"
-				class="aspect-video w-full"
+				class="aspect-video w-full rounded-s-3xl"
 				bind:this={videoPlayer}
 				playsinline
 				autoplay={false}
