@@ -57,7 +57,7 @@
 	{...$$restProps}
 	use:inview
 	on:inview_change={inViewColorTransition}
-	class={cls(blok.class, textStyle({ theme: $backgroundTheme }))}
+	class={cls(blok.class, textStyle({ theme: $backgroundTheme }), blok.disabled && 'hidden')}
 >
 	<div class="relative mt-32 grid grid-cols-12" bind:this={el}>
 		{#if blok.asset.filename?.length > 0}
