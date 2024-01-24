@@ -44,9 +44,9 @@
 		on:inview_change={inViewColorTransition}
 		class={cls('relative grid grid-cols-12', blok.class, textStyle({ theme: $backgroundTheme }))}
 	>
-		<div class="relative col-span-10 col-start-3">
+		<div class="relative col-span-10 col-start-4">
 			<div class="absolute left-0 top-0">
-				<div class="-translate-x-1/2 -translate-y-1/2">
+				<div class="-translate-x-14 -translate-y-14 scale-110">
 					<img src={`${base}/assets/GFC-lockup.png`} alt="" class="animate-spin-slow" />
 				</div>
 			</div>
@@ -64,17 +64,17 @@
 			</video>
 		</div>
 		<div class=" col-span-10 col-start-2">
-			<div class=" max-w-[600px] -translate-y-28">
+			<div class=" max-w-[600px] -translate-y-44">
 				<Heading as="h2" size="h2">
 					{blok.title}<span class="text-white">{blok.highlight}</span>
 				</Heading>
-				<Spacer gap="extra-large" />
-				<a href={blok.link.cached_url}>
-					<Heading size="h2" as="h4" underline class="text-rose-50 underline">
-						{blok.label}
-					</Heading>
-				</a>
 			</div>
+			<Spacer gap="extra-large" />
+			<a href={blok.link.cached_url}>
+				<Heading size="h2" as="h4" underline class="-translate-y-44 text-rose-50 underline">
+					{blok.label}
+				</Heading>
+			</a>
 		</div>
 	</div>
 </div>
