@@ -6,7 +6,7 @@
 	import { base } from '$app/paths';
 	import { Heading, Spacer } from '$lib/components';
 	import { cls } from '$lib/styles';
-	import { backgroundTheme } from '$lib/stores';
+	import { backgroundTheme, cursorType } from '$lib/stores';
 	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;
@@ -33,6 +33,14 @@
 		} else {
 			videoPlayer.pause();
 		}
+	};
+
+	const onEnter = () => {
+		cursorType.set('checkout');
+	};
+
+	const onLeave = () => {
+		cursorType.set('none');
 	};
 </script>
 
@@ -70,7 +78,7 @@
 				</Heading>
 			</div>
 			<Spacer gap="extra-large" />
-			<a href={blok.link.cached_url}>
+			<a href={blok.link.cached_url} on:mouseenter={onEnter} on:mouseleave={onLeave}>
 				<Heading size="h2" as="h4" underline class="-translate-y-44 text-rose-50 underline">
 					{blok.label}
 				</Heading>

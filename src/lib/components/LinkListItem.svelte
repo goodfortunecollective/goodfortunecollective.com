@@ -2,7 +2,7 @@
 	import { cva } from 'class-variance-authority';
 
 	import { cls } from '$lib/styles';
-	import { backgroundTheme } from '$lib/stores';
+	import { backgroundTheme, cursorType } from '$lib/stores';
 	import { inViewColorTransition } from '$lib/utils/animations';
 	import { Heading } from '$lib/components';
 
@@ -45,10 +45,23 @@
 			theme: 'light'
 		}
 	});
+
+	const onEnter = () => {
+		cursorType.set('checkout');
+	};
+
+	const onLeave = () => {
+		cursorType.set('none');
+	};
 </script>
 
 <li>
-	<a class="list-item-link flex w-full items-center py-4" href={url}>
+	<a
+		class="list-item-link flex w-full items-center py-4"
+		href={url}
+		on:mouseenter={onEnter}
+		on:mouseleave={onLeave}
+	>
 		<Heading
 			as="h3"
 			size="h3"

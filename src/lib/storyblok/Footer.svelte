@@ -4,10 +4,11 @@
 	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 
 	import gsap from '$lib/gsap';
-	import { backgroundTheme, isTransitioningEnabled } from '$lib/stores';
+	import { backgroundTheme, isTransitioningEnabled, cursorType } from '$lib/stores';
 	import { cls } from '$lib/styles';
 	import { Gfc } from '$lib/components';
 	import { inViewColorTransition } from '$lib/utils/animations';
+
 	import { onMount } from 'svelte';
 
 	export let blok: any;
@@ -53,6 +54,14 @@
 			gsap.set(el, { opacity: 0 });
 		}
 	});
+
+	const onEnter = () => {
+		cursorType.set('checkout');
+	};
+
+	const onLeave = () => {
+		cursorType.set('none');
+	};
 </script>
 
 <footer
@@ -79,6 +88,8 @@
 					<a
 						use:inview
 						on:inview_change={inViewColorTransition}
+						on:mouseenter={onEnter}
+						on:mouseleave={onLeave}
 						class={cls(
 							'c-animated-underline text-rose-50',
 							hightlightStyle({ theme: $backgroundTheme })
@@ -101,6 +112,8 @@
 					Find us in<a
 						href={blok.address}
 						use:inview
+						on:mouseenter={onEnter}
+						on:mouseleave={onLeave}
 						on:inview_change={inViewColorTransition}
 						class={cls('c-animated-underline', hightlightStyle({ theme: $backgroundTheme }))}
 						>Vancouver, Canada</a
