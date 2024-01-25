@@ -176,7 +176,7 @@
 							href="{base}/{slug}"
 							class={cls(
 								getRootPathname($page.url.pathname) !== slug && 'c-animated-underline',
-								'text-sm leading-6 3xl:text-lg'
+								'text-base leading-6 3xl:text-lg'
 							)}
 						>
 							<span
