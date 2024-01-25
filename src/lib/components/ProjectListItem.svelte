@@ -105,12 +105,14 @@
 			data-id={slug}
 			use:inview
 			on:inview_change={inViewItem}
+			on:mouseenter={onEnter}
+			on:mouseleave={onLeave}
 			class={cls(
 				'flex-no-wrap pointer-events-auto flex w-full flex-col hover:no-underline',
 				variants({ theme: theme, layout: layout })
 			)}
 		>
-			<div class="relative w-full" on:mouseenter={onEnter} on:mouseleave={onLeave} role="group">
+			<div class="relative w-full" role="group">
 				<div class="flex aspect-video overflow-hidden">
 					{#if isActive}
 						<ScrollPlane {content} {name} />
