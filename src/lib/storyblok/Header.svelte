@@ -7,7 +7,7 @@
 	import { page } from '$app/stores';
 	import { base } from '$app/paths';
 	import gsap from '$lib/gsap';
-	import { Gfc } from '$lib/components';
+	import { Gfc, HoverText } from '$lib/components';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 	import { cls } from '$lib/styles';
 	import { inViewColorTransition } from '$lib/utils/animations';
@@ -185,10 +185,10 @@
 								on:inview_change={inViewColorTransition}
 								class={cls(
 									'block text-stone-450  duration-200 hover:text-white',
-									getRootPathname($page.url.pathname) === slug &&
-										'text-white underline underline-offset-8'
+									getRootPathname($page.url.pathname) === slug && 'text-white'
 								)}
-								>{name}
+							>
+								<HoverText label={name} />
 							</span>
 						</a>
 					{/each}
