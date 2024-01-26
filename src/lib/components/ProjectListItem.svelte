@@ -53,11 +53,22 @@
 				video: 'aspect-video',
 				portrait: 'aspect-[2/3]',
 				auto: 'aspect-auto'
-			},
-			scale: {}
+			}
 		},
 		defaultVariants: {
 			aspect: 'video'
+		}
+	});
+
+	const containerStyle = cva('relative h-auto w-1/2', {
+		variants: {
+			scale: {
+				full: 'w-full',
+				half: 'w-2/3 lg:w-1/2'
+			}
+		},
+		defaultVariants: {
+			scale: 'full'
 		}
 	});
 
@@ -125,6 +136,16 @@
 		return 'square';
 	};
 
+	const getImageScaleRatio: (image: any) => 'full' | 'half' = (image: any) => {
+		const { width, height } = getImageDimensionsFromUrl(image);
+
+		if (width > height) {
+			return 'full';
+		}
+
+		return 'half';
+	};
+
 	onDestroy(() => {
 		if (ctx) ctx.revert();
 	});
@@ -144,7 +165,14 @@
 				variants({ theme: theme, layout: layout })
 			)}
 		>
-			<div class="relative w-full" role="group">
+			<div
+				role="group"
+				class={cls(
+					containerStyle({
+						scale: getImageScaleRatio(content.thumbnail.filename)
+					})
+				)}
+			>
 				<div
 					class={cls(
 						imageStyle({
