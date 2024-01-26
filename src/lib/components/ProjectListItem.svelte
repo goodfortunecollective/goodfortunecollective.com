@@ -4,6 +4,7 @@
 	import { cva } from 'class-variance-authority';
 	import { renderRichText } from '@storyblok/svelte';
 
+	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	import { base } from '$app/paths';
@@ -42,6 +43,21 @@
 		defaultVariants: {
 			theme: 'light',
 			layout: 'left'
+		}
+	});
+
+	const imageStyle = cva('flex overflow-hidden', {
+		variants: {
+			aspect: {
+				square: 'aspect-square',
+				video: 'aspect-video',
+				portrait: 'aspect-[2/3]',
+				auto: 'aspect-auto'
+			},
+			scale: {}
+		},
+		defaultVariants: {
+			aspect: 'video'
 		}
 	});
 
@@ -93,6 +109,22 @@
 		}, el);
 	});
 
+	const getImageAspectRatio: (image: any) => 'square' | 'video' | 'portrait' | 'auto' = (
+		image: any
+	) => {
+		const { width, height } = getImageDimensionsFromUrl(image);
+
+		if (width > height) {
+			return 'video';
+		}
+
+		if (height > width) {
+			return 'portrait';
+		}
+
+		return 'square';
+	};
+
 	onDestroy(() => {
 		if (ctx) ctx.revert();
 	});
@@ -113,7 +145,13 @@
 			)}
 		>
 			<div class="relative w-full" role="group">
-				<div class="flex aspect-video overflow-hidden">
+				<div
+					class={cls(
+						imageStyle({
+							aspect: getImageAspectRatio(content.thumbnail.filename)
+						})
+					)}
+				>
 					{#if isActive}
 						<ScrollPlane {content} {name} />
 					{/if}
