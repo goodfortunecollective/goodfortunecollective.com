@@ -139,7 +139,7 @@
 	const getImageScaleRatio: (image: any) => 'full' | 'half' = (image: any) => {
 		const { width, height } = getImageDimensionsFromUrl(image);
 
-		if (width > height) {
+		if (width >= height) {
 			return 'full';
 		}
 
