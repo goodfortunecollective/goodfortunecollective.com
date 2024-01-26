@@ -3,6 +3,8 @@ export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
 		extend: {
+			animation: {
+				'spin-slow': 'spin 20s linear infinite'},
 			aspectRatio: {
 				'9/16': '9/16',
 			  },

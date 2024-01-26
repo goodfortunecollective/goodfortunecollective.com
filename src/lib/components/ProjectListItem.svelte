@@ -4,6 +4,7 @@
 	import { cva } from 'class-variance-authority';
 	import { renderRichText } from '@storyblok/svelte';
 
+	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	import { base } from '$app/paths';
@@ -42,6 +43,32 @@
 		defaultVariants: {
 			theme: 'light',
 			layout: 'left'
+		}
+	});
+
+	const imageStyle = cva('flex overflow-hidden', {
+		variants: {
+			aspect: {
+				square: 'aspect-square',
+				video: 'aspect-video',
+				portrait: 'aspect-[2/3]',
+				auto: 'aspect-auto'
+			}
+		},
+		defaultVariants: {
+			aspect: 'video'
+		}
+	});
+
+	const containerStyle = cva('relative h-auto w-1/2', {
+		variants: {
+			scale: {
+				full: 'w-full',
+				half: 'w-2/3 lg:w-1/2'
+			}
+		},
+		defaultVariants: {
+			scale: 'full'
 		}
 	});
 
@@ -93,6 +120,32 @@
 		}, el);
 	});
 
+	const getImageAspectRatio: (image: any) => 'square' | 'video' | 'portrait' | 'auto' = (
+		image: any
+	) => {
+		const { width, height } = getImageDimensionsFromUrl(image);
+
+		if (width > height) {
+			return 'video';
+		}
+
+		if (height > width) {
+			return 'portrait';
+		}
+
+		return 'square';
+	};
+
+	const getImageScaleRatio: (image: any) => 'full' | 'half' = (image: any) => {
+		const { width, height } = getImageDimensionsFromUrl(image);
+
+		if (width > height) {
+			return 'full';
+		}
+
+		return 'half';
+	};
+
 	onDestroy(() => {
 		if (ctx) ctx.revert();
 	});
@@ -105,13 +158,28 @@
 			data-id={slug}
 			use:inview
 			on:inview_change={inViewItem}
+			on:mouseenter={onEnter}
+			on:mouseleave={onLeave}
 			class={cls(
 				'flex-no-wrap pointer-events-auto flex w-full flex-col hover:no-underline',
 				variants({ theme: theme, layout: layout })
 			)}
 		>
-			<div class="relative w-full" on:mouseenter={onEnter} on:mouseleave={onLeave} role="group">
-				<div class="flex aspect-video overflow-hidden">
+			<div
+				role="group"
+				class={cls(
+					containerStyle({
+						scale: getImageScaleRatio(content.thumbnail.filename)
+					})
+				)}
+			>
+				<div
+					class={cls(
+						imageStyle({
+							aspect: getImageAspectRatio(content.thumbnail.filename)
+						})
+					)}
+				>
 					{#if isActive}
 						<ScrollPlane {content} {name} />
 					{/if}
