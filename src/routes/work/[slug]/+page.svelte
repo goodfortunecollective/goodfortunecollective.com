@@ -93,14 +93,28 @@
 			>
 				{#if data.story.content.brand}
 					<div>
-						<h5 class="mb-2 text-sm font-bold uppercase tracking-wide text-rose-50">Brand</h5>
-						{data.story.content.brand}
+						<Heading
+							as="h2"
+							size="h6"
+							class="inline-block text-sm font-bold uppercase tracking-wide text-rose-50"
+							>Brand</Heading
+						>
+						<RichtextTransition class="text-xl [&_p]:leading-8">
+							<p>{@html data.story.content.brand}</p>
+						</RichtextTransition>
 					</div>
 				{/if}
 				{#if data.story.content.ask_text}
 					<div>
-						<h5 class="mb-2 text-sm font-bold uppercase tracking-wide text-rose-50">The ask</h5>
-						{@html ask_text}
+						<Heading
+							as="h2"
+							size="h6"
+							class="inline-block text-sm font-bold uppercase tracking-wide text-rose-50"
+							>The ask</Heading
+						>
+						<RichtextTransition class="text-xl [&_p]:leading-8">
+							{@html ask_text}
+						</RichtextTransition>
 					</div>
 				{/if}
 			</div>
@@ -139,8 +153,8 @@
 			<div class="col-span-12 grid w-full grid-cols-12 py-16">
 				<Heading
 					as="h4"
-					size="h5"
-					class="col-span-10 col-start-2 uppercase lg:col-span-2 lg:col-start-2"
+					size="h6"
+					class="col-span-10 col-start-2 mt-1 uppercase text-rose-50 lg:col-span-2 lg:col-start-2"
 					><strong>Strategy</strong></Heading
 				>
 				<RichtextTransition
@@ -155,8 +169,8 @@
 			<div class="col-span-12 grid w-full grid-cols-12 pt-16">
 				<Heading
 					as="h4"
-					size="h5"
-					class="col-span-10 col-start-2 uppercase lg:col-span-2 lg:col-start-2"
+					size="h6"
+					class="col-span-10 col-start-2 mt-1 uppercase text-rose-50 lg:col-span-2 lg:col-start-2"
 					><strong>Solution</strong></Heading
 				>
 				<RichtextTransition
@@ -167,7 +181,7 @@
 			</div>
 		{/if}
 		{#if data.story.content.ask}
-			<div class="col-span-12 grid w-full grid-cols-12 py-16">
+			<div class="col-span-12 grid w-full grid-cols-12 pb-0 pt-16">
 				<ul
 					class="col-span-10 col-start-2 text-[#dcf945] lg:col-span-6 lg:col-start-5 [&>*:not(:last-child)]:after:ml-4 [&>*:not(:last-child)]:after:content-['•']"
 				>
