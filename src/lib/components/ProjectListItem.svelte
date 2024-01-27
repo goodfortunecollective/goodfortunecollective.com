@@ -46,6 +46,31 @@
 		}
 	});
 
+	const containerStyle = cva('self-start', {
+		variants: {
+			margin: {
+				none: '',
+				left: 'lg:translate-x-[16.66%]',
+				right: 'lg:-translate-x-[16.66%]'
+			}
+		},
+		defaultVariants: {
+			margin: 'none'
+		}
+	});
+
+	const containerImageStyle = cva('relative h-auto w-1/2', {
+		variants: {
+			scale: {
+				full: 'w-full',
+				half: 'w-2/3 lg:w-1/2'
+			}
+		},
+		defaultVariants: {
+			scale: 'full'
+		}
+	});
+
 	const imageStyle = cva('flex overflow-hidden', {
 		variants: {
 			aspect: {
@@ -57,18 +82,6 @@
 		},
 		defaultVariants: {
 			aspect: 'video'
-		}
-	});
-
-	const containerStyle = cva('relative h-auto w-1/2', {
-		variants: {
-			scale: {
-				full: 'w-full',
-				half: 'w-2/3 lg:w-1/2'
-			}
-		},
-		defaultVariants: {
-			scale: 'full'
 		}
 	});
 
@@ -146,13 +159,31 @@
 		return 'half';
 	};
 
+	const getContainerMargin: (image: any) => 'none' | 'left' | 'right' = (image: any) => {
+		const { width, height } = getImageDimensionsFromUrl(image);
+
+		if (width >= height) {
+			return 'none';
+		}
+
+		return layout === 'left' ? 'left' : 'right';
+	};
+
 	onDestroy(() => {
 		if (ctx) ctx.revert();
 	});
 </script>
 
 <div class={cls('pointer-events-none mb-24 lg:mb-0', $$props.class)} bind:this={el}>
-	<Parallax speed={parallaxSpeed} class="self-start" id={slug}>
+	<Parallax
+		speed={parallaxSpeed}
+		class={cls(
+			containerStyle({
+				margin: getContainerMargin(content.thumbnail.filename)
+			})
+		)}
+		id={slug}
+	>
 		<a
 			href="{base}/work/{slug}"
 			data-id={slug}
@@ -168,7 +199,7 @@
 			<div
 				role="group"
 				class={cls(
-					containerStyle({
+					containerImageStyle({
 						scale: getImageScaleRatio(content.thumbnail.filename)
 					})
 				)}
