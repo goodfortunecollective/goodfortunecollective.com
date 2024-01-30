@@ -17,6 +17,7 @@
 	import type { LayoutData } from './$types';
 	import { pageLeaveDuration, pageTransitionPauseDuration } from '$lib/utils/page-transitions';
 
+	import Analytics from './Analytics.svelte';
 	import Loader from './Loader.svelte';
 	import ScrollIndicator from './ScrollIndicator.svelte';
 	import Curtains from './Curtains.svelte';
@@ -131,6 +132,8 @@
 <PageTransitionAnim bind:this={pageTransitionAnimRef} />
 
 <Cursor />
+
+<Analytics />
 
 <style>
 </style>
