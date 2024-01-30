@@ -95,7 +95,10 @@
 
 <span
 	bind:this={element}
-	class={cls('[&_a]:c-animated-underline inline-block break-words', clazz)}
+	class={cls(
+		'[&_a]:c-animated-underline inline-block break-words [&_*]:duration-1000 [&_*]:ease-out',
+		clazz
+	)}
 	{style}
 >
 	<span class="wrap" /><slot />

@@ -115,7 +115,10 @@
 				type === 'hover' && !inheritTextColor && variantsHover({ theme: $backgroundTheme })
 			)}
 		>
-			<span class="wrap" />{name}
+			<span class="wrap" />
+			{#if name !== null}
+				{name}
+			{/if}
 		</span>
 	</h2>
 {/key}
