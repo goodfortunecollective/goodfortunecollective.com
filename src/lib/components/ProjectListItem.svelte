@@ -75,13 +75,13 @@
 		variants: {
 			aspect: {
 				square: 'aspect-square',
-				video: 'aspect-video',
+				landscape: 'aspect-video',
 				portrait: 'aspect-[2/3]',
 				auto: 'aspect-auto'
 			}
 		},
 		defaultVariants: {
-			aspect: 'video'
+			aspect: 'landscape'
 		}
 	});
 
@@ -133,13 +133,13 @@
 		}, el);
 	});
 
-	const getImageAspectRatio: (image: any) => 'square' | 'video' | 'portrait' | 'auto' = (
+	const getImageAspectRatio: (image: any) => 'square' | 'landscape' | 'portrait' | 'auto' = (
 		image: any
 	) => {
 		const { width, height } = getImageDimensionsFromUrl(image);
 
 		if (width > height) {
-			return 'video';
+			return 'landscape';
 		}
 
 		if (height > width) {
