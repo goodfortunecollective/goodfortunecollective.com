@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
+	import { onDestroy, afterUpdate } from 'svelte';
 
 	import { cls } from '$lib/styles';
 	import gsap from '$lib/gsap';
@@ -17,7 +17,7 @@
 	let triggerEl!: HTMLElement;
 	let tl: any;
 
-	onMount(() => {
+	afterUpdate(() => {
 		if (innerWidth < 1024) return;
 
 		const y = innerWidth * speed * 0.1;

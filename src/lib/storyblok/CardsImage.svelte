@@ -8,8 +8,12 @@
 	import { backgroundTheme } from '$lib/stores';
 	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
 	import { inViewColorTransition } from '$lib/utils/animations';
+	import { onMount } from 'svelte';
 
 	export let blok: any;
+
+	let el!: HTMLElement;
+	let imageWidth = 0;
 
 	const variants = cva('h-full w-full duration-1000 ease-out', {
 		variants: {
@@ -23,32 +27,13 @@
 		}
 	});
 
-	const containerStyle = cva('relative h-full w-full', {
-		variants: {
-			aspect: {
-				square: 'aspect-square',
-				portrait: 'aspect-[2/3]',
-				video: 'aspect-video',
-				half: 'aspect-[1/2]'
-			}
-		},
-		defaultVariants: {
-			aspect: 'video'
-		}
-	});
+	onMount(() => {
+		if (!blok.asset?.filename) return;
 
-	const imageStyle = cva('h-full w-full', {
-		variants: {
-			objectFit: {
-				none: 'object-none',
-				fill: 'object-fill',
-				contain: 'object-contain',
-				cover: 'object-cover'
-			}
-		},
-		defaultVariants: {
-			objectFit: 'cover'
-		}
+		const w = getImageDimensionsFromUrl(blok.asset.filename).width;
+		const h = getImageDimensionsFromUrl(blok.asset.filename).height;
+
+		imageWidth = (el.getBoundingClientRect().height / h) * w;
 	});
 </script>
 
@@ -58,23 +43,22 @@
 	use:inview
 	on:inview_change={inViewColorTransition}
 	class={cls(variants({ theme: $backgroundTheme }), blok.class)}
+	bind:this={el}
 >
 	<div class="flex h-full w-full flex-col">
-		<div class={containerStyle({ aspect: blok.aspect })}>
-			<div class="absolute inset-0">
-				{#if blok.asset.filename?.length > 0}
+		{#if blok.asset.filename?.length > 0}
+			<div class="relative h-full" style={`width: ${imageWidth}px`}>
+				<div class="absolute inset-0">
 					<img
 						src={`${blok.asset.filename}/m/`}
-						width={getImageDimensionsFromUrl(blok.asset.filename).width}
-						height={getImageDimensionsFromUrl(blok.asset.filename).height}
 						alt={blok.asset.name}
-						class={imageStyle({ objectFit: blok.objectFit })}
 						loading="lazy"
 						decoding="async"
+						class="h-full w-full"
 						in:fade={{ duration: 500 }}
 					/>
-				{/if}
+				</div>
 			</div>
-		</div>
+		{/if}
 	</div>
 </div>
