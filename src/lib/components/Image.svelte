@@ -7,7 +7,7 @@
 	import { ScrollTrigger } from '$lib/gsap';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
-	export let aspect: 'square' | 'video' | 'portrait' | 'auto' = 'video';
+	export let aspect: 'square' | 'landscape' | 'portrait' | 'auto' = 'landscape';
 	export let animated: boolean = true;
 
 	$: innerWidth = 0;
@@ -21,13 +21,13 @@
 		variants: {
 			aspect: {
 				square: 'aspect-square',
-				video: 'aspect-video',
+				landscape: 'aspect-video',
 				portrait: 'aspect-[2/3]',
 				auto: 'aspect-auto'
 			}
 		},
 		defaultVariants: {
-			aspect: 'video'
+			aspect: 'landscape'
 		}
 	});
 

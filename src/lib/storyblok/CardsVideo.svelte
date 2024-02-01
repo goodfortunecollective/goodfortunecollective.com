@@ -26,26 +26,12 @@
 		variants: {
 			aspect: {
 				square: 'aspect-square',
-				video: 'aspect-video',
+				landscape: 'aspect-video',
 				half: 'aspect-[1/2]'
 			}
 		},
 		defaultVariants: {
-			aspect: 'video'
-		}
-	});
-
-	const imageStyle = cva('h-full w-full', {
-		variants: {
-			objectFit: {
-				none: 'object-none',
-				fill: 'object-fill',
-				contain: 'object-contain',
-				cover: 'object-cover'
-			}
-		},
-		defaultVariants: {
-			objectFit: 'cover'
+			aspect: 'landscape'
 		}
 	});
 </script>
@@ -60,14 +46,7 @@
 	<div class="flex h-full w-full flex-col">
 		<div class={containerStyle({ aspect: blok.aspect })}>
 			<div class="absolute inset-0">
-				<Video
-					videoUrl={blok.asset}
-					autoplay
-					muted
-					loop
-					animated={false}
-					class={imageStyle({ objectFit: blok.objectFit })}
-				/>
+				<Video videoUrl={blok.asset} autoplay muted loop animated={false} />
 			</div>
 		</div>
 	</div>

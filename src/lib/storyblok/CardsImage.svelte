@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { inview } from 'svelte-inview';
 	import { storyblokEditable } from '@storyblok/svelte';
@@ -8,7 +9,6 @@
 	import { backgroundTheme } from '$lib/stores';
 	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
 	import { inViewColorTransition } from '$lib/utils/animations';
-	import { onMount } from 'svelte';
 
 	export let blok: any;
 
