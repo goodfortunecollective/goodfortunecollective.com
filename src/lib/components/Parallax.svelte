@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
+	import { onDestroy, afterUpdate } from 'svelte';
 
 	import { cls } from '$lib/styles';
 	import gsap from '$lib/gsap';
@@ -17,8 +17,10 @@
 	let triggerEl!: HTMLElement;
 	let tl: any;
 
-	onMount(() => {
+	afterUpdate(() => {
 		if (innerWidth < 1024) return;
+
+		console.log('----------');
 
 		const y = innerWidth * speed * 0.1;
 		const setY = gsap.quickSetter(targetEl, 'y', 'px');
@@ -40,6 +42,7 @@
 	});
 
 	onDestroy(() => {
+		console.log('killll');
 		if (ctx) ctx.revert();
 		if (tl) tl.kill();
 	});
