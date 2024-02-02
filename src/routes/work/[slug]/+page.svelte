@@ -158,7 +158,7 @@
 					><strong>Strategy</strong></Heading
 				>
 				<RichtextTransition
-					class="col-span-10 col-start-2 text-xl lg:col-span-6 lg:col-start-5 xl:text-2xl 4xl:text-4xl [&_p]:leading-8"
+					class="4xl:[&_p]:leading-12 col-span-10 col-start-2 text-xl lg:col-span-6 lg:col-start-5 xl:text-2xl 4xl:text-4xl [&_p]:leading-8"
 				>
 					{@html strategy_text}
 				</RichtextTransition>
@@ -174,7 +174,7 @@
 					><strong>Solution</strong></Heading
 				>
 				<RichtextTransition
-					class="col-span-10 col-start-2 text-xl lg:col-span-6 lg:col-start-5 xl:text-2xl 4xl:text-4xl [&_p]:leading-8"
+					class="4xl:[&_p]:leading-12 col-span-10 col-start-2 text-xl lg:col-span-6 lg:col-start-5 xl:text-2xl 4xl:text-4xl [&_p]:leading-8"
 				>
 					{@html solution_text}
 				</RichtextTransition>

@@ -26,8 +26,6 @@
 			</Heading>
 		{/if}
 
-		<RichtextTransition class="w-full text-xl xl:text-2xl 4xl:text-4xl"
-			>{@html content}</RichtextTransition
-		>
+		<RichtextTransition class="w-full">{@html content}</RichtextTransition>
 	</dd>
 </div>
