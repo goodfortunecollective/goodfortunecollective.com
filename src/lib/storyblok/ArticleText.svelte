@@ -11,7 +11,9 @@
 <div
 	use:storyblokEditable={blok}
 	{...$$restProps}
-	class="col-span-10 col-start-2 text-xl lg:col-span-6 lg:col-start-4"
+	class="col-span-10 col-start-2 lg:col-span-6 lg:col-start-4"
 >
-	<RichtextTransition class="[&_p]:my-4 [&_p]:leading-8">{@html content}</RichtextTransition>
+	<RichtextTransition class="text-xl xl:text-2xl 4xl:text-4xl [&_p]:my-4 [&_p]:leading-8"
+		>{@html content}</RichtextTransition
+	>
 </div>

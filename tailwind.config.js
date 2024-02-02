@@ -80,7 +80,10 @@ export default {
 				widest: '.15em'
 			},
 			height: {
+				'112': '28rem',
 				'128': '32rem',
+				'160': '40rem',
+				'192': '48rem'
 			},
 			zIndex: {
 				'1': '1',
