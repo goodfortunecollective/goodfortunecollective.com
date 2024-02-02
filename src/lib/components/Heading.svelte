@@ -10,7 +10,7 @@
 	export let animated: boolean = true;
 	export let underline: boolean = false;
 
-	const variants = cva('w-full', {
+	const variants = cva('w-full duration-1000 ease-out', {
 		variants: {
 			size: {
 				h1: 'leading-10 font-degular-display text-stone-450',
