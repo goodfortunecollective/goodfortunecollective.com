@@ -32,13 +32,13 @@
 	on:inview_change={inViewColorTransition}
 	class={cls(variants({ theme: $backgroundTheme }), blok.class)}
 >
-	<div class="col-span-10 col-start-2 4xl:col-span-6 4xl:col-start-4">
+	<div class=" dispa col-span-10 col-start-2 4xl:col-span-6 4xl:col-start-4">
 		<Heading as="h3" size="h2" cl>{blok.title}</Heading>
 	</div>
 	<div
 		class="col-span-10 col-start-2 my-8 text-center lg:col-span-8 lg:col-start-3 4xl:col-span-6 4xl:col-start-4"
 	>
-		<RichtextTransition class="text-xl xl:text-2xl 4xl:text-4xl [&_p]:my-4 [&_p]:leading-8"
+		<RichtextTransition class="text-xl xl:text-2xl 4xl:text-4xl [&_p]:my-4 [&_p]:leading-snug"
 			>{@html content}</RichtextTransition
 		>
 	</div>

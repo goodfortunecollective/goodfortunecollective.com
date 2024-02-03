@@ -238,7 +238,9 @@
 						</li>
 					{/each}
 				</ul>
-				<div class="mt-4 max-w-md overflow-hidden text-base font-medium xl:text-xl 4xl:text-2xl">
+				<div
+					class="mt-4 max-w-md overflow-hidden text-base font-medium leading-snug xl:text-xl 4xl:text-2xl"
+				>
 					<RichtextAnimated bind:this={descriptionTextRef}>
 						<span class="wrap" />{@html description}
 					</RichtextAnimated>

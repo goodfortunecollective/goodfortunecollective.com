@@ -11,32 +11,29 @@
 	export let blok: any;
 	$: content = renderRichText(blok.content);
 
-	const variants = cva(
-		'flex w-full text-xl leading-9 duration-1000 ease-out xl:text-2xl 4xl:text-4xl 4xl:leading-loose',
-		{
-			variants: {
-				theme: {
-					light: '',
-					dark: 'text-white'
-				},
-				align: {
-					left: '',
-					center: 'm-auto'
-				},
-				maxWidth: {
-					sm: 'max-w-sm',
-					md: 'max-w-md',
-					lg: 'max-w-lg',
-					xl: 'max-w-xl',
-					'2xl': 'max-w-2xl',
-					'3xl': 'max-w-3xl'
-				}
+	const variants = cva('flex w-full text-xl  duration-1000 ease-out xl:text-2xl 4xl:text-4xl', {
+		variants: {
+			theme: {
+				light: '',
+				dark: 'text-white'
 			},
-			defaultVariants: {
-				theme: 'light'
+			align: {
+				left: '',
+				center: 'm-auto'
+			},
+			maxWidth: {
+				sm: 'max-w-sm 2xl:max-w-md 4xl:max-w-xl',
+				md: 'max-w-md 2xl:max-w-lg 3xl:max-w-xl 4xl:max-w-2xl',
+				lg: 'max-w-lg 2xl:max-w-xl 3xl:max-w-2xl 4xl:max-w-3xl',
+				xl: 'max-w-xl max-w-2xl 3xl:max-w-3xl 4xl:max-w-4xl',
+				'2xl': 'max-w-2xl 3xl:max-w-3xl 4xl:max-w-4xl',
+				'3xl': 'max-w-3xl 2xl:max-w-4xl 3xl:max-w-5xl 4xl:max-w-6xl'
 			}
+		},
+		defaultVariants: {
+			theme: 'light'
 		}
-	);
+	});
 </script>
 
 <div
@@ -49,5 +46,5 @@
 	use:inview
 	on:inview_change={inViewColorTransition}
 >
-	<RichtextTransition class="[&_p]:my-16 [&_p]:leading-8">{@html content}</RichtextTransition>
+	<RichtextTransition class="[&_p]:my-16 [&_p]:leading-snug">{@html content}</RichtextTransition>
 </div>

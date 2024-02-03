@@ -86,7 +86,7 @@
 			<div class="ScrollActionToPage-bar relative h-32 w-px" />
 			<span
 				bind:this={scrollLabel}
-				class="ScrollActionToPage-label inline-flex h-[1em] font-degular-display text-7xl leading-8 md:text-9xl lg:text-[12em]"
+				class="ScrollActionToPage-label inline-flex h-[1em] font-degular-display text-7xl leading-snug md:text-9xl lg:text-[12em]"
 				>{label}</span
 			>
 		</div>

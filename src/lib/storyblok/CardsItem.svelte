@@ -14,7 +14,10 @@
 	{...$$restProps}
 	use:inview
 	on:inview_change={inViewColorTransition}
-	class={cls('w-[26rem] rounded-2xl bg-black duration-1000 ease-out', blok.class)}
+	class={cls(
+		'w-[26rem] rounded-2xl bg-black duration-1000 ease-out 2xl:w-[40rem]  4xl:w-[56rem]',
+		blok.class
+	)}
 >
 	<div class="flex flex-col p-8 pb-12">
 		<div class="relative aspect-video w-full">
@@ -24,7 +27,7 @@
 		</div>
 		<div class="relative h-3">
 			<span
-				class="absolute -bottom-4 align-bottom text-3xl text-white lg:text-4xl 3xl:text-5xl 4xl:text-5xl"
+				class="absolute -bottom-4 align-bottom text-3xl text-white lg:text-4xl 2xl:text-6xl 4xl:text-8xl"
 				>{blok.title}</span
 			>
 		</div>

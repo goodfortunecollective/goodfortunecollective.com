@@ -26,8 +26,8 @@
 				},
 				lineHeight: {
 					none: '',
-					'extra-tight': 'leading-extra-tight lg:leading-extra-tight',
-					tightest: 'leading-tightest lg:leading-tightest'
+					'extra-tight': 'leading-extra-tight lg:leading-extra-tight 2xl:leading-snug',
+					tightest: 'leading-tightest lg:leading-tightest 2xl:leading-snug'
 				}
 			},
 			defaultVariants: {
@@ -99,7 +99,7 @@
 		{#if content}
 			<div class="col-span-10 col-start-2 lg:col-span-6 lg:col-start-5">
 				<div
-					class="max-w-screen-xl text-xl leading-9 lg:pt-12 xl:text-2xl 4xl:text-4xl 4xl:leading-loose"
+					class="max-w-screen-xl text-xl leading-9 lg:pt-12 xl:text-2xl 4xl:text-4xl 4xl:leading-snug"
 					{...$$restProps}
 				>
 					<RichtextTransition>{@html content}</RichtextTransition>

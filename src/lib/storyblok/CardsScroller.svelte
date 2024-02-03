@@ -24,7 +24,7 @@
 			size: {
 				small: 'h-64 2xl:h-72 4xl:h-80' /* 256px */,
 				medium: 'h-96 2xl:h-112 4xl:h-128' /* 384px */,
-				large: 'h-128 2xl:h-160 4xl:h-192' /* 512px */
+				large: 'h-128 2xl:h-160 4xl:h-224' /* 512px */
 			},
 			theme: {
 				light: '',
@@ -80,12 +80,7 @@
 	{#if blok.title?.length > 0}
 		<div class="fixed grid w-full grid-cols-12">
 			<div class="col-span-10 col-start-2">
-				<Heading
-					as="h2"
-					animated={true}
-					size="h2"
-					class="leading-extra-tight lg:leading-extra-tight"
-				>
+				<Heading as="h2" animated={true} size="h2" class="leading-snug lg:leading-snug">
 					{blok.title}
 				</Heading>
 			</div>

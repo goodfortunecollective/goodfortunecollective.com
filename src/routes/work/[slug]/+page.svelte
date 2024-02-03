@@ -99,7 +99,7 @@
 							class="inline-block text-sm font-bold uppercase tracking-wide text-rose-50"
 							>Brand</Heading
 						>
-						<RichtextTransition class="text-xl xl:text-2xl 4xl:text-4xl [&_p]:leading-8">
+						<RichtextTransition class="text-xl xl:text-2xl 4xl:text-4xl [&_p]:leading-snug">
 							<p>{@html data.story.content.brand}</p>
 						</RichtextTransition>
 					</div>
@@ -112,7 +112,7 @@
 							class="inline-block text-sm font-bold uppercase tracking-wide text-rose-50"
 							>The ask</Heading
 						>
-						<RichtextTransition class="text-xl xl:text-2xl 4xl:text-4xl [&_p]:leading-8">
+						<RichtextTransition class="text-xl xl:text-2xl 4xl:text-4xl [&_p]:leading-snug">
 							{@html ask_text}
 						</RichtextTransition>
 					</div>
@@ -143,7 +143,7 @@
 					animated={false}
 				/>
 			</div>
-			<div class=" max-w-4xl py-16">
+			<div class="max-w-4xl py-16 2xl:max-w-6xl 4xl:max-w-8xl">
 				<Heading as="h2" size="h2" animated={false}
 					><RichtextTransition>{@html description}</RichtextTransition></Heading
 				>
@@ -158,7 +158,7 @@
 					><strong>Strategy</strong></Heading
 				>
 				<RichtextTransition
-					class="col-span-10 col-start-2 text-xl lg:col-span-6 lg:col-start-5 xl:text-2xl 4xl:text-4xl [&_p]:leading-8 4xl:[&_p]:leading-10"
+					class="col-span-10 col-start-2 text-xl lg:col-span-6 lg:col-start-5 xl:text-2xl 4xl:text-4xl [&_p]:leading-snug"
 				>
 					{@html strategy_text}
 				</RichtextTransition>
@@ -174,7 +174,7 @@
 					><strong>Solution</strong></Heading
 				>
 				<RichtextTransition
-					class="col-span-10 col-start-2 text-xl lg:col-span-6 lg:col-start-5 xl:text-2xl 4xl:text-4xl [&_p]:leading-8 4xl:[&_p]:leading-10"
+					class="col-span-10 col-start-2 text-xl lg:col-span-6 lg:col-start-5 xl:text-2xl 4xl:text-4xl [&_p]:leading-snug"
 				>
 					{@html solution_text}
 				</RichtextTransition>
