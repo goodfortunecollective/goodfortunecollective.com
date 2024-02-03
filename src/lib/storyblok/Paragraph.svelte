@@ -46,5 +46,5 @@
 	use:inview
 	on:inview_change={inViewColorTransition}
 >
-	<RichtextTransition class="[&_p]:my-16 [&_p]:leading-snug">{@html content}</RichtextTransition>
+	<RichtextTransition class="[&_p]:mb-16 [&_p]:leading-snug">{@html content}</RichtextTransition>
 </div>

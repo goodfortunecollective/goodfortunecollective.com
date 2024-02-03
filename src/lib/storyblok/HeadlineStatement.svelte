@@ -26,8 +26,8 @@
 				},
 				lineHeight: {
 					none: '',
-					'extra-tight': 'leading-extra-tight lg:leading-extra-tight 2xl:leading-snug',
-					tightest: 'leading-tightest lg:leading-tightest 2xl:leading-snug'
+					'extra-tight': 'leading-extra-tight lg:leading-extra-tight ',
+					tightest: 'leading-tightest lg:leading-tightest'
 				}
 			},
 			defaultVariants: {
