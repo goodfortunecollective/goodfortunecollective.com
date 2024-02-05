@@ -104,10 +104,10 @@
 			>
 				<div class="mt-24 flow-root">
 					<div class="-my-6 divide-y divide-gray-500/10">
-						<div class="space-y-2 py-6">
+						<div class="space-y-2 py-6 text-center">
 							{#each blok.navigation as { name, slug }, i}<a
 									href="{base}/{slug}"
-									class="-mx-3 block px-3 py-2 text-xl font-semibold leading-7 text-white"
+									class="block px-3 py-8 font-degular-display text-6xl leading-7 text-white"
 									in:fly={{ x: -48, duration: 500, delay: 300 + 50 * i }}
 									out:fly={{ x: -48, duration: 500, delay: 300 - 50 * i }}
 									on:click={closeMobileMenu}>{name}</a
