@@ -64,7 +64,7 @@
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	<div class="grid grid-cols-12 gap-8 pt-24 md:gap-0">
 		{#if blok.divider}
-			<div class="col-span-5 col-start-7 flex pb-24">
+			<div class="col-span-12 col-start-1 flex pb-20 md:col-span-5 md:col-start-7 md:pb-24">
 				<div class={cls(dividerStyle({ theme: $backgroundTheme }))}></div>
 			</div>
 		{/if}
