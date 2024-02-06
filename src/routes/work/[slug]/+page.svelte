@@ -96,8 +96,7 @@
 						<Heading
 							as="h2"
 							size="h6"
-							class="inline-block text-sm font-bold uppercase tracking-wide text-rose-50"
-							>Brand</Heading
+							class="inline-block font-bold uppercase tracking-wide text-rose-50">Brand</Heading
 						>
 						<RichtextTransition class="text-xl xl:text-2xl 4xl:text-4xl [&_p]:leading-snug">
 							<p>{@html data.story.content.brand}</p>
@@ -109,8 +108,7 @@
 						<Heading
 							as="h2"
 							size="h6"
-							class="inline-block text-sm font-bold uppercase tracking-wide text-rose-50"
-							>The ask</Heading
+							class="inline-block font-bold uppercase tracking-wide text-rose-50">The ask</Heading
 						>
 						<RichtextTransition class="text-xl xl:text-2xl 4xl:text-4xl [&_p]:leading-snug">
 							{@html ask_text}

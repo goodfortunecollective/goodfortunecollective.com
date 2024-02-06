@@ -250,7 +250,11 @@
 					{/each}
 				</ul>
 				<div
-					class="mt-4 max-w-md overflow-hidden text-base font-medium leading-snug lg:block xl:text-xl 4xl:text-2xl"
+					class={cls(
+						'mt-4 max-w-md overflow-hidden text-base font-medium leading-snug lg:block lg:pl-0 lg:pr-0 xl:text-xl 4xl:text-2xl',
+						layout === 'right' && 'pr-8',
+						layout === 'left' && 'pl-8'
+					)}
 				>
 					<RichtextAnimated bind:this={descriptionTextRef}>
 						<span class="wrap" />{@html description}
