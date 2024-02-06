@@ -7,6 +7,7 @@
 	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
+	import { browser } from '$app/environment';
 	import { base } from '$app/paths';
 	import { cls } from '$lib/styles';
 	import { ScrollPlane, Heading, RichtextAnimated, Parallax } from '$lib/components';
@@ -22,6 +23,8 @@
 	export let parallaxSpeed: number = 1;
 
 	$: description = renderRichText(content.description);
+
+	$: isTouchDevice = browser && 'ontouchstart' in window;
 
 	let descriptionTextRef: RichtextAnimated | null = null;
 
@@ -86,6 +89,8 @@
 	});
 
 	function onEnter() {
+		if (isTouchDevice) return;
+
 		project_list_hover.set(name);
 
 		descriptionTextRef?.animateIn();
@@ -93,6 +98,8 @@
 	}
 
 	const onLeave = () => {
+		if (isTouchDevice) return;
+
 		// reset hover title only if we're not transitioning
 		if (!$isTransitioning) {
 			project_list_hover.set(null);
@@ -113,6 +120,10 @@
 
 	onMount(() => {
 		gsap.set(el, { opacity: 0, y: 100 });
+
+		if (isTouchDevice) {
+			descriptionTextRef?.animateIn();
+		}
 	});
 
 	useTransitionReady(() => {
@@ -239,7 +250,7 @@
 					{/each}
 				</ul>
 				<div
-					class="mt-4 max-w-md overflow-hidden text-base font-medium leading-snug xl:text-xl 4xl:text-2xl"
+					class="mt-4 max-w-md overflow-hidden text-base font-medium leading-snug lg:block xl:text-xl 4xl:text-2xl"
 				>
 					<RichtextAnimated bind:this={descriptionTextRef}>
 						<span class="wrap" />{@html description}
