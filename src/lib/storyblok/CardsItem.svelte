@@ -15,7 +15,7 @@
 	use:inview
 	on:inview_change={inViewColorTransition}
 	class={cls(
-		'w-[26rem] rounded-2xl bg-black duration-1000 ease-out 2xl:w-[40rem]  4xl:w-[56rem]',
+		'w-[20rem] rounded-2xl bg-black duration-1000 ease-out md:w-[26rem] 2xl:w-[40rem]  4xl:w-[56rem]',
 		blok.class
 	)}
 >

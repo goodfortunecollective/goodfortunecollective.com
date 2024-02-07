@@ -87,7 +87,7 @@
 		</div>
 		<Spacer gap="extra-large" />
 	{/if}
-	<div class="overflow">
+	<div class={cls('overflow', blok.title?.length > 0 && 'pt-4')}>
 		<div class="grid grid-cols-12" bind:this={scrollEl}>
 			<div class="col-span-10 col-start-2 flex gap-8">
 				{#each blok.content as b, index}
