@@ -283,7 +283,10 @@
 						muted={!videoPlaying}
 						playsinline
 					>
-						<source src={blok.videoPreview} type="video/mp4" />
+						<source
+							src={innerWidth < 1024 ? blok.videoPreviewMobile : blok.videoPreview}
+							type="video/mp4"
+						/>
 						<track kind="captions" />
 					</video>
 				</div>
