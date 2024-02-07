@@ -162,7 +162,7 @@
 			<video
 				preload="metadata"
 				class={cls(!autoplay && posterUrl && 'absolute z-10', 'h-auto w-full')}
-				src={offsetWidth < 1024 ? videoUrlMobile : videoUrl}
+				src={offsetWidth < 1024 && videoUrlMobile !== '' ? videoUrlMobile : videoUrl}
 				bind:this={videoPlayer}
 				poster=""
 				on:click={playPauseVideo}

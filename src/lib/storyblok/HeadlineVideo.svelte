@@ -282,13 +282,10 @@
 						loop={true}
 						muted={!videoPlaying}
 						playsinline
-					>
-						<source
-							src={innerWidth < 1024 ? blok.videoPreviewMobile : blok.videoPreview}
-							type="video/mp4"
-						/>
-						<track kind="captions" />
-					</video>
+						src={innerWidth < 1024 && blok.videoPreviewMobile !== ''
+							? blok.videoPreviewMobile
+							: blok.videoPreview}
+					/>
 				</div>
 			</div>
 
