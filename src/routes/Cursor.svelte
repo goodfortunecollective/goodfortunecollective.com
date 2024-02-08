@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { spring } from 'svelte/motion';
 	import { cva } from 'class-variance-authority';
 
@@ -34,6 +35,8 @@
 		}
 	});
 
+	$: isTouchDevice = browser && 'ontouchstart' in window;
+
 	let el!: HTMLElement;
 
 	const mouseCoords = spring({ x: 0, y: 0 }, { damping: 0.77, stiffness: 0.25 });
@@ -42,6 +45,8 @@
 	let opacity: number = 0;
 
 	cursorType.subscribe((value) => {
+		if (isTouchDevice) return;
+
 		if (value !== 'none') {
 			type = value;
 		}

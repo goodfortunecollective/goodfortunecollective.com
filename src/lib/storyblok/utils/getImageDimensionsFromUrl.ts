@@ -3,6 +3,11 @@
 const getImageDimensionsFromUrl = (imageUrl:string) => {
   const regex = /\/(\d+)x(\d+)\//; // Matches dimensions in the format "/widthxheight/"
 
+  if (!imageUrl) {
+    console.log('No image URL provided');
+    return { width: 0, height: 0 };
+  }
+
   const match = imageUrl.match(regex);
 
   if (match && match.length === 3) {

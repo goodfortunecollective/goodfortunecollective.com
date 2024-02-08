@@ -7,6 +7,7 @@
 	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
+	import { browser } from '$app/environment';
 	import { base } from '$app/paths';
 	import { cls } from '$lib/styles';
 	import { ScrollPlane, Heading, RichtextAnimated, Parallax } from '$lib/components';
@@ -22,6 +23,8 @@
 	export let parallaxSpeed: number = 1;
 
 	$: description = renderRichText(content.description);
+
+	$: isTouchDevice = browser && 'ontouchstart' in window;
 
 	let descriptionTextRef: RichtextAnimated | null = null;
 
@@ -63,7 +66,7 @@
 		variants: {
 			scale: {
 				full: 'w-full',
-				half: 'w-2/3 lg:w-1/2'
+				half: 'w-full md:w-2/3 lg:w-1/2'
 			}
 		},
 		defaultVariants: {
@@ -75,17 +78,19 @@
 		variants: {
 			aspect: {
 				square: 'aspect-square',
-				video: 'aspect-video',
+				landscape: 'aspect-video',
 				portrait: 'aspect-[2/3]',
 				auto: 'aspect-auto'
 			}
 		},
 		defaultVariants: {
-			aspect: 'video'
+			aspect: 'landscape'
 		}
 	});
 
 	function onEnter() {
+		if (isTouchDevice) return;
+
 		project_list_hover.set(name);
 
 		descriptionTextRef?.animateIn();
@@ -93,6 +98,8 @@
 	}
 
 	const onLeave = () => {
+		if (isTouchDevice) return;
+
 		// reset hover title only if we're not transitioning
 		if (!$isTransitioning) {
 			project_list_hover.set(null);
@@ -113,6 +120,10 @@
 
 	onMount(() => {
 		gsap.set(el, { opacity: 0, y: 100 });
+
+		if (isTouchDevice) {
+			descriptionTextRef?.animateIn();
+		}
 	});
 
 	useTransitionReady(() => {
@@ -133,13 +144,13 @@
 		}, el);
 	});
 
-	const getImageAspectRatio: (image: any) => 'square' | 'video' | 'portrait' | 'auto' = (
+	const getImageAspectRatio: (image: any) => 'square' | 'landscape' | 'portrait' | 'auto' = (
 		image: any
 	) => {
 		const { width, height } = getImageDimensionsFromUrl(image);
 
 		if (width > height) {
-			return 'video';
+			return 'landscape';
 		}
 
 		if (height > width) {
@@ -217,7 +228,7 @@
 				</div>
 			</div>
 
-			<div class="mt-8">
+			<div class={cls('mt-8 lg:pl-0', layout === 'right' && 'pr-8', layout === 'left' && 'pl-8')}>
 				<Heading
 					as="h4"
 					size="h6"
@@ -238,7 +249,9 @@
 						</li>
 					{/each}
 				</ul>
-				<div class="text-md mt-4 max-w-md overflow-hidden font-medium">
+				<div
+					class="mt-4 max-w-md overflow-hidden text-base font-medium leading-snug lg:block xl:text-xl 4xl:text-2xl"
+				>
 					<RichtextAnimated bind:this={descriptionTextRef}>
 						<span class="wrap" />{@html description}
 					</RichtextAnimated>

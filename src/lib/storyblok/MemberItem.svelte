@@ -20,9 +20,9 @@
 	{...$$restProps}
 	on:mouseenter={handleMouseEnter}
 	on:mouseleave={handleMouseLeave}
-	class="h-auto w-full border-b border-gray-500 last:border-0 lg:h-20"
+	class="h-auto w-full border-b border-gray-500 last:border-0 lg:h-20 2xl:h-32"
 >
-	<span class="align-center block py-4 text-left lg:flex lg:flex-row">
+	<span class="align-center block h-full py-4 text-left lg:flex lg:flex-row 2xl:py-8">
 		<Heading size="h3" as="h3" class="w-full lg:w-2/3">
 			{blok.name}
 		</Heading>

@@ -96,7 +96,7 @@
 <span
 	bind:this={element}
 	class={cls(
-		'[&_a]:c-animated-underline inline-block break-words [&_*]:duration-1000 [&_*]:ease-out',
+		'[&_a]:c-animated-underline inline-block break-words [&_p]:duration-1000 [&_p]:ease-out',
 		clazz
 	)}
 	{style}

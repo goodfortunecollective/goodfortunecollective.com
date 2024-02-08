@@ -13,6 +13,7 @@
 	export { clazz as class };
 	export let videoID: string = '';
 	export let videoUrl: string = '';
+	export let videoUrlMobile: string = '';
 	export let posterUrl: string = '';
 	export let name: string = '';
 	export let autoplay: boolean = false;
@@ -161,7 +162,7 @@
 			<video
 				preload="metadata"
 				class={cls(!autoplay && posterUrl && 'absolute z-10', 'h-auto w-full')}
-				src={videoUrl}
+				src={offsetWidth < 1024 && videoUrlMobile !== '' ? videoUrlMobile : videoUrl}
 				bind:this={videoPlayer}
 				poster=""
 				on:click={playPauseVideo}

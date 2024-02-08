@@ -22,9 +22,9 @@
 	const variants = cva('w-full', {
 		variants: {
 			size: {
-				small: 'h-64' /* 256px */,
-				medium: 'h-96' /* 384px */,
-				large: 'h-128' /* 512px */
+				small: 'h-48 md:h-64 2xl:h-72 4xl:h-80' /* 256px */,
+				medium: 'h-72 md:h-96 2xl:h-112 4xl:h-128' /* 384px */,
+				large: 'h-96 md:h-128 2xl:h-160 4xl:h-224' /* 512px */
 			},
 			theme: {
 				light: '',
@@ -49,7 +49,7 @@
 					xPercent: 100,
 					scrollTrigger: {
 						trigger: scrollEl,
-						start: 'center 66%',
+						start: blok.title?.length > 0 ? 'center 66%' : 'center center',
 						end: () => {
 							if (scrollEl?.scrollWidth && innerWidth) {
 								return `+=${scrollEl.scrollWidth - innerWidth}`;
@@ -80,19 +80,14 @@
 	{#if blok.title?.length > 0}
 		<div class="fixed grid w-full grid-cols-12">
 			<div class="col-span-10 col-start-2">
-				<Heading
-					as="h2"
-					animated={true}
-					size="h2"
-					class="leading-extra-tight lg:leading-extra-tight"
-				>
+				<Heading as="h2" animated={true} size="h2" class="leading-snug lg:leading-snug">
 					{blok.title}
 				</Heading>
 			</div>
 		</div>
 		<Spacer gap="extra-large" />
 	{/if}
-	<div class="overflow">
+	<div class={cls('overflow', blok.title?.length > 0 && 'pt-4')}>
 		<div class="grid grid-cols-12" bind:this={scrollEl}>
 			<div class="col-span-10 col-start-2 flex gap-8">
 				{#each blok.content as b, index}

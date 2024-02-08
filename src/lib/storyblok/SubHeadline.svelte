@@ -70,7 +70,7 @@
 			{/if}
 		</div>
 		<div class="col-span-10 col-start-2 md:col-start-6 lg:col-span-5 lg:col-start-6">
-			<div class="flex flex-col gap-8 text-3xl leading-10">
+			<div class="flex flex-col gap-8 text-3xl leading-snug">
 				{#each blok.content as b}
 					<StoryblokComponent blok={b} />
 				{/each}

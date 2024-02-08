@@ -38,7 +38,7 @@
 			<Heading as="h4" size="h4" class="mb-4 border-b pb-8 uppercase">
 				<strong>{blok.left_col_title}</strong>
 			</Heading>
-			<RichtextTransition class="text-xl xl:text-2xl 4xl:text-4xl [&_p]:my-8 [&_p]:leading-8">
+			<RichtextTransition class="text-xl xl:text-2xl 4xl:text-4xl [&_p]:my-8 [&_p]:leading-snug">
 				{@html left_col}
 			</RichtextTransition>
 		</div>
@@ -46,7 +46,7 @@
 			<Heading as="h4" size="h4" class="mb-4 border-b pb-8 uppercase">
 				<strong>{blok.right_col_title}</strong>
 			</Heading>
-			<RichtextTransition class="text-xl xl:text-2xl 4xl:text-4xl [&_p]:my-8 [&_p]:leading-8">
+			<RichtextTransition class="text-xl xl:text-2xl 4xl:text-4xl [&_p]:my-8 [&_p]:leading-snug">
 				{@html right_col}
 			</RichtextTransition>
 		</div>

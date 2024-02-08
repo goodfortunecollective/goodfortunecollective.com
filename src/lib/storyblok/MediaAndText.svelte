@@ -59,7 +59,9 @@
 				<Video videoUrl={blok.video} autoplay muted loop animated={false} />
 			{/if}
 		</div>
-		<div class="flex flex-col text-xl md:w-1/2 md:justify-center [&_p]:my-4 [&_p]:leading-8">
+		<div
+			class="flex flex-col text-xl md:w-1/2 md:justify-center xl:text-2xl 4xl:text-4xl [&_p]:my-4 [&_p]:leading-snug"
+		>
 			{#each blok.content as b}
 				<StoryblokComponent blok={b} />
 			{/each}

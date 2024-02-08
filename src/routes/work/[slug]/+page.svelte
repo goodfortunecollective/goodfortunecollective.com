@@ -96,10 +96,9 @@
 						<Heading
 							as="h2"
 							size="h6"
-							class="inline-block text-sm font-bold uppercase tracking-wide text-rose-50"
-							>Brand</Heading
+							class="inline-block font-bold uppercase tracking-wide text-rose-50">Brand</Heading
 						>
-						<RichtextTransition class="text-xl [&_p]:leading-8">
+						<RichtextTransition class="text-xl xl:text-2xl 4xl:text-4xl [&_p]:leading-snug">
 							<p>{@html data.story.content.brand}</p>
 						</RichtextTransition>
 					</div>
@@ -109,10 +108,9 @@
 						<Heading
 							as="h2"
 							size="h6"
-							class="inline-block text-sm font-bold uppercase tracking-wide text-rose-50"
-							>The ask</Heading
+							class="inline-block font-bold uppercase tracking-wide text-rose-50">The ask</Heading
 						>
-						<RichtextTransition class="text-xl [&_p]:leading-8">
+						<RichtextTransition class="text-xl xl:text-2xl 4xl:text-4xl [&_p]:leading-snug">
 							{@html ask_text}
 						</RichtextTransition>
 					</div>
@@ -143,7 +141,7 @@
 					animated={false}
 				/>
 			</div>
-			<div class=" max-w-4xl py-16">
+			<div class="max-w-4xl py-16 2xl:max-w-6xl 4xl:max-w-8xl">
 				<Heading as="h2" size="h2" animated={false}
 					><RichtextTransition>{@html description}</RichtextTransition></Heading
 				>
@@ -158,7 +156,7 @@
 					><strong>Strategy</strong></Heading
 				>
 				<RichtextTransition
-					class="col-span-10 col-start-2 text-xl lg:col-span-6 lg:col-start-5 [&_p]:leading-8"
+					class="col-span-10 col-start-2 text-xl lg:col-span-6 lg:col-start-5 xl:text-2xl 4xl:text-4xl [&_p]:leading-snug"
 				>
 					{@html strategy_text}
 				</RichtextTransition>
@@ -174,7 +172,7 @@
 					><strong>Solution</strong></Heading
 				>
 				<RichtextTransition
-					class="col-span-10 col-start-2 text-xl lg:col-span-6 lg:col-start-5 [&_p]:leading-8"
+					class="col-span-10 col-start-2 text-xl lg:col-span-6 lg:col-start-5 xl:text-2xl 4xl:text-4xl [&_p]:leading-snug"
 				>
 					{@html solution_text}
 				</RichtextTransition>
@@ -183,26 +181,26 @@
 		{#if data.story.content.ask}
 			<div class="col-span-12 grid w-full grid-cols-12 pb-0 pt-16">
 				<ul
-					class="col-span-10 col-start-2 text-[#dcf945] lg:col-span-6 lg:col-start-5 [&>*:not(:last-child)]:after:ml-4 [&>*:not(:last-child)]:after:content-['•']"
+					class="col-span-10 col-start-2 text-[#dcf945] lg:col-span-6 lg:col-start-5 [&>*:not(:last-child)]:after:ml-2 [&>*:not(:last-child)]:after:align-super [&>*:not(:last-child)]:after:content-['•']"
 				>
-					<TextTransition type="words">
-						{#each data.story.content.ask as item}
-							<li class="mr-4 inline-block">{item}</li>
-						{/each}
-					</TextTransition>
+					{#each data.story.content.ask as item}
+						<li class="mr-2 inline-block text-base xl:text-xl 4xl:text-2xl">
+							<TextTransition type="words">{item}</TextTransition>
+						</li>
+					{/each}
 				</ul>
 			</div>
 		{/if}
 		{#if data.story.content.output}
-			<div class="col-span-12 grid w-full grid-cols-12">
+			<div class="col-span-12 grid w-full grid-cols-12 pt-8">
 				<ul
-					class="col-span-10 col-start-2 text-[#dcf945] lg:col-span-6 lg:col-start-5 [&>*:not(:last-child)]:after:ml-4 [&>*:not(:last-child)]:after:content-['•']"
+					class="col-span-10 col-start-2 text-[#dcf945] lg:col-span-6 lg:col-start-5 [&>*:not(:last-child)]:after:ml-2 [&>*:not(:last-child)]:after:align-super [&>*:not(:last-child)]:after:content-['•']"
 				>
-					<TextTransition type="words">
-						{#each data.story.content.output as item}
-							<li class="mr-4 inline-block">{item}</li>
-						{/each}
-					</TextTransition>
+					{#each data.story.content.output as item}
+						<li class="mr-2 inline-block text-base xl:text-xl 4xl:text-2xl">
+							<TextTransition type="words">{item}</TextTransition>
+						</li>
+					{/each}
 				</ul>
 			</div>
 		{/if}

@@ -42,7 +42,8 @@ export default {
 				'tenon': ['tenon', 'cursive']
 			},
 			fontSize: {
-				'10xl': '10rem'
+				'10xl': '10rem',
+				'12xl': '12rem'
 			},
 			lineHeight: {
 				'tightest': '0.5',
@@ -80,7 +81,11 @@ export default {
 				widest: '.15em'
 			},
 			height: {
+				'112': '28rem',
 				'128': '32rem',
+				'160': '40rem',
+				'192': '48rem',
+				'224': '56rem'
 			},
 			zIndex: {
 				'1': '1',

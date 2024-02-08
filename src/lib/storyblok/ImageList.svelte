@@ -42,7 +42,7 @@
 		</h2>
 		<div class="mt-8 [&_p]:my-0 [&_p]:leading-10">
 			<RichtextTransition
-				class="font-degular-display text-xl leading-10 text-white lg:text-2xl [&_p]:my-4"
+				class="font-degular-display text-xl leading-10 text-white lg:text-2xl 4xl:text-4xl [&_p]:my-4"
 			>
 				{@html list}
 			</RichtextTransition>

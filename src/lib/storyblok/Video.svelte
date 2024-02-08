@@ -12,6 +12,7 @@
 		name={blok.id}
 		videoID={blok.id}
 		videoUrl={blok.file}
+		videoUrlMobile={blok.fileMobile}
 		posterUrl={blok.poster?.filename ? blok.poster.filename : `https://vumbnail.com/${blok.id}.jpg`}
 		loop={blok.loop}
 		muted={blok.muted}

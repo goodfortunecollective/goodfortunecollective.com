@@ -44,7 +44,7 @@
 	};
 </script>
 
-<div use:inview on:inview_change={inViewPlayer}>
+<div use:inview on:inview_change={inViewPlayer} class="pb-48 md:pb-0">
 	<div
 		use:storyblokEditable={blok}
 		{...$$restProps}
@@ -72,14 +72,19 @@
 			</video>
 		</div>
 		<div class=" col-span-10 col-start-2">
-			<div class=" max-w-[600px] -translate-y-44">
+			<div class=" max-w-[600px] translate-y-8 md:-translate-y-44">
 				<Heading as="h2" size="h2">
 					{blok.title}<span class="text-white">{blok.highlight}</span>
 				</Heading>
 			</div>
 			<Spacer gap="extra-large" />
 			<a href={blok.link.cached_url} on:mouseenter={onEnter} on:mouseleave={onLeave}>
-				<Heading size="h2" as="h4" underline class="-translate-y-44 text-rose-50 underline">
+				<Heading
+					size="h2"
+					as="h4"
+					underline
+					class="translate-y-8 text-rose-50 underline md:-translate-y-44"
+				>
 					{blok.label}
 				</Heading>
 			</a>
