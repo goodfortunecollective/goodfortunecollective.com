@@ -14,7 +14,7 @@
 	const variants = cva('', {
 		variants: {
 			layout: {
-				left: 'col-span-10 col-start-1 z-1 text-right md:text-left md:col-span-6 md:col-start-2',
+				left: 'col-span-10 col-start-1 z-1 text-left md:text-left md:col-span-6 md:col-start-2',
 				right: 'col-span-10 col-start-3 text-left md:col-span-6 md:col-start-6 md:text-right md:z-2'
 			}
 		},
