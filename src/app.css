@@ -77,7 +77,6 @@
 
 	.split-line {
 		overflow: hidden;
-		display: inline-block !important;
 	}
 
 	.split-line > * {
