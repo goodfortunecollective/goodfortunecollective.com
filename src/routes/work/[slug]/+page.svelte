@@ -185,7 +185,7 @@
 				>
 					{#each data.story.content.ask as item}
 						<li class="mr-2 inline-block text-base xl:text-xl 4xl:text-2xl">
-							<TextTransition type="words">{item}</TextTransition>
+							<TextTransition blockType="list" type="words">{item}</TextTransition>
 						</li>
 					{/each}
 				</ul>
@@ -198,7 +198,7 @@
 				>
 					{#each data.story.content.output as item}
 						<li class="mr-2 inline-block text-base xl:text-xl 4xl:text-2xl">
-							<TextTransition type="words">{item}</TextTransition>
+							<TextTransition blockType="list" type="words">{item}</TextTransition>
 						</li>
 					{/each}
 				</ul>
