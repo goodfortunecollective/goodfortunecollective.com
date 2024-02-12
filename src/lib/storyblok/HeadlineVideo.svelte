@@ -17,6 +17,8 @@
 
 	let ctx: any = null;
 
+	let touchCapability: number = 0;
+
 	let videoContainer!: HTMLElement;
 	let video!: HTMLElement;
 	let videoPlayerPreview!: HTMLVideoElement;
@@ -95,6 +97,16 @@
 	};
 
 	onMount(() => {
+		// 0 - no touch (pointer/mouse only)
+		// 1 - touch-only device (like a phone)
+		// 2 - device can accept touch input and mouse/pointer (like Windows tablets)
+		touchCapability =
+			window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches
+				? 1
+				: 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
+					? 2
+					: 0;
+
 		const splitText = gsap.utils.toArray('[data-gsap="split-text"]');
 
 		splitText.forEach((content) => {
@@ -240,6 +252,9 @@
 		if (videoPlayerFullscreen.requestFullscreen) {
 			videoPlayerFullscreen.requestFullscreen();
 			videoPlayerFullscreen.play();
+		} else if (videoPlayerFullscreen.webkitEnterFullScreen) {
+			videoPlayerFullscreen.webkitEnterFullScreen();
+			videoPlayerFullscreen.play();
 		}
 	}
 
@@ -286,21 +301,43 @@
 					)}
 					style="--video-effect: {videoTransformEffect}; --rotation-x: {videoRotation.x}deg; --rotation-y: {videoRotation.y}deg"
 				>
-					<video
-						preload="metadata"
-						bind:this={videoPlayerPreview}
-						on:click={playVideoFullscreen}
-						on:mouseenter={videoPreviewOnEnter}
-						on:mouseleave={videoPreviewOnLeave}
-						class="aspect-portrait w-full rounded-3xl"
-						autoplay={true}
-						loop={true}
-						muted={!videoPlaying}
-						playsinline
-						src={innerWidth < 1024 && blok.videoPreviewMobile !== ''
-							? blok.videoPreviewMobile
-							: blok.videoPreview}
-					/>
+					<div class="relative h-full w-full">
+						<div
+							class={cls(
+								'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity	duration-300 ease-out',
+								touchCapability !== 1 && 'hidden',
+								isScrollFullVideo ? 'opacity-100' : 'opacity-0'
+							)}
+						>
+							<button
+								class="flex h-[86px] w-[86px] origin-center -translate-y-[86px] items-center justify-center transition duration-300 ease-out"
+								on:click={playVideoFullscreen}
+							>
+								<div
+									class="z-1 flex h-full w-full origin-center items-center justify-center rounded-[100%] bg-yellow-350"
+								>
+									<div
+										class="ml-0.5 inline-block h-0 w-0 origin-center transform cursor-pointer border-y-[7px] border-l-[12px] border-solid border-y-transparent border-l-black content-['']"
+									></div>
+								</div>
+							</button>
+						</div>
+						<video
+							preload="metadata"
+							bind:this={videoPlayerPreview}
+							on:click={playVideoFullscreen}
+							on:mouseenter={videoPreviewOnEnter}
+							on:mouseleave={videoPreviewOnLeave}
+							class="aspect-portrait w-full rounded-3xl"
+							autoplay={true}
+							loop={true}
+							muted={!videoPlaying}
+							playsinline
+							src={innerWidth < 1024 && blok.videoPreviewMobile !== ''
+								? blok.videoPreviewMobile
+								: blok.videoPreview}
+						/>
+					</div>
 
 					<video
 						on:fullscreenchange={toggleVideoFullscreen}
