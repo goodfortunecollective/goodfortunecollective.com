@@ -36,7 +36,7 @@
 	<TextTransition
 		enabled={animated}
 		{underline}
-		type={size !== 'h1' ? 'words' : 'chars'}
+		type="words"
 		speed={size !== 'h1' && size !== 'h2' ? 1 : 1.25}
 	>
 		<slot />

@@ -11,7 +11,7 @@
 	export let blok: any;
 
 	const headingStyle = cva(
-		'flex-1 lg:leading-extra-tight leading-extra-tight duration-1000 ease-out',
+		'flex-1 leading-extra-tight lg:leading-extra-tight duration-1000 ease-out',
 		{
 			variants: {
 				theme: {
@@ -23,17 +23,11 @@
 					lg: 'max-w-screen-lg',
 					xl: 'max-w-screen-xl',
 					'2xl': 'max-w-screen-2xl'
-				},
-				lineHeight: {
-					none: '',
-					'extra-tight': 'leading-extra-tight lg:leading-extra-tight ',
-					tightest: 'leading-tightest lg:leading-tightest'
 				}
 			},
 			defaultVariants: {
 				theme: 'light',
-				maxWidth: 'md',
-				lineHeight: 'none'
+				maxWidth: 'md'
 			}
 		}
 	);
@@ -81,8 +75,7 @@
 					size="h1"
 					class={headingStyle({
 						theme: $backgroundTheme,
-						maxWidth: blok.maxWidth,
-						lineHeight: blok.lineHeight
+						maxWidth: blok.maxWidth
 					})}
 				>
 					{blok.title}
