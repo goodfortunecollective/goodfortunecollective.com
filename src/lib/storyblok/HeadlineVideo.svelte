@@ -19,9 +19,11 @@
 
 	let videoContainer!: HTMLElement;
 	let video!: HTMLElement;
-	let videoPlayer!: HTMLVideoElement;
+	let videoPlayerPreview!: HTMLVideoElement;
+	let videoPlayerFullscreen!: HTMLVideoElement;
 	let container!: HTMLElement;
 
+	let isFullscreen = false;
 	let videoPlaying = blok.autoplay;
 
 	// avoid division by 0
@@ -121,8 +123,8 @@
 
 			if (!isReady) {
 				isReady = true;
-				if (videoPlayer.paused) {
-					videoPlayer.play();
+				if (videoPlayerPreview.paused) {
+					videoPlayerPreview.play();
 				}
 			}
 
@@ -137,8 +139,8 @@
 				gsap.timeline({
 					scrollTrigger: {
 						trigger: container,
-						start: '=+50%',
-						end: '=+100%',
+						start: '=+25%',
+						end: '=+125%',
 						onUpdate: (self) => {
 							if (self.progress === 0) {
 								cursorType.set('none');
@@ -152,7 +154,18 @@
 
 							isScrollFullVideo = true;
 						},
+						onEnterBack: () => {
+							if (isCursorEnter) {
+								cursorType.set('play');
+							}
+
+							isScrollFullVideo = true;
+						},
 						onLeave: () => {
+							cursorType.set('none');
+							isScrollFullVideo = false;
+						},
+						onLeaveBack: () => {
 							cursorType.set('none');
 							isScrollFullVideo = false;
 						}
@@ -210,21 +223,23 @@
 		cursorType.set('none');
 	}
 
-	function startVideo() {
-		if (isScrollFullVideo) {
-			videoPlayer.src = blok.video;
-			cursorType.set('pause');
-			videoPlaying = true;
+	function toggleVideoFullscreen(event: any) {
+		if (document.fullscreenElement) {
+			console.log(`Element: ${document.fullscreenElement.id} entered fullscreen mode.`);
+			videoPlayerPreview.pause();
+			isFullscreen = true;
+		} else {
+			console.log('Leaving fullscreen mode.');
+			videoPlayerPreview.play();
+			isFullscreen = false;
+			videoPlayerFullscreen.pause();
 		}
 	}
 
-	function playPauseVideo() {
-		if (videoPlayer.paused) {
-			videoPlayer.play();
-			cursorType.set('pause');
-		} else {
-			videoPlayer.pause();
-			cursorType.set('play');
+	function playVideoFullscreen() {
+		if (videoPlayerFullscreen.requestFullscreen) {
+			videoPlayerFullscreen.requestFullscreen();
+			videoPlayerFullscreen.play();
 		}
 	}
 
@@ -245,12 +260,12 @@
 		const { inView } = detail as ObserverEventDetails;
 		if (inView) {
 			if (isReady) {
-				videoPlayer.play();
+				videoPlayerPreview.play();
 			} else {
-				videoPlayer.pause();
+				videoPlayerPreview.pause();
 			}
 		} else {
-			videoPlayer.pause();
+			videoPlayerPreview.pause();
 		}
 		isInView = inView;
 	};
@@ -273,8 +288,8 @@
 				>
 					<video
 						preload="metadata"
-						bind:this={videoPlayer}
-						on:click={videoPlaying ? playPauseVideo : startVideo}
+						bind:this={videoPlayerPreview}
+						on:click={playVideoFullscreen}
 						on:mouseenter={videoPreviewOnEnter}
 						on:mouseleave={videoPreviewOnLeave}
 						class="aspect-portrait w-full rounded-3xl"
@@ -285,6 +300,15 @@
 						src={innerWidth < 1024 && blok.videoPreviewMobile !== ''
 							? blok.videoPreviewMobile
 							: blok.videoPreview}
+					/>
+
+					<video
+						on:fullscreenchange={toggleVideoFullscreen}
+						preload="metadata"
+						bind:this={videoPlayerFullscreen}
+						class={cls(!isFullscreen && 'hidden')}
+						autoplay={false}
+						src={blok.video}
 					/>
 				</div>
 			</div>
