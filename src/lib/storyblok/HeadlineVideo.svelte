@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import { storyblokEditable } from '@storyblok/svelte';
 	import type { ObserverEventDetails } from 'svelte-inview';
 	import { inview } from 'svelte-inview';
@@ -106,6 +106,9 @@
 				: 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
 					? 2
 					: 0;
+
+		videoPlayerFullscreen.addEventListener('webkitendfullscreen', hideVideoFullscreen, false);
+		videoPlayerFullscreen.addEventListener('webkitbeginfullscreen', showVideoFullscreen, false);
 
 		const splitText = gsap.utils.toArray('[data-gsap="split-text"]');
 
@@ -236,18 +239,31 @@
 	}
 
 	function toggleVideoFullscreen(event: any) {
-		if (document.fullscreenElement) {
-			console.log(`Element: ${document.fullscreenElement.id} entered fullscreen mode.`);
-			videoPlayerPreview.pause();
-			isFullscreen = true;
+		if (
+			document.fullScreenElement ||
+			document.webkitIsFullScreen == true ||
+			document.mozFullScreen ||
+			document.msFullscreenElement
+		) {
+			showVideoFullscreen();
 		} else {
-			console.log('Leaving fullscreen mode.');
-			videoPlayerPreview.play();
-			isFullscreen = false;
-			videoPlayerFullscreen.pause();
+			hideVideoFullscreen();
 		}
 	}
 
+	function showVideoFullscreen() {
+		videoPlayerPreview.pause();
+		isFullscreen = true;
+		videoPlayerFullscreen.pause();
+		videoPlayerFullscreen.currentTime = 0;
+		videoPlayerFullscreen.play();
+	}
+
+	function hideVideoFullscreen() {
+		isFullscreen = false;
+		videoPlayerFullscreen.pause();
+		videoPlayerPreview.play();
+	}
 	function playVideoFullscreen() {
 		if (videoPlayerFullscreen.requestFullscreen) {
 			videoPlayerFullscreen.requestFullscreen();
@@ -269,6 +285,9 @@
 	beforeNavigate(() => {
 		gsap.ticker.remove(onRender);
 		$lenis?.off('scroll', onScroll);
+
+		videoPlayerFullscreen.removeEventListener('webkitendfullscreen', hideVideoFullscreen);
+		videoPlayerFullscreen.removeEventListener('webkitbeginfullscreen', showVideoFullscreen);
 	});
 
 	const inViewPlayer = ({ detail }: CustomEvent<ObserverEventDetails>) => {
