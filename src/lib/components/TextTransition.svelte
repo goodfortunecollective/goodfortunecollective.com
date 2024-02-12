@@ -34,7 +34,8 @@
 
 			typeText = type === 'words' ? text.words : text.chars;
 
-			gsap.set(typeText, { yPercent: 200, opacity: 0 });
+			gsap.set(typeText, { yPercent: 100, opacity: 0 });
+			gsap.set(text.lines, { rotateZ: 4 });
 		}
 	});
 
@@ -54,7 +55,15 @@
 								duration: 0.4 * speed,
 								ease: 'circ.out',
 								yPercent: 0,
-								stagger: 0.02
+								stagger: 0.03
+							});
+
+							gsap.to(text.lines, {
+								duration: 0.3 * speed,
+								ease: 'sine.out',
+								rotateZ: 0,
+								stagger: 0.01,
+								delay: 0.1
 							});
 						}
 					});
