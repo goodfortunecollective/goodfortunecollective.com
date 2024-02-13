@@ -4,6 +4,7 @@
 	import { cls } from '$lib/styles';
 	import gsap, { SplitText, ScrollTrigger } from '$lib/gsap';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import { debounce } from '$lib/utils/debounce';
 
 	let clazz: string = '';
 	export { clazz as class };
@@ -14,6 +15,7 @@
 
 	let ctx: any = null;
 	let paragraphs: any = null;
+	let text: any = null;
 
 	onMount(() => {
 		if (enabled) {
@@ -36,7 +38,7 @@
 						paragraphs.forEach((p: any) => {
 							gsap.set(p, { opacity: 1 });
 
-							const text = new SplitText(p, {
+							text = new SplitText(p, {
 								type: 'lines,words',
 								linesClass: 'split-line'
 							});
@@ -90,7 +92,13 @@
 			if (ctx) ctx.revert();
 		}
 	);
+
+	const onResize = () => {
+		text.split();
+	};
 </script>
+
+<svelte:window on:resize={debounce(onResize)} />
 
 <span
 	bind:this={element}

@@ -4,6 +4,7 @@
 	import { cls } from '$lib/styles';
 	import gsap, { SplitText, ScrollTrigger } from '$lib/gsap';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import { debounce } from '$lib/utils/debounce';
 
 	let clazz: string = '';
 	export { clazz as class };
@@ -70,7 +71,13 @@
 			if (ctx) ctx.revert();
 		}
 	);
+
+	const onResize = () => {
+		text.split();
+	};
 </script>
+
+<svelte:window on:resize={debounce(onResize)} />
 
 <span
 	bind:this={element}
