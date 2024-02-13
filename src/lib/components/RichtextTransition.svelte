@@ -37,9 +37,8 @@
 							gsap.set(p, { opacity: 1 });
 
 							const text = new SplitText(p, {
-								type: 'lines,words,chars',
-								linesClass: 'split-line',
-								charClass: 'split-char'
+								type: 'lines,words',
+								linesClass: 'split-line'
 							});
 
 							if (text.words.length > 0) {

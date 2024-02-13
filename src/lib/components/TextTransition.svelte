@@ -10,7 +10,6 @@
 	export let style: string = '';
 	export let enabled: boolean = true;
 	export let underline: boolean = false;
-	export let type: 'words' | 'chars' = 'chars';
 	export let blockType: 'list' | 'default' = 'list';
 	export let speed: number = 1;
 
@@ -18,12 +17,11 @@
 
 	let ctx: any = null;
 	let text: any = null;
-	let typeText: any = null;
 
 	onMount(() => {
 		if (enabled) {
 			text = new SplitText(element, {
-				type: 'lines,words,chars',
+				type: 'lines,words',
 				linesClass: underline
 					? 'split-line c-animated-underline c-animated-underline__heading'
 					: blockType === 'list'
@@ -32,9 +30,7 @@
 				charClass: 'split-char'
 			});
 
-			typeText = type === 'words' ? text.words : text.chars;
-
-			gsap.set(typeText, { yPercent: 100, opacity: 0 });
+			gsap.set(text.words, { yPercent: 100, opacity: 0 });
 			gsap.set(text.lines, { rotateZ: 4 });
 		}
 	});
@@ -43,9 +39,9 @@
 		() => {
 			if (enabled) {
 				ctx = gsap.context(() => {
-					gsap.set(typeText, { opacity: 1 });
+					gsap.set(text.words, { opacity: 1 });
 
-					ScrollTrigger.batch(typeText, {
+					ScrollTrigger.batch(text.words, {
 						start: 'top 90%',
 						end: 'bottom 10%',
 						top: 'top center',
