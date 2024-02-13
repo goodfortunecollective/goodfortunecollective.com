@@ -73,7 +73,7 @@
 	);
 
 	const onResize = () => {
-		text.split();
+		if (text) text.split();
 	};
 </script>
 

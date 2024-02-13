@@ -36,7 +36,7 @@
 				headingStyle({ theme: $backgroundTheme })
 			)}
 		>
-			<TextTransition type="words">
+			<TextTransition>
 				{blok.title}
 			</TextTransition>
 		</h2>
