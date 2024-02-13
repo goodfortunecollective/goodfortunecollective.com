@@ -3,7 +3,7 @@
 
 	export let gap: 'small' | 'medium' | 'base' | 'large' | 'extra-large' = 'large';
 
-	const variants = cva('', {
+	const variants = cva('w-full', {
 		variants: {
 			gap: {
 				small: 'h-2' /* 8px */,
