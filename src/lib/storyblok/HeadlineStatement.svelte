@@ -91,7 +91,10 @@
 		{/if}
 		{#if content}
 			<div class="col-span-10 col-start-2 lg:col-span-6 lg:col-start-5">
-				<div class="max-w-screen-xl text-3xl leading-snug lg:pt-12" {...$$restProps}>
+				<div
+					class="max-w-screen-xl text-2xl leading-snug lg:pt-12 xl:text-3xl 4xl:text-5xl"
+					{...$$restProps}
+				>
 					<RichtextTransition>{@html content}</RichtextTransition>
 				</div>
 			</div>
