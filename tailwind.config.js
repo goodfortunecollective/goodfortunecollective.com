@@ -47,7 +47,7 @@ export default {
 			},
 			lineHeight: {
 				'tightest': '0.5',
-				'extra-tight': '0.93'
+				'extra-tight': '0.75'
 			},
 			gridTemplateColumns: {
 				// Simple 24 column grid
