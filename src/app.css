@@ -79,11 +79,6 @@
 		overflow: hidden;
 	}
 
-	.split-line__list {
-		overflow: hidden;
-		display: inline-block !important;
-	}
-
 	.split-line > * {
 		vertical-align: text-top;
 	}

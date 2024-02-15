@@ -116,7 +116,6 @@
 			new SplitText(splitText[0], {
 				type: 'lines,words,chars',
 				linesClass: 'split-line',
-				wordsClass: 'split-word__bottom',
 				charClass: 'split-char'
 			})
 		);
