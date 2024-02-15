@@ -22,9 +22,8 @@
 				p.style.opacity = '0';
 
 				const text = new SplitText(p, {
-					type: 'lines,words,chars',
-					linesClass: 'split-line',
-					charClass: 'split-char'
+					type: 'lines,words',
+					linesClass: 'split-line'
 				});
 
 				splitTexts.push(text);

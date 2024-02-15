@@ -71,8 +71,8 @@
 				<track kind="captions" />
 			</video>
 		</div>
-		<div class=" col-span-10 col-start-2">
-			<div class=" max-w-[600px] translate-y-8 md:-translate-y-44">
+		<div class="col-span-10 col-start-2">
+			<div class="max-w-[600px] translate-y-8 md:-translate-y-44">
 				<Heading as="h2" size="h2">
 					{blok.title}<span class="text-white">{blok.highlight}</span>
 				</Heading>

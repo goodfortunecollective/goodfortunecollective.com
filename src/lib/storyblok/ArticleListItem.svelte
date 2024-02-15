@@ -17,8 +17,8 @@
 				dark: 'text-white'
 			},
 			kind: {
-				primary: 'text-rose-50 lg:leading-tightest leading-tightest',
-				secondary: 'lg:leading-tightest leading-tightest',
+				primary: 'text-rose-50 lg:leading-extra-tight leading-extra-tight',
+				secondary: 'lg:leading-extra-tight leading-extra-tight',
 				tertiary: ''
 			}
 		},

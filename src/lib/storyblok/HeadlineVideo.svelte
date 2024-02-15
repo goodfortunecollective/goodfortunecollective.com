@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import { storyblokEditable } from '@storyblok/svelte';
 	import type { ObserverEventDetails } from 'svelte-inview';
 	import { inview } from 'svelte-inview';
@@ -17,11 +17,15 @@
 
 	let ctx: any = null;
 
+	let touchCapability: number = 0;
+
 	let videoContainer!: HTMLElement;
 	let video!: HTMLElement;
-	let videoPlayer!: HTMLVideoElement;
+	let videoPlayerPreview!: HTMLVideoElement;
+	let videoPlayerFullscreen!: HTMLVideoElement;
 	let container!: HTMLElement;
 
+	let isFullscreen = false;
 	let videoPlaying = blok.autoplay;
 
 	// avoid division by 0
@@ -93,17 +97,37 @@
 	};
 
 	onMount(() => {
+		// 0 - no touch (pointer/mouse only)
+		// 1 - touch-only device (like a phone)
+		// 2 - device can accept touch input and mouse/pointer (like Windows tablets)
+		touchCapability =
+			window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches
+				? 1
+				: 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
+					? 2
+					: 0;
+
+		videoPlayerFullscreen.addEventListener('webkitendfullscreen', hideVideoFullscreen, false);
+		videoPlayerFullscreen.addEventListener('webkitbeginfullscreen', showVideoFullscreen, false);
+
 		const splitText = gsap.utils.toArray('[data-gsap="split-text"]');
 
-		splitText.forEach((content) => {
-			const text = new SplitText(content, {
+		splitTexts.push(
+			new SplitText(splitText[0], {
 				type: 'lines,words,chars',
 				linesClass: 'split-line',
 				charClass: 'split-char'
-			});
+			})
+		);
 
-			splitTexts.push(text);
-		});
+		splitTexts.push(
+			new SplitText(splitText[1], {
+				type: 'lines,words,chars',
+				linesClass: 'split-line',
+				wordsClass: 'split-word',
+				charClass: 'split-char'
+			})
+		);
 
 		splitTexts.forEach((text) => {
 			gsap.set(text.chars, { yPercent: 200, opacity: 0 });
@@ -121,8 +145,8 @@
 
 			if (!isReady) {
 				isReady = true;
-				if (videoPlayer.paused) {
-					videoPlayer.play();
+				if (videoPlayerPreview.paused) {
+					videoPlayerPreview.play();
 				}
 			}
 
@@ -137,8 +161,8 @@
 				gsap.timeline({
 					scrollTrigger: {
 						trigger: container,
-						start: '=+50%',
-						end: '=+100%',
+						start: '=+25%',
+						end: '=+125%',
 						onUpdate: (self) => {
 							if (self.progress === 0) {
 								cursorType.set('none');
@@ -152,7 +176,18 @@
 
 							isScrollFullVideo = true;
 						},
+						onEnterBack: () => {
+							if (isCursorEnter) {
+								cursorType.set('play');
+							}
+
+							isScrollFullVideo = true;
+						},
 						onLeave: () => {
+							cursorType.set('none');
+							isScrollFullVideo = false;
+						},
+						onLeaveBack: () => {
 							cursorType.set('none');
 							isScrollFullVideo = false;
 						}
@@ -210,21 +245,39 @@
 		cursorType.set('none');
 	}
 
-	function startVideo() {
-		if (isScrollFullVideo) {
-			videoPlayer.src = blok.video;
-			cursorType.set('pause');
-			videoPlaying = true;
+	function toggleVideoFullscreen(event: any) {
+		if (
+			document.fullScreenElement ||
+			document.webkitIsFullScreen == true ||
+			document.mozFullScreen ||
+			document.msFullscreenElement
+		) {
+			showVideoFullscreen();
+		} else {
+			hideVideoFullscreen();
 		}
 	}
 
-	function playPauseVideo() {
-		if (videoPlayer.paused) {
-			videoPlayer.play();
-			cursorType.set('pause');
-		} else {
-			videoPlayer.pause();
-			cursorType.set('play');
+	function showVideoFullscreen() {
+		videoPlayerPreview.pause();
+		isFullscreen = true;
+		videoPlayerFullscreen.pause();
+		videoPlayerFullscreen.currentTime = 0;
+		videoPlayerFullscreen.play();
+	}
+
+	function hideVideoFullscreen() {
+		isFullscreen = false;
+		videoPlayerFullscreen.pause();
+		videoPlayerPreview.play();
+	}
+	function playVideoFullscreen() {
+		if (videoPlayerFullscreen.requestFullscreen) {
+			videoPlayerFullscreen.requestFullscreen();
+			videoPlayerFullscreen.play();
+		} else if (videoPlayerFullscreen.webkitEnterFullScreen) {
+			videoPlayerFullscreen.webkitEnterFullScreen();
+			videoPlayerFullscreen.play();
 		}
 	}
 
@@ -239,18 +292,21 @@
 	beforeNavigate(() => {
 		gsap.ticker.remove(onRender);
 		$lenis?.off('scroll', onScroll);
+
+		videoPlayerFullscreen.removeEventListener('webkitendfullscreen', hideVideoFullscreen);
+		videoPlayerFullscreen.removeEventListener('webkitbeginfullscreen', showVideoFullscreen);
 	});
 
 	const inViewPlayer = ({ detail }: CustomEvent<ObserverEventDetails>) => {
 		const { inView } = detail as ObserverEventDetails;
 		if (inView) {
 			if (isReady) {
-				videoPlayer.play();
+				videoPlayerPreview.play();
 			} else {
-				videoPlayer.pause();
+				videoPlayerPreview.pause();
 			}
 		} else {
-			videoPlayer.pause();
+			videoPlayerPreview.pause();
 		}
 		isInView = inView;
 	};
@@ -271,20 +327,51 @@
 					)}
 					style="--video-effect: {videoTransformEffect}; --rotation-x: {videoRotation.x}deg; --rotation-y: {videoRotation.y}deg"
 				>
+					<div class="relative h-full w-full">
+						<div
+							class={cls(
+								'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity	duration-300 ease-out',
+								touchCapability !== 1 && 'hidden',
+								isScrollFullVideo ? 'opacity-100' : 'opacity-0'
+							)}
+						>
+							<button
+								class="flex h-[86px] w-[86px] origin-center -translate-y-[86px] items-center justify-center transition duration-300 ease-out"
+								on:click={playVideoFullscreen}
+							>
+								<div
+									class="z-1 flex h-full w-full origin-center items-center justify-center rounded-[100%] bg-yellow-350"
+								>
+									<div
+										class="ml-0.5 inline-block h-0 w-0 origin-center transform cursor-pointer border-y-[7px] border-l-[12px] border-solid border-y-transparent border-l-black content-['']"
+									></div>
+								</div>
+							</button>
+						</div>
+						<video
+							preload="metadata"
+							bind:this={videoPlayerPreview}
+							on:click={playVideoFullscreen}
+							on:mouseenter={videoPreviewOnEnter}
+							on:mouseleave={videoPreviewOnLeave}
+							class="aspect-portrait w-full rounded-3xl"
+							autoplay={true}
+							loop={true}
+							muted={!videoPlaying}
+							playsinline
+							src={innerWidth < 1024 && blok.videoPreviewMobile !== ''
+								? blok.videoPreviewMobile
+								: blok.videoPreview}
+						/>
+					</div>
+
 					<video
+						on:fullscreenchange={toggleVideoFullscreen}
 						preload="metadata"
-						bind:this={videoPlayer}
-						on:click={videoPlaying ? playPauseVideo : startVideo}
-						on:mouseenter={videoPreviewOnEnter}
-						on:mouseleave={videoPreviewOnLeave}
-						class="aspect-portrait w-full rounded-3xl"
-						autoplay={true}
-						loop={true}
-						muted={!videoPlaying}
-						playsinline
-						src={innerWidth < 1024 && blok.videoPreviewMobile !== ''
-							? blok.videoPreviewMobile
-							: blok.videoPreview}
+						bind:this={videoPlayerFullscreen}
+						class={cls(!isFullscreen && 'hidden')}
+						autoplay={false}
+						src={blok.video}
 					/>
 				</div>
 			</div>

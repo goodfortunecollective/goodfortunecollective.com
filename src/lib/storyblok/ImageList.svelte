@@ -11,7 +11,7 @@
 
 	$: list = renderRichText(blok.list);
 
-	const headingStyle = cva('max-w-4xl leading-tightest duration-1000 ease-out', {
+	const headingStyle = cva('max-w-4xl leading-extra-tight duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: '',
@@ -36,7 +36,7 @@
 				headingStyle({ theme: $backgroundTheme })
 			)}
 		>
-			<TextTransition type="words">
+			<TextTransition>
 				{blok.title}
 			</TextTransition>
 		</h2>

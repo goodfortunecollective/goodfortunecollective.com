@@ -40,7 +40,7 @@
 			},
 			layout: {
 				left: '',
-				right: 'items-end'
+				right: 'items-start md:items-end'
 			}
 		},
 		defaultVariants: {
@@ -228,7 +228,13 @@
 				</div>
 			</div>
 
-			<div class={cls('mt-8 lg:pl-0', layout === 'right' && 'pr-8', layout === 'left' && 'pl-8')}>
+			<div
+				class={cls(
+					'mt-8 lg:pl-0',
+					layout === 'right' && 'pl-8 md:pl-0 md:pr-8',
+					layout === 'left' && 'pl-8'
+				)}
+			>
 				<Heading
 					as="h4"
 					size="h6"

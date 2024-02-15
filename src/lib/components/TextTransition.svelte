@@ -4,34 +4,34 @@
 	import { cls } from '$lib/styles';
 	import gsap, { SplitText, ScrollTrigger } from '$lib/gsap';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import { debounce } from '$lib/utils/debounce';
 
 	let clazz: string = '';
 	export { clazz as class };
 	export let style: string = '';
 	export let enabled: boolean = true;
 	export let underline: boolean = false;
-	export let type: 'words' | 'chars' = 'chars';
 	export let speed: number = 1;
 
 	let element: HTMLSpanElement;
 
 	let ctx: any = null;
 	let text: any = null;
-	let typeText: any = null;
 
 	onMount(() => {
 		if (enabled) {
 			text = new SplitText(element, {
-				type: 'lines,words,chars',
-				linesClass: underline
-					? 'split-line c-animated-underline c-animated-underline__heading'
-					: 'split-line',
+				type: 'lines,words',
+				linesClass: cls(
+					'split-line',
+					underline && 'c-animated-underline c-animated-underline__heading'
+				),
+				wordsClass: 'split-word',
 				charClass: 'split-char'
 			});
 
-			typeText = type === 'words' ? text.words : text.chars;
-
-			gsap.set(typeText, { yPercent: 200, opacity: 0 });
+			gsap.set(text.words, { yPercent: 200, opacity: 0 });
+			gsap.set(text.lines, { rotateZ: 4 });
 		}
 	});
 
@@ -39,9 +39,9 @@
 		() => {
 			if (enabled) {
 				ctx = gsap.context(() => {
-					gsap.set(typeText, { opacity: 1 });
+					gsap.set(text.words, { opacity: 1 });
 
-					ScrollTrigger.batch(typeText, {
+					ScrollTrigger.batch(text.words, {
 						start: 'top 90%',
 						end: 'bottom 10%',
 						top: 'top center',
@@ -51,7 +51,15 @@
 								duration: 0.4 * speed,
 								ease: 'circ.out',
 								yPercent: 0,
-								stagger: 0.02
+								stagger: 0.03
+							});
+
+							gsap.to(text.lines, {
+								duration: 0.3 * speed,
+								ease: 'sine.out',
+								rotateZ: 0,
+								stagger: 0.01,
+								delay: 0.1
 							});
 						}
 					});
@@ -62,7 +70,13 @@
 			if (ctx) ctx.revert();
 		}
 	);
+
+	const onResize = () => {
+		if (text) text.split();
+	};
 </script>
+
+<svelte:window on:resize={debounce(onResize)} />
 
 <span
 	bind:this={element}
