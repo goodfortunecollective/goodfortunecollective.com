@@ -11,7 +11,7 @@
 	export let blok: any;
 	$: content = renderRichText(blok.content);
 
-	const variants = cva('flex w-full text-xl  duration-1000 ease-out xl:text-2xl 4xl:text-4xl', {
+	const variants = cva('flex w-full text-2xl duration-1000 ease-out xl:text-3xl 4xl:text-5xl', {
 		variants: {
 			theme: {
 				light: '',

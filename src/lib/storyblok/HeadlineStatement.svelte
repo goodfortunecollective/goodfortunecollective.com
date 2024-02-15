@@ -10,27 +10,24 @@
 
 	export let blok: any;
 
-	const headingStyle = cva(
-		'flex-1 leading-extra-tight lg:leading-extra-tight duration-1000 ease-out',
-		{
-			variants: {
-				theme: {
-					light: '',
-					dark: 'text-yellow-50'
-				},
-				maxWidth: {
-					md: 'max-w-screen-md',
-					lg: 'max-w-screen-lg',
-					xl: 'max-w-screen-xl',
-					'2xl': 'max-w-screen-2xl'
-				}
+	const headingStyle = cva('flex-1 leading-tightest lg:leading-tightest duration-1000 ease-out', {
+		variants: {
+			theme: {
+				light: '',
+				dark: 'text-yellow-50'
 			},
-			defaultVariants: {
-				theme: 'light',
-				maxWidth: 'md'
+			maxWidth: {
+				md: 'max-w-screen-md',
+				lg: 'max-w-screen-lg',
+				xl: 'max-w-screen-xl',
+				'2xl': 'max-w-screen-2xl'
 			}
+		},
+		defaultVariants: {
+			theme: 'light',
+			maxWidth: 'md'
 		}
-	);
+	});
 
 	const textStyle = cva('duration-1000 ease-out', {
 		variants: {

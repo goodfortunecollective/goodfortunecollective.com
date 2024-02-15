@@ -22,7 +22,7 @@
 		}
 	});
 
-	const headingStyle = cva('leading-extra-tight lg:leading-extra-tight', {
+	const headingStyle = cva(' leading-tightest lg:leading-tightest', {
 		variants: {
 			maxWidth: {
 				md: 'max-w-screen-base 3xl:max-w-screen-basexl',

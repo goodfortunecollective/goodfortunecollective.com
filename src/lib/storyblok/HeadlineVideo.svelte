@@ -112,15 +112,23 @@
 
 		const splitText = gsap.utils.toArray('[data-gsap="split-text"]');
 
-		splitText.forEach((content) => {
-			const text = new SplitText(content, {
+		splitTexts.push(
+			new SplitText(splitText[0], {
 				type: 'lines,words,chars',
 				linesClass: 'split-line',
+				wordsClass: 'split-word__bottom',
 				charClass: 'split-char'
-			});
+			})
+		);
 
-			splitTexts.push(text);
-		});
+		splitTexts.push(
+			new SplitText(splitText[1], {
+				type: 'lines,words,chars',
+				linesClass: 'split-line',
+				wordsClass: 'split-word',
+				charClass: 'split-char'
+			})
+		);
 
 		splitTexts.forEach((text) => {
 			gsap.set(text.chars, { yPercent: 200, opacity: 0 });

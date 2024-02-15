@@ -11,7 +11,6 @@
 	export let style: string = '';
 	export let enabled: boolean = true;
 	export let underline: boolean = false;
-	export let blockType: 'list' | 'default' = 'list';
 	export let speed: number = 1;
 
 	let element: HTMLSpanElement;
@@ -23,15 +22,15 @@
 		if (enabled) {
 			text = new SplitText(element, {
 				type: 'lines,words',
-				linesClass: underline
-					? 'split-line c-animated-underline c-animated-underline__heading'
-					: blockType === 'list'
-						? 'split-line__list'
-						: 'split-line',
+				linesClass: cls(
+					'split-line',
+					underline && 'c-animated-underline c-animated-underline__heading'
+				),
+				wordsClass: 'split-word',
 				charClass: 'split-char'
 			});
 
-			gsap.set(text.words, { yPercent: 100, opacity: 0 });
+			gsap.set(text.words, { yPercent: 200, opacity: 0 });
 			gsap.set(text.lines, { rotateZ: 4 });
 		}
 	});
