@@ -24,6 +24,9 @@ export default {
 					450: "#a7a89a"
 				}
 			},
+			scale: {
+				'200': '2',
+			},
 			screens: {
 				'base': '800px',
 				'basexl': '998px',
