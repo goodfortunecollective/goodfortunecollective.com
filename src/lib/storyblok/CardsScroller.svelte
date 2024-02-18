@@ -47,6 +47,7 @@
 						return scrollEl?.scrollWidth ? scrollEl.scrollWidth * -1 : 0;
 					},
 					xPercent: 100,
+					ease: 'none',
 					scrollTrigger: {
 						trigger: scrollEl,
 						start: blok.title?.length > 0 ? 'center 66%' : 'center center',
@@ -56,7 +57,7 @@
 							}
 							return 0;
 						},
-						pin: el,
+						pin: true,
 						scrub: true,
 						invalidateOnRefresh: true
 					}
@@ -74,27 +75,28 @@
 <div
 	use:storyblokEditable={blok}
 	{...$$restProps}
-	bind:this={el}
 	class={cls('relative', blok.class, variants({ theme: $backgroundTheme }))}
 >
-	{#if blok.title?.length > 0}
-		<div class="fixed grid w-full grid-cols-12">
-			<div class="col-span-10 col-start-2">
-				<Heading as="h2" animated={true} size="h2" class="leading-snug lg:leading-snug">
-					{blok.title}
-				</Heading>
+	<div bind:this={el}>
+		{#if blok.title?.length > 0}
+			<div class="fixed grid w-full grid-cols-12">
+				<div class="col-span-10 col-start-2">
+					<Heading as="h2" animated={true} size="h2" class="leading-snug lg:leading-snug">
+						{blok.title}
+					</Heading>
+				</div>
 			</div>
-		</div>
-		<Spacer gap="extra-large" />
-	{/if}
-	<div class={cls('overflow', blok.title?.length > 0 && 'pt-4')}>
-		<div class="grid grid-cols-12" bind:this={scrollEl}>
-			<div class="col-span-10 col-start-2 flex gap-8">
-				{#each blok.content as b, index}
-					<div class={variants({ size: blok.size })}>
-						<StoryblokComponent blok={b} {index} />
-					</div>
-				{/each}
+			<Spacer gap="extra-large" />
+		{/if}
+		<div class={cls('overflow', blok.title?.length > 0 && 'pt-4')}>
+			<div class="grid grid-cols-12" bind:this={scrollEl}>
+				<div class="col-span-10 col-start-2 flex gap-8">
+					{#each blok.content as b, index}
+						<div class={variants({ size: blok.size })}>
+							<StoryblokComponent blok={b} {index} />
+						</div>
+					{/each}
+				</div>
 			</div>
 		</div>
 	</div>
