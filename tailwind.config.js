@@ -25,7 +25,7 @@ export default {
 				}
 			},
 			scale: {
-				'200': '2',
+				'175': '1.75',
 			},
 			screens: {
 				'base': '800px',

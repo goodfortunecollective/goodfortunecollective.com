@@ -21,15 +21,19 @@
 </script>
 
 <BackgroundTheme preload tartColor="#1a1a1a" endColor="#1a1a1a" startTheme="dark" endTheme="dark" />
-<section class={cls('relative pt-24 3xl:pt-32', variants({ theme: $backgroundTheme }))}>
-	<div class="flex h-full flex-col items-center justify-center space-y-4 text-center">
-		<h1 class={cls('font-degular-display leading-none text-transparent', 'b-error__title')}>
-			<TextTransition>
+<section
+	class={cls('relative grid grid-cols-12 pt-24 3xl:pt-32 ', variants({ theme: $backgroundTheme }))}
+>
+	<div class="col-span-10 col-start-2 flex h-full flex-col items-center text-center">
+		<h1
+			class={cls('my-0 py-0 font-degular-display leading-none text-transparent', 'b-error__title')}
+		>
+			<TextTransition enabled={false}>
 				<span class="relative z-1 inline-block">4</span>
 				<span class="relative -z-1 inline-block">
 					<img
 						src={`${base}/assets/GFC-error.webp`}
-						class="aspect-ratio:500/376 absolute inset-0 top-1/2 -z-1 inline-block w-full -translate-y-1/2 scale-200"
+						class="aspect-ratio:500/376 absolute inset-0 top-[57.5%] -z-1 inline-block w-full -translate-y-1/2 scale-175"
 						alt=""
 					/>
 					<span>0</span>
@@ -59,7 +63,7 @@
 		&__title {
 			-webkit-text-stroke: 1px white;
 			// text-shadow: -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
-			font-size: clamp(64px, calc(200px + (280 - 200) * (100vw - 768px) / (1920 - 768)), 280px);
+			font-size: clamp(64px, calc(200px + (360 - 200) * (100vw - 768px) / (1920 - 768)), 540px);
 
 			//font-size: clamp(16px, calc(60px + (36 - 20) * (100vw - 768px) / (1920 - 768)), 48px);
 
