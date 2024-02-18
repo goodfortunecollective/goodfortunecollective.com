@@ -123,12 +123,15 @@
 		const { inView } = detail as ObserverEventDetails;
 
 		if (inView) {
-			if (videoVisible && videoPlayer.paused) {
+			if (autoplay) {
 				videoPlayer.play();
 			}
 		} else {
 			if (videoVisible) {
 				videoPlayer.pause();
+				if (!autoplay) {
+					videoPlaying = false;
+				}
 			}
 		}
 	};
@@ -162,7 +165,7 @@
 			<video
 				preload="metadata"
 				class={cls(!autoplay && posterUrl && 'absolute z-10', 'h-auto w-full')}
-				src={offsetWidth < 1024 && videoUrlMobile !== '' ? videoUrlMobile : videoUrl}
+				src={innerWidth < 1024 && videoUrlMobile !== '' ? videoUrlMobile : videoUrl}
 				bind:this={videoPlayer}
 				poster=""
 				on:click={playPauseVideo}
