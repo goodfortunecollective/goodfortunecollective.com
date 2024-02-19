@@ -57,7 +57,7 @@
 
 <li>
 	<a
-		class="list-item-link flex w-full items-center py-4"
+		class={cls('c-list-item-link', 'flex w-full items-center py-4')}
 		href={url}
 		on:mouseenter={onEnter}
 		on:mouseleave={onLeave}
@@ -70,16 +70,28 @@
 		>
 			{name}
 		</Heading>
-		<span class="list-item-action text-xs font-bold uppercase tracking-widest">{label}</span>
-		<span class={cls('bg-black before:bg-black after:bg-black', 'arrow arrow-default')} />
+		<span class={cls('c-list-item-link__action', 'text-xs font-bold uppercase tracking-widest')}>
+			{label}
+		</span>
+		<span
+			class={cls(
+				'bg-black before:bg-black after:bg-black',
+				'c-list-item-link__arrow c-list-item-link__arrow-default'
+			)}
+		/>
 		<span
 			class={cls(
 				'flex items-center justify-center',
-				'list-item-circle',
+				'c-list-item-link__circle',
 				arrowStyle({ theme: $backgroundTheme })
 			)}
 		>
-			<span class={cls('arrow arrow-hover', arrowHoverStyle({ theme: $backgroundTheme }))} />
+			<span
+				class={cls(
+					'c-list-item-link__arrow c-list-item-link__arrow-hover',
+					arrowHoverStyle({ theme: $backgroundTheme })
+				)}
+			/>
 		</span>
 	</a>
 </li>
@@ -87,7 +99,7 @@
 <style lang="scss">
 	@import '../../vars.scss';
 
-	.list-item-link {
+	.c-list-item-link {
 		position: relative;
 		overflow: hidden;
 
@@ -106,23 +118,23 @@
 		}
 
 		&:hover {
-			.list-item-action {
+			.c-list-item-link__action {
 				transform: translate(0, 0);
 				opacity: 1;
 			}
 
-			.list-item-circle {
+			.c-list-item-link__circle {
 				&:before {
 					transform: scale(1) translate(0, 0);
 				}
 			}
 
-			.arrow-default {
+			.c-list-item-link__arrow-default {
 				//transform: scale(0, 1) translate(45px, 0);
 				transform: translate3d(200%, 0, 0);
 			}
 
-			.arrow-hover {
+			.c-list-item-link__arrow-hover {
 				transform: translate(0, 0);
 			}
 
@@ -145,7 +157,7 @@
 	// 	}
 	// }
 
-	.list-item-action {
+	.c-list-item-link__action {
 		position: absolute;
 		right: 70px;
 		transform: translate(-20%, 0);
@@ -155,7 +167,7 @@
 			0.4s opacity ease-out;
 	}
 
-	.list-item-circle {
+	.c-list-item-link__circle {
 		position: absolute;
 		right: 0;
 		width: 40px;
@@ -181,7 +193,7 @@
 		}
 	}
 
-	.arrow {
+	.c-list-item-link__arrow {
 		position: absolute;
 		width: 50%;
 		height: 1px;
@@ -209,14 +221,14 @@
 			transform-origin: bottom right;
 		}
 
-		&.arrow-default {
+		&.c-list-item-link__arrow-default {
 			width: 29px;
 			right: 20px;
 			z-index: 15;
 			transform-origin: 100% 50%;
 		}
 
-		&.arrow-hover {
+		&.c-list-item-link__arrow-hover {
 			width: 38%;
 			transform: translate3d(-200%, 0, 0);
 			z-index: 10;

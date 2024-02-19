@@ -213,7 +213,7 @@
 
 <svelte:window on:mousemove={onMouseMove} />
 
-<div class="HoverPlane" bind:this={planeEl}>
+<div class="flex h-[33%] w-full overflow-hidden" bind:this={planeEl}>
 	<img
 		src={content.thumbnail
 			? content.thumbnail.filename.replace('//a-us.storyblok.com', '//a2-us.storyblok.com')
@@ -224,14 +224,3 @@
 		class={cls('hidden')}
 	/>
 </div>
-
-<style lang="scss">
-	@import '../../vars.scss';
-
-	.HoverPlane {
-		display: flex;
-		overflow: hidden;
-		width: 100%;
-		height: 33%;
-	}
-</style>

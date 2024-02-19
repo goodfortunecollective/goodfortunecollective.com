@@ -177,7 +177,7 @@
 		{/if}
 		{#if !autoplay && posterUrl}
 			<div
-				class={cls(variants({ visible: !videoVisible }), 'video-poster')}
+				class={cls(variants({ visible: !videoVisible }), 'c-video__poster')}
 				on:click={showVideo}
 				role="presentation"
 			>
@@ -188,7 +188,7 @@
 </div>
 
 <style lang="scss">
-	.video-poster {
+	.c-video__poster {
 		transition:
 			0.5s opacity ease-out,
 			0s visibility 0.5s,

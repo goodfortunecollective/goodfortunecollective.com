@@ -70,7 +70,11 @@
 	class="fixed bottom-0 left-0 right-0 top-0 -z-1 flex items-center justify-center"
 >
 	<div
-		class={cls('absolute left-0 top-0 overflow-hidden', variants({ size: blok.size }), 'cursor')}
+		class={cls(
+			'absolute left-0 top-0 overflow-hidden',
+			variants({ size: blok.size }),
+			'sb-heading-hover-image__cursor'
+		)}
 		style:--x={`${$mouseCoords.x}px`}
 		style:--y={`${$mouseCoords.y}px`}
 	>
@@ -87,7 +91,7 @@
 </div>
 
 <style lang="scss">
-	.cursor {
+	.sb-heading-hover-image__cursor {
 		transform: translate(-50%, -50%) translate(var(--x, 0px), var(--y, 0px));
 	}
 </style>

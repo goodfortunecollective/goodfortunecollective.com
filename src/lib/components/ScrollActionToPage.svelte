@@ -77,33 +77,41 @@
 	);
 </script>
 
-<div bind:this={scrollEl} class={cls('ScrollActionToPage', variants({ theme: $backgroundTheme }))}>
+<div
+	bind:this={scrollEl}
+	class={cls('c-scroll-action-to-page', variants({ theme: $backgroundTheme }))}
+>
 	<div style="--parallax-effect: {parallaxEffect}">
 		<div
-			class="ScrollActionToPage-inner flex flex-col items-center justify-center gap-8 text-center"
+			class={cls(
+				'c-scroll-action-to-page__inner',
+				'flex flex-col items-center justify-center gap-8 text-center'
+			)}
 		>
 			<p class="font-medium uppercase tracking-widest">Scroll</p>
-			<div class="ScrollActionToPage-bar relative h-32 w-px" />
+			<div class={cls('c-scroll-action-to-page__bar', 'relative h-32 w-px')} />
 			<span
 				bind:this={scrollLabel}
-				class="ScrollActionToPage-label inline-flex h-[1em] font-degular-display text-7xl leading-snug md:text-9xl lg:text-[12em]"
-				>{label}</span
+				class={cls(
+					'c-scroll-action-to-page__label',
+					'inline-flex h-[1em] font-degular-display text-7xl leading-snug md:text-9xl lg:text-[12em]'
+				)}>{label}</span
 			>
 		</div>
 	</div>
 </div>
 
 <style lang="scss">
-	.ScrollActionToPage {
+	.c-scroll-action-to-page {
 		$scrollHeight: 150vh; // how much we need to scroll to go to next page
 		padding-bottom: $scrollHeight;
 
-		&-inner {
+		&__inner {
 			transform: translate3d(0, calc(var(--parallax-effect) * #{$scrollHeight}), 0);
 			perspective: 1000px;
 		}
 
-		&-bar {
+		&__bar {
 			&:before {
 				content: '';
 				position: absolute;
@@ -128,7 +136,7 @@
 			}
 		}
 
-		&-label {
+		&__label {
 			// prettier-ignore
 			transform:
 				rotate3d(1, 0, 0, calc((1 - var(--parallax-effect)) * -75deg))
