@@ -70,7 +70,12 @@
 		>
 			{name}
 		</Heading>
-		<span class={cls('c-list-item-link__action', 'text-xs font-bold uppercase tracking-widest')}>
+		<span
+			class={cls(
+				'c-list-item-link__action',
+				'hidden text-xs font-bold uppercase tracking-widest lg:block'
+			)}
+		>
 			{label}
 		</span>
 		<span
