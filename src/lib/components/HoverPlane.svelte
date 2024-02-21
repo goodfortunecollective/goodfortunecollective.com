@@ -122,7 +122,9 @@
 			plane = new Plane(curtains, planeEl, params);
 
 			plane.onRender(() => {
-				const planeBBox = plane.getBoundingRect();
+				const planeBBox = plane?.getBoundingRect();
+
+				if (!planeBBox) return;
 
 				const translation = {
 					x: mousePosition.x - (planeBBox.left + planeBBox.width * 0.5) / curtains.pixelRatio,
