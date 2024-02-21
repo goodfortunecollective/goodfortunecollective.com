@@ -26,7 +26,7 @@
 >
 	<div class="col-span-10 col-start-2 flex h-full flex-col items-center text-center">
 		<h1
-			class={cls('my-0 py-0 font-degular-display leading-none text-transparent', 'b-error__title')}
+			class={cls('my-0 py-0 font-degular-display leading-none text-transparent', 'p-error__title')}
 		>
 			<TextTransition enabled={false}>
 				<span class="relative z-1 inline-block">4</span>
@@ -59,7 +59,7 @@
 </section>
 
 <style lang="scss">
-	.b-error {
+	.p-error {
 		&__title {
 			-webkit-text-stroke: 1px white;
 			// text-shadow: -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;

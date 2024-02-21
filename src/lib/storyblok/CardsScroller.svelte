@@ -57,7 +57,7 @@
 							}
 							return 0;
 						},
-						pin: true,
+						pin: el,
 						scrub: true,
 						invalidateOnRefresh: true
 					}
@@ -73,11 +73,12 @@
 <svelte:window bind:innerWidth />
 
 <div
+	bind:this={el}
 	use:storyblokEditable={blok}
 	{...$$restProps}
 	class={cls('relative', blok.class, variants({ theme: $backgroundTheme }))}
 >
-	<div bind:this={el}>
+	<div>
 		{#if blok.title?.length > 0}
 			<div class="fixed grid w-full grid-cols-12">
 				<div class="col-span-10 col-start-2">

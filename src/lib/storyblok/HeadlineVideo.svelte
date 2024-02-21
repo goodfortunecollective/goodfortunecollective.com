@@ -322,7 +322,7 @@
 					bind:this={video}
 					class={cls(
 						'preserve-3d absolute mt-[20vh] h-full w-full transform-gpu md:mt-[7vh]',
-						'b-headline-video__container',
+						'sb-headline-video__container',
 						videoTransformEffect >= 0.99 && 'cursor-pointer'
 					)}
 					style="--video-effect: {videoTransformEffect}; --rotation-x: {videoRotation.x}deg; --rotation-y: {videoRotation.y}deg"
@@ -384,7 +384,7 @@
 						data-gsap="split-text"
 						class={cls(
 							'z-[8] max-w-11xl font-degular-display leading-tightest tracking-wide text-neutral-950',
-							'b-headline-video__title'
+							'sb-headline-video__title'
 						)}
 					>
 						{blok.headline}
@@ -405,7 +405,7 @@
 </div>
 
 <style lang="scss">
-	.b-headline-video {
+	.sb-headline-video {
 		&__container {
 			// prettier-ignore
 			transform:

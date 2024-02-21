@@ -37,7 +37,10 @@
 	{href}
 	target={isExternal ? '_blank' : undefined}
 	rel={isExternal ? 'noopener' : undefined}
-	class="3xl:text-md link flex h-10 flex-row items-stretch text-xs font-bold uppercase tracking-widest hover:no-underline 4xl:text-lg"
+	class={cls(
+		'c-link',
+		'3xl:text-md inline-flex h-10 flex-row items-stretch overflow-hidden text-xs font-bold uppercase tracking-widest hover:no-underline 4xl:text-lg'
+	)}
 >
 	{#if label}
 		<span class="flex items-center pr-4">{label}</span>
@@ -45,15 +48,22 @@
 	<span
 		class="relative ml-[50px] flex items-center justify-center text-4xl 3xl:text-5xl 4xl:text-6xl"
 	>
-		<span class={cls('bg-black before:bg-black after:bg-black', 'arrow arrow-default')} />
+		<span
+			class={cls('bg-black before:bg-black after:bg-black', 'c-link__arrow c-link__arrow-default')}
+		/>
 		<span
 			class={cls(
 				'flex items-center justify-center',
-				'link-circle',
+				'c-link__circle',
 				arrowStyle({ theme: $backgroundTheme })
 			)}
 		>
-			<span class={cls('arrow arrow-hover', arrowHoverStyle({ theme: $backgroundTheme }))} />
+			<span
+				class={cls(
+					'c-link__arrow c-link__arrow-hover',
+					arrowHoverStyle({ theme: $backgroundTheme })
+				)}
+			/>
 		</span>
 	</span>
 </a>
@@ -61,18 +71,15 @@
 <style lang="scss">
 	@import '../../vars.scss';
 
-	.link {
-		display: inline-flex;
-		overflow: hidden;
-
+	.c-link {
 		&:hover {
-			.link-circle {
+			.c-link__circle {
 				&:before {
 					transform: scale(1) translate(0, 0);
 				}
 			}
 
-			.arrow-default {
+			.c-link__arrow-default {
 				//transform: scale(0, 1) translate(45px, 0);
 				transform: translate3d(200%, 0, 0);
 				transition:
@@ -80,13 +87,13 @@
 					0.5s opacity $ease-out-expo;
 			}
 
-			.arrow-hover {
+			.c-link__arrow-hover {
 				transform: translate(0, 0);
 			}
 		}
 	}
 
-	.link-circle {
+	.c-link__circle {
 		position: absolute;
 		right: 0;
 		width: 40px;
@@ -112,7 +119,7 @@
 		}
 	}
 
-	.arrow {
+	.c-link__arrow {
 		position: absolute;
 		width: 50%;
 		height: 1px;
@@ -140,7 +147,7 @@
 			transform-origin: bottom right;
 		}
 
-		&.arrow-default {
+		&.c-link__arrow-default {
 			width: 29px;
 			right: 20px;
 			z-index: 15;
@@ -148,7 +155,7 @@
 			transition-delay: 0.2s;
 		}
 
-		&.arrow-hover {
+		&.c-link__arrow-hover {
 			width: 38%;
 			transform: translate3d(-200%, 0, 0);
 			z-index: 10;

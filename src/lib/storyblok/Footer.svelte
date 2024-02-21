@@ -77,7 +77,8 @@
 				use:inview
 				on:inview_change={inViewColorTransition}
 				class={cls(
-					'footer-col col-span-10 col-start-2 pb-2 pt-8 md:col-span-5 md:col-start-2 lg:col-span-4 lg:col-start-2',
+					'sb-footer__col',
+					'col-span-10 col-start-2 pb-2 pt-8 md:col-span-5 md:col-start-2 lg:col-span-4 lg:col-start-2',
 					lineStyle({ theme: $backgroundTheme })
 				)}
 			>
@@ -102,7 +103,8 @@
 				use:inview
 				on:inview_change={inViewColorTransition}
 				class={cls(
-					'footer-col col-span-10 col-start-2 pb-2 pt-8 md:col-span-4 md:col-start-8',
+					'sb-footer__col',
+					'col-span-10 col-start-2 pb-2 pt-8 md:col-span-4 md:col-start-8',
 					lineStyle({ theme: $backgroundTheme })
 				)}
 			>
@@ -148,7 +150,7 @@
 <style lang="scss">
 	@import '../../vars.scss';
 
-	.footer-col {
+	.sb-footer__col {
 		position: relative;
 		@media (min-width: $media-md) {
 			overflow: hidden;

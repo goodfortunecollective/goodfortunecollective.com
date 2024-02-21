@@ -69,7 +69,7 @@
 				data-gsap="tags-list"
 				class="border-b-2 border-b-gray-200 border-opacity-10 last-of-type:border-0"
 			>
-				<ul class=" whitespace-nowrap">
+				<ul class="whitespace-nowrap">
 					{#each Array(2) as _, index (index)}
 						{#each blok.tags as b}
 							<li
