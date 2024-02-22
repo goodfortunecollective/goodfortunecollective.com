@@ -31,6 +31,8 @@
 	$: innerWidth = 0;
 	$: offsetWidth = 0;
 
+	let touchCapability: number = 0;
+
 	const variants = cva('relative w-full h-full z-[11] cursor-pointer', {
 		variants: {
 			visible: {
@@ -81,6 +83,16 @@
 	}
 
 	onMount(() => {
+		// 0 - no touch (pointer/mouse only)
+		// 1 - touch-only device (like a phone)
+		// 2 - device can accept touch input and mouse/pointer (like Windows tablets)
+		touchCapability =
+			window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches
+				? 1
+				: 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
+					? 2
+					: 0;
+
 		gsap.set(videoContainer, { clipPath: 'inset(0)' });
 	});
 
@@ -165,7 +177,7 @@
 			<video
 				preload="metadata"
 				class={cls(!autoplay && posterUrl && 'absolute z-10', 'h-auto w-full')}
-				src={innerWidth < 1024 && videoUrlMobile !== '' ? videoUrlMobile : videoUrl}
+				src={innerWidth < 768 && videoUrlMobile !== '' ? videoUrlMobile : videoUrl}
 				bind:this={videoPlayer}
 				poster=""
 				on:click={playPauseVideo}
