@@ -74,7 +74,7 @@
 	<span bind:this={el} class="pointer-events-none relative inline-block h-full w-full">
 		{label}
 	</span>
-	<span bind:this={childrenEl} class="pointer-events-none absolute left-0 h-full w-full">
+	<span bind:this={childrenEl} class="pointer-events-none absolute left-0 top-0 h-full w-full">
 		{label}
 	</span>
 </span>
