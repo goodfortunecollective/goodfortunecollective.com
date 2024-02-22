@@ -17,7 +17,7 @@
 				dark: 'text-yellow-50'
 			},
 			textAlign: {
-				true: 'md:col-span-4 md:col-start-2',
+				true: 'md:col-span-4 md:col-start-2 2xl:col-start-3  2xl:col-span-3',
 				false: 'md:col-span-3 md:col-start-3'
 			}
 		},
@@ -64,7 +64,9 @@
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	<div class="grid grid-cols-12 gap-8 pt-24 md:gap-0">
 		{#if blok.divider}
-			<div class="col-span-12 col-start-1 flex pb-20 md:col-span-5 md:col-start-7 md:pb-24">
+			<div
+				class="col-span-12 col-start-1 flex pb-20 md:col-span-5 md:col-start-7 md:pb-24 2xl:col-span-4 2xl:col-start-7"
+			>
 				<div class={cls(dividerStyle({ theme: $backgroundTheme }))}></div>
 			</div>
 		{/if}
@@ -78,7 +80,9 @@
 				headingStyle({ theme: $backgroundTheme, textAlign: blok.heading_leftAlign })
 			)}>{blok.heading}</Heading
 		>
-		<div class="col-span-10 col-start-2 text-lg md:col-span-5 md:col-start-7">
+		<div
+			class="col-span-10 col-start-2 text-lg md:col-span-5 md:col-start-7 2xl:col-span-4 2xl:col-start-7"
+		>
 			<div
 				use:inview
 				on:inview_change={inViewColorTransition}

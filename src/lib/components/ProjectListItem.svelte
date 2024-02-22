@@ -66,6 +66,7 @@
 		variants: {
 			scale: {
 				full: 'w-full',
+				'2/3': 'w-2/3',
 				half: 'w-full md:w-2/3 lg:w-1/2'
 			}
 		},
@@ -160,11 +161,15 @@
 		return 'square';
 	};
 
-	const getImageScaleRatio: (image: any) => 'full' | 'half' = (image: any) => {
+	const getImageScaleRatio: (image: any) => 'full' | '2/3' | 'half' = (image: any) => {
 		const { width, height } = getImageDimensionsFromUrl(image);
 
-		if (width >= height) {
+		if (width > height) {
 			return 'full';
+		}
+
+		if (width === height) {
+			return '2/3';
 		}
 
 		return 'half';

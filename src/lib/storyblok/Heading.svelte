@@ -11,6 +11,7 @@
 		{...$$restProps}
 		as={blok.as}
 		size={blok.size}
+		leading={blok.leading}
 		class={blok.class}
 		animated={blok.animated}>{blok.text}</Heading
 	>

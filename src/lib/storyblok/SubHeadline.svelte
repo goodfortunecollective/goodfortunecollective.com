@@ -22,7 +22,7 @@
 		}
 	});
 
-	const headingStyle = cva(' leading-tightest lg:leading-tightest', {
+	const headingStyle = cva('leading-tightest lg:leading-tightest', {
 		variants: {
 			maxWidth: {
 				md: 'max-w-screen-base 3xl:max-w-screen-basexl',
@@ -47,8 +47,8 @@
 	<div class="grid grid-cols-12 gap-8 pb-8 pt-16 lg:gap-0">
 		<div
 			class={cls(
-				'col-span-10 col-start-2 lg:col-start-2 ',
-				blok.titleFullWidth ? 'lg:col-span-8' : 'lg:col-span-4'
+				'col-span-10 col-start-2 lg:col-start-2  2xl:col-start-3',
+				blok.titleFullWidth ? 'lg:col-span-8 2xl:col-span-6' : 'lg:col-span-4 2xl:col-span-4'
 			)}
 		>
 			<Heading
@@ -69,7 +69,9 @@
 				</div>
 			{/if}
 		</div>
-		<div class="col-span-10 col-start-2 md:col-start-6 lg:col-span-5 lg:col-start-6">
+		<div
+			class="col-span-10 col-start-2 md:col-start-6 lg:col-span-5 lg:col-start-6 2xl:col-span-4 2xl:col-start-7"
+		>
 			<div class="flex flex-col gap-8 text-3xl leading-snug">
 				{#each blok.content as b}
 					<StoryblokComponent blok={b} />

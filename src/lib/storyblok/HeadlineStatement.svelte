@@ -44,8 +44,8 @@
 	const childrenStyle = cva('col-span-10 col-start-2  ', {
 		variants: {
 			align: {
-				left: 'lg:col-span-2 lg:col-start-2 lg:pt-12',
-				right: 'flex lg:justify-end lg:-translate-y-16'
+				left: 'lg:col-span-2 lg:col-start-2 lg:pt-12 2xl:col-span-3 2xl:col-start-3',
+				right: 'flex lg:justify-end lg:-translate-y-16 2xl:col-span-4 2xl:col-start-7'
 			}
 		},
 		defaultVariants: {
@@ -64,7 +64,7 @@
 	class={cls(blok.class, textStyle({ theme: $backgroundTheme }))}
 >
 	<div class="pt-18 grid grid-cols-12 gap-8 pt-32 lg:gap-0 lg:pt-[25vh]">
-		<div class="col-span-10 col-start-2">
+		<div class="col-span-10 col-start-2 2xl:col-span-7 2xl:col-start-3">
 			<div class="flex h-full flex-col">
 				<Heading
 					on:inview_change={inViewColorTransition}
@@ -87,7 +87,9 @@
 			</div>
 		{/if}
 		{#if content}
-			<div class="col-span-10 col-start-2 lg:col-span-6 lg:col-start-5">
+			<div
+				class="col-span-10 col-start-2 lg:col-span-6 lg:col-start-5 2xl:col-span-4 2xl:col-start-7"
+			>
 				<div
 					class="max-w-screen-xl text-2xl leading-snug lg:pt-12 xl:text-3xl 4xl:text-5xl"
 					{...$$restProps}

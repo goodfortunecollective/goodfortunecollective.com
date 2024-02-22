@@ -15,7 +15,7 @@
 	use:inview
 	on:inview_change={inViewColorTransition}
 	class={cls(
-		'w-[20rem] rounded-2xl bg-neutral-950 duration-1000 ease-out md:w-[26rem] 2xl:w-[40rem]  4xl:w-[56rem]',
+		'w-[20rem] rounded-2xl bg-neutral-950 duration-1000 ease-out md:w-[26rem] 2xl:w-[30rem]',
 		blok.class
 	)}
 >
@@ -38,7 +38,7 @@
 		</div>
 		<div class="relative h-3">
 			<span
-				class="absolute -bottom-4 align-bottom text-3xl text-white lg:text-4xl 2xl:text-6xl 4xl:text-8xl"
+				class="absolute -bottom-4 align-bottom text-3xl text-white lg:text-4xl 2xl:text-5xl 4xl:text-6xl"
 				>{blok.title}</span
 			>
 		</div>

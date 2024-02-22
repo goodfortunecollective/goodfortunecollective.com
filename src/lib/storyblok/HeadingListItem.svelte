@@ -21,9 +21,12 @@
 		class="col-span-10 col-start-2 mt-8 flex flex-col gap-4 text-xl leading-7 lg:col-span-6 lg:col-start-4 4xl:text-3xl"
 	>
 		{#if blok.heading}
-			<Heading as="h3" size="h2" class="w-full leading-extra-tight lg:leading-extra-tight"
-				>{blok.heading}
-			</Heading>
+			<Heading
+				as="h3"
+				leading="tightest"
+				size="h2"
+				class="w-full text-5xl lg:text-7xl 3xl:text-8xl 4xl:text-9xl">{blok.heading}</Heading
+			>
 		{/if}
 
 		<RichtextTransition class="w-full">{@html content}</RichtextTransition>

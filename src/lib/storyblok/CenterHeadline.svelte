@@ -32,18 +32,20 @@
 	on:inview_change={inViewColorTransition}
 	class={cls(variants({ theme: $backgroundTheme }), blok.class)}
 >
-	<div class=" dispa col-span-10 col-start-2 4xl:col-span-6 4xl:col-start-4">
-		<Heading as="h3" size="h2" cl>{blok.title}</Heading>
+	<div
+		class=" dispa col-span-10 col-start-2 2xl:col-span-8 2xl:col-start-3 4xl:col-span-6 4xl:col-start-4"
+	>
+		<Heading as="h3" size="h2" leading="tightest">{blok.title}</Heading>
 	</div>
 	<div
-		class="col-span-10 col-start-2 my-8 text-center lg:col-span-8 lg:col-start-3 4xl:col-span-6 4xl:col-start-4"
+		class="col-span-10 col-start-2 my-8 text-center lg:col-span-8 lg:col-start-3 2xl:col-span-6 4xl:col-start-4"
 	>
 		<RichtextTransition class="text-xl xl:text-2xl 4xl:text-4xl [&_p]:my-4 [&_p]:leading-snug"
 			>{@html content}</RichtextTransition
 		>
 	</div>
 	<div
-		class="col-span-10 col-start-2 mt-16 flex flex-col flex-wrap items-center justify-center gap-16 lg:flex-row lg:gap-32"
+		class="2 col-span-10 col-start-2 mt-16 flex flex-col flex-wrap items-center justify-center gap-16 lg:flex-row lg:gap-32 2xl:col-span-8 2xl:col-start-3"
 	>
 		{#each blok.children as b}
 			<StoryblokComponent blok={b} />

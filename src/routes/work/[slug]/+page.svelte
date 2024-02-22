@@ -66,7 +66,7 @@
 	<div class="absolute inset-0 flex h-full w-full items-center text-center">
 		<div class="mx-auto grid -translate-y-1/2 grid-cols-12 pt-16 lg:-translate-y-1/4">
 			<div
-				class="col-span-10 col-start-2"
+				class="col-span-10 col-start-2 2xl:col-span-8 2xl:col-start-3"
 				on:mouseenter={() => (isTitleHovered = true)}
 				on:mouseleave={() => (isTitleHovered = false)}
 				role="presentation"
@@ -89,7 +89,7 @@
 			class="absolute bottom-0 left-0 col-span-12 col-start-1 grid w-full grid-cols-12 pb-24 lg:pb-32"
 		>
 			<div
-				class="col-span-10 col-start-2 mx-auto flex flex-col gap-8 lg:flex-row lg:gap-0 lg:space-x-24"
+				class="col-span-10 col-start-2 mx-auto flex flex-col gap-8 lg:flex-row lg:gap-0 lg:space-x-24 2xl:col-span-8 2xl:col-start-3"
 			>
 				{#if data.story.content.brand}
 					<div>
@@ -126,7 +126,7 @@
 	class={cls(variants({ theme: $backgroundTheme }))}
 >
 	<div class="grid -translate-y-16 grid-cols-12 pb-16">
-		<div class="col-span-10 col-start-2">
+		<div class="col-span-10 col-start-2 2xl:col-span-8 2xl:col-start-3">
 			<div class="w-full">
 				<Video
 					name={data.story.content.video_id}
@@ -142,9 +142,9 @@
 				/>
 			</div>
 			<div class="max-w-4xl py-16 2xl:max-w-6xl 4xl:max-w-8xl">
-				<Heading as="h2" size="h2" animated={false}
-					><RichtextTransition>{@html description}</RichtextTransition></Heading
-				>
+				<Heading as="h2" size="h2" leading="tightest" animated={false}>
+					<RichtextTransition>{@html description}</RichtextTransition>
+				</Heading>
 			</div>
 		</div>
 		{#if data.story.content.strategy_text}
@@ -152,11 +152,11 @@
 				<Heading
 					as="h4"
 					size="h6"
-					class="col-span-10 col-start-2 mt-1 uppercase text-rose-50 lg:col-span-2 lg:col-start-2"
+					class="col-span-10 col-start-2 mt-1 uppercase text-rose-50 lg:col-span-2 lg:col-start-2 2xl:col-start-3"
 					><strong>Strategy</strong></Heading
 				>
 				<RichtextTransition
-					class="col-span-10 col-start-2 text-xl lg:col-span-6 lg:col-start-5 xl:text-2xl 4xl:text-4xl [&_p]:leading-snug"
+					class="[&_p]:leading-snu7 col-span-10 col-start-2 text-xl lg:col-span-6 lg:col-start-5 xl:text-2xl 2xl:col-span-5 2xl:col-start-6 4xl:text-4xl [&_p]:leading-snug"
 				>
 					{@html strategy_text}
 				</RichtextTransition>
@@ -168,11 +168,11 @@
 				<Heading
 					as="h4"
 					size="h6"
-					class="col-span-10 col-start-2 mt-1 uppercase text-rose-50 lg:col-span-2 lg:col-start-2"
+					class="col-span-10 col-start-2 mt-1 uppercase text-rose-50 lg:col-span-2 lg:col-start-2 2xl:col-start-3"
 					><strong>Solution</strong></Heading
 				>
 				<RichtextTransition
-					class="col-span-10 col-start-2 text-xl lg:col-span-6 lg:col-start-5 xl:text-2xl 4xl:text-4xl [&_p]:leading-snug"
+					class="col-span-10 col-start-2 text-xl lg:col-span-6 lg:col-start-5 xl:text-2xl 2xl:col-span-5 2xl:col-start-6  4xl:text-4xl [&_p]:leading-snug"
 				>
 					{@html solution_text}
 				</RichtextTransition>
@@ -181,7 +181,7 @@
 		{#if data.story.content.ask}
 			<div class="col-span-12 grid w-full grid-cols-12 pb-0 pt-16">
 				<ul
-					class="col-span-10 col-start-2 text-[#dcf945] lg:col-span-6 lg:col-start-5 [&>*:not(:last-child)]:after:ml-2 [&>*:not(:last-child)]:after:align-super [&>*:not(:last-child)]:after:content-['•']"
+					class="col-span-10 col-start-2 text-[#dcf945] lg:col-span-6 lg:col-start-5 2xl:col-span-5 2xl:col-start-6 [&>*:not(:last-child)]:after:ml-2 [&>*:not(:last-child)]:after:align-super [&>*:not(:last-child)]:after:content-['•']"
 				>
 					{#each data.story.content.ask as item}
 						<li class="mr-2 inline-block text-base xl:text-xl 4xl:text-2xl">
@@ -194,7 +194,7 @@
 		{#if data.story.content.output}
 			<div class="col-span-12 grid w-full grid-cols-12 pt-8">
 				<ul
-					class="col-span-10 col-start-2 text-[#dcf945] lg:col-span-6 lg:col-start-5 [&>*:not(:last-child)]:after:ml-2 [&>*:not(:last-child)]:after:align-super [&>*:not(:last-child)]:after:content-['•']"
+					class="col-span-10 col-start-2 text-[#dcf945] lg:col-span-6 lg:col-start-5 2xl:col-span-5 2xl:col-start-6 [&>*:not(:last-child)]:after:ml-2 [&>*:not(:last-child)]:after:align-super [&>*:not(:last-child)]:after:content-['•']"
 				>
 					{#each data.story.content.output as item}
 						<li class="mr-2 inline-block text-base xl:text-xl 4xl:text-2xl">

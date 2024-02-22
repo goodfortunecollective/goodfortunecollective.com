@@ -316,7 +316,10 @@
 
 <div use:inview on:inview_change={inViewPlayer}>
 	<section use:storyblokEditable={blok} {...$$restProps} class="grid h-screen grid-cols-12">
-		<div class="relative col-span-10 col-start-2 h-full w-full" bind:this={container}>
+		<div
+			class="relative col-span-10 col-start-2 h-full w-full 2xl:col-span-8 2xl:col-start-3"
+			bind:this={container}
+		>
 			<div class="perspective-800 relative z-[9] h-full w-full" bind:this={videoContainer}>
 				<div
 					bind:this={video}
@@ -421,7 +424,7 @@
 		&__title {
 			-webkit-text-stroke: 1px white;
 			// text-shadow: -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
-			font-size: clamp(64px, calc(80px + (280 - 80) * (100vw - 768px) / (1920 - 768)), 280px);
+			font-size: clamp(64px, calc(80px + (230 - 80) * (100vw - 768px) / (1920 - 768)), 220px);
 
 			//font-size: clamp(16px, calc(20px + (36 - 20) * (100vw - 768px) / (1920 - 768)), 48px);
 
