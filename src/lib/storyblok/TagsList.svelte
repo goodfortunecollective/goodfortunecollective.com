@@ -81,7 +81,7 @@
 									<Heading
 										as="h4"
 										size="h2"
-										class="mr-16 text-5xl uppercase lg:text-6xl 3xl:text-7xl 4xl:text-8xl"
+										class="mr-16 text-5xl uppercase lg:text-7xl 2xl:text-8xl"
 										animated={false}
 									>
 										<StoryblokComponent blok={b} />
