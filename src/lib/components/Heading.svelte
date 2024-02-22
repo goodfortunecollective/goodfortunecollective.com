@@ -7,6 +7,7 @@
 
 	export let as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1';
 	export let size: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1';
+	export let leading: 'normal' | 'extra-tight' | 'tightest' = 'normal';
 	export let animated: boolean = true;
 	export let underline: boolean = false;
 
@@ -19,10 +20,16 @@
 				h4: 'text-3xl 3xl:text-4xl 4xl:text-5xl font-bold',
 				h5: 'text-2xl 3xl:text-3xl 4xl:text-4xl font-bold',
 				h6: 'text-xl md:text-sm lg:text-xl 3xl:text-2xl 4xl:text-3xl font-bold'
+			},
+			leading: {
+				normal: '',
+				'extra-tight': 'leading-extra-tight lg:leading-extra-tight',
+				tightest: 'leading-tightest lg:leading-tightest'
 			}
 		},
 		defaultVariants: {
-			size: 'h1'
+			size: 'h1',
+			leading: 'normal'
 		}
 	});
 </script>
@@ -31,7 +38,7 @@
 	this={as}
 	use:inview
 	{...$$restProps}
-	class={cls(variants({ size }), size === 'h1' && 'c-heading__h1', $$props.class)}
+	class={cls(variants({ size, leading }), size === 'h1' && 'c-heading__h1', $$props.class)}
 >
 	<TextTransition enabled={animated} {underline} speed={size !== 'h1' && size !== 'h2' ? 1 : 1.25}>
 		<slot />

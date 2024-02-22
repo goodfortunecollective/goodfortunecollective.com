@@ -14,7 +14,7 @@
 		blok.backgroundColor !== '' &&
 		`background-color: ${blok.backgroundColor};`}
 >
-	<div class={cls(blok.wrapped && 'col-span-10 col-start-2')}>
+	<div class={cls(blok.wrapped && 'col-span-10 col-start-2 2xl:col-span-8 2xl:col-start-3')}>
 		{#each blok.children as b}
 			<StoryblokComponent blok={b} />
 		{/each}

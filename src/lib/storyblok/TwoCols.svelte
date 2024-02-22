@@ -34,7 +34,9 @@
 	class={cls(variants({ theme: $backgroundTheme }), blok.class, blok.padding_title ? 'pt-32' : '')}
 >
 	<div class="grid grid-cols-12">
-		<div class="col-span-10 col-start-2 mb-12 md:col-span-4 md:col-start-2 md:mb-0">
+		<div
+			class="col-span-10 col-start-2 mb-12 md:col-span-4 md:col-start-2 md:mb-0 2xl:col-span-3 2xl:col-start-3"
+		>
 			<Heading as="h4" size="h4" class="mb-4 border-b pb-8 uppercase">
 				<strong>{blok.left_col_title}</strong>
 			</Heading>
@@ -42,7 +44,9 @@
 				{@html left_col}
 			</RichtextTransition>
 		</div>
-		<div class="col-span-10 col-start-2 md:col-span-4 md:col-start-7">
+		<div
+			class="col-span-10 col-start-2 md:col-span-4 md:col-start-7 2xl:col-span-3 2xl:col-start-8"
+		>
 			<Heading as="h4" size="h4" class="mb-4 border-b pb-8 uppercase">
 				<strong>{blok.right_col_title}</strong>
 			</Heading>
