@@ -196,6 +196,25 @@
 				<Image class="relative h-auto w-full" src={posterUrl} alt={name} {animated} />
 			</div>
 		{/if}
+		{#if !autoplay && touchCapability === 1 && !videoVisible}
+			<div
+				class="absolute inset-0 z-20 flex h-full w-full items-center justify-center bg-black bg-opacity-50"
+				on:click={showVideo}
+			>
+				<button
+					type="button"
+					class="flex h-[64px] w-[64px] origin-center items-center justify-center transition duration-300 ease-out"
+				>
+					<div
+						class="z-1 flex h-full w-full origin-center items-center justify-center rounded-[100%] bg-yellow-350"
+					>
+						<div
+							class="ml-0.5 inline-block h-0 w-0 origin-center transform cursor-pointer border-y-[7px] border-l-[12px] border-solid border-y-transparent border-l-black content-['']"
+						></div>
+					</div>
+				</button>
+			</div>
+		{/if}
 	</div>
 </div>
 
