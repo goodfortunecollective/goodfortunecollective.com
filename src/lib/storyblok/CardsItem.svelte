@@ -15,11 +15,11 @@
 	use:inview
 	on:inview_change={inViewColorTransition}
 	class={cls(
-		'w-[20rem] rounded-2xl bg-neutral-950 duration-1000 ease-out md:w-[26rem] 2xl:w-[30rem]',
+		'w-[20rem] rounded-2xl bg-neutral-950 duration-1000 ease-out md:w-[26rem] 2xl:w-[28rem] ',
 		blok.class
 	)}
 >
-	<div class="flex flex-col p-8 pb-12">
+	<div class="flex flex-col p-8 pb-8 2xl:pb-12">
 		<div class="relative aspect-video w-full">
 			<div class="absolute inset-0 text-red-100">
 				<NumberedListItem index={$$restProps.index} />
@@ -36,7 +36,7 @@
 				/>
 			{/if}
 		</div>
-		<div class="relative h-3">
+		<div class="relative pb-16">
 			<span
 				class="absolute -bottom-4 align-bottom text-3xl text-white lg:text-4xl 2xl:text-5xl 4xl:text-6xl"
 				>{blok.title}</span
