@@ -33,32 +33,33 @@
 		const w = getImageDimensionsFromUrl(blok.asset.filename).width;
 		const h = getImageDimensionsFromUrl(blok.asset.filename).height;
 
-		imageWidth = (el.getBoundingClientRect().height / h) * w;
+		imageWidth = Math.round((el.getBoundingClientRect().height / h) * w);
 	});
 </script>
 
-<div
-	use:storyblokEditable={blok}
-	{...$$restProps}
-	use:inview
-	on:inview_change={inViewColorTransition}
-	class={cls(variants({ theme: $backgroundTheme }), blok.class)}
-	bind:this={el}
->
-	<div class="flex h-full w-full flex-col">
-		{#if blok.asset.filename?.length > 0}
-			<div class="relative h-full" style={`width: ${imageWidth}px`}>
+{#if blok.asset.filename?.length > 0}
+	<div
+		use:storyblokEditable={blok}
+		{...$$restProps}
+		use:inview
+		on:inview_change={inViewColorTransition}
+		class={cls(variants({ theme: $backgroundTheme }), blok.class)}
+		bind:this={el}
+		style={`width: ${imageWidth}px`}
+	>
+		<div class="flex h-full w-full flex-col">
+			<div class="relative h-full w-full">
 				<div class="absolute inset-0">
 					<img
 						src={`${blok.asset.filename}/m/`}
 						alt={blok.asset.name}
 						loading="lazy"
 						decoding="async"
-						class="h-full w-full"
+						class="h-full w-full object-cover"
 						in:fade={{ duration: 500 }}
 					/>
 				</div>
 			</div>
-		{/if}
+		</div>
 	</div>
-</div>
+{/if}
