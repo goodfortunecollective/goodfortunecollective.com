@@ -76,7 +76,7 @@
 	bind:this={el}
 	use:storyblokEditable={blok}
 	{...$$restProps}
-	class={cls('relative', blok.class, variants({ theme: $backgroundTheme }))}
+	class={cls('relative', variants({ theme: $backgroundTheme, size: blok.size }), blok.class)}
 >
 	<div>
 		{#if blok.title?.length > 0}
