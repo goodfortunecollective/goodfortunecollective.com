@@ -19,7 +19,7 @@
 
 	$: innerWidth = 0;
 
-	const variants = cva('w-full', {
+	const variants = cva('', {
 		variants: {
 			size: {
 				small: 'h-48 md:h-64 2xl:h-72 4xl:h-80' /* 256px */,
@@ -76,7 +76,11 @@
 	bind:this={el}
 	use:storyblokEditable={blok}
 	{...$$restProps}
-	class={cls('relative', blok.class, variants({ theme: $backgroundTheme }))}
+	class={cls(
+		'relative flex w-full',
+		variants({ theme: $backgroundTheme, size: blok.size }),
+		blok.class
+	)}
 >
 	<div>
 		{#if blok.title?.length > 0}

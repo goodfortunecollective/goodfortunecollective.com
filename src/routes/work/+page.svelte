@@ -36,19 +36,19 @@
 	$: filter = $page.url.hash.slice(1);
 
 	const projectGridItemsClasses = [
-		'col-span-10 col-start-3 md:col-span-5 md:col-start-6 md:mt-[4.166%]  z-2 text-left md:text-right 2xl:col-span-4 2xl:col-start-6',
-		'col-span-10 col-start-1 md:col-span-6 md:col-start-2 md:-mt-[16.66%] z-1 text-left md:text-left 2xl:col-span-4 2xl:col-start-3',
+		'col-span-10 col-start-3 md:col-span-5 md:col-start-6 md:mt-[4.166%]  z-2 text-left md:text-right 2xl:col-span-5 2xl:col-start-6',
+		'col-span-10 col-start-1 md:col-span-6 md:col-start-2 md:-mt-[16.66%] z-1 text-left md:text-left 2xl:col-span-5 2xl:col-start-3',
 		'col-span-10 col-start-3 md:col-span-6 md:col-start-5 md:mt-[16.66%] z-2 text-left md:text-right 2xl:col-span-5 2xl:col-start-5',
-		'col-span-10 col-start-1 md:col-span-4 md:col-start-2 md:-mt-[4.166%] z-1 text-left md:text-left 2xl:col-span-4 2xl:col-start-3',
-		'col-span-10 col-start-3 md:col-span-4 md:col-start-7 md:mt-0 z-2 text-left md:text-right 2xl:col-span-4 2xl:col-start-7',
-		'col-span-10 col-start-1 md:col-span-7 md:col-start-2 md:-mt-0 z-1 text-left md:text-left 2xl:col-span-4 2xl:col-start-3'
+		'col-span-10 col-start-1 md:col-span-4 md:col-start-2 md:-mt-[4.166%] z-1 text-left md:text-left 2xl:col-span-5 2xl:col-start-3',
+		'col-span-10 col-start-3 md:col-span-4 md:col-start-7 md:mt-0 z-2 text-left md:text-right 2xl:col-span-5 2xl:col-start-6',
+		'col-span-10 col-start-1 md:col-span-7 md:col-start-2 md:-mt-0 z-1 text-left md:text-left 2xl:col-span-5 2xl:col-start-3'
 	];
 
 	const projectGridParallax = [-1, -4, -2, -3, -2, -3];
 
 	const getProjectGridItemClass = (index: number) => {
 		if (index === 0) {
-			return 'z-1 col-span-10 col-start-1 text-left md:col-span-5 md:col-start-3 md:-mt[16.33%] md:text-left 2xl:col-span-4 2xl:col-start-3';
+			return 'z-1 col-span-10 col-start-1 text-left md:col-span-5 md:col-start-3 md:-mt[16.33%] md:text-left 2xl:col-span-5 2xl:col-start-3';
 		} else {
 			return projectGridItemsClasses[(index - 1) % 6];
 		}

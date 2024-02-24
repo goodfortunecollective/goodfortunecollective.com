@@ -181,11 +181,11 @@
 		{#if data.story.content.ask}
 			<div class="col-span-12 grid w-full grid-cols-12 pb-0 pt-16">
 				<ul
-					class="col-span-10 col-start-2 text-[#dcf945] lg:col-span-6 lg:col-start-5 2xl:col-span-5 2xl:col-start-6 [&>*:not(:last-child)]:after:ml-2 [&>*:not(:last-child)]:after:align-super [&>*:not(:last-child)]:after:content-['•']"
+					class="col-span-10 col-start-2 text-[#dcf945] lg:col-span-6 lg:col-start-5 2xl:col-span-5 2xl:col-start-6 [&>*:not(:last-child)]:after:ml-2 [&>*:not(:last-child)]:after:content-['•']"
 				>
 					{#each data.story.content.ask as item}
 						<li class="mr-2 inline-block text-base xl:text-xl 4xl:text-2xl">
-							<TextTransition>{item}</TextTransition>
+							{item}
 						</li>
 					{/each}
 				</ul>
@@ -194,11 +194,11 @@
 		{#if data.story.content.output}
 			<div class="col-span-12 grid w-full grid-cols-12 pt-8">
 				<ul
-					class="col-span-10 col-start-2 text-[#dcf945] lg:col-span-6 lg:col-start-5 2xl:col-span-5 2xl:col-start-6 [&>*:not(:last-child)]:after:ml-2 [&>*:not(:last-child)]:after:align-super [&>*:not(:last-child)]:after:content-['•']"
+					class="col-span-10 col-start-2 text-[#dcf945] lg:col-span-6 lg:col-start-5 2xl:col-span-5 2xl:col-start-6 [&>*:not(:last-child)]:after:ml-2 [&>*:not(:last-child)]:after:content-['•']"
 				>
 					{#each data.story.content.output as item}
 						<li class="mr-2 inline-block text-base xl:text-xl 4xl:text-2xl">
-							<TextTransition>{item}</TextTransition>
+							{item}
 						</li>
 					{/each}
 				</ul>

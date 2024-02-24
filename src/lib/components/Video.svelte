@@ -31,6 +31,8 @@
 	$: innerWidth = 0;
 	$: offsetWidth = 0;
 
+	let touchCapability: number = 0;
+
 	const variants = cva('relative w-full h-full z-[11] cursor-pointer', {
 		variants: {
 			visible: {
@@ -81,6 +83,16 @@
 	}
 
 	onMount(() => {
+		// 0 - no touch (pointer/mouse only)
+		// 1 - touch-only device (like a phone)
+		// 2 - device can accept touch input and mouse/pointer (like Windows tablets)
+		touchCapability =
+			window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches
+				? 1
+				: 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
+					? 2
+					: 0;
+
 		gsap.set(videoContainer, { clipPath: 'inset(0)' });
 	});
 
@@ -165,7 +177,7 @@
 			<video
 				preload="metadata"
 				class={cls(!autoplay && posterUrl && 'absolute z-10', 'h-auto w-full')}
-				src={innerWidth < 1024 && videoUrlMobile !== '' ? videoUrlMobile : videoUrl}
+				src={innerWidth < 768 && videoUrlMobile !== '' ? videoUrlMobile : videoUrl}
 				bind:this={videoPlayer}
 				poster=""
 				on:click={playPauseVideo}
@@ -182,6 +194,25 @@
 				role="presentation"
 			>
 				<Image class="relative h-auto w-full" src={posterUrl} alt={name} {animated} />
+			</div>
+		{/if}
+		{#if !autoplay && touchCapability === 1 && !videoVisible}
+			<div
+				class="absolute inset-0 z-20 flex h-full w-full items-center justify-center bg-black bg-opacity-50"
+				on:click={showVideo}
+			>
+				<button
+					type="button"
+					class="flex h-[64px] w-[64px] origin-center items-center justify-center transition duration-300 ease-out"
+				>
+					<div
+						class="z-1 flex h-full w-full origin-center items-center justify-center rounded-[100%] bg-yellow-350"
+					>
+						<div
+							class="ml-0.5 inline-block h-0 w-0 origin-center transform cursor-pointer border-y-[7px] border-l-[12px] border-solid border-y-transparent border-l-black content-['']"
+						></div>
+					</div>
+				</button>
 			</div>
 		{/if}
 	</div>

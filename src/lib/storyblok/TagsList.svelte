@@ -81,14 +81,16 @@
 									<Heading
 										as="h4"
 										size="h2"
-										class="mr-16 text-5xl uppercase lg:text-6xl 3xl:text-7xl 4xl:text-8xl"
+										class="mr-16 text-5xl uppercase lg:text-8xl 4xl:text-9xl"
 										animated={false}
 									>
 										<StoryblokComponent blok={b} />
 									</Heading>
-									<span class="inline-block font-degular-display text-6xl 3xl:text-8xl 4xl:text-9xl"
-										>*</span
+									<span
+										class="inline-block font-degular-display text-6xl 3xl:text-8xl 4xl:text-9xl"
 									>
+										*
+									</span>
 								</span>
 							</li>
 						{/each}
