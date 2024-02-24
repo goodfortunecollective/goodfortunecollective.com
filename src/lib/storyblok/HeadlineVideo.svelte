@@ -281,6 +281,24 @@
 		}
 	}
 
+	function startVideo() {
+		if (isScrollFullVideo) {
+			videoPlayerPreview.src = blok.video;
+			cursorType.set('pause');
+			videoPlaying = true;
+		}
+	}
+
+	function playPauseVideo() {
+		if (videoPlayerPreview.paused) {
+			videoPlayerPreview.play();
+			cursorType.set('pause');
+		} else {
+			videoPlayerPreview.pause();
+			cursorType.set('play');
+		}
+	}
+
 	const onScroll = (scroll: any) => {
 		if (video?.offsetHeight) {
 			if (scroll.animatedScroll <= video.offsetHeight) {
@@ -300,10 +318,12 @@
 	const inViewPlayer = ({ detail }: CustomEvent<ObserverEventDetails>) => {
 		const { inView } = detail as ObserverEventDetails;
 		if (inView) {
-			if (isReady) {
-				videoPlayerPreview.play();
-			} else {
-				videoPlayerPreview.pause();
+			if (!videoPlaying) {
+				if (isReady) {
+					videoPlayerPreview.play();
+				} else {
+					videoPlayerPreview.pause();
+				}
 			}
 		} else {
 			videoPlayerPreview.pause();
@@ -354,7 +374,11 @@
 						<video
 							preload="metadata"
 							bind:this={videoPlayerPreview}
-							on:click={playVideoFullscreen}
+							on:click={touchCapability !== 1
+								? videoPlaying
+									? playPauseVideo
+									: startVideo
+								: playVideoFullscreen}
 							on:mouseenter={videoPreviewOnEnter}
 							on:mouseleave={videoPreviewOnLeave}
 							class="aspect-portrait w-full rounded-3xl"
