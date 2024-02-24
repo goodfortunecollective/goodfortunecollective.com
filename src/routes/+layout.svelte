@@ -13,6 +13,7 @@
 
 	import { getComponentByName } from '$lib/storyblok';
 	import { ProjectListHover } from '$lib/components';
+	import { debounce } from '$lib/utils/debounce';
 
 	import type { LayoutData } from './$types';
 	import { pageLeaveDuration, pageTransitionPauseDuration } from '$lib/utils/page-transitions';
@@ -104,6 +105,10 @@
 			}
 		});
 	}
+
+	const onResize = () => {
+		ScrollTrigger.refresh();
+	};
 </script>
 
 <Body style="--theme-color: {$backgroundColor}" />

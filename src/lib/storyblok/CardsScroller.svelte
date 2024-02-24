@@ -8,8 +8,7 @@
 	import gsap from '$lib/gsap';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady.js';
 
-	import { Heading } from '$lib/components';
-	import Spacer from '$lib/components/Spacer.svelte';
+	import { Heading, Spacer } from '$lib/components';
 
 	export let blok: any;
 
