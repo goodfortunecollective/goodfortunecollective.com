@@ -111,6 +111,8 @@
 	};
 </script>
 
+<svelte:window on:resize={debounce(onResize)} />
+
 <Body style="--theme-color: {$backgroundColor}" />
 
 {#if data.settings}
