@@ -132,7 +132,7 @@
 
 	useTransitionReady(() => {
 		activeFilter = true;
-		ScrollTrigger.refresh();
+		ScrollTrigger.refresh(true);
 	});
 
 	onDestroy(() => {

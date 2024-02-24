@@ -127,7 +127,7 @@
 					curtains.updateScrollValues(0, 0);
 				}
 
-				ScrollTrigger.refresh();
+				ScrollTrigger.refresh(true);
 
 				isTransitioningIn.set(false);
 

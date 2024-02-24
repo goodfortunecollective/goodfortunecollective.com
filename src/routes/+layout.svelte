@@ -107,7 +107,7 @@
 	}
 
 	const onResize = () => {
-		ScrollTrigger.refresh();
+		ScrollTrigger.refresh(true);
 	};
 </script>
 
