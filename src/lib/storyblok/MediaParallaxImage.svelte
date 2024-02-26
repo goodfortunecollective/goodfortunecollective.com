@@ -22,7 +22,8 @@
 					scrollTrigger: {
 						trigger: element,
 						start: 'top center',
-						scrub: true
+						scrub: true,
+						invalidateOnRefresh: true
 					}
 				});
 			}, element);

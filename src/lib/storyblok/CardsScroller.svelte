@@ -4,11 +4,10 @@
 
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
-
 	import gsap from '$lib/gsap';
-	import { useTransitionReady } from '$lib/utils/useTransitionReady.js';
-
 	import { Heading, Spacer } from '$lib/components';
+	import { debounce } from '$lib/utils/debounce';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady.js';
 
 	export let blok: any;
 
@@ -36,40 +35,49 @@
 		}
 	});
 
+	const setupAnimation = () => {
+		ctx = gsap.context(() => {
+			if (!scrollEl || !scrollEl.scrollWidth) return;
+
+			gsap.to(scrollEl, {
+				x: () => {
+					return scrollEl?.scrollWidth ? scrollEl.scrollWidth * -1 : 0;
+				},
+				xPercent: 100,
+				ease: 'none',
+				scrollTrigger: {
+					trigger: scrollEl,
+					start: blok.title?.length > 0 ? 'center 66%' : 'center center',
+					end: () => {
+						if (scrollEl?.scrollWidth && innerWidth) {
+							return `+=${scrollEl.scrollWidth - innerWidth}`;
+						}
+						return 0;
+					},
+					pin: el,
+					scrub: true,
+					invalidateOnRefresh: true
+				}
+			});
+		}, scrollEl);
+	};
+
 	useTransitionReady(
 		() => {
-			ctx = gsap.context(() => {
-				if (!scrollEl || !scrollEl.scrollWidth) return;
-
-				gsap.to(scrollEl, {
-					x: () => {
-						return scrollEl?.scrollWidth ? scrollEl.scrollWidth * -1 : 0;
-					},
-					xPercent: 100,
-					ease: 'none',
-					scrollTrigger: {
-						trigger: scrollEl,
-						start: blok.title?.length > 0 ? 'center 66%' : 'center center',
-						end: () => {
-							if (scrollEl?.scrollWidth && innerWidth) {
-								return `+=${scrollEl.scrollWidth - innerWidth}`;
-							}
-							return 0;
-						},
-						pin: el,
-						scrub: true,
-						invalidateOnRefresh: true
-					}
-				});
-			}, scrollEl);
+			setupAnimation();
 		},
 		() => {
 			ctx?.revert();
 		}
 	);
+
+	const onResize = () => {
+		ctx?.revert();
+		setupAnimation();
+	};
 </script>
 
-<svelte:window bind:innerWidth />
+<svelte:window on:resize={debounce(onResize)} bind:innerWidth />
 
 <div
 	bind:this={el}

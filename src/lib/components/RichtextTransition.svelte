@@ -18,6 +18,10 @@
 	let text: any = null;
 
 	onMount(() => {
+		initAnimation();
+	});
+
+	const initAnimation = () => {
 		if (enabled) {
 			paragraphs = element.querySelectorAll('p:not(:empty)');
 			if (paragraphs?.length > 0) {
@@ -28,65 +32,69 @@
 				gsap.set(element, { opacity: 0 });
 			}
 		}
-	});
+	};
+
+	const createAnimation = () => {
+		if (enabled) {
+			ctx = gsap.context(() => {
+				if (paragraphs?.length > 0) {
+					paragraphs.forEach((p: any) => {
+						gsap.set(p, { opacity: 1 });
+
+						text = new SplitText(p, {
+							type: 'lines,words',
+							linesClass: 'split-line'
+						});
+
+						if (text.words.length > 0) {
+							gsap.set(text.words, { yPercent: 200, opacity: 0 });
+
+							ScrollTrigger.batch(text.words, {
+								start: 'top 90%',
+								end: 'bottom 10%',
+								top: 'top center',
+								toggleActions: 'restart pause resume reverse',
+								onEnter(elements: any, triggers: any) {
+									gsap.to(elements, {
+										duration: 0.4,
+										ease: 'circ.out',
+										yPercent: 0,
+										opacity: 1,
+										stagger: 0.005
+									});
+								}
+							});
+						}
+
+						if (text.lines.length > 0) {
+							gsap.set(text.lines, { skewY: 5 });
+
+							ScrollTrigger.batch(text.lines, {
+								start: 'top 90%',
+								end: 'bottom 10%',
+								top: 'top center',
+								toggleActions: 'restart pause resume reverse',
+								onEnter(elements: any, triggers: any) {
+									gsap.to(elements, {
+										duration: 0.4,
+										ease: 'circ.out',
+										skewY: 0,
+										stagger: 0.02
+									});
+								}
+							});
+						}
+					});
+				} else {
+					gsap.to(element, { opacity: 1, delay: 0.4, duration: 0.6, ease: 'circ.out' });
+				}
+			}, element);
+		}
+	};
 
 	useTransitionReady(
 		() => {
-			if (enabled) {
-				ctx = gsap.context(() => {
-					if (paragraphs?.length > 0) {
-						paragraphs.forEach((p: any) => {
-							gsap.set(p, { opacity: 1 });
-
-							text = new SplitText(p, {
-								type: 'lines,words',
-								linesClass: 'split-line'
-							});
-
-							if (text.words.length > 0) {
-								gsap.set(text.words, { yPercent: 200, opacity: 0 });
-
-								ScrollTrigger.batch(text.words, {
-									start: 'top 90%',
-									end: 'bottom 10%',
-									top: 'top center',
-									toggleActions: 'restart pause resume reverse',
-									onEnter(elements: any, triggers: any) {
-										gsap.to(elements, {
-											duration: 0.4,
-											ease: 'circ.out',
-											yPercent: 0,
-											opacity: 1,
-											stagger: 0.005
-										});
-									}
-								});
-							}
-
-							if (text.lines.length > 0) {
-								gsap.set(text.lines, { skewY: 5 });
-
-								ScrollTrigger.batch(text.lines, {
-									start: 'top 90%',
-									end: 'bottom 10%',
-									top: 'top center',
-									toggleActions: 'restart pause resume reverse',
-									onEnter(elements: any, triggers: any) {
-										gsap.to(elements, {
-											duration: 0.4,
-											ease: 'circ.out',
-											skewY: 0,
-											stagger: 0.02
-										});
-									}
-								});
-							}
-						});
-					} else {
-						gsap.to(element, { opacity: 1, delay: 0.4, duration: 0.6, ease: 'circ.out' });
-					}
-				}, element);
-			}
+			createAnimation();
 		},
 		() => {
 			if (ctx) ctx.revert();
@@ -94,7 +102,10 @@
 	);
 
 	const onResize = () => {
-		if (text) text.split();
+		if (text) text.revert();
+		if (ctx) ctx.revert();
+		initAnimation();
+		createAnimation();
 	};
 </script>
 

@@ -4,6 +4,8 @@
 	import type { ObserverEventDetails } from 'svelte-inview';
 	import { inview } from 'svelte-inview';
 
+	import { beforeNavigate } from '$app/navigation';
+
 	import { BackgroundTheme } from '$lib/components';
 	import gsap, { SplitText } from '$lib/gsap';
 	import { clamp } from '$lib/utils/maths';
@@ -11,7 +13,7 @@
 	import { cursorType } from '$lib/stores';
 	import { cls } from '$lib/styles';
 	import { lenisStore as lenis } from '$lib/stores/lenis';
-	import { beforeNavigate } from '$app/navigation';
+	import { debounce } from '$lib/utils/debounce';
 
 	export let blok: any;
 
@@ -65,6 +67,12 @@
 		if (video) {
 			videoBBox = video.getBoundingClientRect();
 		}
+
+		splitTexts.forEach((text) => {
+			text.revert();
+		});
+		splitTexts = [];
+		initAnimation();
 	};
 
 	const onMouseMove = (event: MouseEvent) => {
@@ -110,6 +118,12 @@
 		videoPlayerFullscreen.addEventListener('webkitendfullscreen', hideVideoFullscreen, false);
 		videoPlayerFullscreen.addEventListener('webkitbeginfullscreen', showVideoFullscreen, false);
 
+		initAnimation();
+
+		gsap.ticker.add(onRender);
+	});
+
+	const initAnimation = () => {
 		const splitText = gsap.utils.toArray('[data-gsap="split-text"]');
 
 		splitTexts.push(
@@ -134,9 +148,7 @@
 		});
 
 		gsap.set(videoContainer, { scale: 0 });
-
-		gsap.ticker.add(onRender);
-	});
+	};
 
 	useTransitionReady(
 		() => {
@@ -332,7 +344,12 @@
 	};
 </script>
 
-<svelte:window bind:innerWidth bind:innerHeight on:mousemove={onMouseMove} on:resize={onResize} />
+<svelte:window
+	bind:innerWidth
+	bind:innerHeight
+	on:mousemove={onMouseMove}
+	on:resize={debounce(onResize)}
+/>
 
 <div use:inview on:inview_change={inViewPlayer}>
 	<section use:storyblokEditable={blok} {...$$restProps} class="grid h-screen grid-cols-12">
