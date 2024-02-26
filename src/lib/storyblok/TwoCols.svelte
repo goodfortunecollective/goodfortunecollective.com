@@ -35,7 +35,7 @@
 >
 	<div class="grid grid-cols-12">
 		<div
-			class="col-span-10 col-start-2 mb-12 md:col-span-4 md:col-start-2 md:mb-0 2xl:col-span-3 2xl:col-start-3"
+			class="col-span-12 col-start-1 mx-4 mb-12 md:col-span-4 md:col-start-2 md:mx-0 md:mb-0 2xl:col-span-3 2xl:col-start-3"
 		>
 			<Heading as="h4" size="h4" class="mb-4 border-b pb-8 uppercase">
 				<strong>{blok.left_col_title}</strong>
@@ -45,7 +45,7 @@
 			</RichtextTransition>
 		</div>
 		<div
-			class="col-span-10 col-start-2 md:col-span-4 md:col-start-7 2xl:col-span-3 2xl:col-start-8"
+			class="col-span-12 col-start-1 mx-4 md:col-span-4 md:col-start-7 md:mx-0 2xl:col-span-3 2xl:col-start-8"
 		>
 			<Heading as="h4" size="h4" class="mb-4 border-b pb-8 uppercase">
 				<strong>{blok.right_col_title}</strong>

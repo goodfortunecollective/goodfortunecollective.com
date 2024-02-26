@@ -337,7 +337,7 @@
 <div use:inview on:inview_change={inViewPlayer}>
 	<section use:storyblokEditable={blok} {...$$restProps} class="grid h-screen grid-cols-12">
 		<div
-			class="relative col-span-10 col-start-2 h-full w-full 2xl:col-span-8 2xl:col-start-3"
+			class="relative col-span-12 col-start-1 h-full w-full md:col-span-10 md:col-start-2 2xl:col-span-8 2xl:col-start-3"
 			bind:this={container}
 		>
 			<div class="perspective-800 relative z-[9] h-full w-full" bind:this={videoContainer}>
@@ -406,7 +406,7 @@
 			<div
 				class="title-cont pointer-events-none absolute left-0 top-0 flex h-full w-full items-start"
 			>
-				<div class="flex h-full flex-col justify-between py-[15vh]">
+				<div class="mx-4 flex h-full flex-col justify-between py-[15vh] md:mx-0">
 					<h1
 						data-gsap="split-text"
 						class={cls(
@@ -426,7 +426,7 @@
 			</div>
 		</div>
 	</section>
-	<div class="h-[80vh]" />
+	<div class="h-[100vh] md:h-[80vh]" />
 	<BackgroundTheme startColor="#1a1a1a" endColor="#fff" startTheme="dark" endTheme="light" />
 	<div class="h-[20vh]" />
 </div>

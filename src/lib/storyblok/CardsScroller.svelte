@@ -84,7 +84,9 @@
 	<div>
 		{#if blok.title?.length > 0}
 			<div class="fixed grid w-full grid-cols-12">
-				<div class="col-span-10 col-start-2 2xl:col-span-8 2xl:col-start-3">
+				<div
+					class="col-span-12 col-start-1 mx-4 md:col-span-10 md:col-start-2 md:mx-0 2xl:col-span-8 2xl:col-start-3"
+				>
 					<Heading as="h2" animated={true} size="h2" leading="tightest">
 						{blok.title}
 					</Heading>
@@ -94,7 +96,9 @@
 		{/if}
 		<div class={cls('overflow', blok.title?.length > 0 && 'pt-4')}>
 			<div class="grid grid-cols-12" bind:this={scrollEl}>
-				<div class="col-span-10 col-start-2 flex gap-8 2xl:col-span-8 2xl:col-start-3">
+				<div
+					class="col-span-12 col-start-1 mx-4 flex gap-4 md:col-span-10 md:col-start-2 md:mx-0 md:gap-8 2xl:col-span-8 2xl:col-start-3"
+				>
 					{#each blok.content as b, index}
 						<div class={variants({ size: blok.size })}>
 							<StoryblokComponent blok={b} {index} />

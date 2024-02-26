@@ -24,7 +24,9 @@
 <section
 	class={cls('relative grid grid-cols-12 pt-24 3xl:pt-32 ', variants({ theme: $backgroundTheme }))}
 >
-	<div class="col-span-10 col-start-2 flex h-full flex-col items-center text-center">
+	<div
+		class="col-span-12 col-start-1 mx-4 flex h-full flex-col items-center text-center md:col-span-10 md:col-start-2 md:mx-0"
+	>
 		<h1
 			class={cls('my-0 py-0 font-degular-display leading-none text-transparent', 'p-error__title')}
 		>

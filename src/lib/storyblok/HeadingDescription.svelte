@@ -62,10 +62,10 @@
 </script>
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
-	<div class="grid grid-cols-12 gap-8 pt-24 md:gap-0">
+	<div class="grid grid-cols-12 gap-8 pt-16 md:gap-0 md:pt-24">
 		{#if blok.divider}
 			<div
-				class="col-span-12 col-start-1 flex pb-20 md:col-span-5 md:col-start-7 md:pb-24 2xl:col-span-4 2xl:col-start-7"
+				class="col-span-12 col-start-1 flex pb-8 md:col-span-5 md:col-start-7 md:pb-24 2xl:col-span-4 2xl:col-start-7"
 			>
 				<div class={cls(dividerStyle({ theme: $backgroundTheme }))}></div>
 			</div>
@@ -76,12 +76,12 @@
 			as="h2"
 			size="h6"
 			class={cls(
-				'col-span-10 col-start-2 w-full break-keep font-bold uppercase tracking-widest xl:w-[75%]',
+				'col-span-12 col-start-1 mx-4 w-full break-keep font-bold uppercase tracking-widest md:col-span-10 md:col-start-2 md:mx-0 xl:w-[75%]',
 				headingStyle({ theme: $backgroundTheme, textAlign: blok.heading_leftAlign })
 			)}>{blok.heading}</Heading
 		>
 		<div
-			class="col-span-10 col-start-2 text-lg md:col-span-5 md:col-start-7 2xl:col-span-4 2xl:col-start-7"
+			class="col-span-12 col-start-1 mx-4 text-lg md:col-span-5 md:col-start-7 md:mx-0 2xl:col-span-4 2xl:col-start-7"
 		>
 			<div
 				use:inview

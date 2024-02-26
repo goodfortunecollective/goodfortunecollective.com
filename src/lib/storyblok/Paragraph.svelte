@@ -11,29 +11,32 @@
 	export let blok: any;
 	$: content = renderRichText(blok.content);
 
-	const variants = cva('flex w-full text-2xl duration-1000 ease-out xl:text-3xl 4xl:text-5xl', {
-		variants: {
-			theme: {
-				light: '',
-				dark: 'text-white'
+	const variants = cva(
+		'flex w-full text-xl md:text-2xl duration-1000 ease-out xl:text-3xl 4xl:text-5xl',
+		{
+			variants: {
+				theme: {
+					light: '',
+					dark: 'text-white'
+				},
+				align: {
+					left: '',
+					center: 'm-auto'
+				},
+				maxWidth: {
+					sm: 'max-w-sm 2xl:max-w-md 4xl:max-w-xl',
+					md: 'max-w-md 2xl:max-w-lg 3xl:max-w-xl 4xl:max-w-2xl',
+					lg: 'max-w-lg 2xl:max-w-xl 3xl:max-w-2xl 4xl:max-w-3xl',
+					xl: 'max-w-xl max-w-2xl 3xl:max-w-3xl 4xl:max-w-4xl',
+					'2xl': 'max-w-2xl 3xl:max-w-3xl 4xl:max-w-4xl',
+					'3xl': 'max-w-3xl 2xl:max-w-4xl 3xl:max-w-5xl 4xl:max-w-6xl'
+				}
 			},
-			align: {
-				left: '',
-				center: 'm-auto'
-			},
-			maxWidth: {
-				sm: 'max-w-sm 2xl:max-w-md 4xl:max-w-xl',
-				md: 'max-w-md 2xl:max-w-lg 3xl:max-w-xl 4xl:max-w-2xl',
-				lg: 'max-w-lg 2xl:max-w-xl 3xl:max-w-2xl 4xl:max-w-3xl',
-				xl: 'max-w-xl max-w-2xl 3xl:max-w-3xl 4xl:max-w-4xl',
-				'2xl': 'max-w-2xl 3xl:max-w-3xl 4xl:max-w-4xl',
-				'3xl': 'max-w-3xl 2xl:max-w-4xl 3xl:max-w-5xl 4xl:max-w-6xl'
+			defaultVariants: {
+				theme: 'light'
 			}
-		},
-		defaultVariants: {
-			theme: 'light'
 		}
-	});
+	);
 </script>
 
 <div
