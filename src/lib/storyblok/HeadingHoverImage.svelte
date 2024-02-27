@@ -7,7 +7,6 @@
 	import gsap from '$lib/gsap';
 	import { cls } from '$lib/styles';
 	import { heading_hover_media } from '$lib/stores';
-	import { lazyLoad } from '$lib/utils/lazyLoad';
 
 	export let blok: any;
 
@@ -81,7 +80,7 @@
 	>
 		<img
 			bind:this={imageEl}
-			use:lazyLoad={image_src}
+			src={image_src}
 			class="inline h-full w-auto origin-center rounded-full object-cover"
 			width="auto"
 			height="100%"
