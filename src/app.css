@@ -109,6 +109,7 @@
 
 	.c-animated-underline:hover {
 		text-decoration-line: none;
+		display: inline-block;
 	}
 
 	.c-animated-underline:hover::after {
