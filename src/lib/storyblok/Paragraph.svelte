@@ -49,5 +49,7 @@
 	use:inview
 	on:inview_change={inViewColorTransition}
 >
-	<RichtextTransition class="[&_p]:mb-16 [&_p]:leading-snug">{@html content}</RichtextTransition>
+	<RichtextTransition class="[&_h3]:duration-1000 [&_h3]:ease-out [&_p]:mb-16 [&_p]:leading-snug">
+		{@html content}
+	</RichtextTransition>
 </div>
