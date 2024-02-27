@@ -6,6 +6,7 @@
 	import { cls } from '$lib/styles';
 
 	import { backgroundTheme } from '$lib/stores';
+	import { lazyLoad } from '$lib/utils/lazyLoad';
 
 	const variants = cva('duration-1000 ease-out', {
 		variants: {
@@ -34,7 +35,7 @@
 				<span class="relative z-1 inline-block">4</span>
 				<span class="relative -z-1 inline-block">
 					<img
-						src={`${base}/assets/GFC-error.webp`}
+						use:lazyLoad={`${base}/assets/GFC-error.webp`}
 						class="aspect-ratio:500/376 absolute inset-0 top-[57.5%] -z-1 inline-block w-full -translate-y-1/2 scale-175"
 						alt=""
 					/>

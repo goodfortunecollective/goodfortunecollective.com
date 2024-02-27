@@ -6,6 +6,7 @@
 	import { gsap } from 'gsap';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
+	import { lazyLoad } from '$lib/utils/lazyLoad';
 
 	export let blok: any;
 	let element: HTMLElement;
@@ -38,7 +39,7 @@
 	{#if blok.asset?.filename?.length > 0}
 		<img
 			bind:this={element}
-			src={`${blok.asset.filename}/m/`}
+			use:lazyLoad={`${blok.asset.filename}/m/`}
 			width={getImageDimensionsFromUrl(blok.asset.filename).width}
 			height={getImageDimensionsFromUrl(blok.asset.filename).height}
 			alt={blok.asset.name}

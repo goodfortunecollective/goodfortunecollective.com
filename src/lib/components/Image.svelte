@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { fade } from 'svelte/transition';
 	import { onDestroy, onMount } from 'svelte';
 	import { cva } from 'class-variance-authority';
 
 	import { cls } from '$lib/styles';
 	import { ScrollTrigger } from '$lib/gsap';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import { lazyLoad } from '$lib/utils/lazyLoad';
 
 	export let aspect: 'square' | 'landscape' | 'portrait' | 'auto' = 'landscape';
 	export let animated: boolean = true;
@@ -13,6 +13,7 @@
 	$: innerWidth = 0;
 
 	let el!: HTMLElement;
+	let imageEl!: HTMLImageElement;
 	let scrollTrigger!: ScrollTrigger;
 
 	$: parallaxEffect = 0 as number;
@@ -75,19 +76,28 @@
 >
 	<div class={cls(containerStyle({ aspect }))}>
 		<img
-			src={$$props.src}
+			use:lazyLoad={$$props.src}
 			alt={$$props.alt}
-			class="c-image absolute inset-0 h-full w-full object-cover"
+			class={cls(
+				'c-image',
+				'absolute inset-0 h-full w-full object-cover',
+				animated && 'c-image__animated'
+			)}
 			style="--parallax-effect: {parallaxEffect}"
-			loading="lazy"
+			loading={$$props.loading}
 			decoding="async"
-			in:fade={{ duration: 500 }}
+			bind:this={imageEl}
 		/>
 	</div>
 </div>
 
 <style lang="scss">
 	.c-image {
+		opacity: 0;
+		transition: opacity 0.6s ease-in-out;
+	}
+
+	.c-image__animated {
 		transform: translateY(calc(50px * var(--parallax-effect)))
 			scale(calc(1.05 + 0.2 * var(--parallax-effect)));
 	}
