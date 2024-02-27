@@ -72,7 +72,9 @@
 			text.revert();
 		});
 		splitTexts = [];
+		if (ctx) ctx.revert();
 		initAnimation();
+		createAnimation();
 	};
 
 	const onMouseMove = (event: MouseEvent) => {
@@ -150,9 +152,90 @@
 		gsap.set(videoContainer, { scale: 0 });
 	};
 
+	const createAnimation = () => {
+		ctx = gsap.context(() => {
+			gsap.to(videoContainer, {
+				duration: 1,
+				scale: 1,
+				delay: 0.2,
+				ease: 'circ.out'
+			});
+
+			gsap.timeline({
+				scrollTrigger: {
+					trigger: container,
+					start: '=+25%',
+					end: '=+125%',
+					onUpdate: (self) => {
+						if (self.progress === 0) {
+							cursorType.set('none');
+							isScrollFullVideo = false;
+						}
+					},
+					onEnter: () => {
+						if (isCursorEnter) {
+							cursorType.set('play');
+						}
+
+						isScrollFullVideo = true;
+					},
+					onEnterBack: () => {
+						if (isCursorEnter) {
+							cursorType.set('play');
+						}
+
+						isScrollFullVideo = true;
+					},
+					onLeave: () => {
+						cursorType.set('none');
+						isScrollFullVideo = false;
+					},
+					onLeaveBack: () => {
+						cursorType.set('none');
+						isScrollFullVideo = false;
+					}
+				}
+			});
+
+			gsap.timeline({
+				scrollTrigger: {
+					trigger: container,
+					start: 'center 50%',
+					end: '+=150% bottom',
+					scrub: true,
+					pin: true
+				}
+			});
+
+			const tlSplitText = gsap.timeline({
+				scrollTrigger: {
+					trigger: videoContainer,
+					start: 'center 55%',
+					end: 'center 30%',
+					toggleActions: 'play reverse play reverse' // onEnter onLeave onEnterBack onLeaveBack
+				}
+			});
+			tlSplitText.addLabel('start');
+
+			splitTexts.forEach((text, index) => {
+				gsap.set(text.chars, { opacity: 1 });
+				tlSplitText.to(
+					text.chars,
+					{
+						duration: 0.5,
+						ease: 'circ.out',
+						yPercent: 0,
+						delay: 0.5 + index,
+						stagger: 0.01
+					},
+					'start'
+				);
+			});
+		}, container);
+	};
+
 	useTransitionReady(
 		() => {
-			onResize();
 			$lenis?.on('scroll', onScroll);
 
 			if (!isReady) {
@@ -162,87 +245,11 @@
 				}
 			}
 
-			ctx = gsap.context(() => {
-				gsap.to(videoContainer, {
-					duration: 1,
-					scale: 1,
-					delay: 0.2,
-					ease: 'circ.out'
-				});
-
-				gsap.timeline({
-					scrollTrigger: {
-						trigger: container,
-						start: '=+25%',
-						end: '=+125%',
-						onUpdate: (self) => {
-							if (self.progress === 0) {
-								cursorType.set('none');
-								isScrollFullVideo = false;
-							}
-						},
-						onEnter: () => {
-							if (isCursorEnter) {
-								cursorType.set('play');
-							}
-
-							isScrollFullVideo = true;
-						},
-						onEnterBack: () => {
-							if (isCursorEnter) {
-								cursorType.set('play');
-							}
-
-							isScrollFullVideo = true;
-						},
-						onLeave: () => {
-							cursorType.set('none');
-							isScrollFullVideo = false;
-						},
-						onLeaveBack: () => {
-							cursorType.set('none');
-							isScrollFullVideo = false;
-						}
-					}
-				});
-
-				gsap.timeline({
-					scrollTrigger: {
-						trigger: container,
-						start: 'center 50%',
-						end: '+=150% bottom',
-						scrub: true,
-						pin: true
-					}
-				});
-
-				const tlSplitText = gsap.timeline({
-					scrollTrigger: {
-						trigger: videoContainer,
-						start: 'center 55%',
-						end: 'center 30%',
-						toggleActions: 'play reverse play reverse' // onEnter onLeave onEnterBack onLeaveBack
-					}
-				});
-				tlSplitText.addLabel('start');
-
-				splitTexts.forEach((text, index) => {
-					gsap.set(text.chars, { opacity: 1 });
-					tlSplitText.to(
-						text.chars,
-						{
-							duration: 0.5,
-							ease: 'circ.out',
-							yPercent: 0,
-							delay: 0.5 + index,
-							stagger: 0.01
-						},
-						'start'
-					);
-				});
-			}, container);
+			createAnimation();
 		},
-		() => {}
+		() => {
+			if (ctx) ctx.revert();
+		}
 	);
 
 	function videoPreviewOnEnter() {
