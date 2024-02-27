@@ -25,7 +25,7 @@
 		}
 	});
 
-	const containerStyle = cva('relative h-full w-full', {
+	const containerStyle = cva('relative h-full w-full max-w-[100vw] md:max-w-full', {
 		variants: {
 			aspect: {
 				square: 'aspect-square',
@@ -55,12 +55,7 @@
 					<Video videoUrl={blok.asset} autoplay muted loop animated={false} />
 				{/if}
 				{#if blok.asset_fallback?.filename?.length > 0 && innerWidth < 768}
-					<Image
-						class="relative h-auto w-full"
-						aspect="landscape"
-						src={blok.asset_fallback.filename}
-						alt=""
-					/>
+					<Image src={blok.asset_fallback.filename} alt="" animated={false} />
 				{/if}
 			</div>
 		</div>
