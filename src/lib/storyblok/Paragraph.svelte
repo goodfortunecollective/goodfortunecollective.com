@@ -13,6 +13,8 @@
 	$: content = renderRichText(blok.content);
 	let el!: HTMLElement;
 
+	let links: NodeListOf<HTMLAnchorElement>;
+
 	const variants = cva(
 		'flex w-full text-xl md:text-2xl duration-1000 ease-out xl:text-3xl 4xl:text-5xl',
 		{
@@ -49,14 +51,15 @@
 	};
 
 	onMount(() => {
-		el.querySelectorAll('a').forEach((link) => {
+		links = el.querySelectorAll('a');
+		links?.forEach((link) => {
 			link.addEventListener('mouseenter', onEnter);
 			link.addEventListener('mouseleave', onLeave);
 		});
 	});
 
 	onDestroy(() => {
-		el.querySelectorAll('a').forEach((link) => {
+		links?.forEach((link) => {
 			link.removeEventListener('mouseenter', onEnter);
 			link.removeEventListener('mouseleave', onLeave);
 		});
