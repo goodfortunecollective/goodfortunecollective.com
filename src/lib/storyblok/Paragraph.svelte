@@ -1,15 +1,17 @@
 <script lang="ts">
+	import { onDestroy, onMount } from 'svelte';
 	import { renderRichText, storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
 	import { inview } from 'svelte-inview';
 
 	import { RichtextTransition } from '$lib/components';
 	import { cls } from '$lib/styles';
-	import { backgroundTheme } from '$lib/stores';
+	import { backgroundTheme, cursorType } from '$lib/stores';
 	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;
 	$: content = renderRichText(blok.content);
+	let el!: HTMLElement;
 
 	const variants = cva(
 		'flex w-full text-xl md:text-2xl duration-1000 ease-out xl:text-3xl 4xl:text-5xl',
@@ -37,10 +39,33 @@
 			}
 		}
 	);
+
+	const onEnter = () => {
+		cursorType.set('checkout');
+	};
+
+	const onLeave = () => {
+		cursorType.set('none');
+	};
+
+	onMount(() => {
+		el.querySelectorAll('a').forEach((link) => {
+			link.addEventListener('mouseenter', onEnter);
+			link.addEventListener('mouseleave', onLeave);
+		});
+	});
+
+	onDestroy(() => {
+		el.querySelectorAll('a').forEach((link) => {
+			link.removeEventListener('mouseenter', onEnter);
+			link.removeEventListener('mouseleave', onLeave);
+		});
+	});
 </script>
 
 <div
 	use:storyblokEditable={blok}
+	bind:this={el}
 	{...$$restProps}
 	class={cls(
 		variants({ theme: $backgroundTheme, align: blok.align, maxWidth: blok.maxWidth }),
