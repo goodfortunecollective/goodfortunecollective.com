@@ -37,7 +37,7 @@
 	});
 </script>
 
-{#if blok.asset.filename?.length > 0}
+{#if blok.asset?.filename?.length > 0}
 	<div
 		use:storyblokEditable={blok}
 		{...$$restProps}

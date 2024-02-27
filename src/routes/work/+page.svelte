@@ -18,8 +18,6 @@
 	import MenuList from './MenuList.svelte';
 	import MenuItem from './MenuItem.svelte';
 
-	$: innerWidth = 0;
-
 	let activeFilter = false;
 
 	let el!: HTMLElement;
@@ -139,8 +137,6 @@
 		ctx?.revert();
 	});
 </script>
-
-<svelte:window bind:innerWidth />
 
 {#if data.story}
 	<StoryblokComponent blok={data.story.content} />
