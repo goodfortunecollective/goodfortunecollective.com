@@ -107,7 +107,10 @@
 						<div class="space-y-2 py-6 text-center">
 							{#each blok.navigation as { name, slug }, i}<a
 									href="{base}/{slug}"
-									class="block px-3 py-8 font-degular-display text-6xl leading-7 text-white"
+									class={cls(
+										getRootPathname($page.url.pathname) === slug && 'underline underline-offset-8',
+										'block px-3 py-8 font-degular-display text-6xl leading-7 text-white'
+									)}
 									in:fly={{ x: -48, duration: 500, delay: 300 + 50 * i }}
 									out:fly={{ x: -48, duration: 500, delay: 300 - 50 * i }}
 									on:click={closeMobileMenu}>{name}</a
@@ -175,8 +178,9 @@
 						<a
 							href="{base}/{slug}"
 							class={cls(
-								getRootPathname($page.url.pathname) !== slug && 'c-animated-underline',
-								'text-base leading-6 3xl:text-lg'
+								getRootPathname($page.url.pathname) === slug && 'after:w-full',
+								'text-base leading-6 3xl:text-lg',
+								'c-animated-underline'
 							)}
 						>
 							<span
