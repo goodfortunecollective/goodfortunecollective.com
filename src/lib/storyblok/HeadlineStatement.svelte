@@ -68,7 +68,7 @@
 	};
 
 	onMount(() => {
-		links = el.querySelectorAll('a');
+		links = el?.querySelectorAll('a');
 		links?.forEach((link) => {
 			link.addEventListener('mouseenter', onEnter);
 			link.addEventListener('mouseleave', onLeave);
