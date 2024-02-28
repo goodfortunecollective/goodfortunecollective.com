@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 
 	import { cls } from '$lib/styles';
-	import gsap, { SplitText, ScrollTrigger } from '$lib/gsap';
+	import gsap, { SplitText } from '$lib/gsap';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 	import { debounce } from '$lib/utils/debounce';
 
@@ -18,7 +18,6 @@
 
 	let ctx: any = null;
 	let paragraphs: any = null;
-	let text: any = null;
 
 	onMount(() => {
 		lastWidth = innerWidth;
@@ -45,46 +44,43 @@
 					paragraphs.forEach((p: any) => {
 						gsap.set(p, { opacity: 1 });
 
-						text = new SplitText(p, {
-							type: 'lines,words',
+						const text = new SplitText(p, {
+							type: 'lines',
 							linesClass: 'split-line'
 						});
 
-						if (text.words.length > 0) {
-							gsap.set(text.words, { yPercent: 200, opacity: 0 });
+						const textParent = new SplitText(p, {
+							type: ['lines'],
+							linesClass: 'c-richtext-transition'
+						});
 
-							ScrollTrigger.batch(text.words, {
-								start: 'top 90%',
-								end: 'bottom 10%',
-								top: 'top center',
-								toggleActions: 'restart pause resume reverse',
-								onEnter(elements: any, triggers: any) {
-									gsap.to(elements, {
-										duration: 0.4,
-										ease: 'circ.out',
-										yPercent: 0,
-										opacity: 1,
-										stagger: 0.005
-									});
-								}
-							});
-						}
+						gsap.set('.c-richtext-transition', { overflow: 'hidden' });
 
 						if (text.lines.length > 0) {
-							gsap.set(text.lines, { skewY: 5 });
+							gsap.set(text.lines, {
+								rotation: 6,
+								yPercent: 20,
+								opacity: 0,
+								transformOrigin: '0% 0%'
+							});
 
-							ScrollTrigger.batch(text.lines, {
-								start: 'top 90%',
-								end: 'bottom 10%',
-								top: 'top center',
-								toggleActions: 'restart pause resume reverse',
-								onEnter(elements: any, triggers: any) {
-									gsap.to(elements, {
-										duration: 0.4,
-										ease: 'circ.out',
-										skewY: 0,
-										stagger: 0.02
-									});
+							gsap.to(text.lines, {
+								duration: 0.5,
+								ease: 'circ.out',
+								rotation: 0,
+								yPercent: 0,
+								opacity: 1,
+								stagger: 0.06,
+								scrollTrigger: {
+									trigger: text.lines,
+									start: 'top 90%',
+									end: 'bottom 10%',
+									toggleActions: 'restart pause resume reverse',
+
+									markers: true
+								},
+								onComplete() {
+									text.revert();
 								}
 							});
 						}
@@ -108,7 +104,6 @@
 	const onResize = () => {
 		if (lastWidth === innerWidth) return;
 
-		if (text) text.revert();
 		if (ctx) ctx.revert();
 		initAnimation();
 		createAnimation();
@@ -122,7 +117,7 @@
 <span
 	bind:this={element}
 	class={cls(
-		'[&_a]:c-animated-underline inline-block break-words [&_p]:duration-1000 [&_p]:ease-out',
+		'[&_a]:c-animated-underline inline-block break-words [&_p]:overflow-hidden [&_p]:duration-1000 [&_p]:ease-out',
 		clazz
 	)}
 	{style}
