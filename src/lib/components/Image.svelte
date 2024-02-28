@@ -12,6 +12,7 @@
 	export let animated: boolean = true;
 
 	$: innerWidth = 0;
+	let lastWidth = 0;
 
 	let el!: HTMLElement;
 	let imageEl!: HTMLImageElement;
@@ -42,6 +43,7 @@
 	}
 
 	onMount(() => {
+		lastWidth = innerWidth;
 		setStyleContainer();
 	});
 
@@ -58,6 +60,14 @@
 		}
 	});
 
+	const onResize = () => {
+		if (lastWidth === innerWidth) return;
+
+		setStyleContainer();
+
+		lastWidth = innerWidth;
+	};
+
 	onDestroy(() => {
 		if (scrollTrigger) {
 			scrollTrigger.kill();
@@ -66,7 +76,7 @@
 	});
 </script>
 
-<svelte:window bind:innerWidth on:resize={debounce(setStyleContainer)} />
+<svelte:window bind:innerWidth on:resize={debounce(onResize)} />
 
 <div
 	bind:this={el}

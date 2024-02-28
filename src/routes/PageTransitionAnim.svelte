@@ -25,6 +25,9 @@
 		pageTransitionPauseDuration
 	} from '$lib/utils/page-transitions';
 
+	$: innerWidth = 0;
+	let lastWidth = 0;
+
 	let curtains: CurtainsInstance;
 	let tl: any;
 
@@ -45,10 +48,20 @@
 		list_hover = value;
 	});
 
+	const updateCanvas = () => {
+		if (canvasEl) {
+			canvasDOMRect = canvasEl.getBoundingClientRect();
+			canvasEl.width = canvasDOMRect.width;
+			canvasEl.height = canvasDOMRect.height;
+		}
+	};
+
 	const onResize = () => {
-		canvasDOMRect = canvasEl.getBoundingClientRect();
-		canvasEl.width = canvasDOMRect.width;
-		canvasEl.height = canvasDOMRect.height;
+		if (lastWidth === innerWidth) return;
+
+		updateCanvas();
+
+		lastWidth = innerWidth;
 	};
 
 	const drawCanvas = (enteringProgress = 0, leavingProgress = 0) => {
@@ -91,8 +104,9 @@
 	};
 
 	onMount(() => {
+		lastWidth = innerWidth;
 		ctx = canvasEl.getContext('2d');
-		onResize();
+		updateCanvas();
 	});
 
 	export const animateTransition = ({
@@ -182,7 +196,7 @@
 	});
 </script>
 
-<svelte:window on:resize={debounce(onResize)} />
+<svelte:window bind:innerWidth on:resize={debounce(onResize)} />
 
 <div
 	class={cls(

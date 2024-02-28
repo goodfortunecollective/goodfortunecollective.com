@@ -17,6 +17,27 @@
 
 	export let blok: any;
 
+	interface DOMPosition {
+		x: number;
+		y: number;
+	}
+
+	$: videoTransformEffect = 0;
+	$: innerWidth = 0;
+	$: innerHeight = 0;
+
+	$: videoRotation = {
+		x: 0,
+		y: 0
+	} as DOMPosition;
+
+	const mousePosition: DOMPosition = {
+		x: 0,
+		y: 0
+	};
+
+	let lastWidth = 0;
+
 	let ctx: any = null;
 
 	let touchCapability: number = 0;
@@ -41,26 +62,9 @@
 
 	let isReady = false;
 
-	interface DOMPosition {
-		x: number;
-		y: number;
-	}
-
-	$: videoTransformEffect = 0;
-	$: innerWidth = 0;
-	$: innerHeight = 0;
-
-	$: videoRotation = {
-		x: 0,
-		y: 0
-	} as DOMPosition;
-
-	const mousePosition: DOMPosition = {
-		x: 0,
-		y: 0
-	};
-
 	const onResize = () => {
+		if (lastWidth === innerWidth) return;
+
 		if ($lenis?.animatedScroll) {
 			scrollPosition = $lenis.animatedScroll;
 		}
@@ -75,6 +79,8 @@
 		if (ctx) ctx.revert();
 		initAnimation();
 		createAnimation();
+
+		lastWidth = innerWidth;
 	};
 
 	const onMouseMove = (event: MouseEvent) => {
@@ -107,6 +113,8 @@
 	};
 
 	onMount(() => {
+		lastWidth = innerWidth;
+
 		// 0 - no touch (pointer/mouse only)
 		// 1 - touch-only device (like a phone)
 		// 2 - device can accept touch input and mouse/pointer (like Windows tablets)

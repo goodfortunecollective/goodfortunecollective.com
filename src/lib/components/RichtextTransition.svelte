@@ -11,6 +11,9 @@
 	export let style: string = '';
 	export let enabled: boolean = true;
 
+	$: innerWidth = 0;
+	let lastWidth = 0;
+
 	let element: HTMLSpanElement;
 
 	let ctx: any = null;
@@ -18,6 +21,7 @@
 	let text: any = null;
 
 	onMount(() => {
+		lastWidth = innerWidth;
 		initAnimation();
 	});
 
@@ -102,14 +106,18 @@
 	);
 
 	const onResize = () => {
+		if (lastWidth === innerWidth) return;
+
 		if (text) text.revert();
 		if (ctx) ctx.revert();
 		initAnimation();
 		createAnimation();
+
+		lastWidth = innerWidth;
 	};
 </script>
 
-<svelte:window on:resize={debounce(onResize)} />
+<svelte:window bind:innerWidth on:resize={debounce(onResize)} />
 
 <span
 	bind:this={element}

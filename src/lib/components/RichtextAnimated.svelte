@@ -10,11 +10,15 @@
 	export let style: string = '';
 	export let enabled: boolean = true;
 
+	$: innerWidth = 0;
+	let lastWidth = 0;
+
 	let element: HTMLSpanElement;
 	let paragraphs: any = null;
 	let splitTexts: any[] = [];
 
 	onMount(() => {
+		lastWidth = innerWidth;
 		initAnimation();
 	});
 
@@ -103,14 +107,18 @@
 	};
 
 	const onResize = () => {
+		if (lastWidth === innerWidth) return;
+
 		splitTexts?.forEach((text) => text.revert());
 		splitTexts = [];
 		paragraphs = [];
 		initAnimation();
+
+		lastWidth = innerWidth;
 	};
 </script>
 
-<svelte:window on:resize={debounce(onResize)} />
+<svelte:window bind:innerWidth on:resize={debounce(onResize)} />
 
 <span bind:this={element} class={cls('inline-block break-words', clazz)} {style}>
 	<span class="wrap" /><slot />
