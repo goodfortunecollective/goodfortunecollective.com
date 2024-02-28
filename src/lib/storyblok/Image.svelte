@@ -16,7 +16,7 @@
 			alt={blok.asset.name}
 			loading="lazy"
 			class="w-full"
-			animated={blok.animated}
+			animated={!!blok.animated}
 		/>
 	{/if}
 </div>
