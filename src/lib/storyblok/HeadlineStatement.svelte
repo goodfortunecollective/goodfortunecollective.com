@@ -1,14 +1,18 @@
 <script lang="ts">
+	import { onDestroy, onMount } from 'svelte';
 	import { inview } from 'svelte-inview';
 	import { renderRichText, storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
 
 	import { Heading, RichtextTransition } from '$lib/components';
 	import { cls } from '$lib/styles';
-	import { backgroundTheme } from '$lib/stores';
+	import { backgroundTheme, cursorType } from '$lib/stores';
 	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;
+
+	let el!: HTMLElement;
+	let links: NodeListOf<HTMLAnchorElement>;
 
 	const headingStyle = cva('flex-1 leading-tightest lg:leading-tightest duration-1000 ease-out', {
 		variants: {
@@ -54,6 +58,29 @@
 	});
 
 	$: content = renderRichText(blok.content);
+
+	const onEnter = () => {
+		cursorType.set('checkout');
+	};
+
+	const onLeave = () => {
+		cursorType.set('none');
+	};
+
+	onMount(() => {
+		links = el.querySelectorAll('a');
+		links?.forEach((link) => {
+			link.addEventListener('mouseenter', onEnter);
+			link.addEventListener('mouseleave', onLeave);
+		});
+	});
+
+	onDestroy(() => {
+		links?.forEach((link) => {
+			link.removeEventListener('mouseenter', onEnter);
+			link.removeEventListener('mouseleave', onLeave);
+		});
+	});
 </script>
 
 <div
@@ -93,6 +120,7 @@
 				class="col-span-12 col-start-1 mx-4 md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-6 lg:col-start-5 2xl:col-span-4 2xl:col-start-7"
 			>
 				<div
+					bind:this={el}
 					class="max-w-screen-xl text-2xl leading-snug lg:pt-12 xl:text-3xl 4xl:text-5xl"
 					{...$$restProps}
 				>

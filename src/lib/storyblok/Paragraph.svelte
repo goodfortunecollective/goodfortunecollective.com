@@ -10,9 +10,10 @@
 	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;
-	$: content = renderRichText(blok.content);
-	let el!: HTMLElement;
 
+	$: content = renderRichText(blok.content);
+
+	let el!: HTMLElement;
 	let links: NodeListOf<HTMLAnchorElement>;
 
 	const variants = cva(
