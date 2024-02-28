@@ -85,6 +85,7 @@
 
 	.c-animated-underline {
 		position: relative;
+		display: inline-block;
 	}
 
 	.c-animated-underline::after {

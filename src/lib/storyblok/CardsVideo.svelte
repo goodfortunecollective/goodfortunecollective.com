@@ -5,10 +5,13 @@
 
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
-	import { Video } from '$lib/components';
+	import { Video, Image } from '$lib/components';
 	import { inViewColorTransition } from '$lib/utils/animations';
+	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
 
 	export let blok: any;
+
+	$: innerWidth = 0;
 
 	const variants = cva('h-full w-full duration-1000 ease-out', {
 		variants: {
@@ -22,7 +25,7 @@
 		}
 	});
 
-	const containerStyle = cva('relative h-full w-full', {
+	const containerStyle = cva('relative h-full w-full max-w-[100vw] md:max-w-full', {
 		variants: {
 			aspect: {
 				square: 'aspect-square',
@@ -36,6 +39,8 @@
 	});
 </script>
 
+<svelte:window bind:innerWidth />
+
 <div
 	use:storyblokEditable={blok}
 	{...$$restProps}
@@ -46,7 +51,12 @@
 	<div class="flex h-full w-full flex-col">
 		<div class={containerStyle({ aspect: blok.aspect })}>
 			<div class="absolute inset-0">
-				<Video videoUrl={blok.asset} autoplay muted loop animated={false} />
+				{#if (blok.asset !== '' && innerWidth >= 768) || blok.asset_fallback === undefined}
+					<Video videoUrl={blok.asset} autoplay muted loop animated={false} />
+				{/if}
+				{#if blok.asset_fallback?.filename?.length > 0 && innerWidth < 768}
+					<Image src={blok.asset_fallback.filename} alt="" animated={false} />
+				{/if}
 			</div>
 		</div>
 	</div>

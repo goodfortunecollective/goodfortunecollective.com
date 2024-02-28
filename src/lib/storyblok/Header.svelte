@@ -121,12 +121,12 @@
 	{/if}
 
 	<header
-		class="fixed top-0 z-30 grid h-20 w-full grid-cols-24 mix-blend-difference transition-transform ease-in 3xl:h-24"
+		class="fixed top-0 z-30 grid h-20 w-full grid-cols-12 mix-blend-difference transition-transform ease-in md:grid-cols-24 3xl:h-24"
 		class:motion-safe:-translate-y-full={offscreen}
 		bind:clientHeight
 	>
 		<nav
-			class="col-span-20 col-start-3 py-6 lg:col-span-22 lg:col-start-2 lg:py-9 3xl:py-12"
+			class="col-span-12 col-start-1 mx-4 py-6 md:col-span-20 md:col-start-3 md:mx-0 lg:col-span-22 lg:col-start-2 lg:py-9 3xl:py-12"
 			aria-label="Global"
 		>
 			<div class="flex items-center justify-between">

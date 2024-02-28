@@ -44,7 +44,9 @@
 
 <section class="pt-[var(--header-height)]">
 	<div class="mb-8 mt-24 grid grid-cols-12">
-		<div class="col-span-10 col-start-2 lg:col-span-4 lg:col-start-2">
+		<div
+			class="col-span-12 col-start-1 mx-4 md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-4 lg:col-start-2"
+		>
 			<span class="inline-block rotate-180">
 				<Link href="{base}/culture/">&#10229;</Link>
 			</span>
@@ -52,7 +54,10 @@
 	</div>
 	<div class="grid grid-cols-12">
 		{#if data.story}
-			<Heading as="h1" size="h2" class="col-span-10 col-start-2 mb-6 lg:col-span-8 lg:col-start-2"
+			<Heading
+				as="h1"
+				size="h2"
+				class="col-span-12 col-start-1 mx-4 mb-6 md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-8 lg:col-start-2"
 				>{data.story.content.title}</Heading
 			>
 			{#if data.story.content.thumbnail}
@@ -73,7 +78,7 @@
 			<Heading
 				as="h4"
 				size="h6"
-				class="col-span-10 col-start-2 w-full  break-keep uppercase md:col-span-2 md:col-start-2 lg:translate-y-4 xl:w-[75%]"
+				class="col-span-12 col-start-1 mx-4 w-full break-keep uppercase md:col-span-2 md:col-start-2 md:mx-0 lg:translate-y-4 xl:w-[75%]"
 				><strong class="tracking-widest">{getStoryReadTime()} min read</strong></Heading
 			>
 			{#each data.story.content.content as b}

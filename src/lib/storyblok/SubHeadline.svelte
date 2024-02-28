@@ -47,7 +47,7 @@
 	<div class="grid grid-cols-12 gap-8 pb-8 pt-16 lg:gap-0">
 		<div
 			class={cls(
-				'col-span-10 col-start-2 lg:col-start-2  2xl:col-start-3',
+				'col-span-12 col-start-1 mx-4 md:col-span-10 md:col-start-2 md:mx-0 lg:col-start-2  2xl:col-start-3',
 				blok.titleFullWidth ? 'lg:col-span-8 2xl:col-span-6' : 'lg:col-span-4 2xl:col-span-4'
 			)}
 		>
@@ -70,7 +70,7 @@
 			{/if}
 		</div>
 		<div
-			class="col-span-10 col-start-2 md:col-start-6 lg:col-span-5 lg:col-start-6 2xl:col-span-4 2xl:col-start-7"
+			class="col-span-12 col-start-1 mx-4 md:col-start-6 md:mx-0 lg:col-span-5 lg:col-start-6 2xl:col-span-4 2xl:col-start-7"
 		>
 			<div class="flex flex-col gap-8 text-3xl leading-snug">
 				{#each blok.content as b}

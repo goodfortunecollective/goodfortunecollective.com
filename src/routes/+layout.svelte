@@ -107,9 +107,11 @@
 	}
 
 	const onResize = () => {
-		ScrollTrigger.refresh();
+		ScrollTrigger.refresh(true);
 	};
 </script>
+
+<svelte:window on:resize={debounce(onResize)} />
 
 <Body style="--theme-color: {$backgroundColor}" />
 

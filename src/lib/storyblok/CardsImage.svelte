@@ -9,6 +9,7 @@
 	import { backgroundTheme } from '$lib/stores';
 	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
 	import { inViewColorTransition } from '$lib/utils/animations';
+	import { lazyLoad } from '$lib/utils/lazyLoad';
 
 	export let blok: any;
 
@@ -37,7 +38,7 @@
 	});
 </script>
 
-{#if blok.asset.filename?.length > 0}
+{#if blok.asset?.filename?.length > 0}
 	<div
 		use:storyblokEditable={blok}
 		{...$$restProps}
@@ -51,7 +52,7 @@
 			<div class="relative h-full w-full">
 				<div class="absolute inset-0">
 					<img
-						src={`${blok.asset.filename}/m/`}
+						use:lazyLoad={`${blok.asset.filename}/m/`}
 						alt={blok.asset.name}
 						loading="lazy"
 						decoding="async"

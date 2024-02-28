@@ -4,6 +4,8 @@
 	import type { ObserverEventDetails } from 'svelte-inview';
 	import { inview } from 'svelte-inview';
 
+	import { beforeNavigate } from '$app/navigation';
+
 	import { BackgroundTheme } from '$lib/components';
 	import gsap, { SplitText } from '$lib/gsap';
 	import { clamp } from '$lib/utils/maths';
@@ -11,7 +13,7 @@
 	import { cursorType } from '$lib/stores';
 	import { cls } from '$lib/styles';
 	import { lenisStore as lenis } from '$lib/stores/lenis';
-	import { beforeNavigate } from '$app/navigation';
+	import { debounce } from '$lib/utils/debounce';
 
 	export let blok: any;
 
@@ -65,6 +67,14 @@
 		if (video) {
 			videoBBox = video.getBoundingClientRect();
 		}
+
+		splitTexts.forEach((text) => {
+			text.revert();
+		});
+		splitTexts = [];
+		if (ctx) ctx.revert();
+		initAnimation();
+		createAnimation();
 	};
 
 	const onMouseMove = (event: MouseEvent) => {
@@ -110,6 +120,12 @@
 		videoPlayerFullscreen.addEventListener('webkitendfullscreen', hideVideoFullscreen, false);
 		videoPlayerFullscreen.addEventListener('webkitbeginfullscreen', showVideoFullscreen, false);
 
+		initAnimation();
+
+		gsap.ticker.add(onRender);
+	});
+
+	const initAnimation = () => {
 		const splitText = gsap.utils.toArray('[data-gsap="split-text"]');
 
 		splitTexts.push(
@@ -134,13 +150,92 @@
 		});
 
 		gsap.set(videoContainer, { scale: 0 });
+	};
 
-		gsap.ticker.add(onRender);
-	});
+	const createAnimation = () => {
+		ctx = gsap.context(() => {
+			gsap.to(videoContainer, {
+				duration: 1,
+				scale: 1,
+				delay: 0.2,
+				ease: 'circ.out'
+			});
+
+			gsap.timeline({
+				scrollTrigger: {
+					trigger: container,
+					start: '=+25%',
+					end: '=+125%',
+					onUpdate: (self) => {
+						if (self.progress === 0) {
+							cursorType.set('none');
+							isScrollFullVideo = false;
+						}
+					},
+					onEnter: () => {
+						if (isCursorEnter) {
+							cursorType.set('play');
+						}
+
+						isScrollFullVideo = true;
+					},
+					onEnterBack: () => {
+						if (isCursorEnter) {
+							cursorType.set('play');
+						}
+
+						isScrollFullVideo = true;
+					},
+					onLeave: () => {
+						cursorType.set('none');
+						isScrollFullVideo = false;
+					},
+					onLeaveBack: () => {
+						cursorType.set('none');
+						isScrollFullVideo = false;
+					}
+				}
+			});
+
+			gsap.timeline({
+				scrollTrigger: {
+					trigger: container,
+					start: 'center 50%',
+					end: '+=150% bottom',
+					scrub: true,
+					pin: true
+				}
+			});
+
+			const tlSplitText = gsap.timeline({
+				scrollTrigger: {
+					trigger: videoContainer,
+					start: 'center 55%',
+					end: 'center 30%',
+					toggleActions: 'play reverse play reverse' // onEnter onLeave onEnterBack onLeaveBack
+				}
+			});
+			tlSplitText.addLabel('start');
+
+			splitTexts.forEach((text, index) => {
+				gsap.set(text.chars, { opacity: 1 });
+				tlSplitText.to(
+					text.chars,
+					{
+						duration: 0.5,
+						ease: 'circ.out',
+						yPercent: 0,
+						delay: 0.5 + index,
+						stagger: 0.01
+					},
+					'start'
+				);
+			});
+		}, container);
+	};
 
 	useTransitionReady(
 		() => {
-			onResize();
 			$lenis?.on('scroll', onScroll);
 
 			if (!isReady) {
@@ -150,87 +245,11 @@
 				}
 			}
 
-			ctx = gsap.context(() => {
-				gsap.to(videoContainer, {
-					duration: 1,
-					scale: 1,
-					delay: 0.2,
-					ease: 'circ.out'
-				});
-
-				gsap.timeline({
-					scrollTrigger: {
-						trigger: container,
-						start: '=+25%',
-						end: '=+125%',
-						onUpdate: (self) => {
-							if (self.progress === 0) {
-								cursorType.set('none');
-								isScrollFullVideo = false;
-							}
-						},
-						onEnter: () => {
-							if (isCursorEnter) {
-								cursorType.set('play');
-							}
-
-							isScrollFullVideo = true;
-						},
-						onEnterBack: () => {
-							if (isCursorEnter) {
-								cursorType.set('play');
-							}
-
-							isScrollFullVideo = true;
-						},
-						onLeave: () => {
-							cursorType.set('none');
-							isScrollFullVideo = false;
-						},
-						onLeaveBack: () => {
-							cursorType.set('none');
-							isScrollFullVideo = false;
-						}
-					}
-				});
-
-				gsap.timeline({
-					scrollTrigger: {
-						trigger: container,
-						start: 'center 50%',
-						end: '+=150% bottom',
-						scrub: true,
-						pin: true
-					}
-				});
-
-				const tlSplitText = gsap.timeline({
-					scrollTrigger: {
-						trigger: videoContainer,
-						start: 'center 55%',
-						end: 'center 30%',
-						toggleActions: 'play reverse play reverse' // onEnter onLeave onEnterBack onLeaveBack
-					}
-				});
-				tlSplitText.addLabel('start');
-
-				splitTexts.forEach((text, index) => {
-					gsap.set(text.chars, { opacity: 1 });
-					tlSplitText.to(
-						text.chars,
-						{
-							duration: 0.5,
-							ease: 'circ.out',
-							yPercent: 0,
-							delay: 0.5 + index,
-							stagger: 0.01
-						},
-						'start'
-					);
-				});
-			}, container);
+			createAnimation();
 		},
-		() => {}
+		() => {
+			if (ctx) ctx.revert();
+		}
 	);
 
 	function videoPreviewOnEnter() {
@@ -281,6 +300,24 @@
 		}
 	}
 
+	function startVideo() {
+		if (isScrollFullVideo) {
+			videoPlayerPreview.src = blok.video;
+			cursorType.set('pause');
+			videoPlaying = true;
+		}
+	}
+
+	function playPauseVideo() {
+		if (videoPlayerPreview.paused) {
+			videoPlayerPreview.play();
+			cursorType.set('pause');
+		} else {
+			videoPlayerPreview.pause();
+			cursorType.set('play');
+		}
+	}
+
 	const onScroll = (scroll: any) => {
 		if (video?.offsetHeight) {
 			if (scroll.animatedScroll <= video.offsetHeight) {
@@ -300,10 +337,12 @@
 	const inViewPlayer = ({ detail }: CustomEvent<ObserverEventDetails>) => {
 		const { inView } = detail as ObserverEventDetails;
 		if (inView) {
-			if (isReady) {
-				videoPlayerPreview.play();
-			} else {
-				videoPlayerPreview.pause();
+			if (!videoPlaying) {
+				if (isReady) {
+					videoPlayerPreview.play();
+				} else {
+					videoPlayerPreview.pause();
+				}
 			}
 		} else {
 			videoPlayerPreview.pause();
@@ -312,12 +351,17 @@
 	};
 </script>
 
-<svelte:window bind:innerWidth bind:innerHeight on:mousemove={onMouseMove} on:resize={onResize} />
+<svelte:window
+	bind:innerWidth
+	bind:innerHeight
+	on:mousemove={onMouseMove}
+	on:resize={debounce(onResize)}
+/>
 
 <div use:inview on:inview_change={inViewPlayer}>
 	<section use:storyblokEditable={blok} {...$$restProps} class="grid h-screen grid-cols-12">
 		<div
-			class="relative col-span-10 col-start-2 h-full w-full 2xl:col-span-8 2xl:col-start-3"
+			class="relative col-span-12 col-start-1 h-full w-full md:col-span-10 md:col-start-2 2xl:col-span-8 2xl:col-start-3"
 			bind:this={container}
 		>
 			<div class="perspective-800 relative z-[9] h-full w-full" bind:this={videoContainer}>
@@ -354,7 +398,11 @@
 						<video
 							preload="metadata"
 							bind:this={videoPlayerPreview}
-							on:click={playVideoFullscreen}
+							on:click={touchCapability !== 1
+								? videoPlaying
+									? playPauseVideo
+									: startVideo
+								: playVideoFullscreen}
 							on:mouseenter={videoPreviewOnEnter}
 							on:mouseleave={videoPreviewOnLeave}
 							class="aspect-portrait w-full rounded-3xl"
@@ -382,7 +430,7 @@
 			<div
 				class="title-cont pointer-events-none absolute left-0 top-0 flex h-full w-full items-start"
 			>
-				<div class="flex h-full flex-col justify-between py-[15vh]">
+				<div class="mx-4 flex h-full flex-col justify-between py-[15vh] md:mx-0">
 					<h1
 						data-gsap="split-text"
 						class={cls(
@@ -402,7 +450,7 @@
 			</div>
 		</div>
 	</section>
-	<div class="h-[80vh]" />
+	<div class="h-[100vh] md:h-[80vh]" />
 	<BackgroundTheme startColor="#1a1a1a" endColor="#fff" startTheme="dark" endTheme="light" />
 	<div class="h-[20vh]" />
 </div>

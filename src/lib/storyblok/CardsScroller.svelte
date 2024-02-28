@@ -4,11 +4,10 @@
 
 	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
-
 	import gsap from '$lib/gsap';
-	import { useTransitionReady } from '$lib/utils/useTransitionReady.js';
-
 	import { Heading, Spacer } from '$lib/components';
+	import { debounce } from '$lib/utils/debounce';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady.js';
 
 	export let blok: any;
 
@@ -36,40 +35,49 @@
 		}
 	});
 
+	const setupAnimation = () => {
+		ctx = gsap.context(() => {
+			if (!scrollEl || !scrollEl.scrollWidth) return;
+
+			gsap.to(scrollEl, {
+				x: () => {
+					return scrollEl?.scrollWidth ? scrollEl.scrollWidth * -1 : 0;
+				},
+				xPercent: 100,
+				ease: 'none',
+				scrollTrigger: {
+					trigger: scrollEl,
+					start: blok.title?.length > 0 ? 'center 66%' : 'center center',
+					end: () => {
+						if (scrollEl?.scrollWidth && innerWidth) {
+							return `+=${scrollEl.scrollWidth - innerWidth}`;
+						}
+						return 0;
+					},
+					pin: el,
+					scrub: true,
+					invalidateOnRefresh: true
+				}
+			});
+		}, scrollEl);
+	};
+
 	useTransitionReady(
 		() => {
-			ctx = gsap.context(() => {
-				if (!scrollEl || !scrollEl.scrollWidth) return;
-
-				gsap.to(scrollEl, {
-					x: () => {
-						return scrollEl?.scrollWidth ? scrollEl.scrollWidth * -1 : 0;
-					},
-					xPercent: 100,
-					ease: 'none',
-					scrollTrigger: {
-						trigger: scrollEl,
-						start: blok.title?.length > 0 ? 'center 66%' : 'center center',
-						end: () => {
-							if (scrollEl?.scrollWidth && innerWidth) {
-								return `+=${scrollEl.scrollWidth - innerWidth}`;
-							}
-							return 0;
-						},
-						pin: el,
-						scrub: true,
-						invalidateOnRefresh: true
-					}
-				});
-			}, scrollEl);
+			setupAnimation();
 		},
 		() => {
 			ctx?.revert();
 		}
 	);
+
+	const onResize = () => {
+		ctx?.revert();
+		setupAnimation();
+	};
 </script>
 
-<svelte:window bind:innerWidth />
+<svelte:window on:resize={debounce(onResize)} bind:innerWidth />
 
 <div
 	bind:this={el}
@@ -84,7 +92,9 @@
 	<div>
 		{#if blok.title?.length > 0}
 			<div class="fixed grid w-full grid-cols-12">
-				<div class="col-span-10 col-start-2 2xl:col-span-8 2xl:col-start-3">
+				<div
+					class="col-span-12 col-start-1 mx-4 md:col-span-10 md:col-start-2 md:mx-0 2xl:col-span-8 2xl:col-start-3"
+				>
 					<Heading as="h2" animated={true} size="h2" leading="tightest">
 						{blok.title}
 					</Heading>
@@ -94,7 +104,9 @@
 		{/if}
 		<div class={cls('overflow', blok.title?.length > 0 && 'pt-4')}>
 			<div class="grid grid-cols-12" bind:this={scrollEl}>
-				<div class="col-span-10 col-start-2 flex gap-8 2xl:col-span-8 2xl:col-start-3">
+				<div
+					class="col-span-12 col-start-1 mx-4 flex gap-4 md:col-span-10 md:col-start-2 md:mx-0 md:gap-8 2xl:col-span-8 2xl:col-start-3"
+				>
 					{#each blok.content as b, index}
 						<div class={variants({ size: blok.size })}>
 							<StoryblokComponent blok={b} {index} />

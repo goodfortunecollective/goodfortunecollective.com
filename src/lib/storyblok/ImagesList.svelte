@@ -11,6 +11,7 @@
 	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 	import { inViewColorTransition } from '$lib/utils/animations';
+	import { lazyLoad } from '$lib/utils/lazyLoad';
 
 	export let blok: any;
 
@@ -63,7 +64,7 @@
 		{#if blok.asset.filename?.length > 0}
 			<img
 				bind:this={pinEl}
-				src={`${blok.asset.filename}/m/`}
+				use:lazyLoad={`${blok.asset.filename}/m/`}
 				width={getImageDimensionsFromUrl(blok.asset.filename).width}
 				height={getImageDimensionsFromUrl(blok.asset.filename).height}
 				alt={blok.asset.name}
@@ -73,7 +74,10 @@
 				in:fade={{ duration: 500 }}
 			/>
 		{/if}
-		<div class="col-span-10 col-start-2 my-32 lg:col-span-8 lg:col-start-4" bind:this={contentEl}>
+		<div
+			class="col-span-12 col-start-1 mx-4 my-32 md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-8 lg:col-start-4"
+			bind:this={contentEl}
+		>
 			<div class=" flex flex-col gap-64">
 				{#each blok.list as b}
 					<StoryblokComponent blok={b} />

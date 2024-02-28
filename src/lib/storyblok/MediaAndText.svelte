@@ -9,11 +9,12 @@
 	import { Video } from '$lib/components';
 	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
 	import { inViewColorTransition } from '$lib/utils/animations';
+	import { lazyLoad } from '$lib/utils/lazyLoad';
 
 	export let blok: any;
 
 	const variants = cva(
-		'col-span-10 col-start-2 2xl:col-start-3 2xl:col-span-8 flex flex-col gap-16 lg:gap-32 duration-1000 ease-out',
+		'col-span-12 col-start-1 mx-4 flex flex-col gap-16 md:col-span-10 md:col-start-2 md:mx-0 2xl:col-start-3 2xl:col-span-8 lg:gap-32 duration-1000 ease-out',
 		{
 			variants: {
 				layoutDirection: {
@@ -44,7 +45,7 @@
 				<figure>
 					{#if blok.image.filename?.length > 0}
 						<img
-							src={`${blok.image.filename}/m/`}
+							use:lazyLoad={`${blok.image.filename}/m/`}
 							width={getImageDimensionsFromUrl(blok.image.filename).width}
 							height={getImageDimensionsFromUrl(blok.image.filename).height}
 							alt={blok.image.name}

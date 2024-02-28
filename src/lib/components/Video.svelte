@@ -153,7 +153,10 @@
 
 <div class={cls('h-full w-full', clazz)} use:inview on:inview_change={inViewPlayer}>
 	<div class="grid w-full grid-cols-12">
-		<div class="col-span-10 col-start-2" bind:offsetWidth />
+		<div
+			class="col-span-12 col-start-1 mx-4 md:col-span-10 md:col-start-2 md:mx-0"
+			bind:offsetWidth
+		/>
 	</div>
 	<div
 		bind:this={videoContainer}

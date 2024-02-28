@@ -8,6 +8,7 @@
 	import { cls } from '$lib/styles';
 	import { backgroundTheme, cursorType } from '$lib/stores';
 	import { inViewColorTransition } from '$lib/utils/animations';
+	import { lazyLoad } from '$lib/utils/lazyLoad';
 
 	export let blok: any;
 
@@ -55,7 +56,7 @@
 		<div class="relative col-span-10 col-start-4">
 			<div class="absolute left-0 top-0">
 				<div class="-translate-x-14 -translate-y-14 scale-110">
-					<img src={`${base}/assets/GFC-lockup.png`} alt="" class="animate-spin-slow" />
+					<img use:lazyLoad={`${base}/assets/GFC-lockup.png`} alt="" class="animate-spin-slow" />
 				</div>
 			</div>
 			<video
@@ -71,7 +72,9 @@
 				<track kind="captions" />
 			</video>
 		</div>
-		<div class="col-span-10 col-start-2 2xl:col-span-7 2xl:col-start-3">
+		<div
+			class="col-span-12 col-start-1 mx-4 md:col-span-10 md:col-start-2 md:mx-0 2xl:col-span-7 2xl:col-start-3"
+		>
 			<div class="max-w-[600px] translate-y-8 md:-translate-y-44 2xl:max-w-[850px]">
 				<Heading leading="tightest" as="h2" size="h2">
 					{blok.title}<span class="text-white">{blok.highlight}</span>

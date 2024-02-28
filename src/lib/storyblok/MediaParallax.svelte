@@ -13,7 +13,7 @@
 	{...$$restProps}
 	class={cls('relative overflow-hidden', blok.class)}
 >
-	{#if blok.background.filename?.length > 0}
+	{#if blok.background?.filename?.length > 0}
 		<Image
 			src={`${blok.background.filename}/m/`}
 			width={getImageDimensionsFromUrl(blok.background.filename).width}

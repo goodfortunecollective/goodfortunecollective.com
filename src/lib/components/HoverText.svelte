@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 
 	import gsap, { SplitText } from '$lib/gsap';
+	import { debounce } from '$lib/utils/debounce';
 
 	export let label: string;
 
@@ -12,6 +13,10 @@
 	let textChildrenEl: any = null;
 
 	onMount(() => {
+		initAnimation();
+	});
+
+	const initAnimation = () => {
 		textEl = new SplitText(el, {
 			type: 'lines,words,chars',
 			linesClass: 'split-line',
@@ -25,7 +30,7 @@
 		});
 
 		gsap.set(textChildrenEl.chars, { y: el.clientHeight + 4 });
-	});
+	};
 
 	const onEnter = () => {
 		gsap.to(textEl.chars, {
@@ -62,7 +67,15 @@
 			stagger: 0.01
 		});
 	};
+
+	const onResize = () => {
+		if (textEl) textEl.revert();
+		if (textChildrenEl) textChildrenEl.revert();
+		initAnimation();
+	};
 </script>
+
+<svelte:window on:resize={debounce(onResize)} />
 
 <span
 	class="relative inline-block h-full w-full overflow-hidden leading-none"

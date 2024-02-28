@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { fade } from 'svelte/transition';
 	import { storyblokEditable } from '@storyblok/svelte';
+	import { Image } from '$lib/components';
 
 	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
 
@@ -9,14 +9,14 @@
 
 <div use:storyblokEditable={blok} {...$$restProps} class={blok.class}>
 	{#if blok.asset.filename?.length > 0}
-		<img
+		<Image
 			src={`${blok.asset.filename}/m/`}
 			width={getImageDimensionsFromUrl(blok.asset.filename).width}
 			height={getImageDimensionsFromUrl(blok.asset.filename).height}
 			alt={blok.asset.name}
 			loading="lazy"
 			class="w-full"
-			in:fade={{ duration: 500 }}
+			animated={blok.animated}
 		/>
 	{/if}
 </div>

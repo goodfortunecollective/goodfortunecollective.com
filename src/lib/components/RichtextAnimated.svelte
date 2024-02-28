@@ -3,6 +3,7 @@
 
 	import { cls } from '$lib/styles';
 	import gsap, { SplitText } from '$lib/gsap';
+	import { debounce } from '$lib/utils/debounce';
 
 	let clazz: string = '';
 	export { clazz as class };
@@ -14,6 +15,10 @@
 	let splitTexts: any[] = [];
 
 	onMount(() => {
+		initAnimation();
+	});
+
+	const initAnimation = () => {
 		if (!enabled) return;
 
 		paragraphs = element.querySelectorAll('p:not(:empty)');
@@ -31,7 +36,7 @@
 		} else {
 			gsap.set(element, { opacity: 0 });
 		}
-	});
+	};
 
 	export const animateIn = () => {
 		if (!enabled) return;
@@ -96,7 +101,16 @@
 			});
 		}
 	};
+
+	const onResize = () => {
+		splitTexts?.forEach((text) => text.revert());
+		splitTexts = [];
+		paragraphs = [];
+		initAnimation();
+	};
 </script>
+
+<svelte:window on:resize={debounce(onResize)} />
 
 <span bind:this={element} class={cls('inline-block break-words', clazz)} {style}>
 	<span class="wrap" /><slot />

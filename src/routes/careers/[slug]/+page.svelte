@@ -27,7 +27,7 @@
 <section class=" pb-32">
 	<div class="mb-8 mt-24 grid grid-cols-12">
 		<div
-			class="col-span-10 col-start-2 lg:col-span-4 lg:col-start-2 2xl:col-span-3 2xl:col-start-3"
+			class="col-span-12 col-start-1 mx-4 md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-4 lg:col-start-2 2xl:col-span-3 2xl:col-start-3"
 		>
 			<span class="inline-block rotate-180">
 				<Link href="{base}/careers/#jobs">&#10229;</Link>
@@ -39,7 +39,7 @@
 			<Heading
 				as="h1"
 				size="h2"
-				class="col-span-10 col-start-2 mb-8 lg:col-span-4 lg:col-start-2 2xl:col-span-3 2xl:col-start-3"
+				class="col-span-12 col-start-1 mx-4 mb-8 md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-4 lg:col-start-2 2xl:col-span-3 2xl:col-start-3"
 				>{data.story.content.title}</Heading
 			>
 			<div class="col-start-0 col-span-12">

@@ -19,6 +19,10 @@
 	let text: any = null;
 
 	onMount(() => {
+		initAnimation();
+	});
+
+	const initAnimation = () => {
 		if (enabled) {
 			text = new SplitText(element, {
 				type: 'lines,words',
@@ -33,38 +37,42 @@
 			gsap.set(text.words, { yPercent: 200, opacity: 0 });
 			gsap.set(text.lines, { rotateZ: 4 });
 		}
-	});
+	};
+
+	const createAnimation = () => {
+		if (enabled) {
+			ctx = gsap.context(() => {
+				gsap.set(text.words, { opacity: 1 });
+
+				ScrollTrigger.batch(text.words, {
+					start: 'top 90%',
+					end: 'bottom 10%',
+					top: 'top center',
+					toggleActions: 'restart pause resume reverse',
+					onEnter(elements: any, triggers: any) {
+						gsap.to(elements, {
+							duration: 0.4 * speed,
+							ease: 'circ.out',
+							yPercent: 0,
+							stagger: 0.03
+						});
+
+						gsap.to(text.lines, {
+							duration: 0.3 * speed,
+							ease: 'sine.out',
+							rotateZ: 0,
+							stagger: 0.01,
+							delay: 0.1
+						});
+					}
+				});
+			}, element);
+		}
+	};
 
 	useTransitionReady(
 		() => {
-			if (enabled) {
-				ctx = gsap.context(() => {
-					gsap.set(text.words, { opacity: 1 });
-
-					ScrollTrigger.batch(text.words, {
-						start: 'top 90%',
-						end: 'bottom 10%',
-						top: 'top center',
-						toggleActions: 'restart pause resume reverse',
-						onEnter(elements: any, triggers: any) {
-							gsap.to(elements, {
-								duration: 0.4 * speed,
-								ease: 'circ.out',
-								yPercent: 0,
-								stagger: 0.03
-							});
-
-							gsap.to(text.lines, {
-								duration: 0.3 * speed,
-								ease: 'sine.out',
-								rotateZ: 0,
-								stagger: 0.01,
-								delay: 0.1
-							});
-						}
-					});
-				}, element);
-			}
+			createAnimation();
 		},
 		() => {
 			if (ctx) ctx.revert();
@@ -72,7 +80,10 @@
 	);
 
 	const onResize = () => {
-		if (text) text.split();
+		if (text) text.revert();
+		if (ctx) ctx.revert();
+		initAnimation();
+		createAnimation();
 	};
 </script>
 

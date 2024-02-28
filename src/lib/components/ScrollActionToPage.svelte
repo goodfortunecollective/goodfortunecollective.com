@@ -38,6 +38,7 @@
 					trigger: scrollEl,
 					start: 'top bottom',
 					end: 'bottom bottom',
+					invalidateOnRefresh: true,
 					onUpdate: (self: any) => {
 						parallaxEffect = self.progress;
 					},

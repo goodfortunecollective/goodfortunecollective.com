@@ -127,7 +127,7 @@
 					curtains.updateScrollValues(0, 0);
 				}
 
-				ScrollTrigger.refresh();
+				ScrollTrigger.refresh(true);
 
 				isTransitioningIn.set(false);
 
@@ -201,7 +201,9 @@
 		in:fade={{ delay: pageLeaveDuration / 2, duration: pageLeaveDuration / 8 }}
 	>
 		<div class="mx-auto grid -translate-y-1/2 grid-cols-12 pt-16 lg:-translate-y-1/4">
-			<div class="col-span-10 col-start-2 text-white 2xl:col-span-8 2xl:col-start-3">
+			<div
+				class="col-span-12 col-start-1 mx-4 text-white md:col-span-10 md:col-start-2 md:mx-0 2xl:col-span-8 2xl:col-start-3"
+			>
 				<ProjectTitle type="hover" animated={false} inheritTextColor name={list_hover} />
 			</div>
 		</div>
