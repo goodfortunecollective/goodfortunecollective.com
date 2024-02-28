@@ -4,6 +4,7 @@
 
 	import { cls } from '$lib/styles';
 	import { ScrollTrigger } from '$lib/gsap';
+	import { debounce } from '$lib/utils/debounce';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 	import { lazyLoad } from '$lib/utils/lazyLoad';
 
@@ -65,14 +66,16 @@
 	});
 </script>
 
-<svelte:window bind:innerWidth on:resize={setStyleContainer} />
+<svelte:window bind:innerWidth on:resize={debounce(setStyleContainer)} />
 
 <div
 	bind:this={el}
 	class={$$props.class}
-	style={`width: ${$$props.width * (innerWidth / $$props.width)}px; height: ${
-		$$props.height * (innerWidth / $$props.width)
-	}px;`}
+	style={animated
+		? `width: ${$$props.width * (innerWidth / $$props.width)}px; height: ${
+				$$props.height * (innerWidth / $$props.width)
+			}px;`
+		: ''}
 >
 	<div class={cls(containerStyle({ aspect }))}>
 		<img

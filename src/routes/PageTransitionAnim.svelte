@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { beforeNavigate } from '$app/navigation';
+	import { fade } from 'svelte/transition';
 
-	import { lenisStore as lenis } from '$lib/stores/lenis';
+	import { beforeNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 
+	import { lenisStore as lenis } from '$lib/stores/lenis';
 	import gsap, { ScrollTrigger } from '$lib/gsap';
-
 	import { cls } from '$lib/styles';
 	import {
 		isTransitioning,
@@ -15,9 +15,8 @@
 		isTransitioningIn,
 		isTransitioningEnabled
 	} from '$lib/stores';
-
 	import { ProjectTitle } from '$lib/components';
-
+	import { debounce } from '$lib/utils/debounce';
 	import { useCurtains } from '$lib/utils/useCurtains';
 	import type { CurtainsInstance } from '$lib/utils/useCurtains';
 	import {
@@ -25,7 +24,6 @@
 		pageEnterDuration,
 		pageTransitionPauseDuration
 	} from '$lib/utils/page-transitions';
-	import { fade } from 'svelte/transition';
 
 	let curtains: CurtainsInstance;
 	let tl: any;
@@ -184,7 +182,7 @@
 	});
 </script>
 
-<svelte:window on:resize={onResize} />
+<svelte:window on:resize={debounce(onResize)} />
 
 <div
 	class={cls(
