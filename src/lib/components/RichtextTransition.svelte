@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 
 	import { cls } from '$lib/styles';
-	import gsap, { SplitText } from '$lib/gsap';
+	import gsap, { SplitText, ScrollTrigger } from '$lib/gsap';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 	import { debounce } from '$lib/utils/debounce';
 
@@ -64,23 +64,21 @@
 								transformOrigin: '0% 0%'
 							});
 
-							gsap.to(text.lines, {
-								duration: 0.5,
-								ease: 'circ.out',
-								rotation: 0,
-								yPercent: 0,
-								opacity: 1,
-								stagger: 0.06,
-								scrollTrigger: {
-									trigger: text.lines,
-									start: 'top 90%',
-									end: 'bottom 10%',
-									toggleActions: 'restart pause resume reverse',
-
-									markers: true
-								},
-								onComplete() {
-									text.revert();
+							ScrollTrigger.batch(text.lines, {
+								start: 'top 90%',
+								end: 'bottom 10%',
+								top: 'top center',
+								toggleActions: 'restart pause resume reverse',
+								onEnter(elements: any, triggers: any) {
+									gsap.to(elements, {
+										duration: 0.3,
+										ease: 'circ.out',
+										yPercent: 0,
+										rotation: 0,
+										opacity: 1,
+										stagger: 0.06,
+										onComplete: () => {}
+									});
 								}
 							});
 						}
@@ -112,7 +110,7 @@
 	};
 </script>
 
-<svelte:window bind:innerWidth on:resize={debounce(onResize)} />
+<svelte:window bind:innerWidth on:resize={debounce(onResize, 1000)} />
 
 <span
 	bind:this={element}
