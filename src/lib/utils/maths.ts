@@ -1,5 +1,5 @@
-function clamp(min: number, input: number, max: number) {
-	return Math.max(min, Math.min(input, max));
+function clamp(min: number, value: number, max: number) {
+	return Math.max(min, Math.min(max, value));
 }
 
 function mapRange(in_min: number, in_max: number, input: number, out_min: number, out_max: number) {
