@@ -28,7 +28,7 @@ export default {
 				'175': '1.75',
 			},
 			screens: {
-				'base': '800px',
+				'base': '780px',
 				'basexl': '998px',
 				'3xl': '1920px',
 				'4xl': '2160px'
