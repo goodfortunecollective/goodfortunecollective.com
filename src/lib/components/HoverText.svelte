@@ -6,6 +6,9 @@
 
 	export let label: string;
 
+	$: innerWidth = 0;
+	let lastWidth = 0;
+
 	let el!: HTMLElement;
 	let childrenEl!: HTMLElement;
 
@@ -13,6 +16,7 @@
 	let textChildrenEl: any = null;
 
 	onMount(() => {
+		lastWidth = innerWidth;
 		initAnimation();
 	});
 
@@ -69,13 +73,17 @@
 	};
 
 	const onResize = () => {
+		if (lastWidth === innerWidth) return;
+
 		if (textEl) textEl.revert();
 		if (textChildrenEl) textChildrenEl.revert();
 		initAnimation();
+
+		lastWidth = innerWidth;
 	};
 </script>
 
-<svelte:window on:resize={debounce(onResize)} />
+<svelte:window bind:innerWidth on:resize={debounce(onResize)} />
 
 <span
 	class="relative inline-block h-full w-full overflow-hidden leading-none"

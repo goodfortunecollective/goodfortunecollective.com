@@ -17,6 +17,27 @@
 
 	export let blok: any;
 
+	interface DOMPosition {
+		x: number;
+		y: number;
+	}
+
+	$: videoTransformEffect = 0;
+	$: innerWidth = 0;
+	$: innerHeight = 0;
+
+	$: videoRotation = {
+		x: 0,
+		y: 0
+	} as DOMPosition;
+
+	const mousePosition: DOMPosition = {
+		x: 0,
+		y: 0
+	};
+
+	let lastWidth = 0;
+
 	let ctx: any = null;
 
 	let touchCapability: number = 0;
@@ -41,26 +62,9 @@
 
 	let isReady = false;
 
-	interface DOMPosition {
-		x: number;
-		y: number;
-	}
-
-	$: videoTransformEffect = 0;
-	$: innerWidth = 0;
-	$: innerHeight = 0;
-
-	$: videoRotation = {
-		x: 0,
-		y: 0
-	} as DOMPosition;
-
-	const mousePosition: DOMPosition = {
-		x: 0,
-		y: 0
-	};
-
 	const onResize = () => {
+		if (lastWidth === innerWidth) return;
+
 		if ($lenis?.animatedScroll) {
 			scrollPosition = $lenis.animatedScroll;
 		}
@@ -75,6 +79,8 @@
 		if (ctx) ctx.revert();
 		initAnimation();
 		createAnimation();
+
+		lastWidth = innerWidth;
 	};
 
 	const onMouseMove = (event: MouseEvent) => {
@@ -87,8 +93,8 @@
 
 		videoTransformEffect =
 			innerWidth > 768
-				? clamp(scrollPosition / innerHeight, 0, 1)
-				: clamp(scrollPosition / innerHeight, 0.5, 1);
+				? clamp(0, scrollPosition / innerHeight, 1)
+				: clamp(0.5, scrollPosition / innerHeight, 1);
 
 		// bail if translation is almost complete
 		if (videoTransformEffect >= 0.9) {
@@ -98,15 +104,20 @@
 		}
 
 		if (videoBBox) {
-			videoRotation.x =
+			videoRotation.x = clamp(
+				1,
 				(1 - videoTransformEffect) *
-				(-(mousePosition.y - videoBBox.y - videoBBox.height / 2) / 100);
+					(-(mousePosition.y - videoBBox.y - videoBBox.height / 2) / 100),
+				2
+			);
 			videoRotation.y =
 				(1 - videoTransformEffect) * ((mousePosition.x - videoBBox.x - videoBBox.width / 2) / 100);
 		}
 	};
 
 	onMount(() => {
+		lastWidth = innerWidth;
+
 		// 0 - no touch (pointer/mouse only)
 		// 1 - touch-only device (like a phone)
 		// 2 - device can accept touch input and mouse/pointer (like Windows tablets)
@@ -119,6 +130,13 @@
 
 		videoPlayerFullscreen.addEventListener('webkitendfullscreen', hideVideoFullscreen, false);
 		videoPlayerFullscreen.addEventListener('webkitbeginfullscreen', showVideoFullscreen, false);
+
+		if ($lenis?.animatedScroll) {
+			scrollPosition = $lenis.animatedScroll;
+		}
+		if (video) {
+			videoBBox = video.getBoundingClientRect();
+		}
 
 		initAnimation();
 
@@ -395,25 +413,27 @@
 								</div>
 							</button>
 						</div>
-						<video
-							preload="metadata"
-							bind:this={videoPlayerPreview}
-							on:click={touchCapability !== 1
-								? videoPlaying
-									? playPauseVideo
-									: startVideo
-								: playVideoFullscreen}
-							on:mouseenter={videoPreviewOnEnter}
-							on:mouseleave={videoPreviewOnLeave}
-							class="aspect-portrait w-full rounded-3xl"
-							autoplay={true}
-							loop={true}
-							muted={!videoPlaying}
-							playsinline
-							src={innerWidth < 1024 && blok.videoPreviewMobile !== ''
-								? blok.videoPreviewMobile
-								: blok.videoPreview}
-						/>
+						<div class="px-4 md:px-0">
+							<video
+								preload="metadata"
+								bind:this={videoPlayerPreview}
+								on:click={touchCapability !== 1
+									? videoPlaying
+										? playPauseVideo
+										: startVideo
+									: playVideoFullscreen}
+								on:mouseenter={videoPreviewOnEnter}
+								on:mouseleave={videoPreviewOnLeave}
+								class="aspect-portrait w-full rounded-3xl"
+								autoplay={true}
+								loop={true}
+								muted={!videoPlaying}
+								playsinline
+								src={innerWidth < 1024 && blok.videoPreviewMobile !== ''
+									? blok.videoPreviewMobile
+									: blok.videoPreview}
+							/>
+						</div>
 					</div>
 
 					<video

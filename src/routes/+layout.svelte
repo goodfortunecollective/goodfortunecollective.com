@@ -30,6 +30,9 @@
 
 	export let data: LayoutData;
 
+	$: innerWidth = 0;
+	let lastWidth = 0;
+
 	let loaderRef: Loader | null = null;
 	let pageTransitionAnimRef: PageTransitionAnim | null = null;
 
@@ -47,6 +50,8 @@
 	// ScrollTrigger.defaults({ markers: process.env.NODE_ENV === 'development' });
 
 	onMount(() => {
+		lastWidth = innerWidth;
+
 		CustomEase.create('css-ease', 'M0,0 C0.25,0.1 0.25,1 1,1');
 		CustomEase.create('css-ease.in', 'M0,0 C0.42,0 1,1 1,1');
 		CustomEase.create('css-ease.out', 'M0,0 C0,0 0.58,1 1,1');
@@ -107,11 +112,15 @@
 	}
 
 	const onResize = () => {
+		if (lastWidth === innerWidth) return;
+
 		ScrollTrigger.refresh(true);
+
+		lastWidth = innerWidth;
 	};
 </script>
 
-<svelte:window on:resize={debounce(onResize)} />
+<svelte:window bind:innerWidth on:resize={debounce(onResize)} />
 
 <Body style="--theme-color: {$backgroundColor}" />
 

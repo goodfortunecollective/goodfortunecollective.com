@@ -8,14 +8,16 @@
 	import { Heading, Spacer } from '$lib/components';
 	import { debounce } from '$lib/utils/debounce';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady.js';
+	import { onMount } from 'svelte';
 
 	export let blok: any;
+
+	$: innerWidth = 0;
+	let lastWidth = 0;
 
 	let el!: HTMLElement;
 	let scrollEl!: HTMLElement;
 	let ctx: any = null;
-
-	$: innerWidth = 0;
 
 	const variants = cva('', {
 		variants: {
@@ -33,6 +35,10 @@
 			size: 'medium',
 			theme: 'light'
 		}
+	});
+
+	onMount(() => {
+		lastWidth = innerWidth;
 	});
 
 	const setupAnimation = () => {
@@ -72,12 +78,16 @@
 	);
 
 	const onResize = () => {
+		if (lastWidth === innerWidth) return;
+
 		ctx?.revert();
 		setupAnimation();
+
+		lastWidth = innerWidth;
 	};
 </script>
 
-<svelte:window on:resize={debounce(onResize)} bind:innerWidth />
+<svelte:window bind:innerWidth on:resize={debounce(onResize)} />
 
 <div
 	bind:this={el}

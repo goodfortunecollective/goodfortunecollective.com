@@ -11,13 +11,16 @@
 	export let style: string = '';
 	export let enabled: boolean = true;
 
+	$: innerWidth = 0;
+	let lastWidth = 0;
+
 	let element: HTMLSpanElement;
 
 	let ctx: any = null;
 	let paragraphs: any = null;
-	let text: any = null;
 
 	onMount(() => {
+		lastWidth = innerWidth;
 		initAnimation();
 	});
 
@@ -41,33 +44,25 @@
 					paragraphs.forEach((p: any) => {
 						gsap.set(p, { opacity: 1 });
 
-						text = new SplitText(p, {
-							type: 'lines,words',
+						const text = new SplitText(p, {
+							type: 'lines',
 							linesClass: 'split-line'
 						});
 
-						if (text.words.length > 0) {
-							gsap.set(text.words, { yPercent: 200, opacity: 0 });
+						const textParent = new SplitText(p, {
+							type: ['lines'],
+							linesClass: 'c-richtext-transition'
+						});
 
-							ScrollTrigger.batch(text.words, {
-								start: 'top 90%',
-								end: 'bottom 10%',
-								top: 'top center',
-								toggleActions: 'restart pause resume reverse',
-								onEnter(elements: any, triggers: any) {
-									gsap.to(elements, {
-										duration: 0.4,
-										ease: 'circ.out',
-										yPercent: 0,
-										opacity: 1,
-										stagger: 0.005
-									});
-								}
-							});
-						}
+						gsap.set('.c-richtext-transition', { overflow: 'hidden' });
 
 						if (text.lines.length > 0) {
-							gsap.set(text.lines, { skewY: 5 });
+							gsap.set(text.lines, {
+								rotation: 6,
+								yPercent: 20,
+								opacity: 0,
+								transformOrigin: '0% 0%'
+							});
 
 							ScrollTrigger.batch(text.lines, {
 								start: 'top 90%',
@@ -76,10 +71,13 @@
 								toggleActions: 'restart pause resume reverse',
 								onEnter(elements: any, triggers: any) {
 									gsap.to(elements, {
-										duration: 0.4,
+										duration: 0.3,
 										ease: 'circ.out',
-										skewY: 0,
-										stagger: 0.02
+										yPercent: 0,
+										rotation: 0,
+										opacity: 1,
+										stagger: 0.06,
+										onComplete: () => {}
 									});
 								}
 							});
@@ -102,19 +100,22 @@
 	);
 
 	const onResize = () => {
-		if (text) text.revert();
+		if (lastWidth === innerWidth) return;
+
 		if (ctx) ctx.revert();
 		initAnimation();
 		createAnimation();
+
+		lastWidth = innerWidth;
 	};
 </script>
 
-<svelte:window on:resize={debounce(onResize)} />
+<svelte:window bind:innerWidth on:resize={debounce(onResize, 1000)} />
 
 <span
 	bind:this={element}
 	class={cls(
-		'[&_a]:c-animated-underline inline-block break-words [&_p]:duration-1000 [&_p]:ease-out',
+		'[&_a]:c-animated-underline inline-block break-words [&_p]:overflow-hidden [&_p]:duration-1000 [&_p]:ease-out',
 		clazz
 	)}
 	{style}

@@ -143,8 +143,8 @@
 				/>
 			</div>
 			<div class="mx-4 max-w-4xl py-16 md:mx-0 2xl:max-w-6xl 4xl:max-w-8xl">
-				<Heading as="h2" size="h2" leading="tightest" animated={false}>
-					<RichtextTransition>{@html description}</RichtextTransition>
+				<Heading as="h2" size="h2" animated={false}>
+					<RichtextTransition class="[&_p]:leading-[1.1]">{@html description}</RichtextTransition>
 				</Heading>
 			</div>
 		</div>
