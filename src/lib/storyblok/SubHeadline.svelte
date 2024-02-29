@@ -48,7 +48,7 @@
 		<div
 			class={cls(
 				'col-span-12 col-start-1 mx-4 md:col-span-10 md:col-start-2 md:mx-0 lg:col-start-2  2xl:col-start-3',
-				blok.titleFullWidth ? 'lg:col-span-8 2xl:col-span-6' : 'lg:col-span-4 2xl:col-span-4'
+				blok.titleFullWidth ? 'lg:col-span-8 2xl:col-span-7' : 'lg:col-span-4 2xl:col-span-5'
 			)}
 		>
 			<Heading
