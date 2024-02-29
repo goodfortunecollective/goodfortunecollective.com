@@ -143,12 +143,7 @@
 				/>
 			</div>
 			<div class="mx-4 max-w-4xl py-16 md:mx-0 2xl:max-w-6xl 4xl:max-w-8xl">
-				<Heading
-					as="h2"
-					size="h2"
-					animated={false}
-					class="font-degular-display text-5xl lg:text-7xl 3xl:text-8xl 4xl:text-10xl"
-				>
+				<Heading as="h2" size="h2" animated={false}>
 					<RichtextTransition>{@html description}</RichtextTransition>
 				</Heading>
 			</div>
