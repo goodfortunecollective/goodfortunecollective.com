@@ -429,7 +429,7 @@
 								loop={true}
 								muted={!videoPlaying}
 								playsinline
-								src={innerWidth < 1024 && blok.videoPreviewMobile !== ''
+								src={innerWidth < 768 && blok.videoPreviewMobile !== ''
 									? blok.videoPreviewMobile
 									: blok.videoPreview}
 							/>
