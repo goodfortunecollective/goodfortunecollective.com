@@ -121,7 +121,7 @@
 			>
 				<div
 					bind:this={el}
-					class="max-w-screen-xl text-2xl leading-snug lg:pt-12 xl:text-3xl 4xl:text-5xl"
+					class="max-w-screen-xl text-2xl leading-snug lg:pt-12 xl:text-3xl"
 					{...$$restProps}
 				>
 					<RichtextTransition>{@html content}</RichtextTransition>
