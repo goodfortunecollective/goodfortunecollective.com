@@ -8,6 +8,7 @@
 	import { Image } from '$lib/components';
 	import { cursorType } from '$lib/stores';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import { isMobile } from '$lib/utils/browser';
 
 	let clazz: string = '';
 	export { clazz as class };
@@ -180,7 +181,7 @@
 			<video
 				preload="metadata"
 				class={cls(!autoplay && posterUrl && 'absolute z-10', 'h-auto w-full')}
-				src={innerWidth < 768 && videoUrlMobile !== '' ? videoUrlMobile : videoUrl}
+				src={innerWidth < 768 && isMobile() && videoUrlMobile !== '' ? videoUrlMobile : videoUrl}
 				bind:this={videoPlayer}
 				poster=""
 				on:click={playPauseVideo}

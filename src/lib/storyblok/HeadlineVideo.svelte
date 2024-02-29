@@ -14,6 +14,7 @@
 	import { cls } from '$lib/styles';
 	import { lenisStore as lenis } from '$lib/stores/lenis';
 	import { debounce } from '$lib/utils/debounce';
+	import { isMobile } from '$lib/utils/browser';
 
 	export let blok: any;
 
@@ -429,7 +430,7 @@
 								loop={true}
 								muted={!videoPlaying}
 								playsinline
-								src={innerWidth < 768 && blok.videoPreviewMobile !== ''
+								src={innerWidth < 768 && isMobile() && blok.videoPreviewMobile !== ''
 									? blok.videoPreviewMobile
 									: blok.videoPreview}
 							/>
