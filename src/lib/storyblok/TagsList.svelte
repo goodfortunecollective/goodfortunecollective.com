@@ -87,7 +87,7 @@
 										<StoryblokComponent blok={b} />
 									</Heading>
 									<span
-										class="inline-block font-degular-display text-6xl 3xl:text-8xl 4xl:text-9xl"
+										class="inline-block font-degular-display text-6xl xl:text-8xl 3xl:text-9xl 4xl:text-10xl"
 									>
 										*
 									</span>
