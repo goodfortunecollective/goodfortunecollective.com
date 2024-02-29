@@ -31,6 +31,8 @@
 			>
 		{/if}
 
-		<RichtextTransition class="w-full">{@html content}</RichtextTransition>
+		<RichtextTransition class="w-full max-w-screen-xl text-2xl leading-snug xl:text-3xl">
+			{@html content}
+		</RichtextTransition>
 	</dd>
 </div>
