@@ -15,19 +15,19 @@
 	use:inview
 	on:inview_change={inViewColorTransition}
 	class={cls(
-		'w-[20rem] rounded-2xl bg-neutral-950 duration-1000 ease-out md:w-[26rem] 2xl:w-[28rem] ',
+		'h-96 w-[20rem] rounded-2xl bg-neutral-950 duration-1000 ease-out md:h-128 md:w-[26rem] 2xl:w-[28rem]',
 		blok.class
 	)}
 >
-	<div class="flex flex-col p-8 pb-8 2xl:pb-12">
-		<div class="relative aspect-video w-full">
+	<div class="relative flex h-full w-full flex-col p-8 pb-8">
+		<div class="relative w-full">
 			<div class="absolute inset-0 text-red-100">
 				<NumberedListItem index={$$restProps.index} />
 			</div>
 			{#if blok.video}
 				<video
 					preload="metadata"
-					class=" h-full w-full"
+					class="h-full w-full"
 					autoplay={true}
 					loop={true}
 					muted={true}
@@ -36,11 +36,8 @@
 				/>
 			{/if}
 		</div>
-		<div class="relative pb-16">
-			<span
-				class="absolute -bottom-4 align-bottom text-3xl text-white lg:text-4xl 2xl:text-5xl 4xl:text-6xl"
-				>{blok.title}</span
-			>
-		</div>
+		<span class="absolute bottom-8 pr-8 align-bottom text-3xl text-white lg:text-4xl 2xl:text-5xl"
+			>{blok.title}</span
+		>
 	</div>
 </div>
