@@ -70,7 +70,7 @@
 			{/if}
 		</div>
 		<div
-			class="col-span-12 col-start-1 mx-4 md:col-start-6 md:mx-0 lg:col-span-6 lg:col-start-5 2xl:col-span-5 2xl:col-start-6"
+			class="col-span-12 col-start-1 mx-4 md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-6 lg:col-start-5 2xl:col-span-5 2xl:col-start-6"
 		>
 			<div class="flex flex-col gap-8 text-3xl leading-snug">
 				{#each blok.content as b}
