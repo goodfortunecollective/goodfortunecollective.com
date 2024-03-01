@@ -236,7 +236,7 @@
 			<div
 				class={cls(
 					'mt-8 lg:pl-0',
-					layout === 'right' && 'pl-8 md:pl-0 md:pr-8',
+					layout === 'right' && 'pl-8 md:pl-0',
 					layout === 'left' && 'pl-8'
 				)}
 			>

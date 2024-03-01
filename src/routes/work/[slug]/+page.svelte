@@ -149,7 +149,7 @@
 			</div>
 		</div>
 		{#if data.story.content.strategy_text}
-			<div class="col-span-12 grid w-full grid-cols-12 py-16">
+			<div class="col-span-12 grid w-full grid-cols-12 pt-16">
 				<Heading
 					as="h4"
 					size="h6"
@@ -163,7 +163,19 @@
 				</RichtextTransition>
 			</div>
 		{/if}
-
+		{#if data.story.content.ask}
+			<div class="col-span-12 grid w-full grid-cols-12 py-16">
+				<ul
+					class="col-span-12 col-start-1 mx-4 text-[#dcf945] md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-6 lg:col-start-5 2xl:col-span-5 2xl:col-start-6 [&>*:not(:last-child)]:after:ml-2 [&>*:not(:last-child)]:after:content-['•']"
+				>
+					{#each data.story.content.ask as item}
+						<li class="mr-2 inline-block text-base xl:text-xl 4xl:text-2xl">
+							{item}
+						</li>
+					{/each}
+				</ul>
+			</div>
+		{/if}
 		{#if data.story.content.solution_text}
 			<div class="col-span-12 grid w-full grid-cols-12 pt-16">
 				<Heading
@@ -179,21 +191,8 @@
 				</RichtextTransition>
 			</div>
 		{/if}
-		{#if data.story.content.ask}
-			<div class="col-span-12 grid w-full grid-cols-12 pb-0 pt-16">
-				<ul
-					class="col-span-12 col-start-1 mx-4 text-[#dcf945] md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-6 lg:col-start-5 2xl:col-span-5 2xl:col-start-6 [&>*:not(:last-child)]:after:ml-2 [&>*:not(:last-child)]:after:content-['•']"
-				>
-					{#each data.story.content.ask as item}
-						<li class="mr-2 inline-block text-base xl:text-xl 4xl:text-2xl">
-							{item}
-						</li>
-					{/each}
-				</ul>
-			</div>
-		{/if}
 		{#if data.story.content.output}
-			<div class="col-span-12 grid w-full grid-cols-12 pt-8">
+			<div class="col-span-12 grid w-full grid-cols-12 py-16">
 				<ul
 					class="col-span-12 col-start-1 mx-4 text-[#dcf945] md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-6 lg:col-start-5 2xl:col-span-5 2xl:col-start-6 [&>*:not(:last-child)]:after:ml-2 [&>*:not(:last-child)]:after:content-['•']"
 				>

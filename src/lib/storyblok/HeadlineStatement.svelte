@@ -117,7 +117,7 @@
 		{/if}
 		{#if content}
 			<div
-				class="col-span-12 col-start-1 mx-4 md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-6 lg:col-start-5 2xl:col-span-4 2xl:col-start-7"
+				class="col-span-12 col-start-1 mx-4 md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-6 lg:col-start-6 2xl:col-span-5 2xl:col-start-6"
 			>
 				<div
 					bind:this={el}

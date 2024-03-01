@@ -7,7 +7,7 @@
 	import { backgroundTheme } from '$lib/stores';
 	import { Video, Image } from '$lib/components';
 	import { inViewColorTransition } from '$lib/utils/animations';
-	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
+	import { isMobile } from '$lib/utils/browser';
 
 	export let blok: any;
 
@@ -25,7 +25,7 @@
 		}
 	});
 
-	const containerStyle = cva('relative h-full w-full max-w-[100vw] md:max-w-full', {
+	const containerStyle = cva('relative h-full w-full', {
 		variants: {
 			aspect: {
 				square: 'aspect-square',
@@ -54,7 +54,7 @@
 				{#if (blok.asset !== '' && innerWidth >= 768) || blok.asset_fallback === undefined}
 					<Video videoUrl={blok.asset} autoplay muted loop animated={false} />
 				{/if}
-				{#if blok.asset_fallback?.filename?.length > 0 && innerWidth < 768}
+				{#if blok.asset_fallback?.filename?.length > 0 && innerWidth < 768 && isMobile()}
 					<Image src={blok.asset_fallback.filename} alt="" animated={false} />
 				{/if}
 			</div>

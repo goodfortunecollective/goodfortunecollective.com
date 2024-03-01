@@ -27,6 +27,18 @@
 		}
 	});
 
+	const contentStyle = cva('col-span-12 col-start-1 mx-4 text-lg  md:mx-0 ', {
+		variants: {
+			content_extended: {
+				true: 'md:col-span-6 md:col-start-6 2xl:col-span-6 2xl:col-start-6',
+				false: 'md:col-span-5 md:col-start-7 2xl:col-span-4 2xl:col-start-7'
+			}
+		},
+		defaultVariants: {
+			content_extended: false
+		}
+	});
+
 	const textStyle = cva('duration-1000 ease-out', {
 		variants: {
 			theme: {
@@ -80,9 +92,7 @@
 				headingStyle({ theme: $backgroundTheme, textAlign: blok.heading_leftAlign })
 			)}>{blok.heading}</Heading
 		>
-		<div
-			class="col-span-12 col-start-1 mx-4 text-lg md:col-span-5 md:col-start-7 md:mx-0 2xl:col-span-4 2xl:col-start-7"
-		>
+		<div class={cls(contentStyle({ content_extended: blok.content_extended }))}>
 			<div
 				use:inview
 				on:inview_change={inViewColorTransition}
