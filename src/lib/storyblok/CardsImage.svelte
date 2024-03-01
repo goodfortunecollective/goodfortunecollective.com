@@ -56,11 +56,17 @@
 						alt={blok.asset.name}
 						loading="lazy"
 						decoding="async"
-						class="h-full w-full object-cover"
-						in:fade={{ duration: 500 }}
+						class={cls('c-cards-image', 'h-full w-full object-cover')}
 					/>
 				</div>
 			</div>
 		</div>
 	</div>
 {/if}
+
+<style lang="scss">
+	.c-cards-image {
+		opacity: 0;
+		transition: opacity 0.6s ease-in-out;
+	}
+</style>
