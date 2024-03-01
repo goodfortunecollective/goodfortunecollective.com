@@ -75,7 +75,9 @@
 		<div
 			class="col-span-12 col-start-1 mx-4 md:col-span-10 md:col-start-2 md:mx-0 2xl:col-span-7 2xl:col-start-3"
 		>
-			<div class="max-w-[600px] translate-y-8 md:-translate-y-44 2xl:max-w-[850px]">
+			<div
+				class="max-w-[400px] translate-y-20 lg:max-w-[650px] lg:-translate-y-24 2xl:-translate-y-32"
+			>
 				<Heading leading="tightest" as="h2" size="h2">
 					{blok.title}<span class="text-white">{blok.highlight}</span>
 				</Heading>
@@ -86,7 +88,7 @@
 					size="h2"
 					as="h4"
 					underline
-					class="translate-y-8 text-rose-50 underline md:-translate-y-44"
+					class="translate-y-20 text-rose-50 underline lg:-translate-y-24 2xl:-translate-y-32"
 				>
 					{blok.label}
 				</Heading>
