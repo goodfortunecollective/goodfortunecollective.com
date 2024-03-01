@@ -25,7 +25,7 @@
 		}
 	});
 
-	const containerStyle = cva('relative h-full w-full max-w-[100vw] md:max-w-full', {
+	const containerStyle = cva('relative h-full w-full', {
 		variants: {
 			aspect: {
 				square: 'aspect-square',
