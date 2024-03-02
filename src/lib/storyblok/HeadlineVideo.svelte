@@ -387,11 +387,13 @@
 				<div
 					bind:this={video}
 					class={cls(
-						'preserve-3d absolute mt-[20vh] h-full w-full transform-gpu md:mt-[7vh]',
+						'preserve-3d absolute mt-[10vh] h-full w-full transform-gpu md:mt-[7vh]',
 						'sb-headline-video__container',
 						videoTransformEffect >= 0.99 && 'cursor-pointer'
 					)}
-					style="--video-effect: {videoTransformEffect}; --rotation-x: {videoRotation.x}deg; --rotation-y: {videoRotation.y}deg"
+					style="--video-effect-start: {innerWidth < 768 && isMobile()
+						? 0.15
+						: 0.3}; --video-effect: {videoTransformEffect}; --rotation-x: {videoRotation.x}deg; --rotation-y: {videoRotation.y}deg"
 				>
 					<div class="relative h-full w-full">
 						<div
@@ -471,7 +473,7 @@
 			</div>
 		</div>
 	</section>
-	<div class="h-[100vh] md:h-[80vh]" />
+	<div class="h-[80vh]" />
 	<BackgroundTheme startColor="#1a1a1a" endColor="#fff" startTheme="dark" endTheme="light" />
 	<div class="h-[20vh]" />
 </div>
@@ -482,13 +484,12 @@
 			// prettier-ignore
 			transform:
 				scale3d(
-					calc(0.3 + var(--video-effect) * 0.7),
-					calc(0.3 + var(--video-effect) * 0.7),
+					calc(var(--video-effect-start) + var(--video-effect) * 0.7),
+					calc(var(--video-effect-start) + var(--video-effect) * 0.7),
 					1
 				)
 				rotateX(var(--rotation-x))
 				rotateY(var(--rotation-y));
-			// opacity: calc(0.5 + var(--video-effect) * 2);
 		}
 		&__title {
 			-webkit-text-stroke: 1px white;
