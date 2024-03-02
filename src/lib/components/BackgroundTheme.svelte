@@ -20,13 +20,10 @@
 	onMount(() => {
 		if (preload) {
 			document.body.style.transitionProperty = 'none';
-			setTimeout(
-				() => {
-					backgroundTheme.set(endTheme);
-					backgroundColor.set(endColor);
-				},
-				pageTransitionPauseDuration / 2 + 250
-			);
+			setTimeout(() => {
+				backgroundTheme.set(endTheme);
+				backgroundColor.set(endColor);
+			}, pageTransitionPauseDuration / 2);
 		}
 	});
 
