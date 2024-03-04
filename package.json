@@ -44,6 +44,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@storyblok/js": "^3.0.7",
 		"@storyblok/svelte": "^4.0.0",
 		"@studio-freight/lenis": "^1.0.33",
 		"@types/curtainsjs": "^8.1.3",
