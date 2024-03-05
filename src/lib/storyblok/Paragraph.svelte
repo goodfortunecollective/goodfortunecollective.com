@@ -16,7 +16,7 @@
 	let el!: HTMLElement;
 	let links: NodeListOf<HTMLAnchorElement>;
 
-	const variants = cva('flex w-full text-xl xl:text-2xl duration-1000 ease-out 4xl:text-4xl', {
+	const variants = cva('flex w-full text-xl xl:text-2xl duration-1000 ease-out', {
 		variants: {
 			theme: {
 				light: '',
