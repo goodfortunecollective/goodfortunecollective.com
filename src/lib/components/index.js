@@ -18,3 +18,4 @@ export { default as ScrollPlane } from './ScrollPlane.svelte';
 export { default as Spacer } from './Spacer.svelte';
 export { default as TextTransition } from './TextTransition.svelte';
 export { default as Video } from './Video.svelte';
+export { default as VideoModal } from './VideoModal.svelte';
