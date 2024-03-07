@@ -3,6 +3,7 @@
 	import { onMount, setContext } from 'svelte';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 	import { Body } from 'svelte-body';
+	import Modal from 'svelte-simple-modal';
 
 	import { afterNavigate, disableScrollHandling } from '$app/navigation';
 	import { browser } from '$app/environment';
@@ -130,7 +131,19 @@
 
 <main class="overflow-hidden">
 	<PageTransition pathname={data.pathname}>
-		<slot key={data.pathname} />
+		<Modal
+			closeButton={false}
+			styleBg={{ background: 'rgba(0, 0, 0, 0.8)', zIndex: 9999 }}
+			classBg="fixed top-0 left-0 w-screen h-screen flex flex-col justify-center"
+			classWindowWrap="relative m-2 max-h-full"
+			classWindow="!bg-transparent relative w-40 max-w-full max-h-full my-2 mx-auto text-orange-200 rounded shadow-md bg-indigo-900"
+			classContent="relative p-2 overflow-auto"
+			on:closed={() => {
+				ScrollTrigger.refresh(true);
+			}}
+		>
+			<slot key={data.pathname} />
+		</Modal>
 		{#if data.settings}
 			<StoryblokComponent blok={getComponentByName(data.settings.content, 'footer')} />
 		{/if}

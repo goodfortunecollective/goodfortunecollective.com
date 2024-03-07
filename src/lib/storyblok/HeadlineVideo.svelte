@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, getContext } from 'svelte';
 	import { storyblokEditable } from '@storyblok/svelte';
 	import type { ObserverEventDetails } from 'svelte-inview';
 	import { inview } from 'svelte-inview';
 
 	import { beforeNavigate } from '$app/navigation';
 
-	import { BackgroundTheme } from '$lib/components';
+	import { BackgroundTheme, VideoModal } from '$lib/components';
 	import gsap, { SplitText } from '$lib/gsap';
 	import { clamp } from '$lib/utils/maths';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
@@ -17,6 +17,8 @@
 	import { isMobile } from '$lib/utils/browser';
 
 	export let blok: any;
+
+	const { open } = getContext('simple-modal');
 
 	interface DOMPosition {
 		x: number;
@@ -49,7 +51,6 @@
 	let videoPlayerFullscreen!: HTMLVideoElement;
 	let container!: HTMLElement;
 
-	let isFullscreen = false;
 	let videoPlaying = blok.autoplay;
 
 	// avoid division by 0
@@ -128,9 +129,6 @@
 				: 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
 					? 2
 					: 0;
-
-		videoPlayerFullscreen.addEventListener('webkitendfullscreen', hideVideoFullscreen, false);
-		videoPlayerFullscreen.addEventListener('webkitbeginfullscreen', showVideoFullscreen, false);
 
 		if ($lenis?.animatedScroll) {
 			scrollPosition = $lenis.animatedScroll;
@@ -282,41 +280,9 @@
 		isCursorEnter = false;
 		cursorType.set('none');
 	}
-
-	function toggleVideoFullscreen(event: any) {
-		if (
-			document.fullScreenElement ||
-			document.webkitIsFullScreen == true ||
-			document.mozFullScreen ||
-			document.msFullscreenElement
-		) {
-			showVideoFullscreen();
-		} else {
-			hideVideoFullscreen();
-		}
-	}
-
-	function showVideoFullscreen() {
-		videoPlayerPreview.pause();
-		isFullscreen = true;
-		videoPlayerFullscreen.pause();
-		videoPlayerFullscreen.currentTime = 0;
-		videoPlayerFullscreen.play();
-	}
-
-	function hideVideoFullscreen() {
-		isFullscreen = false;
-		videoPlayerFullscreen.pause();
-		videoPlayerPreview.play();
-	}
 	function playVideoFullscreen() {
-		if (videoPlayerFullscreen.requestFullscreen) {
-			videoPlayerFullscreen.requestFullscreen();
-			videoPlayerFullscreen.play();
-		} else if (videoPlayerFullscreen.webkitEnterFullScreen) {
-			videoPlayerFullscreen.webkitEnterFullScreen();
-			videoPlayerFullscreen.play();
-		}
+		videoPlayerPreview.pause();
+		open(VideoModal, { src: blok.video });
 	}
 
 	function startVideo() {
@@ -348,9 +314,6 @@
 	beforeNavigate(() => {
 		gsap.ticker.remove(onRender);
 		$lenis?.off('scroll', onScroll);
-
-		videoPlayerFullscreen.removeEventListener('webkitendfullscreen', hideVideoFullscreen);
-		videoPlayerFullscreen.removeEventListener('webkitbeginfullscreen', showVideoFullscreen);
 	});
 
 	const inViewPlayer = ({ detail }: CustomEvent<ObserverEventDetails>) => {
@@ -438,15 +401,6 @@
 							/>
 						</div>
 					</div>
-
-					<video
-						on:fullscreenchange={toggleVideoFullscreen}
-						preload="metadata"
-						bind:this={videoPlayerFullscreen}
-						class={cls(!isFullscreen && 'hidden')}
-						autoplay={false}
-						src={blok.video}
-					/>
 				</div>
 			</div>
 
