@@ -3,8 +3,20 @@
 
 	import { PUBLIC_GOOGLE_MEASUREMENT_ID } from '$env/static/public';
 
+	const content = `
+		window.dataLayer = window.dataLayer || [];
+		function gtag() {
+		dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
+		gtag('config', '${PUBLIC_GOOGLE_MEASUREMENT_ID}');
+	`;
+
 	$: {
+		// @ts-expect-error - gtag is defined in script tag
 		if (typeof gtag !== 'undefined') {
+			// @ts-expect-error - gtag is defined in script tag
+			// eslint-disable-next-line no-undef
 			gtag('config', `${PUBLIC_GOOGLE_MEASUREMENT_ID}`, {
 				page_title: document.title,
 				page_path: $page.url.pathname
@@ -14,16 +26,13 @@
 </script>
 
 <svelte:head>
-	<script async src={`https://www.googletagmanager.com/gtag/js?id=${PUBLIC_GOOGLE_MEASUREMENT_ID}`}>
-	</script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-
-		function gtag() {
-			dataLayer.push(arguments);
-		}
-
-		gtag('js', new Date());
-		gtag('config', `MEASUREMENT_ID`);
-	</script>
+	{#if PUBLIC_GOOGLE_MEASUREMENT_ID}
+		<script
+			async
+			src="https://www.googletagmanager.com/gtag/js?id={PUBLIC_GOOGLE_MEASUREMENT_ID}"
+		></script>
+		<svelte:element this="script">
+			{content}
+		</svelte:element>
+	{/if}
 </svelte:head>
