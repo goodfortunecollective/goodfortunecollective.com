@@ -24,7 +24,8 @@
 			size: {
 				small: 'h-48 md:h-64 2xl:h-72 4xl:h-80' /* 256px */,
 				medium: 'h-72 md:h-96 2xl:h-112 4xl:h-128' /* 384px */,
-				large: 'h-96 md:h-128 2xl:h-160 4xl:h-224' /* 512px */
+				large: 'h-96 md:h-128 2xl:h-160 4xl:h-224' /* 512px */,
+				'extra-large': 'h-128 md:h-160 2xl:h-224 4xl:h-256'
 			},
 			theme: {
 				light: '',
