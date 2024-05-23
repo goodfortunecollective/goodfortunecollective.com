@@ -15,7 +15,7 @@
 		variants: {
 			size: {
 				h1: 'font-degular-display text-stone-450',
-				h2: 'font-degular-display text-5xl lg:text-7xl 3xl:text-8xl 4xl:text-10xl',
+				h2: 'font-degular-display text-5xl lg:text-7xl 3xl:text-8xl',
 				h3: 'text-3xl md:text-4xl 3xl:text-5xl 4xl:text-6xl font-degular-display',
 				h4: 'text-3xl 3xl:text-4xl 4xl:text-5xl font-bold',
 				h5: 'text-2xl 3xl:text-3xl 4xl:text-4xl font-bold',
