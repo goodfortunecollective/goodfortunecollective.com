@@ -1,12 +1,15 @@
 <script lang="ts">
 	import { inview } from 'svelte-inview';
-	import { storyblokEditable } from '@storyblok/svelte';
+	import { renderRichText, storyblokEditable } from '@storyblok/svelte';
 
-	import { NumberedListItem } from '$lib/components';
 	import { cls } from '$lib/styles';
 	import { inViewColorTransition } from '$lib/utils/animations';
 
+	import { NumberedListItem, RichtextTransition } from '$lib/components';
+
 	export let blok: any;
+
+	$: content = renderRichText(blok.content);
 </script>
 
 <div
@@ -15,7 +18,7 @@
 	use:inview
 	on:inview_change={inViewColorTransition}
 	class={cls(
-		'h-96 w-[20rem] rounded-2xl bg-neutral-950 duration-1000 ease-out md:h-128 md:w-[26rem] 2xl:w-[28rem]',
+		'h-full w-[20rem] rounded-2xl bg-neutral-950 duration-1000 ease-out md:w-[26rem] 2xl:w-[28rem]',
 		blok.class
 	)}
 >
@@ -36,8 +39,10 @@
 				/>
 			{/if}
 		</div>
-		<span class="absolute bottom-8 pr-8 align-bottom text-3xl text-white lg:text-4xl 2xl:text-5xl"
-			>{blok.title}</span
+		<RichtextTransition
+			class="absolute bottom-8 pr-8 align-bottom  text-white [&_h3]:text-3xl [&_h3]:lg:text-4xl [&_h3]:2xl:text-5xl [&_p]:my-4 [&_p]:text-xl [&_p]:leading-snug [&_p]:xl:text-2xl [&_p]:4xl:text-4xl"
 		>
+			{@html content}
+		</RichtextTransition>
 	</div>
 </div>
