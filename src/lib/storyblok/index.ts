@@ -43,6 +43,7 @@ import SubHeadline from './SubHeadline.svelte';
 import TagsList from './TagsList.svelte';
 import Text from './Text.svelte';
 import TwoCols from './TwoCols.svelte';
+import Typeform from './Typeform.svelte';
 import Video from './Video.svelte';
 
 export const components: any = {
@@ -92,6 +93,7 @@ export const components: any = {
 	'text': Text,
 	'tags-list': TagsList,
 	'two-cols': TwoCols,
+	'typeform': Typeform,
 	'video': Video,
 };
 

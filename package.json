@@ -47,6 +47,7 @@
 		"@storyblok/js": "^3.0.7",
 		"@storyblok/svelte": "^4.0.0",
 		"@studio-freight/lenis": "^1.0.33",
+		"@typeform/embed": "^4.10.0",
 		"@types/curtainsjs": "^8.1.3",
 		"clsx": "^2.1.0",
 		"gsap": "file:gsap-bonus.tgz",

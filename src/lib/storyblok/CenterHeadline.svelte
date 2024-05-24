@@ -23,6 +23,18 @@
 			theme: 'light'
 		}
 	});
+
+	const variantsChildren = cva('', {
+		variants: {
+			gap: {
+				small: 'mt-4',
+				base: ' mt-16'
+			}
+		},
+		defaultVariants: {
+			gap: 'base'
+		}
+	});
 </script>
 
 <div
@@ -45,7 +57,10 @@
 		</RichtextTransition>
 	</div>
 	<div
-		class="col-span-12 col-start-1 mx-4 mt-16 flex flex-col flex-wrap items-center justify-center gap-16 md:col-span-10 md:col-start-2 md:mx-0 lg:flex-row lg:gap-32 2xl:col-span-8 2xl:col-start-3"
+		class={cls(
+			'col-span-12 col-start-1 mx-4 flex flex-col flex-wrap items-center justify-center gap-16 md:col-span-10 md:col-start-2 md:mx-0 lg:flex-row lg:gap-32 2xl:col-span-8 2xl:col-start-3',
+			variantsChildren({ gap: blok.gap })
+		)}
 	>
 		{#each blok.children as b}
 			<StoryblokComponent blok={b} />
