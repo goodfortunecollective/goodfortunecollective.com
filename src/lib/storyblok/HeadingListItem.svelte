@@ -14,7 +14,7 @@
 	>
 		<NumberedListItem index={$$restProps.index} divider />
 	</div>
-	<dt class="md:col-span-6 md:col-start-4 lg:col-span-6 lg:col-start-4">
+	<dt class="col-span-12 col-start-4 md:col-span-6">
 		<span class="font-bold uppercase 3xl:text-2xl 4xl:text-3xl">
 			<TextTransition>{blok.label}</TextTransition>
 		</span>
