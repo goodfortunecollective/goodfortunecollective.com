@@ -19,7 +19,8 @@ export async function load({ parent, url }) {
 
 	return {
 		story: dataStory.data.story,
-		projects: projects.data.stories,
+		projects: projects.data.stories.filter((project:any) => !project.full_slug.includes('projects/archive/')),
+		archive: projects.data.stories.filter((project:any) => project.full_slug.includes('projects/archive/')),
 		categories: categories
 	};
 }
