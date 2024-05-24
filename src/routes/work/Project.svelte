@@ -42,7 +42,6 @@
 	});
 
 	onMount(() => {
-		console.log(data.story);
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}

@@ -11,8 +11,8 @@
 	import { lenisStore as lenis } from '$lib/stores/lenis';
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
-	import { ProjectListItem } from '$lib/components';
-	import { project_list_hover, isTransitioningEnabled } from '$lib/stores';
+	import { Heading, ProjectListItem } from '$lib/components';
+	import { heading_hover_media, isTransitioningEnabled } from '$lib/stores';
 	import { useCurtains } from '$lib/utils/useCurtains';
 
 	import MenuList from './MenuList.svelte';
@@ -142,7 +142,7 @@
 	<StoryblokComponent blok={data.story.content} />
 {/if}
 
-<section class="relative pb-16 pt-8 3xl:pb-16 3xl:pt-8" bind:this={el}>
+<section class="relative pt-8" bind:this={el}>
 	<div class="relative hidden xl:block">
 		{#if activeFilter}
 			<MenuList class="fixed right-4 top-32 z-10 flex flex-col items-end gap-4 pr-8 pt-8">
@@ -187,5 +187,42 @@
 				/>
 			</div>
 		{/each}
+	</div>
+</section>
+
+<!-- Archive -->
+<section class="mb-16 grid grid-cols-12">
+	<div
+		class="col-span-12 col-start-1 mx-4 md:col-span-10 md:col-start-2 md:mx-0 2xl:col-span-8 2xl:col-start-3"
+	>
+		<ul class="m-auto flex-col items-center">
+			{#each data.archive as { name, slug, content }, index (name)}
+				<li
+					on:mouseenter={() => {
+						console.log('content.thumbnail.filename', content.thumbnail.filename);
+						heading_hover_media.set(content.thumbnail.filename);
+					}}
+					on:mouseleave={() => {
+						heading_hover_media.set(null);
+					}}
+					class="h-auto w-full border-b border-gray-500 last:border-0 lg:h-20 2xl:h-32"
+					id={`${slug}`}
+				>
+					<a
+						href={`${base}/work/archive/${slug}`}
+						class="align-center block h-full py-4 text-left lg:flex lg:flex-row 2xl:py-8"
+					>
+						<Heading size="h3" as="h3" class="w-full lg:w-2/3">{name}</Heading>
+						<Heading
+							size="h6"
+							as="h3"
+							class="flex w-full items-center font-bold uppercase tracking-widest text-white lg:w-1/3"
+						>
+							<small>{content.brand}</small>
+						</Heading>
+					</a>
+				</li>
+			{/each}
+		</ul>
 	</div>
 </section>
