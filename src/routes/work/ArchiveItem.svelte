@@ -19,15 +19,15 @@
 	on:mouseleave={() => {
 		heading_hover_media.set(null);
 	}}
-	class="h-auto w-full border-b border-gray-500 last:border-0"
+	class="grid h-auto w-full grid-cols-12 hover:bg-slate-700/25 [&_a]:last:border-0"
 	id={`${slug}`}
 >
 	<a
 		href={`${base}/work/archive/${slug}`}
-		class="align-center block h-full py-3 text-left hover:no-underline lg:flex lg:flex-row 2xl:py-6"
+		class=" align-center col-span-12 col-start-1 mx-4 block h-full border-b border-gray-500 py-3 text-left hover:no-underline md:col-span-10 md:col-start-2 md:mx-0 lg:flex lg:flex-row 2xl:py-6"
 	>
 		<span class="flex w-full flex-col lg:w-2/3">
-			<Heading size="h3" as="h3" class="w-full" underline>{name}</Heading>
+			<Heading size="h3" as="h3" class="w-full">{name}</Heading>
 			{#if description && description.length > 0}
 				<span class="mt-1 inline-block w-full text-base text-white xl:text-xl 4xl:text-2xl">
 					{@html description}
