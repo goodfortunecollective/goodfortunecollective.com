@@ -17,7 +17,6 @@
 
 	import MenuList from './MenuList.svelte';
 	import MenuItem from './MenuItem.svelte';
-	import ArchiveList from './ArchiveList.svelte';
 	import ArchiveItem from './ArchiveItem.svelte';
 
 	let activeFilter = false;
@@ -194,9 +193,7 @@
 
 <!-- Archive -->
 <section class="mb-16">
-	<ArchiveList>
-		{#each data.archive as { name, slug, content }, index (name)}
-			<ArchiveItem {name} {slug} {content} />
-		{/each}
-	</ArchiveList>
+	{#each data.archive as { name, slug, content }, index (name)}
+		<ArchiveItem {name} {slug} {content} />
+	{/each}
 </section>
