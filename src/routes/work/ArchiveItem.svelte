@@ -19,7 +19,7 @@
 	on:mouseleave={() => {
 		heading_hover_media.set(null);
 	}}
-	class="grid h-auto w-full grid-cols-12 hover:bg-slate-700/25 [&_a]:last:border-0"
+	class="grid h-auto w-full grid-cols-12 bg-gradient-to-r from-transparent to-transparent hover:from-transparent hover:via-slate-700/25 hover:to-transparent [&_a]:last:border-0"
 	id={`${slug}`}
 >
 	<a
