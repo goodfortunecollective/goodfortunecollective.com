@@ -19,12 +19,15 @@
 	on:mouseleave={() => {
 		heading_hover_media.set(null);
 	}}
-	class="grid h-auto w-full grid-cols-12 bg-gradient-to-r from-transparent to-transparent hover:from-transparent hover:via-slate-700/25 hover:to-transparent [&_a]:last:border-0"
+	class="animate-gradient-x t relative grid h-auto w-full grid-cols-12 [&_a]:last:border-0"
 	id={`${slug}`}
 >
+	<div
+		class="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent to-transparent opacity-0 transition duration-500 ease-in-out hover:from-transparent hover:via-slate-700/25 hover:to-transparent hover:opacity-70"
+	/>
 	<a
 		href={`${base}/work/archive/${slug}`}
-		class=" align-center col-span-12 col-start-1 mx-4 block h-full border-b border-gray-500 py-3 text-left hover:no-underline md:col-span-10 md:col-start-2 md:mx-0 lg:flex lg:flex-row 2xl:py-6"
+		class=" align-center col-span-12 col-start-1 mx-4 block h-full border-b border-gray-500 py-12 text-left hover:no-underline md:col-span-10 md:col-start-2 md:mx-0 lg:flex lg:flex-row 2xl:py-6"
 	>
 		<span class="flex w-full flex-col lg:w-2/3">
 			<Heading size="h3" as="h3" class="w-full">{name}</Heading>
