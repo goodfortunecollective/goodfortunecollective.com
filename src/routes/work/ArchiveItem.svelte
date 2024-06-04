@@ -23,7 +23,7 @@
 	id={`${slug}`}
 >
 	<div
-		class="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent to-transparent opacity-0 transition duration-500 ease-in-out hover:from-transparent hover:via-slate-700/25 hover:to-transparent hover:opacity-70"
+		class="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-slate-700/25 to-transparent opacity-0 transition-opacity duration-500 ease-in hover:opacity-100"
 	/>
 	<a
 		href={`${base}/work/archive/${slug}`}
