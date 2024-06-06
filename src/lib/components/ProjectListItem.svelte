@@ -10,7 +10,7 @@
 	import { browser } from '$app/environment';
 	import { base } from '$app/paths';
 	import { cls } from '$lib/styles';
-	import { ScrollPlane, Heading, RichtextAnimated, Parallax } from '$lib/components';
+	import { ScrollPlane, Video, Heading, RichtextAnimated, Parallax } from '$lib/components';
 	import { project_list_hover, isTransitioning } from '$lib/stores';
 	import gsap from '$lib/gsap';
 	import { cursorType } from '$lib/stores';
@@ -21,6 +21,8 @@
 	export let layout: 'left' | 'right' = 'left';
 	export let theme: 'light' | 'dark' = 'light';
 	export let parallaxSpeed: number = 1;
+
+	$: innerWidth = 0;
 
 	$: description = renderRichText(content.description);
 
@@ -190,6 +192,8 @@
 	});
 </script>
 
+<svelte:window bind:innerWidth />
+
 <div class={cls('pointer-events-none mb-24 lg:mb-0', $$props.class)} bind:this={el}>
 	<Parallax
 		speed={parallaxSpeed}
@@ -228,7 +232,13 @@
 					)}
 				>
 					{#if isActive}
-						<ScrollPlane {content} {name} />
+						{#if content.thumbnail_video && innerWidth >= 768}
+							<div class="absolute inset-0 overflow-hidden">
+								<Video videoUrl={content.thumbnail_video} autoplay muted loop animated={false} />
+							</div>
+						{:else}
+							<ScrollPlane {content} {name} />
+						{/if}
 					{/if}
 				</div>
 			</div>
