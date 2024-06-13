@@ -1,14 +1,13 @@
 <script lang="ts">
 	import Lenis from '@studio-freight/lenis';
 	import { onMount, setContext } from 'svelte';
-	import { VERSION } from 'svelte/compiler';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 	import { Body } from 'svelte-body';
 	import Modal from 'svelte-simple-modal';
 	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
 
 	import { afterNavigate, disableScrollHandling } from '$app/navigation';
-	import { browser } from '$app/environment';
+	import { browser, version } from '$app/environment';
 	import { isIntroDone, backgroundColor, isTransitioningEnabled } from '$lib/stores';
 	import gsap, { ScrollTrigger, CustomEase } from '$lib/gsap';
 
@@ -87,7 +86,7 @@
 
 		const logVersion = () => {
 			console.log(
-				`%cGood Fortune Collective %cV${VERSION}`,
+				`%cGood Fortune Collective %cV${version}`,
 				'color: #fff; background-color: #1a1a1a; font-size: 16px; padding: 4px; border-radius: 4px 0 0 4px;',
 				'color: #1a1a1a; background-color: #fff; font-size: 10px; padding: 2px; border-radius: 0 4px 4px 0;'
 			);
