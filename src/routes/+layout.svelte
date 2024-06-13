@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Lenis from '@studio-freight/lenis';
 	import { onMount, setContext } from 'svelte';
+	import { VERSION } from 'svelte/compiler';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 	import { Body } from 'svelte-body';
 	import Modal from 'svelte-simple-modal';
@@ -83,6 +84,16 @@
 		});
 
 		gsap.ticker.lagSmoothing(0);
+
+		const logVersion = () => {
+			console.log(
+				`%cGood Fortune Collective %cV${VERSION}`,
+				'color: #fff; background-color: #1a1a1a; font-size: 16px; padding: 4px; border-radius: 4px 0 0 4px;',
+				'color: #1a1a1a; background-color: #fff; font-size: 10px; padding: 2px; border-radius: 0 4px 4px 0;'
+			);
+		};
+
+		logVersion();
 
 		return () => {
 			$lenis?.destroy();
