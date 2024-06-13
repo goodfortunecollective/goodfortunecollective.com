@@ -4,6 +4,7 @@
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 	import { Body } from 'svelte-body';
 	import Modal from 'svelte-simple-modal';
+	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
 
 	import { afterNavigate, disableScrollHandling } from '$app/navigation';
 	import { browser } from '$app/environment';
@@ -28,6 +29,8 @@
 	import Cursor from './Cursor.svelte';
 
 	import '../app.css';
+
+	injectSpeedInsights();
 
 	export let data: LayoutData;
 
