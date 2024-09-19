@@ -25,7 +25,7 @@
 		}
 	});
 
-	const containerStyle = cva('relative h-full w-full', {
+	const containerStyle = cva('relative h-full w-full overflow-hidden', {
 		variants: {
 			aspect: {
 				square: 'aspect-square',
@@ -50,7 +50,7 @@
 >
 	<div class="flex h-full w-full flex-col">
 		<div class={containerStyle({ aspect: blok.aspect })}>
-			<div class="absolute inset-0">
+			<div class="absolute inset-x-0 bottom-0">
 				{#if (blok.asset !== '' && innerWidth >= 768) || blok.asset_fallback === undefined}
 					<Video videoUrl={blok.asset} autoplay muted loop animated={false} />
 				{/if}
