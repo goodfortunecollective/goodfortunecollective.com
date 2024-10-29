@@ -123,7 +123,7 @@
 									class="block px-3 py-8 font-degular-display text-6xl leading-7 text-white"
 									in:fly={{ x: -48, duration: 500, delay: 300 + 50 * blok.navigation.length }}
 									out:fly={{ x: -48, duration: 500, delay: 300 - 50 * blok.navigation.length }}
-									on:click={closeMobileMenu}>Shop &#8599;</a
+									on:click={closeMobileMenu}>Shop</a
 								>
 							{/if}
 						</div>
@@ -219,7 +219,7 @@
 								on:inview_change={inViewColorTransition}
 								class={cls('block text-stone-450  duration-200 hover:text-white')}
 							>
-								<HoverText label="Shop &#8599;" />
+								<HoverText label="Shop" />
 							</span>
 						</a>
 					{/if}
