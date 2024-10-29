@@ -116,6 +116,16 @@
 									on:click={closeMobileMenu}>{name}</a
 								>
 							{/each}
+							{#if blok.shop && blok.shop.url !== ''}<a
+									href={blok.shop.url}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="block px-3 py-8 font-degular-display text-6xl leading-7 text-white"
+									in:fly={{ x: -48, duration: 500, delay: 300 + 50 * blok.navigation.length }}
+									out:fly={{ x: -48, duration: 500, delay: 300 - 50 * blok.navigation.length }}
+									on:click={closeMobileMenu}>Shop &#8599;</a
+								>
+							{/if}
 						</div>
 					</div>
 				</div>
@@ -196,6 +206,23 @@
 							</span>
 						</a>
 					{/each}
+					{#if blok.shop && blok.shop.url !== ''}
+						<a
+							href={blok.shop.url}
+							target="_blank"
+							rel="noopener noreferrer"
+							class={cls('text-base leading-6 3xl:text-lg', 'c-animated-underline')}
+						>
+							<span
+								data-gsap="nav-items"
+								use:inview
+								on:inview_change={inViewColorTransition}
+								class={cls('block text-stone-450  duration-200 hover:text-white')}
+							>
+								<HoverText label="Shop &#8599;" />
+							</span>
+						</a>
+					{/if}
 				</div>
 			</div>
 		</nav>
