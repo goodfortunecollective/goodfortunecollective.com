@@ -14,7 +14,7 @@
 	export let blok: any;
 
 	const variants = cva(
-		'col-span-12 col-start-1 mx-4 flex flex-col gap-16 md:col-span-10 md:col-start-2 md:mx-0 2xl:col-start-3 2xl:col-span-8 lg:gap-32 duration-1000 ease-out',
+		'col-span-12 col-start-1 mx-4 flex flex-col gap-16 md:col-span-10 md:col-start-2 md:mx-0 4xl:col-start-3 4xl:col-span-8 lg:gap-32 duration-1000 ease-out',
 		{
 			variants: {
 				layoutDirection: {
