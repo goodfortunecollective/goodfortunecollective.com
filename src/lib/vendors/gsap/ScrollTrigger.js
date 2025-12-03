@@ -1,10 +1,9 @@
 /*!
- * ScrollTrigger 3.12.4
+ * ScrollTrigger 3.13.0
  * https://gsap.com
  *
- * @license Copyright 2008-2023, GreenSock. All rights reserved.
- * Subject to the terms at https://gsap.com/standard-license or for
- * Club GSAP members, the agreement issued with that membership.
+ * @license Copyright 2008-2025, GreenSock. All rights reserved.
+ * Subject to the terms at https://gsap.com/standard-license
  * @author: Jack Doyle, jack@greensock.com
 */
 /* eslint-disable */
@@ -207,9 +206,9 @@ let gsap, _coreInitted, _win, _doc, _docEl, _body, _root, _resizeDelay, _toArray
 		_baseScreenWidth = _win.innerWidth;
 		_baseScreenHeight = _win.innerHeight;
 	},
-	_onResize = () => {
+	_onResize = (force) => {
 		_scrollers.cache++;
-		!_refreshing && !_ignoreResize && !_doc.fullscreenElement && !_doc.webkitFullscreenElement && (!_ignoreMobileResize || _baseScreenWidth !== _win.innerWidth || Math.abs(_win.innerHeight - _baseScreenHeight) > _win.innerHeight * 0.25) && _resizeDelay.restart(true);
+		(force === true || (!_refreshing && !_ignoreResize && !_doc.fullscreenElement && !_doc.webkitFullscreenElement && (!_ignoreMobileResize || _baseScreenWidth !== _win.innerWidth || Math.abs(_win.innerHeight - _baseScreenHeight) > _win.innerHeight * 0.25))) && _resizeDelay.restart(true);
 	}, // ignore resizes triggered by refresh()
 	_listeners = {},
 	_emptyArray = [],
@@ -262,6 +261,9 @@ let gsap, _coreInitted, _win, _doc, _docEl, _body, _root, _resizeDelay, _toArray
 	},
 	_hideAllMarkers = hide => _toArray(".gsap-marker-start, .gsap-marker-end, .gsap-marker-scroller-start, .gsap-marker-scroller-end").forEach(el => el.style.display = hide ? "none" : "block"),
 	_refreshAll = (force, skipRevert) => {
+		_docEl = _doc.documentElement; // some frameworks like Astro may cache the <body> and replace it during routing, so we'll just re-record the _docEl and _body for safety (otherwise, the markers may not get added properly).
+		_body = _doc.body;
+		_root = [_win, _doc, _docEl, _body];
 		if (_lastScrollTime && !force && !_isReverted) {
 			_addListener(ScrollTrigger, "scrollEnd", _softRefresh);
 			return;
@@ -534,8 +536,8 @@ let gsap, _coreInitted, _win, _doc, _docEl, _body, _root, _resizeDelay, _toArray
 				onInterrupt && onInterrupt();
 			}
 			last2 = last1;
-			last1 = value;
-			return value;
+			last1 = Math.round(value);
+			return last1;
 		};
 	},
 	_shiftMarker = (marker, direction, value) => {
@@ -562,11 +564,12 @@ let gsap, _coreInitted, _win, _doc, _docEl, _body, _root, _resizeDelay, _toArray
 				let checkForInterruption = _interruptionTracker(getScroll, initialValue, () => {
 					tween.kill();
 					getTween.tween = 0;
-				})
+				});
 				change2 = (change1 && change2) || 0; // if change1 is 0, we set that to the difference and ignore change2. Otherwise, there would be a compound effect.
 				change1 = change1 || (scrollTo - initialValue);
 				tween && tween.kill();
 				vars[prop] = scrollTo;
+				vars.inherit = false;
 				vars.modifiers = modifiers;
 				modifiers[prop] = () => checkForInterruption(initialValue + change1 * tween.ratio + change2 * tween.ratio * tween.ratio);
 				vars.onUpdate = () => {
@@ -653,7 +656,7 @@ export class ScrollTrigger {
 				scrubTween && scrubTween.progress(1).kill();
 				scrubTween = 0;
 			} else {
-				scrubTween ? scrubTween.duration(value) : (scrubTween = gsap.to(animation, {ease: "expo", totalProgress: "+=0", duration: scrubSmooth, paused: true, onComplete: () => onScrubComplete && onScrubComplete(self)}));
+				scrubTween ? scrubTween.duration(value) : (scrubTween = gsap.to(animation, {ease: "expo", totalProgress: "+=0", inherit: false, duration: scrubSmooth, paused: true, onComplete: () => onScrubComplete && onScrubComplete(self)}));
 			}
 		};
 		if (animation) {
@@ -686,9 +689,11 @@ export class ScrollTrigger {
 						velocity = refreshedRecently ? 0 : ((totalProgress - snap2) / (_getTime() - _time2) * 1000) || 0,
 						change1 = gsap.utils.clamp(-progress, 1 - progress, _abs(velocity / 2) * velocity / 0.185),
 						naturalEnd = progress + (snap.inertia === false ? 0 : change1),
-						endValue = _clamp(0, 1, snapFunc(naturalEnd, self)),
-						endScroll = Math.round(start + endValue * change),
+						endValue, endScroll,
 						{ onStart, onInterrupt, onComplete } = snap;
+					endValue = snapFunc(naturalEnd, self);
+					_isNumber(endValue) || (endValue = naturalEnd); // in case the function didn't return a number, fall back to using the naturalEnd
+					endScroll = Math.max(0, Math.round(start + endValue * change));
 					if (scroll <= end && scroll >= start && endScroll !== scroll) {
 						if (tween && !tween._initted && tween.data <= _abs(endScroll - scroll)) { // there's an overlapping snap! So we must figure out which one is closer and let that tween live.
 							return;
@@ -701,10 +706,12 @@ export class ScrollTrigger {
 							ease: snap.ease || "power3",
 							data: _abs(endScroll - scroll), // record the distance so that if another snap tween occurs (conflict) we can prioritize the closest snap.
 							onInterrupt: () => snapDelayedCall.restart(true) && onInterrupt && onInterrupt(self),
-							onComplete: () => {
+							onComplete() {
 								self.update();
 								lastSnap = scrollFunc();
-								scrubTween && animation && animation.progress(endValue); // the resolution of the scrollbar is limited, so we should correct the scrubbed animation's playhead at the end to match EXACTLY where it was supposed to snap
+								if (animation && !isToggle) { // the resolution of the scrollbar is limited, so we should correct the scrubbed animation's playhead at the end to match EXACTLY where it was supposed to snap
+									scrubTween ? scrubTween.resetTo("totalProgress", endValue, animation._tTime / animation._tDur) : animation.progress(endValue);
+								}
 								snap1 = snap2 = animation && !isToggle ? animation.totalProgress() : self.progress;
 								onSnapComplete && onSnapComplete(self);
 								onComplete && onComplete(self);
@@ -826,13 +833,18 @@ export class ScrollTrigger {
 				tweenTo.tween = 0;
 			}
 			scrubTween && scrubTween.pause();
-			invalidateOnRefresh && animation && animation.revert({kill: false}).invalidate();
+
+			if (invalidateOnRefresh && animation) {
+				animation.revert({kill: false}).invalidate();
+				animation.getChildren && animation.getChildren(true, true, false).forEach(t => t.vars.immediateRender && t.render(0, true, true)); // any from() or fromTo() tweens inside a timeline should render immediately (well, unless they have immediateRender: false)
+			}
+
 			self.isReverted || self.revert(true, true);
 			self._subPinOffset = false; // we'll set this to true in the sub-pins if we find any
 			let size = getScrollerSize(),
 				scrollerBounds = getScrollerOffsets(),
 				max = containerAnimation ? containerAnimation.duration() : _maxScroll(scroller, direction),
-				isFirstRefresh = change <= 0.01,
+				isFirstRefresh = change <= 0.01 || !change,
 				offset = 0,
 				otherPinOffset = pinOffset || 0,
 				parsedEnd = _isObject(position) ? position.end : vars.end,
@@ -846,7 +858,7 @@ export class ScrollTrigger {
 				markerStartOffset = gsap.getProperty(markerStartTrigger, direction.p);
 				markerEndOffset = gsap.getProperty(markerEndTrigger, direction.p);
 			}
-			while (i--) { // user might try to pin the same element more than once, so we must find any prior triggers with the same pin, revert them, and determine how long they're pinning so that we can offset things appropriately. Make sure we revert from last to first so that things "rewind" properly.
+			while (i-- > 0) { // user might try to pin the same element more than once, so we must find any prior triggers with the same pin, revert them, and determine how long they're pinning so that we can offset things appropriately. Make sure we revert from last to first so that things "rewind" properly.
 				curTrigger = _triggers[i];
 				curTrigger.end || curTrigger.refresh(0, 1) || (_refreshing = self); // if it's a timeline-based trigger that hasn't been fully initialized yet because it's waiting for 1 tick, just force the refresh() here, otherwise if it contains a pin that's supposed to affect other ScrollTriggers further down the page, they won't be adjusted properly.
 				curPin = curTrigger.pin;
@@ -944,6 +956,9 @@ export class ScrollTrigger {
 						});
 					}
 					useFixedPosition && scrollFunc(prevScroll);
+				} else {
+					i = _getSize(pin, direction);
+					i && spacer.style.flexBasis !== "auto" && (spacer.style.flexBasis = i + _px);
 				}
 				if (useFixedPosition) {
 					override = {
@@ -1005,8 +1020,8 @@ export class ScrollTrigger {
 			}
 			_refreshing = 0;
 			animation && isToggle && (animation._initted || prevAnimProgress) && animation.progress() !== prevAnimProgress && animation.progress(prevAnimProgress || 0, true).render(animation.time(), true, true); // must force a re-render because if saveStyles() was used on the target(s), the styles could have been wiped out during the refresh().
-			if (isFirstRefresh || prevProgress !== self.progress || containerAnimation) { // ensures that the direction is set properly (when refreshing, progress is set back to 0 initially, then back again to wherever it needs to be) and that callbacks are triggered.
-				animation && !isToggle && animation.totalProgress(containerAnimation && start < -0.001 && !prevProgress ? gsap.utils.normalize(start, end, 0) : prevProgress, true); // to avoid issues where animation callbacks like onStart aren't triggered.
+			if (isFirstRefresh || prevProgress !== self.progress || containerAnimation || invalidateOnRefresh || (animation && !animation._initted)) { // ensures that the direction is set properly (when refreshing, progress is set back to 0 initially, then back again to wherever it needs to be) and that callbacks are triggered.
+				animation && !isToggle && (animation._initted || prevProgress || animation.vars.immediateRender !== false) && animation.totalProgress(containerAnimation && start < -0.001 && !prevProgress ? gsap.utils.normalize(start, end, 0) : prevProgress, true); // to avoid issues where animation callbacks like onStart aren't triggered.
 				self.progress = isFirstRefresh || ((scroll1 - start) / change === prevProgress) ? 0 : prevProgress;
 			}
 			pin && pinSpacing && (spacer._pinOffset = Math.round(self.progress * pinChange));
@@ -1066,7 +1081,13 @@ export class ScrollTrigger {
 				}
 			}
 			// anticipate the pinning a few ticks ahead of time based on velocity to avoid a visual glitch due to the fact that most browsers do scrolling on a separate thread (not synced with requestAnimationFrame).
-			(anticipatePin && !clipped && pin && !_refreshing && !_startup && _lastScrollTime && start < scroll + ((scroll - scroll2) / (_getTime() - _time2)) * anticipatePin) && (clipped = 0.0001);
+			if (anticipatePin && pin && !_refreshing && !_startup && _lastScrollTime) {
+				if (!clipped && start < scroll + ((scroll - scroll2) / (_getTime() - _time2)) * anticipatePin) {
+					clipped = 0.0001;
+				} else if (clipped === 1 && end > scroll + ((scroll - scroll2) / (_getTime() - _time2)) * anticipatePin) {
+					clipped = 0.9999;
+				}
+			}
 			if (clipped !== prevProgress && self.enabled) {
 				isActive = self.isActive = !!clipped && clipped < 1;
 				wasActive = !!prevProgress && prevProgress < 1;
@@ -1260,6 +1281,7 @@ export class ScrollTrigger {
 			let updateFunc = self.update; // some browsers may fire a scroll event BEFORE a tick elapses and/or the DOMContentLoaded fires. So there's a chance update() will be called BEFORE a refresh() has happened on a Timeline-attached ScrollTrigger which means the start/end won't be calculated yet. We don't want to add conditional logic inside the update() method (like check to see if end is defined and if not, force a refresh()) because that's a function that gets hit a LOT (performance). So we swap out the real update() method for this one that'll re-attach it the first time it gets called and of course forces a refresh().
 			self.update = () => {
 				self.update = updateFunc;
+				_scrollers.cache++; // otherwise a cached scroll position may get used in the refresh() in a very rare scenario, like if ScrollTriggers are created inside a DOMContentLoaded event and the queued requestAnimationFrame() fires beforehand. See https://gsap.com/community/forums/topic/41267-scrolltrigger-breaks-on-refresh-when-using-domcontentloaded/
 				start || end || self.refresh();
 			};
 			gsap.delayedCall(0.01, self.update);
@@ -1319,7 +1341,7 @@ export class ScrollTrigger {
 			_context = gsap.core.context || _passThrough;
 			_suppressOverwrites = gsap.core.suppressOverwrites || _passThrough;
 			_scrollRestoration = _win.history.scrollRestoration || "auto";
-			_lastScroll = _win.pageYOffset;
+			_lastScroll = _win.pageYOffset || 0;
 			gsap.core.globals("ScrollTrigger", ScrollTrigger); // must register the global manually because in Internet Explorer, functions (classes) don't have a "name" property.
 			if (_body) {
 				_enabled = 1;
@@ -1332,6 +1354,7 @@ export class ScrollTrigger {
 				// isTouch is 0 if no touch, 1 if ONLY touch, and 2 if it can accommodate touch but also other types like mouse/pointer.
 				ScrollTrigger.isTouch = Observer.isTouch;
 				_fixIOSBug = Observer.isTouch && /(iPad|iPhone|iPod|Mac)/g.test(navigator.userAgent); // since 2017, iOS has had a bug that causes event.clientX/Y to be inaccurate when a scroll occurs, thus we must alternate ignoring every other touchmove event to work around it. See https://bugs.webkit.org/show_bug.cgi?id=181954 and https://codepen.io/GreenSock/pen/ExbrPNa/087cef197dc35445a0951e8935c41503
+				_ignoreMobileResize = Observer.isTouch === 1;
 				_addListener(_win, "wheel", _onScroll); // mostly for 3rd party smooth scrolling libraries.
 				_root = [_win, _doc, _docEl, _body];
 				if (gsap.matchMedia) {
@@ -1349,7 +1372,7 @@ export class ScrollTrigger {
 						_refreshAll(0, 1);
 						_dispatch("matchMedia");
 					});
-					gsap.matchMedia("(orientation: portrait)", () => { // when orientation changes, we should take new base measurements for the ignoreMobileResize feature.
+					gsap.matchMedia().add("(orientation: portrait)", () => { // when orientation changes, we should take new base measurements for the ignoreMobileResize feature.
 						_setBaseDimensions();
 						return _setBaseDimensions;
 					});
@@ -1358,7 +1381,8 @@ export class ScrollTrigger {
 				}
 				_setBaseDimensions();
 				_addListener(_doc, "scroll", _onScroll); // some browsers (like Chrome), the window stops dispatching scroll events on the window if you scroll really fast, but it's consistent on the document!
-				let bodyStyle = _body.style,
+				let bodyHasStyle = _body.hasAttribute("style"),
+					bodyStyle = _body.style,
 					border = bodyStyle.borderTopStyle,
 					AnimationProto = gsap.core.Animation.prototype,
 					bounds, i;
@@ -1368,6 +1392,10 @@ export class ScrollTrigger {
 				_vertical.m = Math.round(bounds.top + _vertical.sc()) || 0; // accommodate the offset of the <body> caused by margins and/or padding
 				_horizontal.m = Math.round(bounds.left + _horizontal.sc()) || 0;
 				border ? (bodyStyle.borderTopStyle = border) : bodyStyle.removeProperty("border-top-style");
+				if (!bodyHasStyle) { // SSR frameworks like Next.js complain if this attribute gets added.
+					_body.setAttribute("style", ""); // it's not enough to just removeAttribute() - we must first set it to empty, otherwise Next.js complains.
+					_body.removeAttribute("style");
+				}
 				// TODO: (?) maybe move to leveraging the velocity mechanism in Observer and skip intervals.
 				_syncInterval = setInterval(_sync, 250);
 				gsap.delayedCall(0.5, () => _startup = 0);
@@ -1451,7 +1479,7 @@ export class ScrollTrigger {
 
 }
 
-ScrollTrigger.version = "3.12.4";
+ScrollTrigger.version = "3.13.0";
 ScrollTrigger.saveStyles = targets => targets ? _toArray(targets).forEach(target => { // saved styles are recorded in a consecutive alternating Array, like [element, cssText, transform attribute, cache, matchMedia, ...]
 	if (target && target.style) {
 		let i = _savedStyles.indexOf(target);
@@ -1461,7 +1489,7 @@ ScrollTrigger.saveStyles = targets => targets ? _toArray(targets).forEach(target
 }) : _savedStyles;
 ScrollTrigger.revert = (soft, media) => _revertAll(!soft, media);
 ScrollTrigger.create = (vars, animation) => new ScrollTrigger(vars, animation);
-ScrollTrigger.refresh = safe => safe ? _onResize() : (_coreInitted || ScrollTrigger.register()) && _refreshAll(true);
+ScrollTrigger.refresh = safe => safe ? _onResize(true) : (_coreInitted || ScrollTrigger.register()) && _refreshAll(true);
 ScrollTrigger.update = force => ++_scrollers.cache && _updateAll(force === true ? 2 : 0);
 ScrollTrigger.clearScrollMemory = _clearScrollMemory;
 ScrollTrigger.maxScroll = (element, horizontal) => _maxScroll(element, horizontal ? _horizontal : _vertical);
@@ -1706,11 +1734,18 @@ let _clampScrollAndGetDurationMultiplier = (scrollFunc, current, end, max) => {
 		_fixIOSBug && !scrollFuncY() && scrollFuncY(1); // iOS bug causes event.clientY values to freak out (wildly inaccurate) if the scroll position is exactly 0.
 		_fixIOSBug && gsap.ticker.add(_passThrough); // prevent the ticker from sleeping
 		onStopDelayedCall = self._dc;
-		tween = gsap.to(self, {ease: "power4", paused: true, scrollX: normalizeScrollX ? "+=0.1" : "+=0", scrollY: "+=0.1", modifiers: {scrollY: _interruptionTracker(scrollFuncY, scrollFuncY(), () => tween.pause())	}, onUpdate: _updateAll, onComplete: onStopDelayedCall.vars.onComplete}); // we need the modifier to sense if the scroll position is altered outside of the momentum tween (like with a scrollTo tween) so we can pause() it to prevent conflicts.
+		tween = gsap.to(self, {ease: "power4", paused: true, inherit: false, scrollX: normalizeScrollX ? "+=0.1" : "+=0", scrollY: "+=0.1", modifiers: {scrollY: _interruptionTracker(scrollFuncY, scrollFuncY(), () => tween.pause())	}, onUpdate: _updateAll, onComplete: onStopDelayedCall.vars.onComplete}); // we need the modifier to sense if the scroll position is altered outside of the momentum tween (like with a scrollTo tween) so we can pause() it to prevent conflicts.
 		return self;
 	};
 
-ScrollTrigger.sort = func => _triggers.sort(func || ((a, b) => (a.vars.refreshPriority || 0) * -1e6 + a.start - (b.start + (b.vars.refreshPriority || 0) * -1e6)));
+ScrollTrigger.sort = func => {
+	if (_isFunction(func)) {
+		return _triggers.sort(func);
+	}
+	let scroll = _win.pageYOffset || 0;
+	ScrollTrigger.getAll().forEach(t => t._sortY = t.trigger ? scroll + t.trigger.getBoundingClientRect().top : t.start + _win.innerHeight);
+	return _triggers.sort(func || ((a, b) => (a.vars.refreshPriority || 0) * -1e6 + (a.vars.containerAnimation ? 1e6 : a._sortY) - ((b.vars.containerAnimation ? 1e6 : b._sortY) + (b.vars.refreshPriority || 0) * -1e6))); // anything with a containerAnimation should refresh last.
+}
 ScrollTrigger.observe = vars => new Observer(vars);
 ScrollTrigger.normalizeScroll = vars => {
 	if (typeof(vars) === "undefined") {

@@ -7,7 +7,7 @@
 	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
 
 	import { afterNavigate, disableScrollHandling } from '$app/navigation';
-	import { browser, version } from '$app/environment';
+	import { browser, dev, version } from '$app/environment';
 	import { isIntroDone, backgroundColor, isTransitioningEnabled } from '$lib/stores';
 	import gsap, { ScrollTrigger, CustomEase } from '$lib/gsap';
 
@@ -30,7 +30,9 @@
 
 	import '../app.css';
 
-	injectSpeedInsights();
+	if (!dev) {
+		injectSpeedInsights();
+	}
 
 	export let data: LayoutData;
 
