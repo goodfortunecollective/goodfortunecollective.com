@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { fly } from 'svelte/transition';
-	import { cls } from '$lib/styles';
 	import gsap from '$lib/gsap';
 	import { lenisStore as lenis } from '$lib/stores/lenis';
-	import { onDestroy } from 'svelte';
+	import { cls } from '$lib/styles';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import { onDestroy } from 'svelte';
+	import { fly } from 'svelte/transition';
 
 	export let strokeDashArray = '0px';
 	export let strokeDashOffset = '0px';

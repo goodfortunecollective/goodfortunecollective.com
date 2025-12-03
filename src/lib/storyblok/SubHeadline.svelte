@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { inview } from 'svelte-inview';
-	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+	import { StoryblokComponent, storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
+	import { inview } from 'svelte-inview';
 
 	import { Heading } from '$lib/components';
-	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
+	import { cls } from '$lib/styles';
 	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;

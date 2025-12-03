@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { zeroPad } from '$lib/utils/text';
 	import { cls } from '$lib/styles';
+	import { zeroPad } from '$lib/utils/text';
 
 	export let name: string;
 	export let url: string;

@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
 	import { renderRichText, storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
+	import { onDestroy, onMount } from 'svelte';
 	import { inview } from 'svelte-inview';
 
 	import { RichtextTransition } from '$lib/components';
-	import { cls } from '$lib/styles';
 	import { backgroundTheme, cursorType } from '$lib/stores';
+	import { cls } from '$lib/styles';
 	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;

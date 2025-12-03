@@ -2,10 +2,10 @@
 	import { renderRichText, storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
 
-	import { backgroundTheme } from '$lib/stores';
 	import { Heading, RichtextTransition, TextTransition } from '$lib/components';
-	import { inViewColorTransition } from '$lib/utils/animations';
+	import { backgroundTheme } from '$lib/stores';
 	import { cls } from '$lib/styles';
+	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;
 

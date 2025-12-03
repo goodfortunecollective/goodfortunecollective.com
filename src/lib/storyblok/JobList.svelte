@@ -1,9 +1,9 @@
 <script lang="ts">
+	import { getStoryblokApi, storyblokEditable } from '@storyblok/svelte';
 	import { onMount } from 'svelte';
-	import { storyblokEditable, getStoryblokApi } from '@storyblok/svelte';
 
-	import { base } from '$app/paths';
 	import { dev } from '$app/environment';
+	import { base } from '$app/paths';
 	import { LinkListItem } from '$lib/components';
 
 	export let blok: any;

@@ -1,22 +1,22 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 
-	import { fade } from 'svelte/transition';
-	import { useTransitionReady } from '$lib/utils/useTransitionReady';
-	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 	import { ScrollTrigger } from '$lib/gsap';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import { StoryblokComponent, useStoryblokBridge } from '@storyblok/svelte';
+	import { fade } from 'svelte/transition';
 
-	import gsap from '$lib/gsap';
-	import { lenisStore as lenis } from '$lib/stores/lenis';
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
 	import { ProjectListItem } from '$lib/components';
+	import gsap from '$lib/gsap';
 	import { isTransitioningEnabled } from '$lib/stores';
+	import { lenisStore as lenis } from '$lib/stores/lenis';
 	import { useCurtains, type CurtainsInstance } from '$lib/utils/useCurtains';
 
-	import MenuList from './MenuList.svelte';
-	import MenuItem from './MenuItem.svelte';
 	import ArchiveItem from './ArchiveItem.svelte';
+	import MenuItem from './MenuItem.svelte';
+	import MenuList from './MenuList.svelte';
 
 	let activeFilter = false;
 

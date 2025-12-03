@@ -1,5 +1,5 @@
-import type { EasingFunction, TransitionConfig } from 'svelte/transition';
 import { linear } from 'svelte/easing';
+import type { EasingFunction, TransitionConfig } from 'svelte/transition';
 
 type Direction =
 	| 'top'

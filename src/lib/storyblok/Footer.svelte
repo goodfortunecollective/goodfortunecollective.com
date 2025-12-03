@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { inview } from 'svelte-inview';
+	import { StoryblokComponent, storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
-	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+	import { inview } from 'svelte-inview';
 
-	import gsap from '$lib/gsap';
-	import { backgroundTheme, isTransitioningEnabled, cursorType } from '$lib/stores';
-	import { cls } from '$lib/styles';
 	import { Gfc } from '$lib/components';
+	import gsap from '$lib/gsap';
+	import { backgroundTheme, cursorType, isTransitioningEnabled } from '$lib/stores';
+	import { cls } from '$lib/styles';
 	import { inViewColorTransition } from '$lib/utils/animations';
 
 	import { onMount } from 'svelte';

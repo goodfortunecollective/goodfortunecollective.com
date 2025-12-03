@@ -2,7 +2,7 @@
 	import { storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
 
-	import { ProjectListItem, Link } from '$lib/components';
+	import { Link, ProjectListItem } from '$lib/components';
 	import { cls } from '$lib/styles';
 
 	export let blok: any;

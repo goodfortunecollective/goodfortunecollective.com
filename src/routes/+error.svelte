@@ -1,8 +1,8 @@
 <script>
-	import { cva } from 'class-variance-authority';
 	import { base } from '$app/paths';
+	import { cva } from 'class-variance-authority';
 
-	import { BackgroundTheme, Heading, TextTransition, Spacer } from '$lib/components';
+	import { BackgroundTheme, Spacer, TextTransition } from '$lib/components';
 	import { cls } from '$lib/styles';
 
 	import { backgroundTheme } from '$lib/stores';

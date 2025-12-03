@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { inview } from 'svelte-inview';
 	import { renderRichText, storyblokEditable } from '@storyblok/svelte';
+	import { inview } from 'svelte-inview';
 
 	import { cls } from '$lib/styles';
 	import { inViewColorTransition } from '$lib/utils/animations';

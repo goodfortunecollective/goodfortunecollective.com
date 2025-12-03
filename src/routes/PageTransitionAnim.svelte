@@ -5,25 +5,25 @@
 	import { beforeNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 
-	import { lenisStore as lenis } from '$lib/stores/lenis';
-	import gsap, { ScrollTrigger } from '$lib/gsap';
-	import { cls } from '$lib/styles';
-	import {
-		isTransitioning,
-		isTransitionDone,
-		project_list_hover,
-		isTransitioningIn,
-		isTransitioningEnabled
-	} from '$lib/stores';
 	import { ProjectTitle } from '$lib/components';
-	import { debounce } from '$lib/utils/debounce';
-	import { useCurtains } from '$lib/utils/useCurtains';
-	import type { CurtainsInstance } from '$lib/utils/useCurtains';
+	import gsap, { ScrollTrigger } from '$lib/gsap';
 	import {
-		pageLeaveDuration,
+		isTransitionDone,
+		isTransitioning,
+		isTransitioningEnabled,
+		isTransitioningIn,
+		project_list_hover
+	} from '$lib/stores';
+	import { lenisStore as lenis } from '$lib/stores/lenis';
+	import { cls } from '$lib/styles';
+	import { debounce } from '$lib/utils/debounce';
+	import {
 		pageEnterDuration,
+		pageLeaveDuration,
 		pageTransitionPauseDuration
 	} from '$lib/utils/page-transitions';
+	import type { CurtainsInstance } from '$lib/utils/useCurtains';
+	import { useCurtains } from '$lib/utils/useCurtains';
 
 	$: innerWidth = 0;
 	let lastWidth = 0;

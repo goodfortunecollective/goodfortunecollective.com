@@ -1,17 +1,17 @@
 <script lang="ts">
-	import { fade } from 'svelte/transition';
-	import { inview } from 'svelte-inview';
-	import { onDestroy } from 'svelte';
-	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+	import { StoryblokComponent, storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
+	import { onDestroy } from 'svelte';
+	import { inview } from 'svelte-inview';
+	import { fade } from 'svelte/transition';
 
 	import { ScrollTrigger } from '$lib/gsap';
-	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
 	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
-	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import { cls } from '$lib/styles';
 	import { inViewColorTransition } from '$lib/utils/animations';
 	import { lazyLoad } from '$lib/utils/lazyLoad';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	export let blok: any;
 

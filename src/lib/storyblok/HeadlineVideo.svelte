@@ -1,8 +1,8 @@
 <!-- @ts-nocheck -->
 <script lang="ts">
 	// @ts-nocheck
-	import { onMount, getContext } from 'svelte';
 	import { storyblokEditable } from '@storyblok/svelte';
+	import { getContext, onMount } from 'svelte';
 	import type { ObserverEventDetails } from 'svelte-inview';
 	import { inview } from 'svelte-inview';
 
@@ -10,13 +10,13 @@
 
 	import { BackgroundTheme, VideoModal } from '$lib/components';
 	import gsap, { SplitText } from '$lib/gsap';
+	import { cursorType } from '$lib/stores';
+	import { lenisStore as lenis } from '$lib/stores/lenis';
+	import { cls } from '$lib/styles';
+	import { isMobile } from '$lib/utils/browser';
+	import { debounce } from '$lib/utils/debounce';
 	import { clamp } from '$lib/utils/maths';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
-	import { cursorType } from '$lib/stores';
-	import { cls } from '$lib/styles';
-	import { lenisStore as lenis } from '$lib/stores/lenis';
-	import { debounce } from '$lib/utils/debounce';
-	import { isMobile } from '$lib/utils/browser';
 
 	export let blok: any;
 

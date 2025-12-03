@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { renderRichText, storyblokEditable, type SbBlokData } from '@storyblok/svelte';
 
-	import { components } from './';
 	import { RichtextTransition } from '$lib/components';
+	import { components } from './';
 
 	export let blok: RichTextProps;
 

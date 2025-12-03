@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { storyblokEditable } from '@storyblok/svelte';
 
-	import { heading_hover_media } from '$lib/stores';
 	import { Heading } from '$lib/components';
+	import { heading_hover_media } from '$lib/stores';
 
 	export let blok: any;
 

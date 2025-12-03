@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { renderRichText } from '@storyblok/svelte';
 
+	import { base } from '$app/paths';
 	import { Heading } from '$lib/components';
 	import { heading_hover_media } from '$lib/stores';
-	import { base } from '$app/paths';
 
 	export let name: string;
 	export let slug: string;

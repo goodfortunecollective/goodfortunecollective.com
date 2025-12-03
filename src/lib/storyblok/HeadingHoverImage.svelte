@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { storyblokEditable } from '@storyblok/svelte';
-	import { spring } from 'svelte/motion';
-	import { onDestroy } from 'svelte';
 	import { cva } from 'class-variance-authority';
+	import { onDestroy } from 'svelte';
+	import { spring } from 'svelte/motion';
 
 	import gsap from '$lib/gsap';
-	import { cls } from '$lib/styles';
 	import { heading_hover_media } from '$lib/stores';
+	import { cls } from '$lib/styles';
 
 	export let blok: any;
 

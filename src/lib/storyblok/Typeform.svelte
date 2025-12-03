@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import * as typeformEmbed from '@typeform/embed';
 	import { storyblokEditable } from '@storyblok/svelte';
+	import * as typeformEmbed from '@typeform/embed';
+	import { onMount } from 'svelte';
 
 	import '@typeform/embed/build/css/popup.css';
 

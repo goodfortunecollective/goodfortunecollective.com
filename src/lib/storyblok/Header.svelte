@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { inview } from 'svelte-inview';
-	import { onMount } from 'svelte';
-	import { fade, fly } from 'svelte/transition';
 	import { storyblokEditable } from '@storyblok/svelte';
+	import { onMount } from 'svelte';
+	import { inview } from 'svelte-inview';
+	import { fade, fly } from 'svelte/transition';
 
-	import { page } from '$app/stores';
 	import { base } from '$app/paths';
-	import gsap from '$lib/gsap';
+	import { page } from '$app/stores';
 	import { Gfc, HoverText } from '$lib/components';
-	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import gsap from '$lib/gsap';
 	import { cls } from '$lib/styles';
 	import { inViewColorTransition } from '$lib/utils/animations';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	export let blok: any;
 

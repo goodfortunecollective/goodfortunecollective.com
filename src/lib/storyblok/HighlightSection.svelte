@@ -5,8 +5,8 @@
 
 	import { base } from '$app/paths';
 	import { Heading, Spacer } from '$lib/components';
-	import { cls } from '$lib/styles';
 	import { backgroundTheme, cursorType } from '$lib/stores';
+	import { cls } from '$lib/styles';
 	import { inViewColorTransition } from '$lib/utils/animations';
 	import { lazyLoad } from '$lib/utils/lazyLoad';
 

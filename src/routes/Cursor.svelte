@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { spring } from 'svelte/motion';
 	import { cva } from 'class-variance-authority';
+	import { spring } from 'svelte/motion';
 
-	import { cls } from '$lib/styles';
 	import { cursorType } from '$lib/stores';
+	import { cls } from '$lib/styles';
 
 	const backgroundVariants = cva('', {
 		variants: {

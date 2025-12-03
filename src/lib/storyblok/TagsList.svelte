@@ -1,15 +1,15 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
 	import { StoryblokComponent, storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
+	import { onDestroy } from 'svelte';
 	import { inview } from 'svelte-inview';
 
 	import { Heading } from '$lib/components';
 	import gsap from '$lib/gsap';
-	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
-	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import { cls } from '$lib/styles';
 	import { inViewColorTransition } from '$lib/utils/animations';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	export let blok: any;
 

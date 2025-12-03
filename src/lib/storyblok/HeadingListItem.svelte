@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { renderRichText, storyblokEditable } from '@storyblok/svelte';
 
-	import { NumberedListItem, RichtextTransition, TextTransition, Heading } from '$lib/components';
+	import { Heading, NumberedListItem, RichtextTransition, TextTransition } from '$lib/components';
 
 	export let blok: any;
 

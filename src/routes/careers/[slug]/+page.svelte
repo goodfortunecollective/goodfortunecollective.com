@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
-	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
+	import { StoryblokComponent, useStoryblokBridge } from '@storyblok/svelte';
+	import { onDestroy, onMount } from 'svelte';
 
 	import { base } from '$app/paths';
-	import { Link, Heading, BackgroundTheme } from '$lib/components';
+	import { BackgroundTheme, Heading, Link } from '$lib/components';
 
 	export let data;
 
