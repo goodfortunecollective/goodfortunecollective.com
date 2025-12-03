@@ -7,6 +7,8 @@
 		"preview": "vite preview",
 		"postinstall": "svelte-kit sync",
 		"test": "playwright test",
+		"test:cross-platform:dev": "playwright test",
+		"test:cross-platform:build": "playwright test",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test:unit": "vitest",
