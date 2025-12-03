@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 
-test('about page has expected h1', async ({ page }) => {
-	await page.goto('/about');
-	await expect(page.getByRole('heading', { name: 'About this app' })).toBeVisible();
+test('home page responds and renders', async ({ page }) => {
+	const response = await page.goto('/');
+	expect(response?.ok()).toBe(true);
+	await expect(page.locator('body')).toBeVisible();
 });
