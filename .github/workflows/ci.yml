@@ -61,7 +61,12 @@ jobs:
       - name: Archive test results
         if: failure()
         shell: bash
-        run: find packages -type d -name test-results -not -empty | tar -czf test-results.tar.gz --files-from=-
+        run: |
+          if [ -d packages ]; then
+            find packages -type d -name test-results -not -empty | tar -czf test-results.tar.gz --files-from=-
+          else
+            echo "No packages directory; skipping test-results archive."
+          fi
       - name: Upload test results
         if: failure()
         uses: actions/upload-artifact@v4
@@ -118,7 +123,12 @@ jobs:
       - name: Archive test results
         if: failure()
         shell: bash
-        run: find packages -type d -name test-results -not -empty | tar -czf test-results-cross-platform-${{ matrix.mode }}.tar.gz --files-from=-
+        run: |
+          if [ -d packages ]; then
+            find packages -type d -name test-results -not -empty | tar -czf test-results-cross-platform-${{ matrix.mode }}.tar.gz --files-from=-
+          else
+            echo "No packages directory; skipping test-results archive."
+          fi
       - name: Upload test results
         if: failure()
         uses: actions/upload-artifact@v4
