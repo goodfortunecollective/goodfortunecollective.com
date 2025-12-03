@@ -44,14 +44,14 @@
 						title="Go to top"
 						class={cls('back-to-top-btn', 'h-full w-full')}
 					>
-						<div class="arrow" />
+						<div class="arrow"></div>
 					</button>
 				</div>
 			{/if}
 		</div>
 
 		<div class="relative">
-			<div class="absolute h-full w-full rounded-full border-2 border-white opacity-20" />
+			<div class="absolute h-full w-full rounded-full border-2 border-white opacity-20"></div>
 
 			<svg width="20" height="20" style="transform:rotate(-90deg)">
 				<circle

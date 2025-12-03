@@ -3,7 +3,7 @@
 	import { cva } from 'class-variance-authority';
 
 	import { cls } from '$lib/styles';
-	import { ScrollTrigger } from '$lib/gsap';
+import { ScrollTrigger } from '$lib/gsap';
 	import { debounce } from '$lib/utils/debounce';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 	import { lazyLoad } from '$lib/utils/lazyLoad';
@@ -16,7 +16,7 @@
 
 	let el!: HTMLElement;
 	let imageEl!: HTMLImageElement;
-	let scrollTrigger!: ScrollTrigger;
+let scrollTrigger: ScrollTrigger | null = null;
 
 	$: parallaxEffect = 0 as number;
 
@@ -68,11 +68,9 @@
 		lastWidth = innerWidth;
 	};
 
-	onDestroy(() => {
-		if (scrollTrigger) {
-			scrollTrigger.kill();
-			scrollTrigger = null;
-		}
+onDestroy(() => {
+		scrollTrigger?.kill?.();
+		scrollTrigger = null;
 	});
 </script>
 

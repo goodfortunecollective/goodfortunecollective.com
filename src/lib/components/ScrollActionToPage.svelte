@@ -90,7 +90,7 @@
 			)}
 		>
 			<p class="font-medium uppercase tracking-widest">Scroll</p>
-			<div class={cls('c-scroll-action-to-page__bar', 'relative h-32 w-px')} />
+			<div class={cls('c-scroll-action-to-page__bar', 'relative h-32 w-px')}></div>
 			<span
 				bind:this={scrollLabel}
 				class={cls(

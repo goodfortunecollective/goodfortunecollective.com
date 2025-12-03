@@ -13,10 +13,8 @@
 
 	onMount(() => {
 		typeformPopup = typeformEmbed.createPopup(blok.id, {
-			mode: 'popup', // popup mode
-			autoOpen: false, // do not open automatically
 			hideHeaders: true, // hide headers
-			hideFooters: true, // hide footers
+			hideFooter: true, // hide footers
 			autoClose: 3 // close after 3 seconds
 		});
 	});

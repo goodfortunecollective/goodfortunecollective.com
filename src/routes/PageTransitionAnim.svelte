@@ -204,7 +204,7 @@
 		!$isTransitioning && 'pointer-events-none'
 	)}
 >
-	<canvas bind:this={canvasEl} class="absolute inset-0 h-full w-full" />
+	<canvas bind:this={canvasEl} class="absolute inset-0 h-full w-full"></canvas>
 </div>
 
 {#if list_hover && showTitle}

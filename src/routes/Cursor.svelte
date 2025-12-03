@@ -88,7 +88,7 @@
 					'flex h-full w-full origin-center items-center  justify-center rounded-[100%]'
 				)}
 			>
-				<div class={cls(variants({ type: type }))} />
+				<div class={cls(variants({ type: type }))}></div>
 			</div>
 		</div>
 	</div>

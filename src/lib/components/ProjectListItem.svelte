@@ -274,7 +274,7 @@
 					class="mt-4 max-w-md overflow-hidden text-base font-medium leading-snug lg:block xl:text-xl 4xl:text-2xl"
 				>
 					<RichtextAnimated bind:this={descriptionTextRef}>
-						<span class="wrap" />{@html description}
+						<span class="wrap"></span>{@html description}
 					</RichtextAnimated>
 				</div>
 			</div>

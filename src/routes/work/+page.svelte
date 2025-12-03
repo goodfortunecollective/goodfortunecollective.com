@@ -4,7 +4,6 @@
 	import { fade } from 'svelte/transition';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
-	import type { Curtains } from '@types/curtainsjs';
 	import { ScrollTrigger } from '$lib/gsap';
 
 	import gsap from '$lib/gsap';
@@ -13,7 +12,7 @@
 	import { page } from '$app/stores';
 	import { ProjectListItem } from '$lib/components';
 	import { isTransitioningEnabled } from '$lib/stores';
-	import { useCurtains } from '$lib/utils/useCurtains';
+	import { useCurtains, type CurtainsInstance } from '$lib/utils/useCurtains';
 
 	import MenuList from './MenuList.svelte';
 	import MenuItem from './MenuItem.svelte';
@@ -22,7 +21,7 @@
 	let activeFilter = false;
 
 	let el!: HTMLElement;
-	let curtains: undefined | Curtains;
+	let curtains: CurtainsInstance;
 	let ctx: any = null;
 
 	useCurtains((curtainsInstance) => {

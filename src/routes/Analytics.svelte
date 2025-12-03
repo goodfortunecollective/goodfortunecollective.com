@@ -31,7 +31,7 @@
 			async
 			src="https://www.googletagmanager.com/gtag/js?id={PUBLIC_GOOGLE_MEASUREMENT_ID}"
 		></script>
-		<svelte:element this="script">
+		<svelte:element this={'script'}>
 			{content}
 		</svelte:element>
 	{/if}

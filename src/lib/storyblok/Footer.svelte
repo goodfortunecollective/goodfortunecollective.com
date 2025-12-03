@@ -148,7 +148,7 @@
 </footer>
 
 <style lang="scss">
-	@import '../../vars.scss';
+	@use '../../vars' as *;
 
 	.sb-footer__col {
 		position: relative;

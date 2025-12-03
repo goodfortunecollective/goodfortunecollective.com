@@ -24,7 +24,7 @@
 >
 	<div
 		class="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-slate-700/25 to-transparent opacity-0 transition-opacity duration-300 ease-in hover:opacity-0"
-	/>
+	></div>
 	<a
 		href={`${base}/work/archive/${slug}`}
 		class=" align-center col-span-12 col-start-1 mx-4 block h-full border-b border-gray-500 py-12 text-left hover:no-underline md:col-span-10 md:col-start-2 md:mx-0 lg:flex lg:flex-row 2xl:py-6"

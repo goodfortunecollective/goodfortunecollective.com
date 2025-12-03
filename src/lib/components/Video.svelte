@@ -90,7 +90,7 @@
 		touchCapability =
 			window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches
 				? 1
-				: 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
+				: 'ontouchstart' in window || navigator.maxTouchPoints > 0
 					? 2
 					: 0;
 
@@ -157,7 +157,7 @@
 		<div
 			class="col-span-12 col-start-1 mx-4 md:col-span-10 md:col-start-2 md:mx-0"
 			bind:offsetWidth
-		/>
+		></div>
 	</div>
 	<div
 		bind:this={videoContainer}
@@ -176,7 +176,7 @@
 				allow="autoplay; fullscreen; picture-in-picture"
 				allowfullscreen
 				title={name}
-			/>
+			></iframe>
 		{:else if videoUrl}
 			<video
 				preload="metadata"
@@ -189,7 +189,7 @@
 				{autoplay}
 				loop={autoplay ? true : loop}
 				muted={autoplay ? true : muted}
-			/>
+			></video>
 		{/if}
 		{#if !autoplay && posterUrl}
 			<div
@@ -201,23 +201,24 @@
 			</div>
 		{/if}
 		{#if !autoplay && touchCapability === 1 && !videoVisible}
-			<div
+			<button
+				type="button"
 				class="absolute inset-0 z-20 flex h-full w-full items-center justify-center bg-black bg-opacity-50"
 				on:click={showVideo}
+				aria-label="Play video"
 			>
-				<button
-					type="button"
+				<span
 					class="flex h-[64px] w-[64px] origin-center items-center justify-center transition duration-300 ease-out"
 				>
-					<div
+					<span
 						class="z-1 flex h-full w-full origin-center items-center justify-center rounded-[100%] bg-yellow-350"
 					>
-						<div
+						<span
 							class="ml-0.5 inline-block h-0 w-0 origin-center transform cursor-pointer border-y-[7px] border-l-[12px] border-solid border-y-transparent border-l-black content-['']"
-						></div>
-					</div>
-				</button>
-			</div>
+						></span>
+					</span>
+				</span>
+			</button>
 		{/if}
 	</div>
 </div>

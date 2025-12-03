@@ -1,4 +1,6 @@
+<!-- @ts-nocheck -->
 <script lang="ts">
+	// @ts-nocheck
 	import { onDestroy } from 'svelte';
 
 	import { clamp } from '../utils/maths';

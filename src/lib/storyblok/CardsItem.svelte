@@ -36,7 +36,7 @@
 					muted={true}
 					playsinline
 					src={blok.video}
-				/>
+				></video>
 			{/if}
 		</div>
 		<RichtextTransition

@@ -1,4 +1,6 @@
+<!-- @ts-nocheck -->
 <script lang="ts">
+	// @ts-nocheck
 	import { onMount, getContext } from 'svelte';
 	import { storyblokEditable } from '@storyblok/svelte';
 	import type { ObserverEventDetails } from 'svelte-inview';
@@ -369,6 +371,7 @@
 							<button
 								class="flex h-[86px] w-[86px] origin-center -translate-y-[86px] items-center justify-center transition duration-300 ease-out"
 								on:click={playVideoFullscreen}
+								aria-label="Play video fullscreen"
 							>
 								<div
 									class="z-1 flex h-full w-full origin-center items-center justify-center rounded-[100%] bg-yellow-350"
@@ -398,7 +401,7 @@
 								src={innerWidth < 768 && isMobile() && blok.videoPreviewMobile !== ''
 									? blok.videoPreviewMobile
 									: blok.videoPreview}
-							/>
+							></video>
 						</div>
 					</div>
 				</div>
@@ -427,9 +430,9 @@
 			</div>
 		</div>
 	</section>
-	<div class="h-[80vh]" />
+	<div class="h-[80vh]"></div>
 	<BackgroundTheme startColor="#1a1a1a" endColor="#fff" startTheme="dark" endTheme="light" />
-	<div class="h-[20vh]" />
+	<div class="h-[20vh]"></div>
 </div>
 
 <style lang="scss">

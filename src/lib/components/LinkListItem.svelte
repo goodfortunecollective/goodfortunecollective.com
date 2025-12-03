@@ -83,7 +83,7 @@
 				'bg-black before:bg-black after:bg-black',
 				'c-list-item-link__arrow c-list-item-link__arrow-default'
 			)}
-		/>
+		></span>
 		<span
 			class={cls(
 				'flex items-center justify-center',
@@ -96,13 +96,13 @@
 					'c-list-item-link__arrow c-list-item-link__arrow-hover',
 					arrowHoverStyle({ theme: $backgroundTheme })
 				)}
-			/>
+			></span>
 		</span>
 	</a>
 </li>
 
 <style lang="scss">
-	@import '../../vars.scss';
+	@use '../../vars' as *;
 
 	.c-list-item-link {
 		position: relative;

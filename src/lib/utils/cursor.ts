@@ -1,14 +1,13 @@
 
 import { cursorType } from '$lib/stores';
-import type { Options } from './types';
 
-export function cursor(node: HTMLElement, options?: Options) {
+export function cursor(node: HTMLElement) {
     function handleMouseEnter() {
-        cursorType('checkout');
+        cursorType.set('checkout');
     }
 
     function handleMouseLeave() {
-        cursorType('none')
+        cursorType.set('none');
     }
 
     node.addEventListener('mouseenter', handleMouseEnter);

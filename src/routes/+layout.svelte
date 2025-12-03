@@ -46,7 +46,7 @@
 
 	$: if (browser && $lenis && hash) {
 		const target = document.querySelector(hash);
-		if ($isTransitioningEnabled) {
+		if (target instanceof HTMLElement && $isTransitioningEnabled) {
 			$lenis.scrollTo(target, { offset: 0 });
 		}
 	}

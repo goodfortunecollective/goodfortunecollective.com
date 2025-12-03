@@ -96,7 +96,7 @@
 	{#if mobileMenuOpen}
 		<div class="bg-white sm:hidden" role="dialog" aria-modal="true">
 			<!-- Background backdrop, show/hide based on slide-over state. -->
-			<div class="fixed inset-0 z-20" />
+			<div class="fixed inset-0 z-20"></div>
 			<div
 				in:fade
 				out:fade={{ delay: 500 }}

@@ -15,11 +15,11 @@
 
 	export let blok: any;
 
-	let el!: HTMLElement;
-	let pinEl!: HTMLElement;
-	let contentEl!: HTMLElement;
+let el!: HTMLElement;
+let pinEl!: HTMLElement;
+let contentEl!: HTMLElement;
 
-	let scrollTrigger!: ScrollTrigger;
+let scrollTrigger: ScrollTrigger | null = null;
 
 	const textStyle = cva('flex flex-col duration-1000 ease-out', {
 		variants: {
@@ -45,12 +45,10 @@
 		}
 	});
 
-	onDestroy(() => {
-		if (scrollTrigger) {
-			scrollTrigger.kill();
-			scrollTrigger = null;
-		}
-	});
+onDestroy(() => {
+	scrollTrigger?.kill?.();
+	scrollTrigger = null;
+});
 </script>
 
 <div

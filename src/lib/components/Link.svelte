@@ -50,7 +50,7 @@
 	>
 		<span
 			class={cls('bg-black before:bg-black after:bg-black', 'c-link__arrow c-link__arrow-default')}
-		/>
+		></span>
 		<span
 			class={cls(
 				'flex items-center justify-center',
@@ -63,13 +63,13 @@
 					'c-link__arrow c-link__arrow-hover',
 					arrowHoverStyle({ theme: $backgroundTheme })
 				)}
-			/>
+			></span>
 		</span>
 	</span>
 </a>
 
 <style lang="scss">
-	@import '../../vars.scss';
+	@use '../../vars' as *;
 
 	.c-link {
 		&:hover {
