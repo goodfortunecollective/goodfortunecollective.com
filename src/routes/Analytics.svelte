@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 
-import { env as publicEnv } from '$env/dynamic/public';
+	import { env as publicEnv } from '$env/dynamic/public';
 
-const measurementId = publicEnv.PUBLIC_GOOGLE_MEASUREMENT_ID;
+	const measurementId = publicEnv.PUBLIC_GOOGLE_MEASUREMENT_ID;
 
-const content = `
+	const content = `
 		window.dataLayer = window.dataLayer || [];
 		function gtag() {
 		dataLayer.push(arguments);
@@ -29,10 +29,7 @@ const content = `
 
 <svelte:head>
 	{#if measurementId}
-		<script
-			async
-			src="https://www.googletagmanager.com/gtag/js?id={measurementId}"
-		></script>
+		<script async src="https://www.googletagmanager.com/gtag/js?id={measurementId}"></script>
 		<svelte:element this={'script'}>
 			{content}
 		</svelte:element>
