@@ -200,7 +200,7 @@
 
 <div
 	class={cls(
-		'fixed inset-0 z-40 h-full w-full items-center overflow-hidden text-center',
+		'fixed inset-0 z-40 h-full w-screen items-center overflow-hidden text-center',
 		!$isTransitioning && 'pointer-events-none'
 	)}
 >
@@ -209,7 +209,7 @@
 
 {#if list_hover && showTitle}
 	<div
-		class="fixed inset-0 z-50 flex h-screen w-full transform-gpu items-center text-center"
+		class="fixed inset-0 z-50 flex h-screen w-screen transform-gpu items-center text-center"
 		in:fade={{ delay: pageLeaveDuration / 2, duration: pageLeaveDuration / 8 }}
 	>
 		<div class="mx-auto grid -translate-y-1/2 grid-cols-12 pt-16 lg:-translate-y-1/4">
