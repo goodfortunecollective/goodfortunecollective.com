@@ -24,7 +24,7 @@ jobs:
           version: 10
       - uses: actions/setup-node@v4
         with:
-          node-version: '22.x'
+          node-version: "22.x"
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm run lint
@@ -38,7 +38,7 @@ jobs:
         include:
           - node-version: 22
             os: ubuntu-latest
-            e2e-browser: 'chromium'
+            e2e-browser: "chromium"
     env:
       KIT_E2E_BROWSER: ${{matrix.e2e-browser}}
     steps:
@@ -52,7 +52,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm playwright install ${{ matrix.e2e-browser }}
+      # Install all Playwright browsers with system deps; tests may invoke a different browser than matrix.e2e-browser.
+      - run: pnpm exec playwright install --with-deps
       - run: pnpm exec playwright install-deps
       - run: pnpm test
       - name: Archive test results
@@ -80,28 +81,28 @@ jobs:
         include:
           - node-version: 22
             os: windows-2019 # slowness reported on newer versions https://github.com/actions/runner-images/issues/5166
-            e2e-browser: 'chromium'
-            mode: 'dev'
+            e2e-browser: "chromium"
+            mode: "dev"
           - node-version: 22
             os: ubuntu-latest
-            e2e-browser: 'firefox'
-            mode: 'dev'
+            e2e-browser: "firefox"
+            mode: "dev"
           - node-version: 22
             os: macOS-latest
-            e2e-browser: 'webkit'
-            mode: 'dev'
+            e2e-browser: "webkit"
+            mode: "dev"
           - node-version: 22
             os: windows-2019 # slowness reported on newer versions https://github.com/actions/runner-images/issues/5166
-            e2e-browser: 'chromium'
-            mode: 'build'
+            e2e-browser: "chromium"
+            mode: "build"
           - node-version: 22
             os: ubuntu-latest
-            e2e-browser: 'firefox'
-            mode: 'build'
+            e2e-browser: "firefox"
+            mode: "build"
           - node-version: 22
             os: macOS-latest
-            e2e-browser: 'webkit'
-            mode: 'build'
+            e2e-browser: "webkit"
+            mode: "build"
     env:
       KIT_E2E_BROWSER: ${{matrix.e2e-browser}}
     steps:
@@ -115,7 +116,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm playwright install ${{ matrix.e2e-browser }}
+      # Install all Playwright browsers with system deps; tests may invoke a different browser than matrix.e2e-browser.
+      - run: pnpm exec playwright install --with-deps
       - run: pnpm exec playwright install-deps
       - run: pnpm test:cross-platform:${{ matrix.mode }}
       - name: Archive test results
