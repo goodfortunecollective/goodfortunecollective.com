@@ -28,6 +28,6 @@ export const load: LayoutLoad = async ({ url }) => {
 		storyblokApi: storyblokApi,
 		pathname: url.pathname,
 		preview: isPreview(url),
-		settings: settingsStory.data.story,
+		settings: settingsStory.data.story
 	};
 };

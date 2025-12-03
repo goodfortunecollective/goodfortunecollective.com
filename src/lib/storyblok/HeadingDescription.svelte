@@ -88,7 +88,7 @@
 			as="h2"
 			size="h6"
 			class={cls(
-				'col-span-12 col-start-1 mx-4 w-full break-keep font-bold uppercase tracking-widest md:col-span-10 md:col-start-2 md:mx-0 xl:w-[75%]',
+				'col-span-12 col-start-1 mx-4 w-full font-bold tracking-widest break-keep uppercase md:col-span-10 md:col-start-2 md:mx-0 xl:w-[75%]',
 				headingStyle({ theme: $backgroundTheme, textAlign: blok.heading_leftAlign })
 			)}>{blok.heading}</Heading
 		>

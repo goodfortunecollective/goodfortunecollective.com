@@ -203,7 +203,7 @@
 		{#if !autoplay && touchCapability === 1 && !videoVisible}
 			<button
 				type="button"
-				class="absolute inset-0 z-20 flex h-full w-full items-center justify-center bg-black bg-opacity-50"
+				class="bg-opacity-50 absolute inset-0 z-20 flex h-full w-full items-center justify-center bg-black"
 				on:click={showVideo}
 				aria-label="Play video"
 			>
@@ -211,7 +211,7 @@
 					class="flex h-[64px] w-[64px] origin-center items-center justify-center transition duration-300 ease-out"
 				>
 					<span
-						class="z-1 flex h-full w-full origin-center items-center justify-center rounded-[100%] bg-yellow-350"
+						class="bg-yellow-350 z-1 flex h-full w-full origin-center items-center justify-center rounded-[100%]"
 					>
 						<span
 							class="ml-0.5 inline-block h-0 w-0 origin-center transform cursor-pointer border-y-[7px] border-l-[12px] border-solid border-y-transparent border-l-black content-['']"

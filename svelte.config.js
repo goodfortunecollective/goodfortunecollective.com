@@ -22,14 +22,14 @@ const config = {
 			base: ''
 		},
 		version: {
-            name: pkg.version
-        }
+			name: pkg.version
+		}
 	},
 
 	onwarn: (warning, handler) => {
-		if (warning.code === 'a11y-click-events-have-key-events') return
-		handler(warning)
-	  },
+		if (warning.code === 'a11y-click-events-have-key-events') return;
+		handler(warning);
+	}
 };
 
 export default config;

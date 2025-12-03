@@ -94,9 +94,9 @@
 						<Heading
 							as="h2"
 							size="h6"
-							class="inline-block font-bold uppercase tracking-wide text-rose-50">Brand</Heading
+							class="inline-block font-bold tracking-wide text-rose-50 uppercase">Brand</Heading
 						>
-						<RichtextTransition class="text-xl xl:text-2xl 4xl:text-4xl [&_p]:leading-snug">
+						<RichtextTransition class="4xl:text-4xl text-xl xl:text-2xl [&_p]:leading-snug">
 							<p>{@html data.story.content.brand}</p>
 						</RichtextTransition>
 					</div>
@@ -106,9 +106,9 @@
 						<Heading
 							as="h2"
 							size="h6"
-							class="inline-block font-bold uppercase tracking-wide text-rose-50">The ask</Heading
+							class="inline-block font-bold tracking-wide text-rose-50 uppercase">The ask</Heading
 						>
-						<RichtextTransition class="text-xl xl:text-2xl 4xl:text-4xl [&_p]:leading-snug">
+						<RichtextTransition class="4xl:text-4xl text-xl xl:text-2xl [&_p]:leading-snug">
 							{@html ask_text}
 						</RichtextTransition>
 					</div>
@@ -141,7 +141,7 @@
 					animated={false}
 				/>
 			</div>
-			<div class="mx-4 max-w-4xl py-16 md:mx-0 2xl:max-w-6xl 4xl:max-w-8xl">
+			<div class="4xl:max-w-8xl mx-4 max-w-4xl py-16 md:mx-0 2xl:max-w-6xl">
 				<Heading as="h2" size="h2" animated={false}>
 					<RichtextTransition class="[&_p]:leading-[1.1]">{@html description}</RichtextTransition>
 				</Heading>
@@ -152,11 +152,11 @@
 				<Heading
 					as="h4"
 					size="h6"
-					class="col-span-12 col-start-1 mx-4 mt-1 uppercase text-rose-50 md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-2 lg:col-start-2 2xl:col-start-3"
+					class="col-span-12 col-start-1 mx-4 mt-1 text-rose-50 uppercase md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-2 lg:col-start-2 2xl:col-start-3"
 					><strong>Strategy</strong></Heading
 				>
 				<RichtextTransition
-					class="[&_p]:leading-snu7 col-span-12 col-start-1 mx-4 text-xl md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-6 lg:col-start-5 xl:text-2xl 2xl:col-span-5 2xl:col-start-6 4xl:text-4xl [&_p]:leading-snug"
+					class="[&_p]:leading-snu7 4xl:text-4xl col-span-12 col-start-1 mx-4 text-xl md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-6 lg:col-start-5 xl:text-2xl 2xl:col-span-5 2xl:col-start-6 [&_p]:leading-snug"
 				>
 					{@html strategy_text}
 				</RichtextTransition>
@@ -168,7 +168,7 @@
 					class="col-span-12 col-start-1 mx-4 text-[#dcf945] md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-6 lg:col-start-5 2xl:col-span-5 2xl:col-start-6 [&>*:not(:last-child)]:after:ml-2 [&>*:not(:last-child)]:after:content-['•']"
 				>
 					{#each data.story.content.ask as item}
-						<li class="mr-2 inline-block text-base xl:text-xl 4xl:text-2xl">
+						<li class="4xl:text-2xl mr-2 inline-block text-base xl:text-xl">
 							{item}
 						</li>
 					{/each}
@@ -180,11 +180,11 @@
 				<Heading
 					as="h4"
 					size="h6"
-					class="col-span-12 col-start-1 mx-4 mt-1 uppercase text-rose-50 md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-2 lg:col-start-2 2xl:col-start-3"
+					class="col-span-12 col-start-1 mx-4 mt-1 text-rose-50 uppercase md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-2 lg:col-start-2 2xl:col-start-3"
 					><strong>Solution</strong></Heading
 				>
 				<RichtextTransition
-					class="col-span-12 col-start-1 mx-4 text-xl md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-6 lg:col-start-5 xl:text-2xl 2xl:col-span-5 2xl:col-start-6  4xl:text-4xl [&_p]:leading-snug"
+					class="4xl:text-4xl col-span-12 col-start-1 mx-4 text-xl md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-6 lg:col-start-5 xl:text-2xl 2xl:col-span-5  2xl:col-start-6 [&_p]:leading-snug"
 				>
 					{@html solution_text}
 				</RichtextTransition>
@@ -196,7 +196,7 @@
 					class="col-span-12 col-start-1 mx-4 text-[#dcf945] md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-6 lg:col-start-5 2xl:col-span-5 2xl:col-start-6 [&>*:not(:last-child)]:after:ml-2 [&>*:not(:last-child)]:after:content-['•']"
 				>
 					{#each data.story.content.output as item}
-						<li class="mr-2 inline-block text-base xl:text-xl 4xl:text-2xl">
+						<li class="4xl:text-2xl mr-2 inline-block text-base xl:text-xl">
 							{item}
 						</li>
 					{/each}

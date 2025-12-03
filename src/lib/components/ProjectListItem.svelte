@@ -254,7 +254,7 @@
 					as="h4"
 					size="h6"
 					animated={false}
-					class="my-0 font-bold uppercase tracking-widest"
+					class="my-0 font-bold tracking-widest uppercase"
 				>
 					<small>{content.brand}</small>
 				</Heading>
@@ -262,7 +262,7 @@
 					{name}
 				</Heading>
 				<ul
-					class="uppercase tracking-widest text-stone-450 lg:[&>*:not(:first-child)]:before:ml-2 lg:[&>*:not(:last-child)]:after:content-['•']"
+					class="text-stone-450 tracking-widest uppercase lg:[&>*:not(:first-child)]:before:ml-2 lg:[&>*:not(:last-child)]:after:content-['•']"
 				>
 					{#each content.category as category}
 						<li class="lg:inline-block">
@@ -271,7 +271,7 @@
 					{/each}
 				</ul>
 				<div
-					class="mt-4 max-w-md overflow-hidden text-base font-medium leading-snug lg:block xl:text-xl 4xl:text-2xl"
+					class="4xl:text-2xl mt-4 max-w-md overflow-hidden text-base leading-snug font-medium lg:block xl:text-xl"
 				>
 					<RichtextAnimated bind:this={descriptionTextRef}>
 						<span class="wrap"></span>{@html description}

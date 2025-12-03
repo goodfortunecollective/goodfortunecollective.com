@@ -40,7 +40,7 @@
 			{/if}
 		</div>
 		<RichtextTransition
-			class="absolute bottom-8 pr-8 align-bottom  text-white [&_h3]:text-3xl [&_h3]:lg:text-4xl [&_h3]:2xl:text-5xl [&_p]:my-4 [&_p]:text-xl [&_p]:leading-snug [&_p]:xl:text-2xl [&_p]:4xl:text-4xl"
+			class="[&_p]:4xl:text-4xl absolute bottom-8 pr-8  align-bottom text-white [&_h3]:text-3xl [&_h3]:lg:text-4xl [&_h3]:2xl:text-5xl [&_p]:my-4 [&_p]:text-xl [&_p]:leading-snug [&_p]:xl:text-2xl"
 		>
 			{@html content}
 		</RichtextTransition>

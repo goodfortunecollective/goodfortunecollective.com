@@ -105,7 +105,7 @@
 
 {#key name}
 	<h2
-		class={cls('overflow-hidden p-8 font-degular-display leading-extra-tight', 'c-project-title')}
+		class={cls('font-degular-display leading-extra-tight overflow-hidden p-8', 'c-project-title')}
 	>
 		<span
 			in:animateIn|global={{ duration: animated ? 0.7 : 0, delay: animated ? 0.5 : 0 }}

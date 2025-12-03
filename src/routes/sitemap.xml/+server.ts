@@ -1,61 +1,53 @@
-import {
-  apiPlugin,
-  storyblokInit,
-  type SbSDKOptions,
-} from "@storyblok/js";
+import { apiPlugin, storyblokInit, type SbSDKOptions } from '@storyblok/js';
 
-import { getComponentByName } from "$lib/storyblok"; 
+import { getComponentByName } from '$lib/storyblok';
 
-import { PUBLIC_STORYBLOK_ACCESS_TOKEN } from "$env/static/public";
+import { PUBLIC_STORYBLOK_ACCESS_TOKEN } from '$env/static/public';
 
 const getStoryblok = (
-  apiOptions: SbSDKOptions["apiOptions"] = {},
-  options: Omit<SbSDKOptions, "apiOptions"> = {}
+	apiOptions: SbSDKOptions['apiOptions'] = {},
+	options: Omit<SbSDKOptions, 'apiOptions'> = {}
 ) => {
-  const { storyblokApi } = storyblokInit({
-    accessToken: PUBLIC_STORYBLOK_ACCESS_TOKEN,
-    use: [apiPlugin],
-    ...options,
-    apiOptions: {
-      https: true,
-      region: "us",
-      ...apiOptions,
-    },
-  });
+	const { storyblokApi } = storyblokInit({
+		accessToken: PUBLIC_STORYBLOK_ACCESS_TOKEN,
+		use: [apiPlugin],
+		...options,
+		apiOptions: {
+			https: true,
+			region: 'us',
+			...apiOptions
+		}
+	});
 
-  return storyblokApi as NonNullable<
-    ReturnType<typeof storyblokInit>["storyblokApi"]
-  >;
+	return storyblokApi as NonNullable<ReturnType<typeof storyblokInit>['storyblokApi']>;
 };
 
 export async function GET({ url }) {
-  const storyblok = getStoryblok();
+	const storyblok = getStoryblok();
 
-  const sbSettings = await storyblok.get("cdn/stories/settings", {
-    version: "published",
-    resolve_relations: ['header.navigation']
-  });
+	const sbSettings = await storyblok.get('cdn/stories/settings', {
+		version: 'published',
+		resolve_relations: ['header.navigation']
+	});
 
- 
-  const sbHeader = getComponentByName(sbSettings.data.story.content, 'header')
+	const sbHeader = getComponentByName(sbSettings.data.story.content, 'header');
 
-
-  const sbProjects = await storyblok.get('cdn/stories', {
+	const sbProjects = await storyblok.get('cdn/stories', {
 		version: 'published',
 		starts_with: 'projects'
 	});
 
-  const body = sitemap(url.origin, sbHeader.navigation, sbProjects.data.stories);
-  const response = new Response(body);
-  response.headers.set("Cache-Control", "max-age=0, s-maxage=3600");
-  response.headers.set("Content-Type", "application/xml");
-  return response;
+	const body = sitemap(url.origin, sbHeader.navigation, sbProjects.data.stories);
+	const response = new Response(body);
+	response.headers.set('Cache-Control', 'max-age=0, s-maxage=3600');
+	response.headers.set('Content-Type', 'application/xml');
+	return response;
 }
 
 const sitemap = (
-  websiteURL: string,
-  pages: any,
-  projects: any
+	websiteURL: string,
+	pages: any,
+	projects: any
 ) => `<?xml version="1.0" encoding="UTF-8" ?>
 <urlset
   xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"
@@ -71,18 +63,19 @@ const sitemap = (
     <priority>1.0</priority>
   </url>
   ${pages
-    .map(
-      (page: any) => `
+		.map(
+			(page: any) => `
   <url>
     <loc>${websiteURL}/${page.slug}</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   `
-    )
-    .join("")}
+		)
+		.join('')}
   ${projects
-    .map((project: any) => `
+		.map(
+			(project: any) => `
   <url>
     <loc>${websiteURL}/work/${project.slug}</loc>
     <changefreq>weekly</changefreq>
@@ -90,6 +83,6 @@ const sitemap = (
     <priority>0.7</priority>
   </url>
   `
-    )
-    .join("")}
+		)
+		.join('')}
 </urlset>`;

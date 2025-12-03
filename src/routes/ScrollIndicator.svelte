@@ -31,7 +31,7 @@
 </script>
 
 <div
-	class="fixed bottom-[20px] right-[20px] z-40 hidden gap-8 mix-blend-difference md:bottom-[60px] md:right-[60px] md:flex"
+	class="fixed right-[20px] bottom-[20px] z-40 hidden gap-8 mix-blend-difference md:right-[60px] md:bottom-[60px] md:flex"
 	id="scroll-indicator"
 >
 	<div class="flex flex-col gap-8">

@@ -8,7 +8,7 @@
 	export let selected: boolean;
 </script>
 
-<li class={cls('mb-3 whitespace-nowrap text-right text-xs font-bold uppercase tracking-wider')}>
+<li class={cls('mb-3 text-right text-xs font-bold tracking-wider whitespace-nowrap uppercase')}>
 	<span
 		class={cls(selected ? 'text-white [&_a]:text-white' : 'text-stone-450 [&_a]:text-stone-450')}
 	>

@@ -14,8 +14,8 @@
 	export let startTheme: 'light' | 'dark' = 'light';
 	export let endTheme: 'light' | 'dark' = 'light';
 
-let el!: HTMLElement;
-let scrollTrigger: ScrollTrigger | null = null;
+	let el!: HTMLElement;
+	let scrollTrigger: ScrollTrigger | null = null;
 
 	onMount(() => {
 		if (preload) {
@@ -49,10 +49,10 @@ let scrollTrigger: ScrollTrigger | null = null;
 		});
 	});
 
-onDestroy(() => {
-	scrollTrigger?.kill?.();
-	scrollTrigger = null;
-});
+	onDestroy(() => {
+		scrollTrigger?.kill?.();
+		scrollTrigger = null;
+	});
 </script>
 
 <div {...$$restProps} bind:this={el}></div>

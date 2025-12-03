@@ -17,15 +17,12 @@
 	}
 
 	$: contentHTML =
-		renderRichText(
-			blok.content,
-			{
-				// cast to maintain custom component resolution with the new SDK
-				resolver: (component: any, blok: any) => {
-					return `__COMPONENT__!!! ${JSON.stringify({ component, blok })} __COMPONENT__`;
-				}
-			} as any
-		) ?? '';
+		renderRichText(blok.content, {
+			// cast to maintain custom component resolution with the new SDK
+			resolver: (component: any, blok: any) => {
+				return `__COMPONENT__!!! ${JSON.stringify({ component, blok })} __COMPONENT__`;
+			}
+		} as any) ?? '';
 
 	$: contentSegments = contentHTML.split('__COMPONENT__').map((x) => {
 		if (x.startsWith('!!!')) {

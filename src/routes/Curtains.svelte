@@ -11,12 +11,12 @@
 		// 0 - no touch (pointer/mouse only)
 		// 1 - touch-only device (like a phone)
 		// 2 - device can accept touch input and mouse/pointer (like Windows tablets)
-	const touchCapability: number =
+		const touchCapability: number =
 			window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches
 				? 1
 				: 'ontouchstart' in window || navigator.maxTouchPoints > 0
-				? 2
-				: 0;
+					? 2
+					: 0;
 
 		if (touchCapability !== 1) {
 			curtains.set(
@@ -53,8 +53,8 @@
 	});
 
 	useFrame(() => {
-	if ($curtains) $curtains.render();
+		if ($curtains) $curtains.render();
 	});
 </script>
 
-<div id="canvas" class="fixed left-0 right-0 top-0 z-[1] h-screen"></div>
+<div id="canvas" class="fixed top-0 right-0 left-0 z-[1] h-screen"></div>

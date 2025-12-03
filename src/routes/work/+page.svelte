@@ -145,7 +145,7 @@
 <section class="relative pt-8" bind:this={el}>
 	<div class="relative hidden xl:block">
 		{#if activeFilter}
-			<MenuList class="fixed right-4 top-32 z-10 flex flex-col items-end gap-4 pr-8 pt-8">
+			<MenuList class="fixed top-32 right-4 z-10 flex flex-col items-end gap-4 pt-8 pr-8">
 				<div in:fade={{ delay: 0 }} out:fade={{ delay: categories.length * 25 }}>
 					<MenuItem
 						name="All Projects"

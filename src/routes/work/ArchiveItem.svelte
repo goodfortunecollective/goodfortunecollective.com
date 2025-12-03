@@ -32,7 +32,7 @@
 		<span class="flex w-full flex-col lg:w-2/3">
 			<Heading size="h3" as="h3" class="w-full">{name}</Heading>
 			{#if description && description.length > 0}
-				<span class="mt-1 inline-block w-full text-base text-white xl:text-xl 4xl:text-2xl">
+				<span class="4xl:text-2xl mt-1 inline-block w-full text-base text-white xl:text-xl">
 					{@html description}
 				</span>
 			{/if}
@@ -40,7 +40,7 @@
 		<Heading
 			size="h6"
 			as="h3"
-			class="mb-2 mt-2 flex w-full items-center font-bold uppercase tracking-widest text-white no-underline lg:mb-0 lg:mt-0 lg:w-1/3"
+			class="mt-2 mb-2 flex w-full items-center font-bold tracking-widest text-white uppercase no-underline lg:mt-0 lg:mb-0 lg:w-1/3"
 		>
 			<small class="text-yellow-350">{content.brand}</small>
 		</Heading>

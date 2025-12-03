@@ -73,7 +73,7 @@
 		<span
 			class={cls(
 				'c-list-item-link__action',
-				'hidden text-xs font-bold uppercase tracking-widest lg:block'
+				'hidden text-xs font-bold tracking-widest uppercase lg:block'
 			)}
 		>
 			{label}

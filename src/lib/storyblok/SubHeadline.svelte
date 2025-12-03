@@ -44,7 +44,7 @@
 	on:inview_change={inViewColorTransition}
 	class={cls(blok.class, containerStyle({ theme: $backgroundTheme }))}
 >
-	<div class="grid grid-cols-12 gap-8 pb-8 pt-16 lg:gap-0">
+	<div class="grid grid-cols-12 gap-8 pt-16 pb-8 lg:gap-0">
 		<div
 			class={cls(
 				'col-span-12 col-start-1 mx-4 md:col-span-10 md:col-start-2 md:mx-0 lg:col-start-2  2xl:col-start-3',

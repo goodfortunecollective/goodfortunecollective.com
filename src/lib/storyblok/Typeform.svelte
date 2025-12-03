@@ -30,7 +30,7 @@
 	<button
 		class={cls(
 			'typeform-button',
-			'mb-1 mr-1 rounded-full border border-solid border-red-100 bg-transparent px-8 py-3 font-bold uppercase text-red-50 outline-none transition-all duration-150 ease-linear hover:bg-red-100 hover:text-black focus:outline-none active:bg-red-200'
+			'mr-1 mb-1 rounded-full border border-solid border-red-100 bg-transparent px-8 py-3 font-bold text-red-50 uppercase transition-all duration-150 ease-linear outline-none hover:bg-red-100 hover:text-black focus:outline-none active:bg-red-200'
 		)}
 		on:click={openTypeform}
 		type="button">{blok.label}</button

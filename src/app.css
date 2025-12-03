@@ -1,16 +1,15 @@
-@config "../tailwind.config.js";
-@import "tailwindcss";
+@config '../tailwind.config.js';
+@import 'tailwindcss';
 
 @layer base {
-
 	a {
-	  @apply text-rose-50;
+		@apply text-rose-50;
 	}
 
 	a:hover {
-		@apply underline underline-offset-8 ;
-	  }
-  }
+		@apply underline underline-offset-8;
+	}
+}
 
 @layer base {
 	:root {
@@ -33,7 +32,7 @@
 		min-height: 100vh;
 		overflow-y: scroll;
 	}
-	
+
 	html.lenis-stopped {
 		overflow: hidden;
 	}
@@ -95,7 +94,7 @@
 		content: '';
 		display: block;
 		position: absolute;
-		bottom:0px;
+		bottom: 0px;
 		width: 0;
 		height: 4px;
 		background: currentColor;
@@ -103,7 +102,7 @@
 	}
 
 	.c-animated-underline__align-right::after {
-		right: 0
+		right: 0;
 	}
 
 	.c-animated-underline__heading::after {
@@ -120,11 +119,11 @@
 	}
 }
 
-@layer components { 
-	.outline-text-rose-50 { 
+@layer components {
+	.outline-text-rose-50 {
 		-webkit-text-stroke: 1px theme('colors.rose.50');
-	  }
+	}
 	.outline-text-black {
 		-webkit-text-stroke: 1px theme('colors.black');
-	  }
+	}
 }

@@ -15,11 +15,11 @@
 
 	export let blok: any;
 
-let el!: HTMLElement;
-let pinEl!: HTMLElement;
-let contentEl!: HTMLElement;
+	let el!: HTMLElement;
+	let pinEl!: HTMLElement;
+	let contentEl!: HTMLElement;
 
-let scrollTrigger: ScrollTrigger | null = null;
+	let scrollTrigger: ScrollTrigger | null = null;
 
 	const textStyle = cva('flex flex-col duration-1000 ease-out', {
 		variants: {
@@ -45,10 +45,10 @@ let scrollTrigger: ScrollTrigger | null = null;
 		}
 	});
 
-onDestroy(() => {
-	scrollTrigger?.kill?.();
-	scrollTrigger = null;
-});
+	onDestroy(() => {
+		scrollTrigger?.kill?.();
+		scrollTrigger = null;
+	});
 </script>
 
 <div
@@ -66,7 +66,7 @@ onDestroy(() => {
 				width={getImageDimensionsFromUrl(blok.asset.filename).width}
 				height={getImageDimensionsFromUrl(blok.asset.filename).height}
 				alt={blok.asset.name}
-				class="-translate-x-1/8 absolute left-1/2 top-0 col-span-12 translate-y-1/4 -rotate-45 scale-150 transform"
+				class="absolute top-0 left-1/2 col-span-12 -translate-x-1/8 translate-y-1/4 scale-150 -rotate-45 transform"
 				loading="lazy"
 				decoding="async"
 				in:fade={{ duration: 500 }}

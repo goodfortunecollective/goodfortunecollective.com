@@ -374,7 +374,7 @@
 								aria-label="Play video fullscreen"
 							>
 								<div
-									class="z-1 flex h-full w-full origin-center items-center justify-center rounded-[100%] bg-yellow-350"
+									class="bg-yellow-350 z-1 flex h-full w-full origin-center items-center justify-center rounded-[100%]"
 								>
 									<div
 										class="ml-0.5 inline-block h-0 w-0 origin-center transform cursor-pointer border-y-[7px] border-l-[12px] border-solid border-y-transparent border-l-black content-['']"
@@ -408,13 +408,13 @@
 			</div>
 
 			<div
-				class="title-cont pointer-events-none absolute left-0 top-0 flex h-full w-full items-start"
+				class="title-cont pointer-events-none absolute top-0 left-0 flex h-full w-full items-start"
 			>
 				<div class="mx-4 flex h-full flex-col justify-between py-[15vh] md:mx-0">
 					<h1
 						data-gsap="split-text"
 						class={cls(
-							'z-[8] max-w-11xl font-degular-display leading-tightest tracking-wide text-neutral-950',
+							'max-w-11xl font-degular-display leading-tightest z-[8] tracking-wide text-neutral-950',
 							'sb-headline-video__title'
 						)}
 					>
@@ -422,7 +422,7 @@
 					</h1>
 					<h2
 						data-gsap="split-text"
-						class="z-10 mb-[5vh] max-w-2xl font-degular-display text-4xl text-white md:text-6xl lg:max-w-2xl"
+						class="font-degular-display z-10 mb-[5vh] max-w-2xl text-4xl text-white md:text-6xl lg:max-w-2xl"
 					>
 						{blok.subheadline}
 					</h2>

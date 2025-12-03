@@ -63,7 +63,7 @@
 <svelte:window on:mousemove={onMouseMove} />
 
 <div
-	class="pointer-events-none fixed left-0 top-0 z-10 h-full w-full origin-center transform"
+	class="pointer-events-none fixed top-0 left-0 z-10 h-full w-full origin-center transform"
 	bind:this={el}
 >
 	<div
