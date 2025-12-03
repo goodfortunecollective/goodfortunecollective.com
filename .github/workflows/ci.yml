@@ -53,6 +53,7 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm playwright install ${{ matrix.e2e-browser }}
+      - run: pnpm exec playwright install-deps
       - run: pnpm test
       - name: Archive test results
         if: failure()
@@ -115,6 +116,7 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm playwright install ${{ matrix.e2e-browser }}
+      - run: pnpm exec playwright install-deps
       - run: pnpm test:cross-platform:${{ matrix.mode }}
       - name: Archive test results
         if: failure()

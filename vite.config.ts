@@ -1,12 +1,13 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vitest/config';
+import type { PluginOption } from 'vite';
 
 import tailwindcss from '@tailwindcss/vite';
 import mkcert from 'vite-plugin-mkcert';
 
 const useMkcert = process.env.CI !== 'true';
 
-const plugins = [tailwindcss(), sveltekit()];
+const plugins: PluginOption[] = [tailwindcss(), sveltekit()];
 
 if (useMkcert) {
 	plugins.unshift(mkcert());
