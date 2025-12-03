@@ -2,14 +2,18 @@ import { apiPlugin, storyblokInit, type SbSDKOptions } from '@storyblok/js';
 
 import { getComponentByName } from '$lib/storyblok';
 
-import { PUBLIC_STORYBLOK_ACCESS_TOKEN } from '$env/static/public';
+import { env as publicEnv } from '$env/dynamic/public';
 
 const getStoryblok = (
 	apiOptions: SbSDKOptions['apiOptions'] = {},
 	options: Omit<SbSDKOptions, 'apiOptions'> = {}
 ) => {
+	const accessToken = publicEnv.PUBLIC_STORYBLOK_ACCESS_TOKEN ?? '';
+
 	const { storyblokApi } = storyblokInit({
-		accessToken: PUBLIC_STORYBLOK_ACCESS_TOKEN,
+		// Dynamic env keeps builds from failing when PUBLIC_STORYBLOK_ACCESS_TOKEN
+		// is not defined at build time (e.g., CI without public envs).
+		accessToken,
 		use: [apiPlugin],
 		...options,
 		apiOptions: {
