@@ -1,9 +1,8 @@
-import { onDestroy, onMount } from 'svelte';
+import { onDestroy } from 'svelte';
 import { curtains } from '$lib/stores';
-import type { Curtains } from '@types/curtainsjs';
 import { useTransitionReady } from './useTransitionReady';
 
-export type CurtainsInstance = null | Curtains;
+export type CurtainsInstance = any | null;
 
 export function useCurtains(
 	setup: (curtainsInstance: CurtainsInstance) => void = (curtainsInstance: CurtainsInstance) => {},

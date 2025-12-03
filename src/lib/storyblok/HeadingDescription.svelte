@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { inview } from 'svelte-inview';
-	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+	import { StoryblokComponent, storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
+	import { inview } from 'svelte-inview';
 
 	import { Heading } from '$lib/components';
-	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
+	import { cls } from '$lib/styles';
 	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;
@@ -88,7 +88,7 @@
 			as="h2"
 			size="h6"
 			class={cls(
-				'col-span-12 col-start-1 mx-4 w-full break-keep font-bold uppercase tracking-widest md:col-span-10 md:col-start-2 md:mx-0 xl:w-[75%]',
+				'col-span-12 col-start-1 mx-4 w-full font-bold tracking-widest break-keep uppercase md:col-span-10 md:col-start-2 md:mx-0 xl:w-[75%]',
 				headingStyle({ theme: $backgroundTheme, textAlign: blok.heading_leftAlign })
 			)}>{blok.heading}</Heading
 		>

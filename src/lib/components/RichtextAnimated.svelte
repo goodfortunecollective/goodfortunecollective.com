@@ -121,5 +121,5 @@
 <svelte:window bind:innerWidth on:resize={debounce(onResize)} />
 
 <span bind:this={element} class={cls('inline-block break-words', clazz)} {style}>
-	<span class="wrap" /><slot />
+	<span class="wrap"></span><slot />
 </span>

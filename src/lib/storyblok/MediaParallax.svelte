@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { StoryblokComponent, storyblokEditable } from '@storyblok/svelte';
 
-	import { cls } from '$lib/styles';
 	import { Image } from '$lib/components';
 	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
+	import { cls } from '$lib/styles';
 
 	export let blok: any;
 </script>

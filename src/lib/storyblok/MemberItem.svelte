@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { storyblokEditable } from '@storyblok/svelte';
 
-	import { heading_hover_media } from '$lib/stores';
 	import { Heading } from '$lib/components';
+	import { heading_hover_media } from '$lib/stores';
 
 	export let blok: any;
 
@@ -29,7 +29,7 @@
 		<Heading
 			size="h6"
 			as="h3"
-			class="flex w-full items-center font-bold uppercase tracking-widest text-white lg:w-1/3"
+			class="flex w-full items-center font-bold tracking-widest text-white uppercase lg:w-1/3"
 		>
 			<small>{blok.role}</small>
 		</Heading>

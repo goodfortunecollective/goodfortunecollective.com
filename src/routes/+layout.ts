@@ -1,6 +1,6 @@
 import { apiPlugin, storyblokInit, useStoryblokApi } from '@storyblok/svelte';
 
-import { PUBLIC_STORYBLOK_ACCESS_TOKEN } from '$env/static/public';
+import { env as publicEnv } from '$env/dynamic/public';
 
 import { dev } from '$app/environment';
 import { components, isPreview } from '$lib/storyblok';
@@ -8,8 +8,11 @@ import { components, isPreview } from '$lib/storyblok';
 import type { LayoutLoad } from './$types';
 
 export const load: LayoutLoad = async ({ url }) => {
+	const accessToken = publicEnv.PUBLIC_STORYBLOK_ACCESS_TOKEN ?? '';
+
 	storyblokInit({
-		accessToken: PUBLIC_STORYBLOK_ACCESS_TOKEN,
+		// Dynamic env allows builds to succeed even when the token isn't injected (e.g., CI).
+		accessToken,
 		use: [apiPlugin],
 		components,
 		apiOptions: {
@@ -28,6 +31,6 @@ export const load: LayoutLoad = async ({ url }) => {
 		storyblokApi: storyblokApi,
 		pathname: url.pathname,
 		preview: isPreview(url),
-		settings: settingsStory.data.story,
+		settings: settingsStory.data.story
 	};
 };

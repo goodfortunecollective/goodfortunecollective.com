@@ -5,8 +5,8 @@
 
 	import { base } from '$app/paths';
 	import { Heading, Spacer } from '$lib/components';
-	import { cls } from '$lib/styles';
 	import { backgroundTheme, cursorType } from '$lib/stores';
+	import { cls } from '$lib/styles';
 	import { inViewColorTransition } from '$lib/utils/animations';
 	import { lazyLoad } from '$lib/utils/lazyLoad';
 
@@ -54,7 +54,7 @@
 		class={cls('relative grid grid-cols-12', blok.class, textStyle({ theme: $backgroundTheme }))}
 	>
 		<div class="relative col-span-10 col-start-4">
-			<div class="absolute left-0 top-0">
+			<div class="absolute top-0 left-0">
 				<div class="-translate-x-14 -translate-y-14 scale-110">
 					<img use:lazyLoad={`${base}/assets/GFC-lockup.png`} alt="" class="animate-spin-slow" />
 				</div>

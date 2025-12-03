@@ -42,9 +42,9 @@
 </script>
 
 {#if active}
-	<div class="fixed left-0 top-0 z-40 h-screen w-screen overflow-hidden bg-white">
+	<div class="fixed top-0 left-0 z-40 h-screen w-screen overflow-hidden bg-white">
 		<div class="flex h-full w-full items-center justify-center">
-			<div class="absolute h-full w-full bg-white" />
+			<div class="absolute h-full w-full bg-white"></div>
 			<video
 				muted
 				playsinline

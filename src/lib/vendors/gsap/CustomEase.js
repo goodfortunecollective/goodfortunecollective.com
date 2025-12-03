@@ -1,33 +1,34 @@
 /*!
- * CustomEase 3.12.4
+ * CustomEase 3.13.0
  * https://gsap.com
  *
- * @license Copyright 2008-2023, GreenSock. All rights reserved.
- * Subject to the terms at https://gsap.com/standard-license or for
- * Club GSAP members, the agreement issued with that membership.
+ * @license Copyright 2008-2025, GreenSock. All rights reserved.
+ * Subject to the terms at https://gsap.com/standard-license
  * @author: Jack Doyle, jack@greensock.com
-*/
+ */
 /* eslint-disable */
 
-import { stringToRawPath, rawPathToString, transformRawPath } from "./utils/paths.js";
+import { stringToRawPath, rawPathToString, transformRawPath } from './utils/paths.js';
 
-let gsap, _coreInitted,
-	_getGSAP = () => gsap || (typeof(window) !== "undefined" && (gsap = window.gsap) && gsap.registerPlugin && gsap),
+let gsap,
+	_coreInitted,
+	_getGSAP = () =>
+		gsap || (typeof window !== 'undefined' && (gsap = window.gsap) && gsap.registerPlugin && gsap),
 	_initCore = () => {
 		gsap = _getGSAP();
 		if (gsap) {
-			gsap.registerEase("_CE", CustomEase.create);
+			gsap.registerEase('_CE', CustomEase.create);
 			_coreInitted = 1;
 		} else {
-			console.warn("Please gsap.registerPlugin(CustomEase)");
+			console.warn('Please gsap.registerPlugin(CustomEase)');
 		}
 	},
 	_bigNum = 1e20,
-	_round = value => ~~(value * 1000 + (value < 0 ? -.5 : .5)) / 1000,
+	_round = (value) => ~~(value * 1000 + (value < 0 ? -0.5 : 0.5)) / 1000,
 	_bonusValidated = 1, //<name>CustomEase</name>
 	_numExp = /[-+=.]*\d+[.e\-+]*\d*[e\-+]*\d*/gi, //finds any numbers, including ones that start with += or -=, negative numbers, and ones in scientific notation like 1e-8.
 	_needsParsingExp = /[cLlsSaAhHvVtTqQ]/g,
-	_findMinimum = values => {
+	_findMinimum = (values) => {
 		let l = values.length,
 			min = _bigNum,
 			i;
@@ -39,17 +40,23 @@ let gsap, _coreInitted,
 	//takes all the points and translates/scales them so that the x starts at 0 and ends at 1.
 	_normalize = (values, height, originY) => {
 		if (!originY && originY !== 0) {
-			originY = Math.max(+values[values.length-1], +values[1]);
+			originY = Math.max(+values[values.length - 1], +values[1]);
 		}
 		let tx = +values[0] * -1,
 			ty = -originY,
 			l = values.length,
 			sx = 1 / (+values[l - 2] + tx),
-			sy = -height || ((Math.abs(+values[l - 1] - +values[1]) < 0.01 * (+values[l - 2] - +values[0])) ? _findMinimum(values) + ty : +values[l - 1] + ty),
+			sy =
+				-height ||
+				(Math.abs(+values[l - 1] - +values[1]) < 0.01 * (+values[l - 2] - +values[0])
+					? _findMinimum(values) + ty
+					: +values[l - 1] + ty),
 			i;
-		if (sy) { //typically y ends at 1 (so that the end values are reached)
+		if (sy) {
+			//typically y ends at 1 (so that the end values are reached)
 			sy = 1 / sy;
-		} else { //in case the ease returns to its beginning value, scale everything proportionally
+		} else {
+			//in case the ease returns to its beginning value, scale everything proportionally
 			sy = -sx;
 		}
 		for (i = 0; i < l; i += 2) {
@@ -77,20 +84,34 @@ let gsap, _coreInitted,
 			d3 = Math.abs((x3 - x4) * dy - (y3 - y4) * dx),
 			length;
 		if (!points) {
-			points = [{x: x1, y: y1}, {x: x4, y: y4}];
+			points = [
+				{ x: x1, y: y1 },
+				{ x: x4, y: y4 }
+			];
 			index = 1;
 		}
-		points.splice(index || points.length - 1, 0, {x: x1234, y: y1234});
+		points.splice(index || points.length - 1, 0, { x: x1234, y: y1234 });
 		if ((d2 + d3) * (d2 + d3) > threshold * (dx * dx + dy * dy)) {
 			length = points.length;
 			_bezierToPoints(x1, y1, x12, y12, x123, y123, x1234, y1234, threshold, points, index);
-			_bezierToPoints(x1234, y1234, x234, y234, x34, y34, x4, y4, threshold, points, index + 1 + (points.length - length));
+			_bezierToPoints(
+				x1234,
+				y1234,
+				x234,
+				y234,
+				x34,
+				y34,
+				x4,
+				y4,
+				threshold,
+				points,
+				index + 1 + (points.length - length)
+			);
 		}
 		return points;
 	};
 
 export class CustomEase {
-
 	constructor(id, data, config) {
 		_coreInitted || _initCore();
 		this.id = id;
@@ -99,16 +120,24 @@ export class CustomEase {
 
 	setData(data, config) {
 		config = config || {};
-		data = data || "0,0,1,1";
+		data = data || '0,0,1,1';
 		let values = data.match(_numExp),
 			closest = 1,
 			points = [],
 			lookup = [],
 			precision = config.precision || 1,
-			fast = (precision <= 1),
-			l, a1, a2, i, inc, j, point, prevPoint, p;
+			fast = precision <= 1,
+			l,
+			a1,
+			a2,
+			i,
+			inc,
+			j,
+			point,
+			prevPoint,
+			p;
 		this.data = data;
-		if (_needsParsingExp.test(data) || (~data.indexOf("M") && data.indexOf("C") < 0)) {
+		if (_needsParsingExp.test(data) || (~data.indexOf('M') && data.indexOf('C') < 0)) {
 			values = stringToRawPath(data)[0];
 		}
 		l = values.length;
@@ -117,34 +146,58 @@ export class CustomEase {
 			values.push(1, 1);
 			l = 8;
 		} else if ((l - 2) % 6) {
-			throw "Invalid CustomEase";
+			throw 'Invalid CustomEase';
 		}
 		if (+values[0] !== 0 || +values[l - 2] !== 1) {
 			_normalize(values, config.height, config.originY);
 		}
 		this.segment = values;
 		for (i = 2; i < l; i += 6) {
-			a1 = {x: +values[i - 2], y: +values[i - 1]};
-			a2 = {x: +values[i + 4], y: +values[i + 5]};
+			a1 = { x: +values[i - 2], y: +values[i - 1] };
+			a2 = { x: +values[i + 4], y: +values[i + 5] };
 			points.push(a1, a2);
-			_bezierToPoints(a1.x, a1.y, +values[i], +values[i + 1], +values[i + 2], +values[i + 3], a2.x, a2.y, 1 / (precision * 200000), points, points.length - 1);
+			_bezierToPoints(
+				a1.x,
+				a1.y,
+				+values[i],
+				+values[i + 1],
+				+values[i + 2],
+				+values[i + 3],
+				a2.x,
+				a2.y,
+				1 / (precision * 200000),
+				points,
+				points.length - 1
+			);
 		}
 		l = points.length;
 		for (i = 0; i < l; i++) {
 			point = points[i];
 			prevPoint = points[i - 1] || point;
-			if ((point.x > prevPoint.x || (prevPoint.y !== point.y && prevPoint.x === point.x) || point === prevPoint) && point.x <= 1) { //if a point goes BACKWARD in time or is a duplicate, just drop it. Also it shouldn't go past 1 on the x axis, as could happen in a string like "M0,0 C0,0 0.12,0.68 0.18,0.788 0.195,0.845 0.308,1 0.32,1 0.403,1.005 0.398,1 0.5,1 0.602,1 0.816,1.005 0.9,1 0.91,1 0.948,0.69 0.962,0.615 1.003,0.376 1,0 1,0".
+			if (
+				(point.x > prevPoint.x ||
+					(prevPoint.y !== point.y && prevPoint.x === point.x) ||
+					point === prevPoint) &&
+				point.x <= 1
+			) {
+				//if a point goes BACKWARD in time or is a duplicate, just drop it. Also it shouldn't go past 1 on the x axis, as could happen in a string like "M0,0 C0,0 0.12,0.68 0.18,0.788 0.195,0.845 0.308,1 0.32,1 0.403,1.005 0.398,1 0.5,1 0.602,1 0.816,1.005 0.9,1 0.91,1 0.948,0.69 0.962,0.615 1.003,0.376 1,0 1,0".
 				prevPoint.cx = point.x - prevPoint.x; //change in x between this point and the next point (performance optimization)
 				prevPoint.cy = point.y - prevPoint.y;
 				prevPoint.n = point;
 				prevPoint.nx = point.x; //next point's x value (performance optimization, making lookups faster in getRatio()). Remember, the lookup will always land on a spot where it's either this point or the very next one (never beyond that)
-				if (fast && i > 1 && Math.abs(prevPoint.cy / prevPoint.cx - points[i - 2].cy / points[i - 2].cx) > 2) { //if there's a sudden change in direction, prioritize accuracy over speed. Like a bounce ease - you don't want to risk the sampling chunks landing on each side of the bounce anchor and having it clipped off.
+				if (
+					fast &&
+					i > 1 &&
+					Math.abs(prevPoint.cy / prevPoint.cx - points[i - 2].cy / points[i - 2].cx) > 2
+				) {
+					//if there's a sudden change in direction, prioritize accuracy over speed. Like a bounce ease - you don't want to risk the sampling chunks landing on each side of the bounce anchor and having it clipped off.
 					fast = 0;
 				}
 				if (prevPoint.cx < closest) {
 					if (!prevPoint.cx) {
 						prevPoint.cx = 0.001; //avoids math problems in getRatio() (dividing by zero)
-						if (i === l - 1) { //in case the final segment goes vertical RIGHT at the end, make sure we end at the end.
+						if (i === l - 1) {
+							//in case the final segment goes vertical RIGHT at the end, make sure we end at the end.
 							prevPoint.x -= 0.001;
 							closest = Math.min(closest, 0.001);
 							fast = 0;
@@ -163,20 +216,25 @@ export class CustomEase {
 		j = 0;
 		point = points[0];
 		if (fast) {
-			for (i = 0; i < l; i++) { //for fastest lookups, we just sample along the path at equal x (time) distance. Uses more memory and is slightly less accurate for anchors that don't land on the sampling points, but for the vast majority of eases it's excellent (and fast).
+			for (i = 0; i < l; i++) {
+				//for fastest lookups, we just sample along the path at equal x (time) distance. Uses more memory and is slightly less accurate for anchors that don't land on the sampling points, but for the vast majority of eases it's excellent (and fast).
 				p = i * inc;
 				if (point.nx < p) {
 					point = points[++j];
 				}
 				a1 = point.y + ((p - point.x) / point.cx) * point.cy;
-				lookup[i] = {x: p, cx: inc, y: a1, cy: 0, nx: 9};
+				lookup[i] = { x: p, cx: inc, y: a1, cy: 0, nx: 9 };
 				if (i) {
 					lookup[i - 1].cy = a1 - lookup[i - 1].y;
 				}
 			}
-			lookup[l - 1].cy = points[points.length - 1].y - a1;
-		} else { //this option is more accurate, ensuring that EVERY anchor is hit perfectly. Clipping across a bounce, for example, would never happen.
-			for (i = 0; i < l; i++) { //build a lookup table based on the smallest distance so that we can instantly find the appropriate point (well, it'll either be that point or the very next one). We'll look up based on the linear progress. So it's it's 0.5 and the lookup table has 100 elements, it'd be like lookup[Math.floor(0.5 * 100)]
+			j = points[points.length - 1];
+			lookup[l - 1].cy = j.y - a1;
+			lookup[l - 1].cx = j.x - lookup[lookup.length - 1].x; //make sure it lands EXACTLY where it should. Otherwise, it might be something like 0.9999999999 instead of 1.
+		} else {
+			//this option is more accurate, ensuring that EVERY anchor is hit perfectly. Clipping across a bounce, for example, would never happen.
+			for (i = 0; i < l; i++) {
+				//build a lookup table based on the smallest distance so that we can instantly find the appropriate point (well, it'll either be that point or the very next one). We'll look up based on the linear progress. So it's it's 0.5 and the lookup table has 100 elements, it'd be like lookup[Math.floor(0.5 * 100)]
 				if (point.nx < i * inc) {
 					point = points[++j];
 				}
@@ -184,12 +242,12 @@ export class CustomEase {
 			}
 
 			if (j < points.length - 1) {
-				lookup[i-1] = points[points.length-2];
+				lookup[i - 1] = points[points.length - 2];
 			}
 		}
 		//this._calcEnd = (points[points.length-1].y !== 1 || points[0].y !== 0); //ensures that we don't run into floating point errors. As long as we're starting at 0 and ending at 1, tell GSAP to skip the final calculation and use 0/1 as the factor.
 
-		this.ease = p => {
+		this.ease = (p) => {
 			let point = lookup[(p * l) | 0] || lookup[l - 1];
 			if (point.nx < p) {
 				point = point.n;
@@ -209,7 +267,7 @@ export class CustomEase {
 	}
 
 	static create(id, data, config) {
-		return (new CustomEase(id, data, config)).ease;
+		return new CustomEase(id, data, config).ease;
 	}
 
 	static register(core) {
@@ -228,12 +286,21 @@ export class CustomEase {
 			x = config.x || 0,
 			y = (config.y || 0) + height,
 			e = gsap.utils.toArray(config.path)[0],
-			a, slope, i, inc, tx, ty, precision, threshold, prevX, prevY;
+			a,
+			slope,
+			i,
+			inc,
+			tx,
+			ty,
+			precision,
+			threshold,
+			prevX,
+			prevY;
 		if (config.invert) {
 			height = -height;
 			y = 0;
 		}
-		if (typeof(ease) === "string") {
+		if (typeof ease === 'string') {
 			ease = gsap.parseEase(ease);
 		}
 		if (ease.custom) {
@@ -253,23 +320,24 @@ export class CustomEase {
 			for (i = 2; i < precision; i++) {
 				tx = _round(x + i * inc * width);
 				ty = _round(y + ease(i * inc) * -height);
-				if (Math.abs((ty - prevY) / (tx - prevX) - slope) > threshold || i === precision - 1) { //only add points when the slope changes beyond the threshold
+				if (Math.abs((ty - prevY) / (tx - prevX) - slope) > threshold || i === precision - 1) {
+					//only add points when the slope changes beyond the threshold
 					a.push(prevX, prevY);
 					slope = (ty - prevY) / (tx - prevX);
 				}
 				prevX = tx;
 				prevY = ty;
 			}
-			a = "M" + a.join(",");
+			a = 'M' + a.join(',');
 		}
-		e && e.setAttribute("d", a);
+		e && e.setAttribute('d', a);
 		return a;
 	}
-
 }
 
-_getGSAP() && gsap.registerPlugin(CustomEase);
+CustomEase.version = '3.13.0';
+CustomEase.headless = true;
 
-CustomEase.version = "3.12.4";
+_getGSAP() && gsap.registerPlugin(CustomEase);
 
 export { CustomEase as default };

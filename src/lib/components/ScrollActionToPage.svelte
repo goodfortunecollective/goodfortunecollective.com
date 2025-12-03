@@ -89,13 +89,13 @@
 				'flex flex-col items-center justify-center gap-8 text-center'
 			)}
 		>
-			<p class="font-medium uppercase tracking-widest">Scroll</p>
-			<div class={cls('c-scroll-action-to-page__bar', 'relative h-32 w-px')} />
+			<p class="font-medium tracking-widest uppercase">Scroll</p>
+			<div class={cls('c-scroll-action-to-page__bar', 'relative h-32 w-px')}></div>
 			<span
 				bind:this={scrollLabel}
 				class={cls(
 					'c-scroll-action-to-page__label',
-					'inline-flex h-[1em] font-degular-display text-7xl leading-snug md:text-9xl lg:text-[12em]'
+					'font-degular-display inline-flex h-[1em] text-7xl leading-snug md:text-9xl lg:text-[12em]'
 				)}>{label}</span
 			>
 		</div>
@@ -131,7 +131,7 @@
 				right: 0;
 				bottom: 0;
 				left: 0;
-				background: theme('colors.yellow.350');
+				background: var(--color-yellow-350);
 				transform-origin: 50% 0;
 				transform: scale3d(1, var(--parallax-effect), 1);
 			}

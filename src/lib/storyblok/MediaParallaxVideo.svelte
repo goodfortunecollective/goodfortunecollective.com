@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { storyblokEditable } from '@storyblok/svelte';
 
-	import { cls } from '$lib/styles';
-	import { gsap } from 'gsap';
-	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 	import { Video } from '$lib/components';
+	import { cls } from '$lib/styles';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import { gsap } from 'gsap';
 
 	export let blok: any;
 	let element: HTMLElement;

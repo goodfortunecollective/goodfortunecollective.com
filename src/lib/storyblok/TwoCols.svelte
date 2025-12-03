@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { storyblokEditable, renderRichText } from '@storyblok/svelte';
+	import { renderRichText, storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
 	import { inview } from 'svelte-inview';
 
-	import { cls } from '$lib/styles';
 	import { Heading, RichtextTransition } from '$lib/components';
 	import { backgroundTheme } from '$lib/stores';
+	import { cls } from '$lib/styles';
 	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;
@@ -40,7 +40,7 @@
 			<Heading as="h4" size="h4" class="mb-4 border-b pb-8 uppercase">
 				<strong>{blok.left_col_title}</strong>
 			</Heading>
-			<RichtextTransition class="text-xl xl:text-2xl 4xl:text-4xl [&_p]:my-8 [&_p]:leading-snug">
+			<RichtextTransition class="4xl:text-4xl text-xl xl:text-2xl [&_p]:my-8 [&_p]:leading-snug">
 				{@html left_col}
 			</RichtextTransition>
 		</div>
@@ -50,7 +50,7 @@
 			<Heading as="h4" size="h4" class="mb-4 border-b pb-8 uppercase">
 				<strong>{blok.right_col_title}</strong>
 			</Heading>
-			<RichtextTransition class="text-xl xl:text-2xl 4xl:text-4xl [&_p]:my-8 [&_p]:leading-snug">
+			<RichtextTransition class="4xl:text-4xl text-xl xl:text-2xl [&_p]:my-8 [&_p]:leading-snug">
 				{@html right_col}
 			</RichtextTransition>
 		</div>

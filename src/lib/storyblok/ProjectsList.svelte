@@ -2,7 +2,7 @@
 	import { storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
 
-	import { ProjectListItem, Link } from '$lib/components';
+	import { Link, ProjectListItem } from '$lib/components';
 	import { cls } from '$lib/styles';
 
 	export let blok: any;
@@ -26,7 +26,7 @@
 </script>
 
 <section use:storyblokEditable={blok} {...$$restProps} class={cls('relative', blok.class)}>
-	<div bind:this={containerEl} class="lg:translate-y-64 3xl:translate-y-48">
+	<div bind:this={containerEl} class="3xl:translate-y-48 lg:translate-y-64">
 		<div class="relative my-16 grid w-full grid-cols-12 lg:absolute lg:my-0">
 			<div
 				class="col-span-12 col-start-1 mx-4 md:col-span-10 md:col-start-2 md:mx-0 2xl:col-span-6 2xl:col-start-3"

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { fly } from 'svelte/transition';
-	import { cls } from '$lib/styles';
 	import gsap from '$lib/gsap';
 	import { lenisStore as lenis } from '$lib/stores/lenis';
-	import { onDestroy } from 'svelte';
+	import { cls } from '$lib/styles';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import { onDestroy } from 'svelte';
+	import { fly } from 'svelte/transition';
 
 	export let strokeDashArray = '0px';
 	export let strokeDashOffset = '0px';
@@ -31,7 +31,7 @@
 </script>
 
 <div
-	class="fixed bottom-[20px] right-[20px] z-40 hidden gap-8 mix-blend-difference md:bottom-[60px] md:right-[60px] md:flex"
+	class="fixed right-[20px] bottom-[20px] z-40 hidden gap-8 mix-blend-difference md:right-[60px] md:bottom-[60px] md:flex"
 	id="scroll-indicator"
 >
 	<div class="flex flex-col gap-8">
@@ -44,14 +44,14 @@
 						title="Go to top"
 						class={cls('back-to-top-btn', 'h-full w-full')}
 					>
-						<div class="arrow" />
+						<div class="arrow"></div>
 					</button>
 				</div>
 			{/if}
 		</div>
 
 		<div class="relative">
-			<div class="absolute h-full w-full rounded-full border-2 border-white opacity-20" />
+			<div class="absolute h-full w-full rounded-full border-2 border-white opacity-20"></div>
 
 			<svg width="20" height="20" style="transform:rotate(-90deg)">
 				<circle
@@ -86,7 +86,7 @@
 			width: 1px;
 			bottom: 0;
 			content: '';
-			background: theme('colors.yellow.350');
+			background: var(--color-yellow-350);
 		}
 
 		&:after {
@@ -111,7 +111,7 @@
 				position: absolute;
 				top: 0;
 				right: 0;
-				background: theme('colors.yellow.350');
+				background: var(--color-yellow-350);
 				content: '';
 			}
 

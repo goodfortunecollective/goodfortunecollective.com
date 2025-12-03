@@ -8,7 +8,6 @@ export function useScroll(callback: (...args: any[]) => void) {
 
 	const unsubscribe = lenisStore.subscribe((lenis) => {
 		lenis?.on('scroll', callback);
-		lenis?.emit();
 	});
 
 	onMount(() => {

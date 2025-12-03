@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { inview } from 'svelte-inview';
-	import { onMount } from 'svelte';
-	import { fade, fly } from 'svelte/transition';
 	import { storyblokEditable } from '@storyblok/svelte';
+	import { onMount } from 'svelte';
+	import { inview } from 'svelte-inview';
+	import { fade, fly } from 'svelte/transition';
 
-	import { page } from '$app/stores';
 	import { base } from '$app/paths';
-	import gsap from '$lib/gsap';
+	import { page } from '$app/stores';
 	import { Gfc, HoverText } from '$lib/components';
-	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import gsap from '$lib/gsap';
 	import { cls } from '$lib/styles';
 	import { inViewColorTransition } from '$lib/utils/animations';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	export let blok: any;
 
@@ -96,7 +96,7 @@
 	{#if mobileMenuOpen}
 		<div class="bg-white sm:hidden" role="dialog" aria-modal="true">
 			<!-- Background backdrop, show/hide based on slide-over state. -->
-			<div class="fixed inset-0 z-20" />
+			<div class="fixed inset-0 z-20"></div>
 			<div
 				in:fade
 				out:fade={{ delay: 500 }}
@@ -109,7 +109,7 @@
 									href="{base}/{slug}"
 									class={cls(
 										getRootPathname($page.url.pathname) === slug && 'underline underline-offset-8',
-										'block px-3 py-8 font-degular-display text-6xl leading-7 text-white'
+										'font-degular-display block px-3 py-8 text-6xl leading-7 text-white'
 									)}
 									in:fly={{ x: -48, duration: 500, delay: 300 + 50 * i }}
 									out:fly={{ x: -48, duration: 500, delay: 300 - 50 * i }}
@@ -120,7 +120,7 @@
 									href={blok.shop.url}
 									target="_blank"
 									rel="noopener noreferrer"
-									class="block px-3 py-8 font-degular-display text-6xl leading-7 text-white"
+									class="font-degular-display block px-3 py-8 text-6xl leading-7 text-white"
 									in:fly={{ x: -48, duration: 500, delay: 300 + 50 * blok.navigation.length }}
 									out:fly={{ x: -48, duration: 500, delay: 300 - 50 * blok.navigation.length }}
 									on:click={closeMobileMenu}>Shop</a
@@ -134,18 +134,18 @@
 	{/if}
 
 	<header
-		class="fixed top-0 z-30 grid h-20 w-full grid-cols-12 mix-blend-difference transition-transform ease-in md:grid-cols-24 3xl:h-24"
+		class="3xl:h-24 fixed top-0 z-30 grid h-20 w-full grid-cols-12 mix-blend-difference transition-transform ease-in md:grid-cols-24"
 		class:motion-safe:-translate-y-full={offscreen}
 		bind:clientHeight
 	>
 		<nav
-			class="col-span-12 col-start-1 mx-4 py-6 md:col-span-20 md:col-start-3 md:mx-0 lg:col-span-22 lg:col-start-2 lg:py-9 3xl:py-12"
+			class="3xl:py-12 col-span-12 col-start-1 mx-4 py-6 md:col-span-20 md:col-start-3 md:mx-0 lg:col-span-22 lg:col-start-2 lg:py-9"
 			aria-label="Global"
 		>
 			<div class="flex items-center justify-between">
 				<a href="{base}/" class="-m-1.5 p-1.5" bind:this={logo}>
 					<span class="sr-only">Good Fortune Collective</span>
-					<Gfc class="h-8 w-auto text-white 3xl:h-10" alt="" />
+					<Gfc class="3xl:h-10 h-8 w-auto text-white" alt="" />
 				</a>
 				<div class="flex sm:hidden">
 					<button
@@ -189,7 +189,7 @@
 							href="{base}/{slug}"
 							class={cls(
 								getRootPathname($page.url.pathname) === slug && 'after:w-full',
-								'text-base leading-6 3xl:text-lg',
+								'3xl:text-lg text-base leading-6',
 								'c-animated-underline'
 							)}
 						>
@@ -198,7 +198,7 @@
 								use:inview
 								on:inview_change={inViewColorTransition}
 								class={cls(
-									'block text-stone-450  duration-200 hover:text-white',
+									'text-stone-450 block  duration-200 hover:text-white',
 									getRootPathname($page.url.pathname) === slug && 'text-white'
 								)}
 							>
@@ -211,13 +211,13 @@
 							href={blok.shop.url}
 							target="_blank"
 							rel="noopener noreferrer"
-							class={cls('text-base leading-6 3xl:text-lg', 'c-animated-underline')}
+							class={cls('3xl:text-lg text-base leading-6', 'c-animated-underline')}
 						>
 							<span
 								data-gsap="nav-items"
 								use:inview
 								on:inview_change={inViewColorTransition}
-								class={cls('block text-stone-450  duration-200 hover:text-white')}
+								class={cls('text-stone-450 block  duration-200 hover:text-white')}
 							>
 								<HoverText label="Shop" />
 							</span>

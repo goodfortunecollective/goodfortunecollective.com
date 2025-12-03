@@ -102,5 +102,5 @@
 	class={cls('inline-block break-words duration-1000 ease-out', clazz)}
 	{style}
 >
-	<span class="wrap" /><slot />
+	<span class="wrap"></span><slot />
 </span>

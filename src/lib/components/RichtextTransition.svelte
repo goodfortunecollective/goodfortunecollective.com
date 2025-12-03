@@ -120,5 +120,5 @@
 	)}
 	{style}
 >
-	<span class="wrap" /><slot />
+	<span class="wrap"></span><slot />
 </span>

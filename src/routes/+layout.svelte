@@ -1,36 +1,38 @@
 <script lang="ts">
+	import { StoryblokComponent, useStoryblokBridge } from '@storyblok/svelte';
 	import Lenis from '@studio-freight/lenis';
+	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
 	import { onMount, setContext } from 'svelte';
-	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 	import { Body } from 'svelte-body';
 	import Modal from 'svelte-simple-modal';
-	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
 
+	import { browser, dev, version } from '$app/environment';
 	import { afterNavigate, disableScrollHandling } from '$app/navigation';
-	import { browser, version } from '$app/environment';
-	import { isIntroDone, backgroundColor, isTransitioningEnabled } from '$lib/stores';
-	import gsap, { ScrollTrigger, CustomEase } from '$lib/gsap';
+	import gsap, { CustomEase, ScrollTrigger } from '$lib/gsap';
+	import { backgroundColor, isIntroDone, isTransitioningEnabled } from '$lib/stores';
 
 	import { lenisStore as lenis, setLenisStore } from '$lib/stores/lenis';
 
-	import { getComponentByName } from '$lib/storyblok';
 	import { ProjectListHover } from '$lib/components';
+	import { getComponentByName } from '$lib/storyblok';
 	import { debounce } from '$lib/utils/debounce';
 
-	import type { LayoutData } from './$types';
 	import { pageLeaveDuration, pageTransitionPauseDuration } from '$lib/utils/page-transitions';
+	import type { LayoutData } from './$types';
 
 	import Analytics from './Analytics.svelte';
-	import Loader from './Loader.svelte';
-	import ScrollIndicator from './ScrollIndicator.svelte';
+	import Cursor from './Cursor.svelte';
 	import Curtains from './Curtains.svelte';
+	import Loader from './Loader.svelte';
 	import PageTransition from './PageTransition.svelte';
 	import PageTransitionAnim from './PageTransitionAnim.svelte';
-	import Cursor from './Cursor.svelte';
+	import ScrollIndicator from './ScrollIndicator.svelte';
 
 	import '../app.css';
 
-	injectSpeedInsights();
+	if (!dev) {
+		injectSpeedInsights();
+	}
 
 	export let data: LayoutData;
 
@@ -46,7 +48,7 @@
 
 	$: if (browser && $lenis && hash) {
 		const target = document.querySelector(hash);
-		if ($isTransitioningEnabled) {
+		if (target instanceof HTMLElement && $isTransitioningEnabled) {
 			$lenis.scrollTo(target, { offset: 0 });
 		}
 	}

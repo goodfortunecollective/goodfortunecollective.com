@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+	import { StoryblokComponent, storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
 
 	import { cls } from '$lib/styles';

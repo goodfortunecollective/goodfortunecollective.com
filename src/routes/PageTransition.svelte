@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { fade } from 'svelte/transition';
-	import { quartOut, cubicOut } from 'svelte/easing';
-	import { pageLeaveDuration } from '$lib/utils/page-transitions';
 	import { isTransitioningEnabled } from '$lib/stores';
+	import { pageLeaveDuration } from '$lib/utils/page-transitions';
+	import { cubicOut, quartOut } from 'svelte/easing';
+	import { fade } from 'svelte/transition';
 
 	export let pathname: string = '';
 </script>

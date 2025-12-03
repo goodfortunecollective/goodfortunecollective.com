@@ -1,8 +1,8 @@
 import adapter from '@sveltejs/adapter-vercel';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
-import { readFileSync } from 'fs';
-import { fileURLToPath } from 'url';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
 const path = fileURLToPath(new URL('package.json', import.meta.url));
 const pkg = JSON.parse(readFileSync(path, 'utf8'));
@@ -22,14 +22,14 @@ const config = {
 			base: ''
 		},
 		version: {
-            name: pkg.version
-        }
+			name: pkg.version
+		}
 	},
 
 	onwarn: (warning, handler) => {
-		if (warning.code === 'a11y-click-events-have-key-events') return
-		handler(warning)
-	  },
+		if (warning.code === 'a11y-click-events-have-key-events') return;
+		handler(warning);
+	}
 };
 
 export default config;

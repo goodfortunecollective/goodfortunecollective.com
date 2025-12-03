@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { spring } from 'svelte/motion';
 	import { cva } from 'class-variance-authority';
+	import { spring } from 'svelte/motion';
 
-	import { cls } from '$lib/styles';
 	import { cursorType } from '$lib/stores';
+	import { cls } from '$lib/styles';
 
 	const backgroundVariants = cva('', {
 		variants: {
@@ -63,7 +63,7 @@
 <svelte:window on:mousemove={onMouseMove} />
 
 <div
-	class="pointer-events-none fixed left-0 top-0 z-10 h-full w-full origin-center transform"
+	class="pointer-events-none fixed top-0 left-0 z-10 h-full w-full origin-center transform"
 	bind:this={el}
 >
 	<div
@@ -88,7 +88,7 @@
 					'flex h-full w-full origin-center items-center  justify-center rounded-[100%]'
 				)}
 			>
-				<div class={cls(variants({ type: type }))} />
+				<div class={cls(variants({ type: type }))}></div>
 			</div>
 		</div>
 	</div>

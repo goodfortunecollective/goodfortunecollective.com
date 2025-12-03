@@ -1,35 +1,37 @@
+import typography from '@tailwindcss/typography';
+
 /** @type {import('tailwindcss').Config} */
-export default {
-	content: ['./src/**/*.{html,js,svelte,ts}'],
+const config = {
 	theme: {
 		extend: {
 			animation: {
-				'spin-slow': 'spin 20s linear infinite'},
+				'spin-slow': 'spin 20s linear infinite'
+			},
 			aspectRatio: {
-				'9/16': '9/16',
-			  },
+				'9/16': '9/16'
+			},
 			colors: {
 				neutral: {
-					950: '#1a1a1a',
+					950: '#1a1a1a'
 				},
 				yellow: {
 					50: '#dbd5bf',
-					350: '#dbfa45',
+					350: '#dbfa45'
 				},
 				rose: {
-					50: "#e9bdb2"
+					50: '#e9bdb2'
 				},
 				stone: {
-					350: "#bec6c4",
-					450: "#a7a89a"
+					350: '#bec6c4',
+					450: '#a7a89a'
 				}
 			},
 			scale: {
-				'175': '1.75',
+				175: '1.75'
 			},
 			screens: {
-				'base': '780px',
-				'basexl': '998px',
+				base: '780px',
+				basexl: '998px',
 				'3xl': '1920px',
 				'4xl': '2160px'
 			},
@@ -42,14 +44,14 @@ export default {
 			},
 			fontFamily: {
 				'degular-display': ['degular-display', 'cursive'],
-				'tenon': ['tenon', 'cursive']
+				tenon: ['tenon', 'cursive']
 			},
 			fontSize: {
 				'10xl': '10rem',
 				'12xl': '12rem'
 			},
 			lineHeight: {
-				'tightest': '0.5',
+				tightest: '0.5',
 				'extra-tight': '0.8'
 			},
 			gridTemplateColumns: {
@@ -84,18 +86,20 @@ export default {
 				widest: '.15em'
 			},
 			height: {
-				'112': '28rem',
-				'128': '32rem',
-				'160': '40rem',
-				'192': '48rem',
-				'224': '56rem',
-				'256': '64rem'
+				112: '28rem',
+				128: '32rem',
+				160: '40rem',
+				192: '48rem',
+				224: '56rem',
+				256: '64rem'
 			},
 			zIndex: {
-				'1': '1',
+				1: '1'
 			}
 		}
 	},
-	plugins: [require('@tailwindcss/typography')],
-	safelist: ['mt-8', 'mt-16','mt-24','mt-32', 'mb-8', 'mb-16','mb-24','mb-32']
+	plugins: [typography],
+	safelist: ['mt-8', 'mt-16', 'mt-24', 'mt-32', 'mb-8', 'mb-16', 'mb-24', 'mb-32']
 };
+
+export default config;

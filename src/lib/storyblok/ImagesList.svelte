@@ -1,17 +1,17 @@
 <script lang="ts">
-	import { fade } from 'svelte/transition';
-	import { inview } from 'svelte-inview';
-	import { onDestroy } from 'svelte';
-	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+	import { StoryblokComponent, storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
+	import { onDestroy } from 'svelte';
+	import { inview } from 'svelte-inview';
+	import { fade } from 'svelte/transition';
 
 	import { ScrollTrigger } from '$lib/gsap';
-	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
 	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
-	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import { cls } from '$lib/styles';
 	import { inViewColorTransition } from '$lib/utils/animations';
 	import { lazyLoad } from '$lib/utils/lazyLoad';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	export let blok: any;
 
@@ -19,7 +19,7 @@
 	let pinEl!: HTMLElement;
 	let contentEl!: HTMLElement;
 
-	let scrollTrigger!: ScrollTrigger;
+	let scrollTrigger: ScrollTrigger | null = null;
 
 	const textStyle = cva('flex flex-col duration-1000 ease-out', {
 		variants: {
@@ -46,10 +46,8 @@
 	});
 
 	onDestroy(() => {
-		if (scrollTrigger) {
-			scrollTrigger.kill();
-			scrollTrigger = null;
-		}
+		scrollTrigger?.kill?.();
+		scrollTrigger = null;
 	});
 </script>
 
@@ -68,7 +66,7 @@
 				width={getImageDimensionsFromUrl(blok.asset.filename).width}
 				height={getImageDimensionsFromUrl(blok.asset.filename).height}
 				alt={blok.asset.name}
-				class="-translate-x-1/8 absolute left-1/2 top-0 col-span-12 translate-y-1/4 -rotate-45 scale-150 transform"
+				class="absolute top-0 left-1/2 col-span-12 -translate-x-1/8 translate-y-1/4 scale-150 -rotate-45 transform"
 				loading="lazy"
 				decoding="async"
 				in:fade={{ duration: 500 }}

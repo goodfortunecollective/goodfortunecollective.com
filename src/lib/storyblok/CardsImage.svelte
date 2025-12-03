@@ -1,13 +1,12 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { fade } from 'svelte/transition';
-	import { inview } from 'svelte-inview';
 	import { storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
+	import { onMount } from 'svelte';
+	import { inview } from 'svelte-inview';
 
-	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
 	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
+	import { cls } from '$lib/styles';
 	import { inViewColorTransition } from '$lib/utils/animations';
 	import { lazyLoad } from '$lib/utils/lazyLoad';
 

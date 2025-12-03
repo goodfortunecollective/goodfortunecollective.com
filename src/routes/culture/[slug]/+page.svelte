@@ -1,9 +1,9 @@
 <script lang="ts">
+	import { StoryblokComponent, useStoryblokBridge } from '@storyblok/svelte';
 	import { onMount } from 'svelte';
-	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 
 	import { base } from '$app/paths';
-	import { BackgroundTheme, Link, Heading, Image } from '$lib/components';
+	import { BackgroundTheme, Heading, Image, Link } from '$lib/components';
 	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
 
 	export let data;
@@ -43,7 +43,7 @@
 />
 
 <section class="pt-[var(--header-height)]">
-	<div class="mb-8 mt-24 grid grid-cols-12">
+	<div class="mt-24 mb-8 grid grid-cols-12">
 		<div
 			class="col-span-12 col-start-1 mx-4 md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-4 lg:col-start-2"
 		>
@@ -61,7 +61,7 @@
 				>{data.story.content.title}</Heading
 			>
 			{#if data.story.content.thumbnail}
-				<figure class="col-start-0 col-span-12 mb-16 mt-8 lg:col-span-9">
+				<figure class="col-span-12 col-start-0 mt-8 mb-16 lg:col-span-9">
 					{#if data.story.content.thumbnail.filename?.length > 0}
 						<Image
 							src={`${data.story.content.thumbnail.filename}/m/`}

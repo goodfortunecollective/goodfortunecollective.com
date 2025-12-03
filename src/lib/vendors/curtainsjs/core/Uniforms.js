@@ -394,14 +394,14 @@ export class Uniforms {
 					uniform.value.elements[1],
 					uniform.value.elements[2],
 					uniform.value[3]
-			  )
+				)
 			: this.gl.uniform4i(
 					uniform.location,
 					uniform.value[0],
 					uniform.value[1],
 					uniform.value[2],
 					uniform.value[3]
-			  );
+				);
 	}
 
 	setUniform4iv(uniform) {
@@ -411,7 +411,7 @@ export class Uniforms {
 					uniform.value.elements[1],
 					uniform.value.elements[2],
 					uniform.value[3]
-			  ])
+				])
 			: this.gl.uniform4iv(uniform.location, uniform.value);
 	}
 
@@ -423,14 +423,14 @@ export class Uniforms {
 					uniform.value.elements[1],
 					uniform.value.elements[2],
 					uniform.value[3]
-			  )
+				)
 			: this.gl.uniform4f(
 					uniform.location,
 					uniform.value[0],
 					uniform.value[1],
 					uniform.value[2],
 					uniform.value[3]
-			  );
+				);
 	}
 
 	setUniform4fv(uniform) {
@@ -440,7 +440,7 @@ export class Uniforms {
 					uniform.value.elements[1],
 					uniform.value.elements[2],
 					uniform.value[3]
-			  ])
+				])
 			: this.gl.uniform4fv(uniform.location, uniform.value);
 	}
 

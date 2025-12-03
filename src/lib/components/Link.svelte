@@ -39,18 +39,18 @@
 	rel={isExternal ? 'noopener' : undefined}
 	class={cls(
 		'c-link',
-		'3xl:text-md inline-flex h-10 flex-row items-stretch overflow-hidden text-xs font-bold uppercase tracking-widest hover:no-underline 4xl:text-lg'
+		'3xl:text-md 4xl:text-lg inline-flex h-10 flex-row items-stretch overflow-hidden text-xs font-bold tracking-widest uppercase hover:no-underline'
 	)}
 >
 	{#if label}
 		<span class="flex items-center pr-4">{label}</span>
 	{/if}
 	<span
-		class="relative ml-[50px] flex items-center justify-center text-4xl 3xl:text-5xl 4xl:text-6xl"
+		class="3xl:text-5xl 4xl:text-6xl relative ml-[50px] flex items-center justify-center text-4xl"
 	>
 		<span
 			class={cls('bg-black before:bg-black after:bg-black', 'c-link__arrow c-link__arrow-default')}
-		/>
+		></span>
 		<span
 			class={cls(
 				'flex items-center justify-center',
@@ -63,13 +63,13 @@
 					'c-link__arrow c-link__arrow-hover',
 					arrowHoverStyle({ theme: $backgroundTheme })
 				)}
-			/>
+			></span>
 		</span>
 	</span>
 </a>
 
 <style lang="scss">
-	@import '../../vars.scss';
+	@use '../../vars' as *;
 
 	.c-link {
 		&:hover {

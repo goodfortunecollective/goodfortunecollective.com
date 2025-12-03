@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { inview } from 'svelte-inview';
 	import { storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
+	import { inview } from 'svelte-inview';
 
-	import { cls } from '$lib/styles';
+	import { Image, Video } from '$lib/components';
 	import { backgroundTheme } from '$lib/stores';
-	import { Video, Image } from '$lib/components';
+	import { cls } from '$lib/styles';
 	import { inViewColorTransition } from '$lib/utils/animations';
 	import { isMobile } from '$lib/utils/browser';
 

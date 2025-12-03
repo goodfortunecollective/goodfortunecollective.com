@@ -9,7 +9,7 @@ export function useMediaQuery(queryString: string) {
 			try {
 				return window.matchMedia(queryString);
 			} catch (error) {
-				if (process.env.NODE_ENV !== 'production') {
+				if (import.meta.env.MODE !== 'production') {
 					console.error(error);
 				}
 			}

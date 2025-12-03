@@ -3,8 +3,8 @@
 	import { cva } from 'class-variance-authority';
 
 	import { Heading } from '$lib/components';
-	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
+	import { cls } from '$lib/styles';
 
 	export let blok: any;
 

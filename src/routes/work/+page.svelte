@@ -1,28 +1,27 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 
-	import { fade } from 'svelte/transition';
-	import { useTransitionReady } from '$lib/utils/useTransitionReady';
-	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
-	import type { Curtains } from '@types/curtainsjs';
 	import { ScrollTrigger } from '$lib/gsap';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import { StoryblokComponent, useStoryblokBridge } from '@storyblok/svelte';
+	import { fade } from 'svelte/transition';
 
-	import gsap from '$lib/gsap';
-	import { lenisStore as lenis } from '$lib/stores/lenis';
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
 	import { ProjectListItem } from '$lib/components';
+	import gsap from '$lib/gsap';
 	import { isTransitioningEnabled } from '$lib/stores';
-	import { useCurtains } from '$lib/utils/useCurtains';
+	import { lenisStore as lenis } from '$lib/stores/lenis';
+	import { useCurtains, type CurtainsInstance } from '$lib/utils/useCurtains';
 
-	import MenuList from './MenuList.svelte';
-	import MenuItem from './MenuItem.svelte';
 	import ArchiveItem from './ArchiveItem.svelte';
+	import MenuItem from './MenuItem.svelte';
+	import MenuList from './MenuList.svelte';
 
 	let activeFilter = false;
 
 	let el!: HTMLElement;
-	let curtains: undefined | Curtains;
+	let curtains: CurtainsInstance;
 	let ctx: any = null;
 
 	useCurtains((curtainsInstance) => {
@@ -146,7 +145,7 @@
 <section class="relative pt-8" bind:this={el}>
 	<div class="relative hidden xl:block">
 		{#if activeFilter}
-			<MenuList class="fixed right-4 top-32 z-10 flex flex-col items-end gap-4 pr-8 pt-8">
+			<MenuList class="fixed top-32 right-4 z-10 flex flex-col items-end gap-4 pt-8 pr-8">
 				<div in:fade={{ delay: 0 }} out:fade={{ delay: categories.length * 25 }}>
 					<MenuItem
 						name="All Projects"
