@@ -19,4 +19,4 @@
 	});
 </script>
 
-<div class={variants({ gap })} />
+<div class={variants({ gap })}></div>

@@ -1,15 +1,15 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
 	import { StoryblokComponent, storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
+	import { onDestroy } from 'svelte';
 	import { inview } from 'svelte-inview';
 
 	import { Heading } from '$lib/components';
 	import gsap from '$lib/gsap';
-	import { cls } from '$lib/styles';
 	import { backgroundTheme } from '$lib/stores';
-	import { useTransitionReady } from '$lib/utils/useTransitionReady';
+	import { cls } from '$lib/styles';
 	import { inViewColorTransition } from '$lib/utils/animations';
+	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	export let blok: any;
 
@@ -67,7 +67,7 @@
 		{#each Array(4) as _, index (index)}
 			<div
 				data-gsap="tags-list"
-				class="border-b-2 border-b-gray-200 border-opacity-10 last-of-type:border-0"
+				class="border-opacity-10 border-b-2 border-b-gray-200 last-of-type:border-0"
 			>
 				<ul class="whitespace-nowrap">
 					{#each Array(2) as _, index (index)}
@@ -81,13 +81,13 @@
 									<Heading
 										as="h4"
 										size="h2"
-										class="mr-16 text-5xl uppercase lg:text-8xl 4xl:text-9xl"
+										class="4xl:text-9xl mr-16 text-5xl uppercase lg:text-8xl"
 										animated={false}
 									>
 										<StoryblokComponent blok={b} />
 									</Heading>
 									<span
-										class="inline-block font-degular-display text-6xl xl:text-8xl 3xl:text-9xl 4xl:text-10xl"
+										class="font-degular-display 3xl:text-9xl 4xl:text-10xl inline-block text-6xl xl:text-8xl"
 									>
 										*
 									</span>

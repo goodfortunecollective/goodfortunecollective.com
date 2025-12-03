@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
-	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
+	import { StoryblokComponent, useStoryblokBridge } from '@storyblok/svelte';
+	import { onDestroy, onMount } from 'svelte';
 
 	import { base } from '$app/paths';
-	import { Link, Heading, BackgroundTheme } from '$lib/components';
+	import { BackgroundTheme, Heading, Link } from '$lib/components';
 
 	export let data;
 
@@ -25,7 +25,7 @@
 />
 
 <section class=" pb-32">
-	<div class="mb-8 mt-24 grid grid-cols-12">
+	<div class="mt-24 mb-8 grid grid-cols-12">
 		<div
 			class="col-span-12 col-start-1 mx-4 md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-4 lg:col-start-2 2xl:col-span-3 2xl:col-start-3"
 		>
@@ -42,7 +42,7 @@
 				class="col-span-12 col-start-1 mx-4 mb-8 md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-4 lg:col-start-2 2xl:col-span-3 2xl:col-start-3"
 				>{data.story.content.title}</Heading
 			>
-			<div class="col-start-0 col-span-12">
+			<div class="col-span-12 col-start-0">
 				{#each data.story.content.description as item}
 					<StoryblokComponent blok={item} />
 				{/each}

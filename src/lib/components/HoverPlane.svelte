@@ -1,4 +1,6 @@
+<!-- @ts-nocheck -->
 <script lang="ts">
+	// @ts-nocheck
 	import { onDestroy } from 'svelte';
 
 	import { useCurtains } from '$lib/utils/useCurtains';

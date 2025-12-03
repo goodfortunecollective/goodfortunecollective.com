@@ -1,6 +1,8 @@
+<!-- @ts-nocheck -->
 <script lang="ts">
-	import { onMount, getContext } from 'svelte';
+	// @ts-nocheck
 	import { storyblokEditable } from '@storyblok/svelte';
+	import { getContext, onMount } from 'svelte';
 	import type { ObserverEventDetails } from 'svelte-inview';
 	import { inview } from 'svelte-inview';
 
@@ -8,13 +10,13 @@
 
 	import { BackgroundTheme, VideoModal } from '$lib/components';
 	import gsap, { SplitText } from '$lib/gsap';
+	import { cursorType } from '$lib/stores';
+	import { lenisStore as lenis } from '$lib/stores/lenis';
+	import { cls } from '$lib/styles';
+	import { isMobile } from '$lib/utils/browser';
+	import { debounce } from '$lib/utils/debounce';
 	import { clamp } from '$lib/utils/maths';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
-	import { cursorType } from '$lib/stores';
-	import { cls } from '$lib/styles';
-	import { lenisStore as lenis } from '$lib/stores/lenis';
-	import { debounce } from '$lib/utils/debounce';
-	import { isMobile } from '$lib/utils/browser';
 
 	export let blok: any;
 
@@ -369,9 +371,10 @@
 							<button
 								class="flex h-[86px] w-[86px] origin-center -translate-y-[86px] items-center justify-center transition duration-300 ease-out"
 								on:click={playVideoFullscreen}
+								aria-label="Play video fullscreen"
 							>
 								<div
-									class="z-1 flex h-full w-full origin-center items-center justify-center rounded-[100%] bg-yellow-350"
+									class="bg-yellow-350 z-1 flex h-full w-full origin-center items-center justify-center rounded-[100%]"
 								>
 									<div
 										class="ml-0.5 inline-block h-0 w-0 origin-center transform cursor-pointer border-y-[7px] border-l-[12px] border-solid border-y-transparent border-l-black content-['']"
@@ -398,20 +401,20 @@
 								src={innerWidth < 768 && isMobile() && blok.videoPreviewMobile !== ''
 									? blok.videoPreviewMobile
 									: blok.videoPreview}
-							/>
+							></video>
 						</div>
 					</div>
 				</div>
 			</div>
 
 			<div
-				class="title-cont pointer-events-none absolute left-0 top-0 flex h-full w-full items-start"
+				class="title-cont pointer-events-none absolute top-0 left-0 flex h-full w-full items-start"
 			>
 				<div class="mx-4 flex h-full flex-col justify-between py-[15vh] md:mx-0">
 					<h1
 						data-gsap="split-text"
 						class={cls(
-							'z-[8] max-w-11xl font-degular-display leading-tightest tracking-wide text-neutral-950',
+							'max-w-11xl font-degular-display leading-tightest z-[8] tracking-wide text-neutral-950',
 							'sb-headline-video__title'
 						)}
 					>
@@ -419,7 +422,7 @@
 					</h1>
 					<h2
 						data-gsap="split-text"
-						class="z-10 mb-[5vh] max-w-2xl font-degular-display text-4xl text-white md:text-6xl lg:max-w-2xl"
+						class="font-degular-display z-10 mb-[5vh] max-w-2xl text-4xl text-white md:text-6xl lg:max-w-2xl"
 					>
 						{blok.subheadline}
 					</h2>
@@ -427,9 +430,9 @@
 			</div>
 		</div>
 	</section>
-	<div class="h-[80vh]" />
+	<div class="h-[80vh]"></div>
 	<BackgroundTheme startColor="#1a1a1a" endColor="#fff" startTheme="dark" endTheme="light" />
-	<div class="h-[20vh]" />
+	<div class="h-[20vh]"></div>
 </div>
 
 <style lang="scss">

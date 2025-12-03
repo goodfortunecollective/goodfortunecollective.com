@@ -5,25 +5,25 @@
 	import { beforeNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 
-	import { lenisStore as lenis } from '$lib/stores/lenis';
-	import gsap, { ScrollTrigger } from '$lib/gsap';
-	import { cls } from '$lib/styles';
-	import {
-		isTransitioning,
-		isTransitionDone,
-		project_list_hover,
-		isTransitioningIn,
-		isTransitioningEnabled
-	} from '$lib/stores';
 	import { ProjectTitle } from '$lib/components';
-	import { debounce } from '$lib/utils/debounce';
-	import { useCurtains } from '$lib/utils/useCurtains';
-	import type { CurtainsInstance } from '$lib/utils/useCurtains';
+	import gsap, { ScrollTrigger } from '$lib/gsap';
 	import {
-		pageLeaveDuration,
+		isTransitionDone,
+		isTransitioning,
+		isTransitioningEnabled,
+		isTransitioningIn,
+		project_list_hover
+	} from '$lib/stores';
+	import { lenisStore as lenis } from '$lib/stores/lenis';
+	import { cls } from '$lib/styles';
+	import { debounce } from '$lib/utils/debounce';
+	import {
 		pageEnterDuration,
+		pageLeaveDuration,
 		pageTransitionPauseDuration
 	} from '$lib/utils/page-transitions';
+	import type { CurtainsInstance } from '$lib/utils/useCurtains';
+	import { useCurtains } from '$lib/utils/useCurtains';
 
 	$: innerWidth = 0;
 	let lastWidth = 0;
@@ -200,16 +200,16 @@
 
 <div
 	class={cls(
-		'fixed inset-0 z-40 h-full w-full items-center overflow-hidden text-center',
+		'fixed inset-0 z-40 h-full w-screen items-center overflow-hidden text-center',
 		!$isTransitioning && 'pointer-events-none'
 	)}
 >
-	<canvas bind:this={canvasEl} class="absolute inset-0 h-full w-full" />
+	<canvas bind:this={canvasEl} class="absolute inset-0 h-full w-full"></canvas>
 </div>
 
 {#if list_hover && showTitle}
 	<div
-		class="fixed inset-0 z-50 flex h-screen w-full transform-gpu items-center text-center"
+		class="fixed inset-0 z-50 flex h-screen w-screen transform-gpu items-center text-center"
 		in:fade={{ delay: pageLeaveDuration / 2, duration: pageLeaveDuration / 8 }}
 	>
 		<div class="mx-auto grid -translate-y-1/2 grid-cols-12 pt-16 lg:-translate-y-1/4">

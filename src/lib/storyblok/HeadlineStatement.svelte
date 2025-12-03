@@ -1,12 +1,12 @@
 <script lang="ts">
+	import { renderRichText, StoryblokComponent, storyblokEditable } from '@storyblok/svelte';
+	import { cva } from 'class-variance-authority';
 	import { onDestroy, onMount } from 'svelte';
 	import { inview } from 'svelte-inview';
-	import { renderRichText, storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
-	import { cva } from 'class-variance-authority';
 
 	import { Heading, RichtextTransition } from '$lib/components';
-	import { cls } from '$lib/styles';
 	import { backgroundTheme, cursorType } from '$lib/stores';
+	import { cls } from '$lib/styles';
 	import { inViewColorTransition } from '$lib/utils/animations';
 
 	export let blok: any;
@@ -90,7 +90,7 @@
 	on:inview_change={inViewColorTransition}
 	class={cls(blok.class, textStyle({ theme: $backgroundTheme }))}
 >
-	<div class="pt-18 grid grid-cols-12 gap-8 pt-32 lg:gap-0 lg:pt-[25vh]">
+	<div class="grid grid-cols-12 gap-8 pt-18 pt-32 lg:gap-0 lg:pt-[25vh]">
 		<div
 			class="col-span-12 col-start-1 mx-4 md:col-span-10 md:col-start-2 md:mx-0 2xl:col-span-7 2xl:col-start-3"
 		>

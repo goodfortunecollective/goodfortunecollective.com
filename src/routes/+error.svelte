@@ -1,8 +1,8 @@
 <script>
-	import { cva } from 'class-variance-authority';
 	import { base } from '$app/paths';
+	import { cva } from 'class-variance-authority';
 
-	import { BackgroundTheme, Heading, TextTransition, Spacer } from '$lib/components';
+	import { BackgroundTheme, Spacer, TextTransition } from '$lib/components';
 	import { cls } from '$lib/styles';
 
 	import { backgroundTheme } from '$lib/stores';
@@ -23,13 +23,13 @@
 
 <BackgroundTheme preload tartColor="#1a1a1a" endColor="#1a1a1a" startTheme="dark" endTheme="dark" />
 <section
-	class={cls('relative grid grid-cols-12 pt-24 3xl:pt-32 ', variants({ theme: $backgroundTheme }))}
+	class={cls('3xl:pt-32 relative grid grid-cols-12 pt-24 ', variants({ theme: $backgroundTheme }))}
 >
 	<div
 		class="col-span-12 col-start-1 mx-4 flex h-full flex-col items-center text-center md:col-span-10 md:col-start-2 md:mx-0"
 	>
 		<h1
-			class={cls('my-0 py-0 font-degular-display leading-none text-transparent', 'p-error__title')}
+			class={cls('font-degular-display my-0 py-0 leading-none text-transparent', 'p-error__title')}
 		>
 			<TextTransition enabled={false}>
 				<span class="relative z-1 inline-block">4</span>
@@ -44,17 +44,17 @@
 				<span class="relative z-1 inline-block">4</span>
 			</TextTransition>
 		</h1>
-		<div class="max-w-sm 2xl:max-w-md 4xl:max-w-xl">
-			<h2 class="font-degular-display text-5xl lg:text-6xl 3xl:text-7xl 4xl:text-8xl">
+		<div class="4xl:max-w-xl max-w-sm 2xl:max-w-md">
+			<h2 class="font-degular-display 3xl:text-7xl 4xl:text-8xl text-5xl lg:text-6xl">
 				<TextTransition>Damn. Sorry.</TextTransition>
 			</h2>
 			<Spacer gap="extra-large" />
-			<p class="text-xl xl:text-2xl 4xl:text-4xl">
+			<p class="4xl:text-4xl text-xl xl:text-2xl">
 				Looks like that page doesn’t exist. "What does? All the reasons you should choose our
 				impactful strategy-driven creative.
 			</p>
 			<Spacer gap="medium" />
-			<a href="/about" class="font-degular-display text-xl xl:text-2xl 4xl:text-4xl">
+			<a href="/about" class="font-degular-display 4xl:text-4xl text-xl xl:text-2xl">
 				<TextTransition underline>See here</TextTransition>
 			</a>
 		</div>

@@ -1,4 +1,3 @@
-
 import { writable } from 'svelte/store';
 
 import { dev } from '$app/environment';
@@ -26,4 +25,3 @@ export const project_list_hover = writable(null as string | null);
 
 // image heading hover state
 export const heading_hover_media = writable(null as string | null);
-

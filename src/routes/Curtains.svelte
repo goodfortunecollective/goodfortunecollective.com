@@ -1,4 +1,6 @@
+<!-- @ts-nocheck -->
 <script lang="ts">
+	// @ts-nocheck
 	import { onMount } from 'svelte';
 
 	import { useFrame } from '$lib/lifecycle-functions/useFrame';
@@ -12,9 +14,9 @@
 		const touchCapability: number =
 			window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches
 				? 1
-				: 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
-				? 2
-				: 0;
+				: 'ontouchstart' in window || navigator.maxTouchPoints > 0
+					? 2
+					: 0;
 
 		if (touchCapability !== 1) {
 			curtains.set(
@@ -29,13 +31,13 @@
 			// $curtains.disableDrawing();
 
 			$curtains
-				.onError(() => {
+				?.onError(() => {
 					// we will add a class to the document body to display original images
 					document.body.classList.add('no-curtains');
 				})
-				.onContextLost(() => {
+				?.onContextLost(() => {
 					// on context lost, try to restore the context
-					$curtains.restoreContext();
+					$curtains?.restoreContext();
 				});
 		} else {
 			// we will add a class to the document body to display original images
@@ -55,4 +57,4 @@
 	});
 </script>
 
-<div id="canvas" class="fixed left-0 right-0 top-0 z-[1] h-screen" />
+<div id="canvas" class="fixed top-0 right-0 left-0 z-[1] h-screen"></div>

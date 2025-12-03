@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { inview } from 'svelte-inview';
+	import { StoryblokComponent, storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
-	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+	import { inview } from 'svelte-inview';
 
-	import gsap from '$lib/gsap';
-	import { backgroundTheme, isTransitioningEnabled, cursorType } from '$lib/stores';
-	import { cls } from '$lib/styles';
 	import { Gfc } from '$lib/components';
+	import gsap from '$lib/gsap';
+	import { backgroundTheme, cursorType, isTransitioningEnabled } from '$lib/stores';
+	import { cls } from '$lib/styles';
 	import { inViewColorTransition } from '$lib/utils/animations';
 
 	import { onMount } from 'svelte';
@@ -78,12 +78,12 @@
 				on:inview_change={inViewColorTransition}
 				class={cls(
 					'sb-footer__col',
-					'col-span-12 col-start-1 mx-4 pb-2 pt-8 md:col-span-5 md:col-start-2 md:mx-0 lg:col-span-4 lg:col-start-2',
+					'col-span-12 col-start-1 mx-4 pt-8 pb-2 md:col-span-5 md:col-start-2 md:mx-0 lg:col-span-4 lg:col-start-2',
 					lineStyle({ theme: $backgroundTheme })
 				)}
 			>
 				<p
-					class="flex flex-col gap-4 text-xs uppercase leading-5 tracking-wider text-gray-500 md:flex-row 3xl:text-sm"
+					class="3xl:text-sm flex flex-col gap-4 text-xs leading-5 tracking-wider text-gray-500 uppercase md:flex-row"
 				>
 					Let’s work together
 					<a
@@ -104,12 +104,12 @@
 				on:inview_change={inViewColorTransition}
 				class={cls(
 					'sb-footer__col',
-					'col-span-12 col-start-1 mx-4 pb-2 pt-8 md:col-span-4 md:col-start-8 md:mx-0',
+					'col-span-12 col-start-1 mx-4 pt-8 pb-2 md:col-span-4 md:col-start-8 md:mx-0',
 					lineStyle({ theme: $backgroundTheme })
 				)}
 			>
 				<p
-					class="flex flex-col gap-4 text-xs uppercase leading-5 tracking-wider text-gray-500 md:flex-row 3xl:text-sm"
+					class="3xl:text-sm flex flex-col gap-4 text-xs leading-5 tracking-wider text-gray-500 uppercase md:flex-row"
 				>
 					Find us in<a
 						href={blok.address}
@@ -125,14 +125,14 @@
 		</div>
 		<div class="grid grid-cols-12 py-2">
 			<div
-				class="col-span-12 col-start-1 mx-4 pb-4 pt-2 text-sm text-gray-400 md:col-span-4 md:col-start-2 md:mx-0 md:pb-0"
+				class="col-span-12 col-start-1 mx-4 pt-2 pb-4 text-sm text-gray-400 md:col-span-4 md:col-start-2 md:mx-0 md:pb-0"
 			>
 				<StoryblokComponent blok={blok.social_links[0]} />
 			</div>
 			<div
 				class="col-span-12 col-start-1 mx-4 md:col-span-4 md:col-start-8 md:mx-0 lg:col-span-4 lg:col-start-8"
 			>
-				<p class="text-xs uppercase leading-5 tracking-wider text-gray-500 3xl:text-sm">
+				<p class="3xl:text-sm text-xs leading-5 tracking-wider text-gray-500 uppercase">
 					&copy; {new Date().getFullYear().toString()} Good Fortune Collective. All rights reserved.
 				</p>
 			</div>
@@ -148,7 +148,7 @@
 </footer>
 
 <style lang="scss">
-	@import '../../vars.scss';
+	@use '../../vars' as *;
 
 	.sb-footer__col {
 		position: relative;

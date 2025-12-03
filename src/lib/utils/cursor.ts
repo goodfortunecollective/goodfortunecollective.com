@@ -1,24 +1,22 @@
-
 import { cursorType } from '$lib/stores';
-import type { Options } from './types';
 
-export function cursor(node: HTMLElement, options?: Options) {
-    function handleMouseEnter() {
-        cursorType('checkout');
-    }
+export function cursor(node: HTMLElement) {
+	function handleMouseEnter() {
+		cursorType.set('checkout');
+	}
 
-    function handleMouseLeave() {
-        cursorType('none')
-    }
+	function handleMouseLeave() {
+		cursorType.set('none');
+	}
 
-    node.addEventListener('mouseenter', handleMouseEnter);
-    node.addEventListener('mouseleave', handleMouseLeave);
+	node.addEventListener('mouseenter', handleMouseEnter);
+	node.addEventListener('mouseleave', handleMouseLeave);
 
-    // Cleanup when the node is destroyed
-    return {
-        destroy() {
-            node.removeEventListener('mouseenter', handleMouseEnter);
-            node.removeEventListener('mouseleave', handleMouseLeave);
-        }
-    };
+	// Cleanup when the node is destroyed
+	return {
+		destroy() {
+			node.removeEventListener('mouseenter', handleMouseEnter);
+			node.removeEventListener('mouseleave', handleMouseLeave);
+		}
+	};
 }

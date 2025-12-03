@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { storyblokEditable } from '@storyblok/svelte';
 
-	import { cls } from '$lib/styles';
 	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
+	import { cls } from '$lib/styles';
 	import { lazyLoad } from '$lib/utils/lazyLoad';
 
 	export let blok: any;

@@ -9,7 +9,6 @@ import { ScrollToPlugin } from '$lib/vendors/gsap/ScrollToPlugin';
 import { ScrollTrigger } from '$lib/vendors/gsap/ScrollTrigger.js';
 import { SplitText } from '$lib/vendors/gsap/SplitText.js';
 
-
 import gsap from 'gsap';
 
 if (browser) {
@@ -25,6 +24,14 @@ if (browser) {
 	);
 }
 
-
-export { CustomEase, Draggable, Flip,InertiaPlugin, MotionPathPlugin, ScrollToPlugin, ScrollTrigger, SplitText };
+export {
+	CustomEase,
+	Draggable,
+	Flip,
+	InertiaPlugin,
+	MotionPathPlugin,
+	ScrollToPlugin,
+	ScrollTrigger,
+	SplitText
+};
 export default gsap;

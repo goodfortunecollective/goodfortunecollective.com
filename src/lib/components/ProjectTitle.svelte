@@ -61,14 +61,16 @@
 		return {
 			/* GSAP's duration is in seconds. Svelte's is in miliseconds */
 			duration: duration * 1000,
-			tick: (t) => {
+			tick: (t: number) => {
 				tl.progress(t);
 			}
 		};
 	}
 
 	function animateOut(node: HTMLElement, { delay = 0, duration = 0.3 }) {
-		if (isExit) return;
+		if (isExit) {
+			return { duration: duration * 1000, tick: () => {} };
+		}
 
 		let tl = gsap.timeline();
 
@@ -89,7 +91,7 @@
 		return {
 			/* GSAP's duration is in seconds. Svelte's is in miliseconds */
 			duration: duration * 1000,
-			tick: (t, u) => {
+			tick: (t: number, u: number) => {
 				tl.progress(u);
 			}
 		};
@@ -103,7 +105,7 @@
 
 {#key name}
 	<h2
-		class={cls('overflow-hidden p-8 font-degular-display leading-extra-tight', 'c-project-title')}
+		class={cls('font-degular-display leading-extra-tight overflow-hidden p-8', 'c-project-title')}
 	>
 		<span
 			in:animateIn|global={{ duration: animated ? 0.7 : 0, delay: animated ? 0.5 : 0 }}
@@ -115,7 +117,7 @@
 				type === 'hover' && !inheritTextColor && variantsHover({ theme: $backgroundTheme })
 			)}
 		>
-			<span class="wrap" />
+			<span class="wrap"></span>
 			{#if name !== null}
 				{name}
 			{/if}

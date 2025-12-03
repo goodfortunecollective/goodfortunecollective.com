@@ -1,13 +1,8 @@
 <script lang="ts">
-	import {
-		renderRichText,
-		RichTextSchema,
-		storyblokEditable,
-		type SbBlokData
-	} from '@storyblok/svelte';
+	import { renderRichText, storyblokEditable, type SbBlokData } from '@storyblok/svelte';
 
-	import { components } from './';
 	import { RichtextTransition } from '$lib/components';
+	import { components } from './';
 
 	export let blok: RichTextProps;
 
@@ -21,12 +16,13 @@
 		html?: string;
 	}
 
-	$: contentHTML = renderRichText(blok.content, {
-		schema: RichTextSchema,
-		resolver: (component, blok) => {
-			return `__COMPONENT__!!! ${JSON.stringify({ component, blok })} __COMPONENT__`;
-		}
-	});
+	$: contentHTML =
+		renderRichText(blok.content, {
+			// cast to maintain custom component resolution with the new SDK
+			resolver: (component: any, blok: any) => {
+				return `__COMPONENT__!!! ${JSON.stringify({ component, blok })} __COMPONENT__`;
+			}
+		} as any) ?? '';
 
 	$: contentSegments = contentHTML.split('__COMPONENT__').map((x) => {
 		if (x.startsWith('!!!')) {

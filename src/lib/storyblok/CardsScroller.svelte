@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { storyblokEditable, StoryblokComponent } from '@storyblok/svelte';
+	import { StoryblokComponent, storyblokEditable } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
 
-	import { cls } from '$lib/styles';
-	import { backgroundTheme } from '$lib/stores';
-	import gsap from '$lib/gsap';
 	import { Heading, Spacer } from '$lib/components';
+	import gsap from '$lib/gsap';
+	import { backgroundTheme } from '$lib/stores';
+	import { cls } from '$lib/styles';
 	import { debounce } from '$lib/utils/debounce';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady.js';
 	import { onMount } from 'svelte';

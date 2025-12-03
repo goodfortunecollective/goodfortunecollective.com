@@ -16,7 +16,7 @@
 
 	let el!: HTMLElement;
 	let imageEl!: HTMLImageElement;
-	let scrollTrigger!: ScrollTrigger;
+	let scrollTrigger: ScrollTrigger | null = null;
 
 	$: parallaxEffect = 0 as number;
 
@@ -69,10 +69,8 @@
 	};
 
 	onDestroy(() => {
-		if (scrollTrigger) {
-			scrollTrigger.kill();
-			scrollTrigger = null;
-		}
+		scrollTrigger?.kill?.();
+		scrollTrigger = null;
 	});
 </script>
 

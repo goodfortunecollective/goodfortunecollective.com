@@ -6,10 +6,6 @@ on:
       - master
   pull_request:
 
-env:
-  # we call `pnpm playwright install` instead
-  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
-
 # cancel in-progress runs on new commits to same PR (gitub.event.number)
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.sha }}
@@ -22,11 +18,13 @@ jobs:
   Lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2.2.4
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
         with:
-          node-version: '16.x'
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm run lint
@@ -38,32 +36,38 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - node-version: 16
-            os: ubuntu-latest
-            e2e-browser: 'chromium'
-          - node-version: 18
+          - node-version: 22
             os: ubuntu-latest
             e2e-browser: 'chromium'
     env:
       KIT_E2E_BROWSER: ${{matrix.e2e-browser}}
     steps:
       - run: git config --global core.autocrlf false
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2.2.4
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm playwright install ${{ matrix.e2e-browser }}
+      # Install all Playwright browsers with system deps; tests may invoke a different browser than matrix.e2e-browser.
+      - run: pnpm exec playwright install --with-deps
+      - run: pnpm exec playwright install-deps
       - run: pnpm test
       - name: Archive test results
         if: failure()
         shell: bash
-        run: find packages -type d -name test-results -not -empty | tar -czf test-results.tar.gz --files-from=-
+        run: |
+          if [ -d packages ]; then
+            find packages -type d -name test-results -not -empty | tar -czf test-results.tar.gz --files-from=-
+          else
+            echo "No packages directory; skipping test-results archive."
+          fi
       - name: Upload test results
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           retention-days: 3
           name: test-failure-${{ github.run_id }}-${{ matrix.os }}-${{ matrix.node-version }}-${{ matrix.e2e-browser }}
@@ -75,27 +79,27 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - node-version: 16
+          - node-version: 22
             os: windows-2019 # slowness reported on newer versions https://github.com/actions/runner-images/issues/5166
             e2e-browser: 'chromium'
             mode: 'dev'
-          - node-version: 16
+          - node-version: 22
             os: ubuntu-latest
             e2e-browser: 'firefox'
             mode: 'dev'
-          - node-version: 16
+          - node-version: 22
             os: macOS-latest
             e2e-browser: 'webkit'
             mode: 'dev'
-          - node-version: 16
+          - node-version: 22
             os: windows-2019 # slowness reported on newer versions https://github.com/actions/runner-images/issues/5166
             e2e-browser: 'chromium'
             mode: 'build'
-          - node-version: 16
+          - node-version: 22
             os: ubuntu-latest
             e2e-browser: 'firefox'
             mode: 'build'
-          - node-version: 16
+          - node-version: 22
             os: macOS-latest
             e2e-browser: 'webkit'
             mode: 'build'
@@ -103,22 +107,31 @@ jobs:
       KIT_E2E_BROWSER: ${{matrix.e2e-browser}}
     steps:
       - run: git config --global core.autocrlf false
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2.2.4
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm playwright install ${{ matrix.e2e-browser }}
+      # Install all Playwright browsers with system deps; tests may invoke a different browser than matrix.e2e-browser.
+      - run: pnpm exec playwright install --with-deps
+      - run: pnpm exec playwright install-deps
       - run: pnpm test:cross-platform:${{ matrix.mode }}
       - name: Archive test results
         if: failure()
         shell: bash
-        run: find packages -type d -name test-results -not -empty | tar -czf test-results-cross-platform-${{ matrix.mode }}.tar.gz --files-from=-
+        run: |
+          if [ -d packages ]; then
+            find packages -type d -name test-results -not -empty | tar -czf test-results-cross-platform-${{ matrix.mode }}.tar.gz --files-from=-
+          else
+            echo "No packages directory; skipping test-results archive."
+          fi
       - name: Upload test results
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           retention-days: 3
           name: test-failure-cross-platform-${{ matrix.mode }}-${{ github.run_id }}-${{ matrix.os }}-${{ matrix.node-version }}-${{ matrix.e2e-browser }}
@@ -126,11 +139,13 @@ jobs:
   Test-create-svelte:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2.2.4
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
         with:
-          node-version: 16
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm run test:create-svelte
