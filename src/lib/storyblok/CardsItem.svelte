@@ -22,7 +22,7 @@
 		blok.class
 	)}
 >
-	<div class="relative flex h-full w-full flex-col p-8 pb-8">
+	<div class="relative flex h-full w-full flex-col p-8">
 		<div class="relative w-full">
 			<div class="absolute inset-0 text-red-100">
 				<NumberedListItem index={$$restProps.index} />
