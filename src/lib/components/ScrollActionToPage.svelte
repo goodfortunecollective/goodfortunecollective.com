@@ -131,7 +131,7 @@
 				right: 0;
 				bottom: 0;
 				left: 0;
-				background: theme('colors.yellow.350');
+				background: var(--color-yellow-350);
 				transform-origin: 50% 0;
 				transform: scale3d(1, var(--parallax-effect), 1);
 			}

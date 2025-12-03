@@ -86,7 +86,7 @@
 			width: 1px;
 			bottom: 0;
 			content: '';
-			background: theme('colors.yellow.350');
+			background: var(--color-yellow-350);
 		}
 
 		&:after {
@@ -111,7 +111,7 @@
 				position: absolute;
 				top: 0;
 				right: 0;
-				background: theme('colors.yellow.350');
+				background: var(--color-yellow-350);
 				content: '';
 			}
 
