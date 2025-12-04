@@ -38,7 +38,8 @@ export async function GET({ url }) {
 
 	const sbProjects = await storyblok.get('cdn/stories', {
 		version: 'published',
-		starts_with: 'projects'
+		starts_with: 'projects',
+		per_page: 100
 	});
 
 	const body = sitemap(url.origin, sbHeader.navigation, sbProjects.data.stories);
