@@ -10,7 +10,8 @@ export async function load({ parent, url }) {
 
 	const projects = await storyblokApi.get('cdn/stories', {
 		version: dev || isPreview(url) ? 'draft' : 'published',
-		starts_with: 'projects'
+		starts_with: 'projects',
+		per_page: 100
 	});
 
 	const categories = await storyblokApi.get('cdn/datasource_entries', {
