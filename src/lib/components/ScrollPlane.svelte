@@ -21,6 +21,7 @@
 
 	let planeEl: HTMLElement;
 	let plane: undefined | PlaneType;
+	let hasPlane = false;
 
 	// only add planes when the page is hidden during transition
 	let canCreatePlane,
@@ -115,6 +116,7 @@
 			params.renderOrder = curtains.planes.length;
 
 			plane = new Plane(curtains, planeEl, params);
+			hasPlane = !!plane;
 
 			const inTransition = {
 				opacity: plane.uniforms.opacity.value
@@ -170,6 +172,7 @@
 				//console.log('plane removed', plane.index, name);
 				plane.remove();
 				plane = null;
+				hasPlane = false;
 			}
 
 			resizeObserver?.disconnect();
@@ -231,6 +234,6 @@
 		crossorigin=""
 		data-sampler="planeTexture"
 		alt={name}
-		class={cls('hidden', 'img-plane')}
+		class={cls(hasPlane ? 'hidden' : 'block', 'img-plane')}
 	/>
 </div>
