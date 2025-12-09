@@ -91,7 +91,7 @@
 	class={variants({ theme: $backgroundTheme })}
 >
 	<div class="absolute inset-0 flex h-full w-screen items-center text-center">
-			<div class="mx-auto grid -translate-y-1/2 grid-cols-12 pt-16 lg:-translate-y-1/4">
+		<div class="mx-auto grid -translate-y-1/2 grid-cols-12 pt-16 lg:-translate-y-1/4">
 			<div
 				class="col-span-12 col-start-1 mx-4 md:col-span-10 md:col-start-2 md:mx-0 2xl:col-span-8 2xl:col-start-3"
 				bind:this={titleWrapper}
