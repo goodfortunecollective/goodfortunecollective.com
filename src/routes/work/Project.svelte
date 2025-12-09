@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { StoryblokComponent, renderRichText, useStoryblokBridge } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
-	import { getContext, onMount } from 'svelte';
+	import { getContext, onDestroy, onMount } from 'svelte';
 	import { inview } from 'svelte-inview';
+	import { browser } from '$app/environment';
 
 	import {
 		BackgroundTheme,
@@ -21,6 +22,8 @@
 
 	// title hover
 	let isTitleHovered = false as boolean;
+	let hoverRestoreTimeout: number | undefined;
+	let titleWrapper: HTMLDivElement;
 
 	$: description = renderRichText(data.story.content.description);
 	$: ask_text = renderRichText(data.story.content.ask_text);
@@ -41,10 +44,36 @@
 		}
 	});
 
+	const resetHover = () => {
+		isTitleHovered = false;
+
+		if (!browser) return;
+
+		clearTimeout(hoverRestoreTimeout);
+		hoverRestoreTimeout = window.setTimeout(() => {
+			if (titleWrapper?.matches(':hover')) {
+				isTitleHovered = true;
+			}
+		}, 150);
+	};
+
 	onMount(() => {
+		if (!browser) return;
+
+		window.addEventListener('scroll', resetHover, { passive: true });
+		window.addEventListener('wheel', resetHover, { passive: true });
+
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
+	});
+
+	onDestroy(() => {
+		if (!browser) return;
+
+		clearTimeout(hoverRestoreTimeout);
+		window.removeEventListener('scroll', resetHover);
+		window.removeEventListener('wheel', resetHover);
 	});
 </script>
 
@@ -65,8 +94,12 @@
 		<div class="mx-auto grid -translate-y-1/2 grid-cols-12 pt-16 lg:-translate-y-1/4">
 			<div
 				class="col-span-12 col-start-1 mx-4 md:col-span-10 md:col-start-2 md:mx-0 2xl:col-span-8 2xl:col-start-3"
-				on:mouseenter={() => (isTitleHovered = true)}
-				on:mouseleave={() => (isTitleHovered = false)}
+				bind:this={titleWrapper}
+				on:pointerenter={() => (isTitleHovered = true)}
+				on:pointerleave={() => (isTitleHovered = false)}
+				on:touchstart={() => (isTitleHovered = true)}
+				on:touchend={() => (isTitleHovered = false)}
+				on:touchcancel={() => (isTitleHovered = false)}
 				role="presentation"
 			>
 				<ProjectTitle animated={false} name={data.story.name} />

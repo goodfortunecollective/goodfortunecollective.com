@@ -1,19 +1,18 @@
 <script lang="ts">
+	import { renderRichText } from '@storyblok/svelte';
+	import { cva } from 'class-variance-authority';
 	import { onDestroy, onMount } from 'svelte';
 	import { inview } from 'svelte-inview';
-	import { cva } from 'class-variance-authority';
-	import { renderRichText } from '@storyblok/svelte';
 
 	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
 
 	import { browser } from '$app/environment';
 	import { base } from '$app/paths';
-	import { cls } from '$lib/styles';
-	import { ScrollPlane, Video, Heading, RichtextAnimated, Parallax } from '$lib/components';
-	import { project_list_hover, isTransitioning } from '$lib/stores';
+	import { Heading, Parallax, RichtextAnimated, ScrollPlane, Video } from '$lib/components';
 	import gsap from '$lib/gsap';
-	import { cursorType } from '$lib/stores';
+	import { cursorType, isTransitioning, project_list_hover } from '$lib/stores';
+	import { cls } from '$lib/styles';
 
 	export let name: string;
 	export let slug: string;
@@ -271,7 +270,7 @@
 					{/each}
 				</ul>
 				<div
-					class="4xl:text-2xl mt-4 max-w-md overflow-hidden text-base leading-snug font-medium lg:block xl:text-xl"
+					class="4xl:text-2xl mt-4 max-w-md overflow-hidden pr-4 text-base leading-snug font-medium lg:block xl:text-xl"
 				>
 					<RichtextAnimated bind:this={descriptionTextRef}>
 						<span class="wrap"></span>{@html description}

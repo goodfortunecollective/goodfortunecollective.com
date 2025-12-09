@@ -54,7 +54,7 @@
 				ease: 'none',
 				scrollTrigger: {
 					trigger: scrollEl,
-					start: blok.title?.length > 0 ? 'center 66%' : 'center center',
+					start: blok.title?.length > 0 ? 'center 58%' : 'center center',
 					end: () => {
 						if (scrollEl?.scrollWidth && innerWidth) {
 							return `+=${scrollEl.scrollWidth - innerWidth}`;
@@ -113,7 +113,7 @@
 			</div>
 			<Spacer gap="extra-large" />
 		{/if}
-		<div class={cls('overflow', blok.title?.length > 0 && 'pt-4')}>
+		<div class={cls('overflow mr-4 md:mr-8', blok.title?.length > 0 && 'pt-4')}>
 			<div class="grid grid-cols-12" bind:this={scrollEl}>
 				<div
 					class="col-span-12 col-start-1 mx-4 flex gap-4 md:col-span-10 md:col-start-2 md:mx-0 md:gap-8 2xl:col-span-8 2xl:col-start-3"
