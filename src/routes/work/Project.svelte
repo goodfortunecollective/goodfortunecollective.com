@@ -22,7 +22,7 @@
 
 	// title hover
 	let isTitleHovered = false as boolean;
-	let hoverRestoreTimeout: ReturnType<typeof setTimeout> | undefined;
+	let hoverRestoreTimeout: number | undefined;
 	let titleWrapper: HTMLDivElement;
 
 	$: description = renderRichText(data.story.content.description);
