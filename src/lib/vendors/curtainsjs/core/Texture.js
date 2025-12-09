@@ -1,7 +1,7 @@
 import { Mat4 } from '../math/Mat4.js';
 import { Vec2 } from '../math/Vec2.js';
 import { Vec3 } from '../math/Vec3.js';
-import { generateUUID, throwError, throwWarning, isPowerOf2 } from '../utils/utils.js';
+import { generateUUID, isPowerOf2, throwError, throwWarning } from '../utils/utils.js';
 
 /***
  Texture class objects used by render targets, shader passes and planes.
@@ -966,10 +966,22 @@ export class Texture {
 
 	/***
      This uses the requestVideoFrameCallback API to update the texture each time a new frame is displayed
-	 ***/
+     ***/
 	_videoFrameCallback() {
 		this._willUpdate = true;
-		this.source.requestVideoFrameCallback(() => this._videoFrameCallback());
+		if (!this.source) {
+			// wait for source to load
+			const waitForSource = this.renderer.nextRender.add(() => {
+				if (this.source) {
+					// source is ready, stop executing the callback
+					waitForSource.keep = false;
+
+					this.source.requestVideoFrameCallback(() => this._videoFrameCallback());
+				}
+			}, true);
+		} else {
+			this.source.requestVideoFrameCallback(() => this._videoFrameCallback());
+		}
 	}
 
 	/***
