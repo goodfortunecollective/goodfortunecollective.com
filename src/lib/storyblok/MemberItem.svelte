@@ -20,6 +20,10 @@
 	{...$$restProps}
 	on:mouseenter={handleMouseEnter}
 	on:mouseleave={handleMouseLeave}
+	on:touchstart={handleMouseEnter}
+	on:touchend={handleMouseLeave}
+	on:touchcancel={handleMouseLeave}
+	on:touchmove={handleMouseLeave}
 	class="h-auto w-full border-b border-gray-500 last:border-0 lg:h-20 2xl:h-32"
 >
 	<span class="align-center block h-full py-4 text-left lg:flex lg:flex-row 2xl:py-8">
