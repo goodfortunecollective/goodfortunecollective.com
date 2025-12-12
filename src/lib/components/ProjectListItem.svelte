@@ -262,7 +262,7 @@
 				</Heading>
 				<ul
 					class={cls(
-						"text-stone-450 tracking-widest uppercase lg:flex lg:flex-wrap lg:items-center lg:[&>li]:flex lg:[&>li]:items-center lg:[&>li+li]:before:content-['•'] lg:[&>li+li]:before:mx-2",
+						"text-stone-450 tracking-widest uppercase lg:flex lg:flex-wrap lg:items-center lg:[&>li]:flex lg:[&>li]:items-center lg:[&>li+li]:before:mx-2 lg:[&>li+li]:before:content-['•']",
 						layout === 'right' && 'lg:justify-end lg:text-right'
 					)}
 				>
@@ -276,7 +276,7 @@
 					class={cls(
 						'4xl:text-2xl mt-4 max-w-md overflow-hidden pr-4 text-base leading-snug font-medium lg:block xl:text-xl',
 						layout === 'right'
-							? "lg:ml-auto lg:max-w-lg xl:max-w-xl lg:text-right lg:[text-wrap:balance] lg:[text-align-last:right] lg:pr-0 lg:pl-4"
+							? 'lg:ml-auto lg:max-w-lg lg:pr-0 lg:pl-4 lg:text-right lg:[text-wrap:balance] lg:[text-align-last:right] xl:max-w-xl'
 							: ''
 					)}
 				>
