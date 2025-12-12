@@ -261,16 +261,24 @@
 					{name}
 				</Heading>
 				<ul
-					class="text-stone-450 tracking-widest uppercase lg:[&>*:not(:first-child)]:before:ml-2 lg:[&>*:not(:last-child)]:after:content-['•']"
+					class={cls(
+						"text-stone-450 tracking-widest uppercase lg:flex lg:flex-wrap lg:items-center lg:[&>li]:flex lg:[&>li]:items-center lg:[&>li+li]:before:content-['•'] lg:[&>li+li]:before:mx-2",
+						layout === 'right' && 'lg:justify-end lg:text-right'
+					)}
 				>
 					{#each content.category as category}
-						<li class="lg:inline-block">
+						<li>
 							<small>{category.replace('-', ' ')}</small>
 						</li>
 					{/each}
 				</ul>
 				<div
-					class="4xl:text-2xl mt-4 max-w-md overflow-hidden pr-4 text-base leading-snug font-medium lg:block xl:text-xl"
+					class={cls(
+						'4xl:text-2xl mt-4 max-w-md overflow-hidden pr-4 text-base leading-snug font-medium lg:block xl:text-xl',
+						layout === 'right'
+							? "lg:ml-auto lg:max-w-lg xl:max-w-xl lg:text-right lg:[text-wrap:balance] lg:[text-align-last:right] lg:pr-0 lg:pl-4"
+							: ''
+					)}
 				>
 					<RichtextAnimated bind:this={descriptionTextRef}>
 						<span class="wrap"></span>{@html description}
