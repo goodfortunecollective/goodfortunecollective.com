@@ -414,7 +414,7 @@
 					<h1
 						data-gsap="split-text"
 						class={cls(
-							'max-w-11xl font-degular-display leading-tightest z-[8] tracking-wide text-neutral-950',
+							'max-w-11xl font-degular-display z-[8] leading-[0.55] tracking-wide text-neutral-950',
 							'sb-headline-video__title'
 						)}
 					>
