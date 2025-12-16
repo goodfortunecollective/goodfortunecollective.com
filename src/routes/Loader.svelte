@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createEventDispatcher, onMount } from 'svelte';
+	import { createEventDispatcher, onDestroy, onMount } from 'svelte';
 
 	import { base } from '$app/paths';
 
@@ -7,6 +7,7 @@
 	export let skip: boolean = false;
 
 	let isReady: boolean = false;
+	let fallbackTimeout: ReturnType<typeof setTimeout> | null = null;
 
 	export const hide = () => {
 		active = false;
@@ -20,6 +21,10 @@
 		if (isReady) return;
 
 		isReady = true;
+		if (fallbackTimeout) {
+			clearTimeout(fallbackTimeout);
+			fallbackTimeout = null;
+		}
 		dispatch('complete');
 	}
 
@@ -29,7 +34,20 @@
 			return;
 		}
 
+		// Kick off playback manually and bail out early if autoplay is blocked (e.g. low power mode).
+		logo.play().catch(() => ready());
+
+		// Fallback so users are not stuck on the loader if the intro video cannot play.
+		fallbackTimeout = setTimeout(ready, 10000);
+
 		checkTimeVideo();
+	});
+
+	onDestroy(() => {
+		if (fallbackTimeout) {
+			clearTimeout(fallbackTimeout);
+			fallbackTimeout = null;
+		}
 	});
 
 	function checkTimeVideo() {
