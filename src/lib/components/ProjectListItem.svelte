@@ -54,8 +54,8 @@
 		variants: {
 			margin: {
 				none: '',
-				left: 'lg:translate-x-[16.66%]',
-				right: 'lg:-translate-x-[16.66%]'
+				left: 'md:translate-x-[16.66%]',
+				right: 'md:-translate-x-[16.66%]'
 			}
 		},
 		defaultVariants: {
@@ -68,7 +68,7 @@
 			scale: {
 				full: 'w-full',
 				'2/3': 'w-2/3',
-				half: 'w-full md:w-2/3 lg:w-1/2'
+				half: 'w-full md:w-2/3 md:w-1/2'
 			}
 		},
 		defaultVariants: {
@@ -193,7 +193,7 @@
 
 <svelte:window bind:innerWidth />
 
-<div class={cls('pointer-events-none mb-24 lg:mb-0', $$props.class)} bind:this={el}>
+<div class={cls('pointer-events-none mb-24 md:mb-0', $$props.class)} bind:this={el}>
 	<Parallax
 		speed={parallaxSpeed}
 		class={cls(
@@ -244,7 +244,7 @@
 
 			<div
 				class={cls(
-					'mt-8 lg:pl-0',
+					'mt-8 md:pl-0',
 					layout === 'right' && 'pl-8 md:pl-0',
 					layout === 'left' && 'pl-8'
 				)}
@@ -262,8 +262,8 @@
 				</Heading>
 				<ul
 					class={cls(
-						"text-stone-450 tracking-widest uppercase lg:flex lg:flex-wrap lg:items-center lg:[&>li]:flex lg:[&>li]:items-center lg:[&>li+li]:before:mx-2 lg:[&>li+li]:before:content-['•']",
-						layout === 'right' && 'lg:justify-end lg:text-right'
+						"text-stone-450 tracking-widest uppercase md:flex md:flex-wrap md:items-center md:[&>li]:flex md:[&>li]:items-center md:[&>li+li]:before:mx-2 md:[&>li+li]:before:content-['•']",
+						layout === 'right' && 'md:justify-end md:text-right'
 					)}
 				>
 					{#each content.category as category}
@@ -274,9 +274,9 @@
 				</ul>
 				<div
 					class={cls(
-						'4xl:text-2xl mt-4 max-w-md overflow-hidden pr-4 text-base leading-snug font-medium lg:block xl:text-xl',
+						'4xl:text-2xl mt-4 max-w-md overflow-hidden pr-4 text-base leading-snug font-medium md:block xl:text-xl',
 						layout === 'right'
-							? 'lg:ml-auto lg:max-w-lg lg:pr-0 lg:pl-4 lg:text-right lg:[text-wrap:balance] lg:[text-align-last:right] xl:max-w-xl'
+							? 'md:ml-auto md:max-w-lg md:pr-0 md:pl-4 md:text-right md:[text-wrap:balance] md:[text-align-last:right] xl:max-w-xl'
 							: ''
 					)}
 				>
