@@ -12,6 +12,7 @@
 	export let enabled: boolean = true;
 	export let underline: boolean = false;
 	export let speed: number = 1;
+	export let unmaskOnComplete: boolean = false;
 
 	$: innerWidth = 0;
 	let lastWidth = 0;
@@ -20,6 +21,25 @@
 
 	let ctx: any = null;
 	let text: any = null;
+
+	const getLinesFor = (elements?: Element[]) => {
+		if (elements?.length) {
+			const lines = elements
+				.map((element) => (element as HTMLElement).closest('.split-line'))
+				.filter(Boolean) as HTMLElement[];
+			return Array.from(new Set(lines));
+		}
+
+		return text?.lines ?? [];
+	};
+
+	const setLineOverflow = (value: 'hidden' | 'visible', elements?: Element[]) => {
+		if (!unmaskOnComplete) return;
+		const lines = getLinesFor(elements);
+		if (lines?.length) {
+			gsap.set(lines, { overflow: value });
+		}
+	};
 
 	onMount(() => {
 		lastWidth = innerWidth;
@@ -54,11 +74,13 @@
 					top: 'top center',
 					toggleActions: 'restart pause resume reverse',
 					onEnter(elements: any, triggers: any) {
+						setLineOverflow('hidden', elements);
 						gsap.to(elements, {
 							duration: 0.4 * speed,
 							ease: 'circ.out',
 							yPercent: 0,
-							stagger: 0.03
+							stagger: 0.03,
+							onComplete: () => setLineOverflow('visible', elements)
 						});
 
 						gsap.to(text.lines, {
