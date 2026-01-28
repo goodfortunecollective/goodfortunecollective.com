@@ -54,6 +54,7 @@
 			<Heading
 				as="h2"
 				animated={blok.animated}
+				unmaskOnComplete={false}
 				size={blok.titleSize}
 				class={headingStyle({
 					maxWidth: blok.maxWidth

@@ -60,6 +60,14 @@
 	let videoBBox: DOMRect | undefined;
 	let splitTexts: any[] = [];
 
+	const setSplitLineOverflow = (value: 'hidden' | 'visible') => {
+		splitTexts.forEach((text) => {
+			if (text?.lines?.length) {
+				gsap.set(text.lines, { overflow: value });
+			}
+		});
+	};
+
 	let isScrollFullVideo = false;
 	let isCursorEnter = false;
 	let isInView = false;
@@ -231,10 +239,13 @@
 					trigger: videoContainer,
 					start: 'center 55%',
 					end: 'center 30%',
-					toggleActions: 'play reverse play reverse' // onEnter onLeave onEnterBack onLeaveBack
+					toggleActions: 'play reverse play reverse', // onEnter onLeave onEnterBack onLeaveBack
+					onLeave: () => setSplitLineOverflow('hidden'),
+					onLeaveBack: () => setSplitLineOverflow('hidden')
 				}
 			});
 			tlSplitText.addLabel('start');
+			tlSplitText.eventCallback('onComplete', () => setSplitLineOverflow('visible'));
 
 			splitTexts.forEach((text, index) => {
 				gsap.set(text.chars, { opacity: 1 });
