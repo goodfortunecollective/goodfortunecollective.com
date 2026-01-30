@@ -60,14 +60,6 @@
 	let videoBBox: DOMRect | undefined;
 	let splitTexts: any[] = [];
 
-	const setSplitLineOverflow = (value: 'hidden' | 'visible') => {
-		splitTexts.forEach((text) => {
-			if (text?.lines?.length) {
-				gsap.set(text.lines, { overflow: value });
-			}
-		});
-	};
-
 	let isScrollFullVideo = false;
 	let isCursorEnter = false;
 	let isInView = false;
@@ -239,13 +231,10 @@
 					trigger: videoContainer,
 					start: 'center 55%',
 					end: 'center 30%',
-					toggleActions: 'play reverse play reverse', // onEnter onLeave onEnterBack onLeaveBack
-					onLeave: () => setSplitLineOverflow('hidden'),
-					onLeaveBack: () => setSplitLineOverflow('hidden')
+					toggleActions: 'play reverse play reverse' // onEnter onLeave onEnterBack onLeaveBack
 				}
 			});
 			tlSplitText.addLabel('start');
-			tlSplitText.eventCallback('onComplete', () => setSplitLineOverflow('visible'));
 
 			splitTexts.forEach((text, index) => {
 				gsap.set(text.chars, { opacity: 1 });
@@ -473,5 +462,12 @@
 			// the font-size won't get lower than 16px
 			// the viewport width is more than 1920px font size will stop scaling at 48px.
 		}
+	}
+
+	.title-cont :global(.split-line) {
+		display: block;
+		overflow: hidden;
+		padding-block: 0.08em;
+		margin-block: -0.08em;
 	}
 </style>

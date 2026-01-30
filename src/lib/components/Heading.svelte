@@ -10,7 +10,6 @@
 	export let leading: 'normal' | 'extra-tight' | 'tightest' = 'normal';
 	export let animated: boolean = true;
 	export let underline: boolean = false;
-	export let unmaskOnComplete: boolean = false;
 
 	const variants = cva('w-full', {
 		variants: {
@@ -44,7 +43,6 @@
 	<TextTransition
 		enabled={animated}
 		{underline}
-		{unmaskOnComplete}
 		speed={size !== 'h1' && size !== 'h2' ? 1 : 1.25}
 	>
 		<slot />
