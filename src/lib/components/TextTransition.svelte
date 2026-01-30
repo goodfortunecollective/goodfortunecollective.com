@@ -12,7 +12,6 @@
 	export let enabled: boolean = true;
 	export let underline: boolean = false;
 	export let speed: number = 1;
-	export let unmaskOnComplete: boolean = false;
 
 	$: innerWidth = 0;
 	let lastWidth = 0;
@@ -21,25 +20,6 @@
 
 	let ctx: any = null;
 	let text: any = null;
-
-	const getLinesFor = (elements?: Element[]) => {
-		if (elements?.length) {
-			const lines = elements
-				.map((element) => (element as HTMLElement).closest('.split-line'))
-				.filter(Boolean) as HTMLElement[];
-			return Array.from(new Set(lines));
-		}
-
-		return text?.lines ?? [];
-	};
-
-	const setLineOverflow = (value: 'hidden' | 'visible', elements?: Element[]) => {
-		if (!unmaskOnComplete) return;
-		const lines = getLinesFor(elements);
-		if (lines?.length) {
-			gsap.set(lines, { overflow: value });
-		}
-	};
 
 	onMount(() => {
 		lastWidth = innerWidth;
@@ -74,13 +54,11 @@
 					top: 'top center',
 					toggleActions: 'restart pause resume reverse',
 					onEnter(elements: any, triggers: any) {
-						setLineOverflow('hidden', elements);
 						gsap.to(elements, {
 							duration: 0.4 * speed,
 							ease: 'circ.out',
 							yPercent: 0,
-							stagger: 0.03,
-							onComplete: () => setLineOverflow('visible', elements)
+							stagger: 0.03
 						});
 
 						gsap.to(text.lines, {
@@ -121,8 +99,16 @@
 
 <span
 	bind:this={element}
-	class={cls('inline-block break-words duration-1000 ease-out', clazz)}
+	class={cls('c-text-transition inline-block break-words duration-1000 ease-out', clazz)}
 	{style}
 >
 	<span class="wrap"></span><slot />
 </span>
+
+<style lang="scss">
+	.c-text-transition :global(.split-line) {
+		overflow: hidden;
+		padding-block: 0.08em;
+		margin-block: -0.08em;
+	}
+</style>
