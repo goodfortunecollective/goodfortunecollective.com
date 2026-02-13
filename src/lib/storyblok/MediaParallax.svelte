@@ -1,11 +1,18 @@
 <script lang="ts">
 	import { StoryblokComponent, storyblokEditable } from '@storyblok/svelte';
 
-	import { Image } from '$lib/components';
 	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
 	import { cls } from '$lib/styles';
+	import { lazyLoad } from '$lib/utils/lazyLoad';
 
 	export let blok: any;
+
+	$: backgroundFilename = blok.background?.filename || '';
+	$: backgroundDimensions = backgroundFilename
+		? getImageDimensionsFromUrl(backgroundFilename)
+		: { width: 0, height: 0 };
+	$: backgroundWidth = backgroundDimensions.width > 0 ? backgroundDimensions.width : undefined;
+	$: backgroundHeight = backgroundDimensions.height > 0 ? backgroundDimensions.height : undefined;
 </script>
 
 <div
@@ -13,13 +20,15 @@
 	{...$$restProps}
 	class={cls('relative overflow-hidden', blok.class)}
 >
-	{#if blok.background?.filename?.length > 0}
-		<Image
-			src={`${blok.background.filename}/m/`}
-			width={getImageDimensionsFromUrl(blok.background.filename).width}
-			height={getImageDimensionsFromUrl(blok.background.filename).height}
-			aspect="auto"
-			alt={blok.background.name}
+	{#if backgroundFilename.length > 0}
+		<img
+			use:lazyLoad={`${backgroundFilename}/m/`}
+			width={backgroundWidth}
+			height={backgroundHeight}
+			alt={blok.background?.name || ''}
+			loading="lazy"
+			decoding="async"
+			class="block h-auto w-full"
 		/>
 	{/if}
 	{#each blok.content as b}
