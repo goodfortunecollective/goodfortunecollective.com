@@ -15,6 +15,9 @@ if (useMkcert) {
 
 export default defineConfig({
 	server: { host: true },
+	ssr: {
+		noExternal: ['gsap']
+	},
 	plugins,
 	test: {
 		include: ['src/**/*.{test,spec}.{js,ts}']
