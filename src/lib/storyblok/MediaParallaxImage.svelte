@@ -3,10 +3,10 @@
 	import { fade } from 'svelte/transition';
 
 	import { getImageDimensionsFromUrl } from '$lib/storyblok/utils';
+	import gsap from '$lib/gsap';
 	import { cls } from '$lib/styles';
 	import { lazyLoad } from '$lib/utils/lazyLoad';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
-	import { gsap } from 'gsap';
 
 	export let blok: any;
 	let element: HTMLElement;
