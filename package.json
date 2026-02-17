@@ -51,7 +51,7 @@
 	},
 	"type": "module",
 	"engines": {
-		"node": ">=22"
+		"node": "22.x"
 	},
 	"dependencies": {
 		"@storyblok/js": "^4.4.5",
