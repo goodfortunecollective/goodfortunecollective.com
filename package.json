@@ -59,7 +59,7 @@
 		"@typeform/embed": "^5.10.0",
 		"@types/curtainsjs": "^8.1.3",
 		"clsx": "^2.1.1",
-		"gsap": "^3.13.0",
+		"gsap": "3.13.0",
 		"lenis": "^1.3.17",
 		"svelte-inview": "^4.0.4",
 		"svelte-simple-modal": "^2.0.0",
