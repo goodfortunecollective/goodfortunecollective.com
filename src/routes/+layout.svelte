@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { StoryblokComponent, useStoryblokBridge } from '@storyblok/svelte';
-	import Lenis from '@studio-freight/lenis';
 	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
+	import Lenis from 'lenis';
 	import { onMount, setContext } from 'svelte';
 	import { Body } from 'svelte-body';
 	import Modal from 'svelte-simple-modal';

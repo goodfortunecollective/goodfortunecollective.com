@@ -25,7 +25,10 @@
 	};
 
 	const normalizeHeadingRichText = (content: string) => {
-		return content.replace(/<\/p>\s*<p>/g, '<br/>').replace(/^<p>/, '').replace(/<\/p>$/, '');
+		return content
+			.replace(/<\/p>\s*<p>/g, '<br/>')
+			.replace(/^<p>/, '')
+			.replace(/<\/p>$/, '');
 	};
 
 	$: titleField = blok.title ?? blok.text;
