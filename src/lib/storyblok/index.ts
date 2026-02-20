@@ -9,6 +9,7 @@ import CardsItem from './CardsItem.svelte';
 import CardsScroller from './CardsScroller.svelte';
 import CenterHeadline from './CenterHeadline.svelte';
 import Container from './Container.svelte';
+import ContentGroup from './ContentGroup.svelte';
 import Figure from './Figure.svelte';
 import Footer from './Footer.svelte';
 import Header from './Header.svelte';
@@ -58,6 +59,7 @@ export const components: any = {
 	'cards-scroller': CardsScroller,
 	'center-headline': CenterHeadline,
 	container: Container,
+	'content-group': ContentGroup,
 	figure: Figure,
 	footer: Footer,
 	header: Header,
