@@ -29,6 +29,10 @@
 	$: ask_text = renderRichText(data.story.content.ask_text);
 	$: strategy_text = renderRichText(data.story.content.strategy_text);
 	$: solution_text = renderRichText(data.story.content.solution_text);
+	const getHeading = (value: unknown, fallback: string) =>
+		typeof value === 'string' && value.trim().length > 0 ? value.trim() : fallback;
+	$: strategy_section_title = getHeading(data.story.content.strategy_section_title, 'Strategy');
+	$: solution_section_title = getHeading(data.story.content.solution_section_title, 'Solution');
 
 	const preview = getContext('storyblok-preview');
 
@@ -186,7 +190,7 @@
 					as="h4"
 					size="h6"
 					class="col-span-12 col-start-1 mx-4 mt-1 text-rose-50 uppercase md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-2 lg:col-start-2 2xl:col-start-3"
-					><strong>Strategy</strong></Heading
+					><strong>{strategy_section_title}</strong></Heading
 				>
 				<RichtextTransition
 					class="[&_p]:leading-snu7 4xl:text-4xl col-span-12 col-start-1 mx-4 text-xl md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-6 lg:col-start-5 xl:text-2xl 2xl:col-span-5 2xl:col-start-6 [&_p]:leading-snug"
@@ -214,7 +218,7 @@
 					as="h4"
 					size="h6"
 					class="col-span-12 col-start-1 mx-4 mt-1 text-rose-50 uppercase md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-2 lg:col-start-2 2xl:col-start-3"
-					><strong>Solution</strong></Heading
+					><strong>{solution_section_title}</strong></Heading
 				>
 				<RichtextTransition
 					class="4xl:text-4xl col-span-12 col-start-1 mx-4 text-xl md:col-span-10 md:col-start-2 md:mx-0 lg:col-span-6 lg:col-start-5 xl:text-2xl 2xl:col-span-5  2xl:col-start-6 [&_p]:leading-snug"
