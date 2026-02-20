@@ -12,7 +12,7 @@
 				none: 'bg-transparent',
 				play: 'bg-yellow-350',
 				pause: 'bg-yellow-350',
-				checkout: 'bg-transparent border-yellow-350 border-solid border'
+				checkout: 'bg-transparent border-yellow-350 border-solid border-3'
 			}
 		},
 		defaultVariants: {
