@@ -12,6 +12,8 @@ import Container from './Container.svelte';
 import ContentGroup from './ContentGroup.svelte';
 import Figure from './Figure.svelte';
 import Footer from './Footer.svelte';
+import GridColumn from './GridColumn.svelte';
+import GridColumns from './GridColumns.svelte';
 import Header from './Header.svelte';
 import Heading from './Heading.svelte';
 import HeadingDescription from './HeadingDescription.svelte';
@@ -62,6 +64,8 @@ export const components: any = {
 	'content-group': ContentGroup,
 	figure: Figure,
 	footer: Footer,
+	'grid-column': GridColumn,
+	'grid-columns': GridColumns,
 	header: Header,
 	heading: Heading,
 	'heading-description': HeadingDescription,
@@ -82,6 +86,8 @@ export const components: any = {
 	'media-parallax-video': MediaParallaxVideo,
 	'member-item': MemberItem,
 	'member-list': MemberList,
+	'nested-column': GridColumn,
+	'nested-columns': GridColumns,
 	'projects-list': ProjectsList,
 	page: Page,
 	paragraph: Paragraph,
