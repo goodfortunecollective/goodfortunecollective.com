@@ -1,17 +1,19 @@
-import ArticleList from './ArticleList.svelte';
 import ArticleHeadline from './ArticleHeadline.svelte';
+import ArticleList from './ArticleList.svelte';
 import ArticleListItem from './ArticleListItem.svelte';
 import ArticleText from './ArticleText.svelte';
 import BackgroundTheme from './BackgroundTheme.svelte';
 import CardsImage from './CardsImage.svelte';
-import CardsVideo from './CardsVideo.svelte';
 import CardsItem from './CardsItem.svelte';
 import CardsScroller from './CardsScroller.svelte';
+import CardsVideo from './CardsVideo.svelte';
 import CenterHeadline from './CenterHeadline.svelte';
 import Container from './Container.svelte';
 import ContentGroup from './ContentGroup.svelte';
 import Figure from './Figure.svelte';
 import Footer from './Footer.svelte';
+import GridColumn from './GridColumn.svelte';
+import GridColumns from './GridColumns.svelte';
 import Header from './Header.svelte';
 import Heading from './Heading.svelte';
 import HeadingDescription from './HeadingDescription.svelte';
@@ -32,9 +34,9 @@ import MediaParallaxImage from './MediaParallaxImage.svelte';
 import MediaParallaxVideo from './MediaParallaxVideo.svelte';
 import MemberItem from './MemberItem.svelte';
 import MemberList from './MemberList.svelte';
+import Page from './Page.svelte';
 import Paragraph from './Paragraph.svelte';
 import ProjectsList from './ProjectsList.svelte';
-import Page from './Page.svelte';
 import RichText from './RichText.svelte';
 import SEO from './SEO.svelte';
 import SocialLink from './SocialLink.svelte';
@@ -62,6 +64,8 @@ export const components: any = {
 	'content-group': ContentGroup,
 	figure: Figure,
 	footer: Footer,
+	'grid-column': GridColumn,
+	'grid-columns': GridColumns,
 	header: Header,
 	heading: Heading,
 	'heading-description': HeadingDescription,
