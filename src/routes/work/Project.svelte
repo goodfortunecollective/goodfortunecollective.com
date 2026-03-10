@@ -1,9 +1,9 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { StoryblokComponent, renderRichText, useStoryblokBridge } from '@storyblok/svelte';
 	import { cva } from 'class-variance-authority';
 	import { getContext, onDestroy, onMount } from 'svelte';
 	import { inview } from 'svelte-inview';
-	import { browser } from '$app/environment';
 
 	import {
 		BackgroundTheme,
@@ -161,23 +161,23 @@
 	class={cls(variants({ theme: $backgroundTheme }))}
 >
 	<div class="grid -translate-y-16 grid-cols-12 pb-16">
+		<div class="col-span-12 col-start-1 w-full">
+			<Video
+				name={data.story.content.video_id}
+				videoID={data.story.content.video_id}
+				videoUrl={data.story.content.video_url}
+				posterUrl={data.story.content.video_poster?.filename
+					? data.story.content.video_poster.filename
+					: `https://vumbnail.com/${data.story.content.video_id}.jpg`}
+				autoplay={data.story.content.video_autoplay}
+				muted={data.story.content.video_autoplay}
+				loop={data.story.content.video_autoplay}
+				animated={false}
+			/>
+		</div>
 		<div
 			class="col-span-12 col-start-1 md:col-span-10 md:col-start-2 2xl:col-span-8 2xl:col-start-3"
 		>
-			<div class="w-full">
-				<Video
-					name={data.story.content.video_id}
-					videoID={data.story.content.video_id}
-					videoUrl={data.story.content.video_url}
-					posterUrl={data.story.content.video_poster?.filename
-						? data.story.content.video_poster.filename
-						: `https://vumbnail.com/${data.story.content.video_id}.jpg`}
-					autoplay={data.story.content.video_autoplay}
-					muted={data.story.content.video_autoplay}
-					loop={data.story.content.video_autoplay}
-					animated={false}
-				/>
-			</div>
 			<div class="4xl:max-w-8xl mx-4 max-w-4xl py-16 md:mx-0 2xl:max-w-6xl">
 				<Heading as="h2" size="h2" animated={false}>
 					<RichtextTransition class="[&_p]:leading-[1.1]">{@html description}</RichtextTransition>
