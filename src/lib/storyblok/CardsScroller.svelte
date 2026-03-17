@@ -19,24 +19,36 @@
 	let scrollEl!: HTMLElement;
 	let ctx: any = null;
 
-	const variants = cva('', {
+	const sizeVariants = cva('', {
 		variants: {
 			size: {
 				small: 'h-48 md:h-64 2xl:h-72 4xl:h-80' /* 256px */,
 				medium: 'h-72 md:h-96 2xl:h-112 4xl:h-128' /* 384px */,
 				large: 'h-96 md:h-128 2xl:h-160 4xl:h-224' /* 512px */,
 				'extra-large': 'h-128 md:h-160 2xl:h-224 4xl:h-256'
-			},
+			}
+		},
+		defaultVariants: {
+			size: 'medium'
+		}
+	});
+
+	const themeVariants = cva('', {
+		variants: {
 			theme: {
 				light: '',
 				dark: 'text-yellow-50'
 			}
 		},
 		defaultVariants: {
-			size: 'medium',
 			theme: 'light'
 		}
 	});
+
+	$: heightClass = cls(
+		sizeVariants({ size: blok.size }),
+		blok.full_height && 'md:h-screen 2xl:h-screen 4xl:h-screen'
+	);
 
 	onMount(() => {
 		lastWidth = innerWidth;
@@ -96,7 +108,8 @@
 	{...$$restProps}
 	class={cls(
 		'relative flex w-full',
-		variants({ theme: $backgroundTheme, size: blok.size }),
+		themeVariants({ theme: $backgroundTheme }),
+		heightClass,
 		blok.class
 	)}
 >
@@ -119,7 +132,7 @@
 					class="col-span-12 col-start-1 mx-4 flex gap-4 md:col-span-10 md:col-start-2 md:mx-0 md:gap-8 2xl:col-span-8 2xl:col-start-3"
 				>
 					{#each blok.content as b, index}
-						<div class={variants({ size: blok.size })}>
+						<div class={heightClass}>
 							<StoryblokComponent blok={b} {index} />
 						</div>
 					{/each}
