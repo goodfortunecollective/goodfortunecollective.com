@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
+	import { onDestroy, onMount, tick } from 'svelte';
 
 	import { ScrollTrigger } from '$lib/gsap';
 	import { useTransitionReady } from '$lib/utils/useTransitionReady';
@@ -24,6 +24,7 @@
 	let el!: HTMLElement;
 	let curtains: CurtainsInstance;
 	let ctx: any = null;
+	let returnScrollFrame: number | null = null;
 
 	useCurtains((curtainsInstance) => {
 		curtains = curtainsInstance;
@@ -95,44 +96,72 @@
 
 	$: projects = getProjectsByFilter(data.projects, filter);
 
+	const waitForFrame = () =>
+		new Promise<void>((resolve) => {
+			returnScrollFrame = requestAnimationFrame(() => {
+				returnScrollFrame = null;
+				resolve();
+			});
+		});
+
+	const scrollInstantlyTo = (target: HTMLElement) => {
+		window.scrollTo({
+			top: target.getBoundingClientRect().top + window.scrollY,
+			behavior: 'auto'
+		});
+
+		$lenis?.scrollTo(target, { offset: 0, immediate: true });
+	};
+
+	const completeProjectReturn = () => {
+		isTransitioningEnabled.set(true);
+		projectReturnReady = true;
+		ScrollTrigger.refresh(true);
+	};
+
+	const handleProjectReturn = async () => {
+		gsap.set(el, { opacity: 0, y: 0 });
+
+		await tick();
+		await waitForFrame();
+
+		const scrollElem = projectReturnSlug ? document.getElementById(projectReturnSlug) : null;
+
+		if (!scrollElem) {
+			if (el) scrollInstantlyTo(el);
+			completeProjectReturn();
+			return;
+		}
+
+		for (let attempt = 0; attempt < 8; attempt += 1) {
+			scrollInstantlyTo(scrollElem);
+			await waitForFrame();
+
+			if (Math.abs(scrollElem.getBoundingClientRect().top) <= 2) break;
+		}
+
+		ctx = gsap.context(() => {
+			gsap.to(el, {
+				duration: 1,
+				opacity: 1,
+				delay: 0.1,
+				ease: 'power2.out',
+				onComplete: () => {
+					ScrollTrigger.refresh(true);
+				}
+			});
+		});
+
+		completeProjectReturn();
+	};
+
 	onMount(() => {
 		if (data.story) {
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
 
 		if (!$isTransitioningEnabled && projectReturnSlug) {
-			gsap.set(el, { opacity: 0, y: 200 });
-
-			ctx = gsap.context(() => {
-				if (el) {
-					$lenis?.scrollTo(el, { offset: 0, immediate: true });
-
-					const search = projectReturnSlug;
-
-					if (search) {
-						const scrollElem = document.getElementById(search);
-
-						if (scrollElem) {
-							gsap.to(el, {
-								duration: 1,
-								opacity: 1,
-								delay: 0.2,
-								y: 0,
-								ease: 'power2.out'
-							});
-
-							setTimeout(() => {
-								isTransitioningEnabled.set(true);
-								$lenis?.scrollTo(scrollElem, { offset: 0, immediate: true });
-								projectReturnReady = true;
-							}, 100);
-						} else {
-							isTransitioningEnabled.set(true);
-							projectReturnReady = true;
-						}
-					}
-				}
-			});
+			handleProjectReturn();
 		} else {
 			projectReturnReady = true;
 		}
@@ -144,6 +173,11 @@
 	});
 
 	onDestroy(() => {
+		if (returnScrollFrame) {
+			cancelAnimationFrame(returnScrollFrame);
+			returnScrollFrame = null;
+		}
+
 		ctx?.revert();
 	});
 </script>
