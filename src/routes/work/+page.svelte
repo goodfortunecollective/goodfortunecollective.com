@@ -19,6 +19,7 @@
 	import MenuList from './MenuList.svelte';
 
 	let activeFilter = false;
+	let projectReturnReady = false;
 
 	let el!: HTMLElement;
 	let curtains: CurtainsInstance;
@@ -32,6 +33,9 @@
 
 	//$: filter = $page.url.searchParams.get('filter');
 	$: filter = $page.url.hash.slice(1);
+	$: projectReturnSlug = $page.url.searchParams.get('slug');
+	$: isProjectReturn = !$isTransitioningEnabled && !!projectReturnSlug;
+	$: hideProjectReturn = isProjectReturn && !projectReturnReady;
 
 	const projectGridItemsClasses = [
 		'col-span-10 col-start-3 md:col-span-5 md:col-start-6 md:mt-[4.166%]  z-2 text-left md:text-right 2xl:col-span-5 2xl:col-start-6',
@@ -96,14 +100,14 @@
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
 		}
 
-		if (!$isTransitioningEnabled) {
+		if (!$isTransitioningEnabled && projectReturnSlug) {
 			gsap.set(el, { opacity: 0, y: 200 });
 
 			ctx = gsap.context(() => {
 				if (el) {
 					$lenis?.scrollTo(el, { offset: 0, immediate: true });
 
-					const search = $page.url.searchParams.get('slug');
+					const search = projectReturnSlug;
 
 					if (search) {
 						const scrollElem = document.getElementById(search);
@@ -120,11 +124,17 @@
 							setTimeout(() => {
 								isTransitioningEnabled.set(true);
 								$lenis?.scrollTo(scrollElem, { offset: 0, immediate: true });
+								projectReturnReady = true;
 							}, 100);
+						} else {
+							isTransitioningEnabled.set(true);
+							projectReturnReady = true;
 						}
 					}
 				}
 			});
+		} else {
+			projectReturnReady = true;
 		}
 	});
 
@@ -138,61 +148,63 @@
 	});
 </script>
 
-{#if data.story}
-	<StoryblokComponent blok={data.story.content} />
-{/if}
+<div class:opacity-0={hideProjectReturn}>
+	{#if data.story}
+		<StoryblokComponent blok={data.story.content} />
+	{/if}
 
-<section class="relative pt-8" bind:this={el}>
-	<div class="relative hidden xl:block">
-		{#if activeFilter}
-			<MenuList class="fixed top-32 right-4 z-10 flex flex-col items-end gap-4 pt-8 pr-8">
-				<div in:fade={{ delay: 0 }} out:fade={{ delay: categories.length * 25 }}>
-					<MenuItem
-						name="All Projects"
-						sup={data.projects.length}
-						url={`${base}/work#all`}
-						selected={!filter || filter === 'all'}
+	<section class="relative pt-8" bind:this={el}>
+		<div class="relative hidden xl:block">
+			{#if activeFilter}
+				<MenuList class="fixed top-32 right-4 z-10 flex flex-col items-end gap-4 pt-8 pr-8">
+					<div in:fade={{ delay: 0 }} out:fade={{ delay: categories.length * 25 }}>
+						<MenuItem
+							name="All Projects"
+							sup={data.projects.length}
+							url={`${base}/work#all`}
+							selected={!filter || filter === 'all'}
+						/>
+					</div>
+					{#each categories as category, index (category.id)}
+						{#if category.count > 0}
+							<div
+								in:fade|global={{ delay: index * 50 }}
+								out:fade|global={{ delay: (categories.length - index) * 25, duration: 150 }}
+							>
+								<MenuItem
+									name={category.name}
+									sup={category.count}
+									url={`${base}/work#${category.value}`}
+									selected={filter === category.value}
+								/>
+							</div>
+						{/if}
+					{/each}
+				</MenuList>
+			{/if}
+		</div>
+
+		<div>
+			{#each projects as { name, slug, content }, index (name)}
+				<div id={`${slug}`} class="grid grid-cols-12">
+					<ProjectListItem
+						theme="dark"
+						{name}
+						{slug}
+						{content}
+						parallaxSpeed={projectGridParallax[index % 6]}
+						layout={index % 2 === 0 ? 'left' : 'right'}
+						class={getProjectGridItemClass(index)}
 					/>
 				</div>
-				{#each categories as category, index (category.id)}
-					{#if category.count > 0}
-						<div
-							in:fade|global={{ delay: index * 50 }}
-							out:fade|global={{ delay: (categories.length - index) * 25, duration: 150 }}
-						>
-							<MenuItem
-								name={category.name}
-								sup={category.count}
-								url={`${base}/work#${category.value}`}
-								selected={filter === category.value}
-							/>
-						</div>
-					{/if}
-				{/each}
-			</MenuList>
-		{/if}
-	</div>
+			{/each}
+		</div>
+	</section>
 
-	<div>
-		{#each projects as { name, slug, content }, index (name)}
-			<div id={`${slug}`} class="grid grid-cols-12">
-				<ProjectListItem
-					theme="dark"
-					{name}
-					{slug}
-					{content}
-					parallaxSpeed={projectGridParallax[index % 6]}
-					layout={index % 2 === 0 ? 'left' : 'right'}
-					class={getProjectGridItemClass(index)}
-				/>
-			</div>
+	<!-- Archive -->
+	<section class="mb-16">
+		{#each data.archive as { name, slug, content }, index (name)}
+			<ArchiveItem {name} {slug} {content} />
 		{/each}
-	</div>
-</section>
-
-<!-- Archive -->
-<section class="mb-16">
-	{#each data.archive as { name, slug, content }, index (name)}
-		<ArchiveItem {name} {slug} {content} />
-	{/each}
-</section>
+	</section>
+</div>
